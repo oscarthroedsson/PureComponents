@@ -1,16 +1,20 @@
 export function checkSectionHeadings() {
-  // Get all sections in the document
   const sections = document.querySelectorAll("section");
 
   sections.forEach((section) => {
-    // Kontrollera om det finns någon heading (h1-h6) i section
     const hasHeading = section.querySelector("h1, h2, h3, h4, h5, h6");
-
+    console.log("hasHeading", hasHeading);
     if (!hasHeading) {
-      console.error("Warning: A <section> element must contain a heading (h1-h6).", section);
+      console.log("error");
+      const errorMessage = `Warning: A <section> element must contain a heading (h1-h6).`;
+      console.error("error", errorMessage, section);
+      console.info("info", errorMessage, section);
+      console.debug("debug", errorMessage, section);
+      console.trace("trace", errorMessage, section);
+      console.assert(false, errorMessage, section);
+      console.dir(section);
     }
   });
 }
 
-//  runs when the DOM is ready
 document.addEventListener("DOMContentLoaded", checkSectionHeadings);
