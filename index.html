@@ -3,15 +3,96 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="./src/Styles/img.css" />
+    <link rel="stylesheet" href="./src/Styles/article.css" />
+
+    <link rel="stylesheet" href="./src/Styles/a-tag.css" />
+    <link rel="stylesheet" href="./src/Styles/address.css" />
+    <link rel="stylesheet" href="./src/Styles/main.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Pure Components</title>
   </head>
   <body>
     <div id="app"></div>
-    <button class="btn-cta">hello</button>
-    <section>
-      <p>hello</p>
-    </section>
+    <article data-article="article-container">
+      <header data-article="introduction">
+        <img
+          src="https://images.pexels.com/photos/190574/pexels-photo-190574.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt=""
+        />
+        <h1>Building My Own Component Library</h1>
+        <p>
+          Over the past few months, I embarked on an exciting project – building my own component library from scratch.
+          This library isn’t just a collection of reusable components, but a fully customized solution designed with
+          performance, accessibility, and ease of use in mind. The goal is to create a flexible tool that developers can
+          seamlessly integrate into their projects, whether they're working on a small website or a large-scale
+          application.
+        </p>
+      </header>
+
+      <address data-article="meta-data">
+        <div data-article="author">
+          <img
+            src="https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            alt=""
+            class="avatar avatar-sm"
+          />
+          <div>
+            <p>By <a href="https://example.com/author">John Doe</a></p>
+            <p>Contact: <a href="mailto:john.doe@example.com">john.doe@example.com</a></p>
+          </div>
+        </div>
+
+        <time datetime="2024-10-17T10:00:00Z">October 17, 2024</time>
+      </address>
+
+      <div role="main">
+        <h2>Why Build a Custom Library?</h2>
+        <p>
+          The idea to create my own component library came from realizing that existing options often lack the
+          combination of style and functionality I needed in my projects. Some libraries offer impressive functionality
+          but require extensive customization, while others focus too much on aesthetics, sacrificing accessibility or
+          performance. By building my own library, I can control every detail, from how the components look to how they
+          function under the hood.
+        </p>
+
+        <h3>Focus on Accessibility and Semantics</h3>
+        <p>
+          One of the most important aspects of my work is accessibility. I want to ensure that all components adhere to
+          best practices for web accessibility (WCAG) and are easy to use for people who rely on screen readers or other
+          assistive technologies. Every component is designed with correct semantic HTML, and I integrate ARIA
+          attributes where necessary to enhance interaction.
+        </p>
+
+        <h3>Simplicity and Flexibility</h3>
+        <p>
+          The components in the library are built to be as flexible as possible without compromising simplicity. This
+          means each component comes with predefined styles and functionality, but developers always have the option to
+          easily override these styles or extend functionality as needed. By leveraging modern JavaScript and
+          TypeScript, I ensure that the codebase remains robust and maintainable.
+        </p>
+      </div>
+
+      <!-- Comments Section -->
+      <article data- role="complementary">
+        <h2>Comments</h2>
+
+        <article role="comment">
+          <img class="" src="" alt="" />
+          <h3>Jane Smith</h3>
+          <p>This is a comment on the blog post. I really enjoyed reading it!</p>
+          <time datetime="2024-10-17T12:00:00Z">October 17, 2024 at 12:00 PM</time>
+        </article>
+
+        <article role="comment">
+          <img add-aria="comment-img" src="" alt="" />
+          <h3>Jane Smith</h3>
+          <p>This is a comment on the blog post. I really enjoyed reading it!</p>
+          <time datetime="2024-10-17T12:00:00Z">October 17, 2024 at 12:00 PM</time>
+        </article>
+      </article>
+    </article>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

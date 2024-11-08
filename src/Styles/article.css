@@ -1,0 +1,68 @@
+article[data-article="article-container"] {
+  max-width: 50rem;
+  padding: 3rem;
+}
+
+/* INTRODUCTION */
+article > header[data-article="introduction"] {
+  max-width: 50rem;
+  font-size: 1rem;
+  margin-bottom: 3rem;
+}
+article > header[data-article="introduction"] > img {
+  width: 100%;
+  max-height: 30vh;
+  margin: 0 auto;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+/* === META DATA ABOUT THE ARTICLE */
+article > address[data-article="meta-data"] {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+/* === AUTHOR CONTAINER === */
+article > address :is(div)[data-article="author"] {
+  display: flex;
+  align-items: center;
+}
+
+/*  */
+article > address :is(div)[data-article="author"] :is(div, span) {
+  font-size: 14px;
+}
+
+article > address :is(div)[data-article="author"] :is(div, span) > :first-child {
+  margin-bottom: 0.3rem;
+}
+
+article > address :is(div)[data-article="author"] :is(div, span) > * {
+  margin: 0px;
+}
+
+article > address :is(time) {
+  font-size: 0.875rem;
+}
+
+/* === ARTICLE BODY */
+article[data-article="article-container"] :is(div[role="main"]) :is(h1, h2, h3, h4, h5, h6) {
+  color: red;
+}
+article[data-article="article-container"] :is(div[role="main"]) :is(h1, h2, h3, h4, h5, h6) + p {
+  font-size: 14px;
+  margin-bottom: 4rem;
+}
+
+.something {
+  color: red;
+  font-size: 16px;
+}
+
+.userClass {
+  font-size: 14px;
+  padding: 10px;
+}
