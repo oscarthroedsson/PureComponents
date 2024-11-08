@@ -1,0 +1,13 @@
+.temp {
+  max-width: 30rem;
+}
+
+.del {
+  background-color: hsl(0, 100%, 50%, 0.2);
+  padding: 2px 4px;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--primary-500);
+}

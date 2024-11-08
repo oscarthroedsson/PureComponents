@@ -1,0 +1,46 @@
+/* -----------------Content Board----------------------- */
+/* 
+→ Base styling
+→ ...add new here
+→ Generall CSS rules
+
+*/
+/* ----------------------------------------------------- */
+
+.badge-sm {
+  font-size: 8px;
+  line-height: fit-content;
+  padding: 0.2rem 0.3rem;
+}
+.badge-md {
+  font-size: 10px;
+  padding: 0.3rem 0.4rem;
+}
+.badge-lg {
+  font-size: 12px;
+  padding: 0.4rem 0.5rem;
+}
+
+.badge-sharp {
+  border-radius: var(--border-radius-sharp);
+}
+
+.badge-soft {
+  border-radius: var(--border-radius-soft);
+}
+
+.badge-round {
+  border-radius: var(--border-radius-round);
+  padding-inline: 0.4rem;
+}
+
+.badge {
+  height: fit-content;
+  background-color: var(--primary-100);
+  border-radius: var(--border-radius-soft);
+}
+
+.badge-outline {
+  background-color: transparent;
+  border: 1px solid var(--primary-100);
+}

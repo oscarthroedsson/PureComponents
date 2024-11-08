@@ -1,0 +1,137 @@
+/* -----------------Content Board----------------------- */
+/* 
+→ Base styling
+→ ...add new here
+→ Generall CSS rules
+
+*/
+/* ----------------------------------------------------- */
+
+/* ========= Base Styling ========= */
+
+.btn-sm {
+  font-size: 12px;
+  padding: 0.3rem 0.5rem;
+}
+.btn-md {
+  font-size: 14px;
+  padding: 0.5rem 0.8rem;
+}
+.btn-lg {
+  font-size: 16px;
+  padding: 0.6rem 1rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 0.25rem;
+  background-color: var(--primary-100);
+  color: var(--primary-900);
+
+  transition: background-color 0.25s;
+
+  &:hover {
+    background-color: var(--primary-200);
+  }
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-radius: 0.25rem;
+  border: 1px solid var(--primary-100);
+  color: var(--primary-900);
+
+  transition: ease-in 0.1s;
+
+  &:hover {
+    background-color: var(--primary-100);
+    color: var(--primary-900);
+  }
+}
+
+.btn-tertiary {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+
+  color: var(--primary-800);
+
+  &:hover {
+    color: var(--primary-900);
+  }
+}
+
+/* Btn with an icon in it */
+[class^="btn"]:has(i, span, svg, img) {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  gap: 0.5rem;
+  white-space: nowrap;
+
+  /* Styles apply at small */
+  &.btn-sm {
+    & > span,
+    & > i,
+    & > svg,
+    & > img {
+      width: 0.75rem;
+    }
+  }
+
+  /* Styles apply at small */
+  &.btn-md {
+    & > span,
+    & > i,
+    & > svg,
+    & > img {
+      width: 1rem;
+    }
+  }
+  /* Styles apply at small */
+  &.btn-lg {
+    & > span,
+    & > i,
+    & > svg,
+    & > img {
+      width: 1.2rem;
+    }
+  }
+}
+
+[class^="btn"].icon > :has(span, i, svg, img) {
+  size: portrait;
+
+  .btn-sm:is(span, i, svg, img) {
+    width: 1rem;
+  }
+  .btn-sm {
+    width: 1.5rem;
+  }
+  .btn-sm {
+    width: 1.8rem;
+  }
+}
+
+/* ========= GENERALL CSS RULES  ========= */
+
+[class^="btn"]:not([disabled]) {
+  transition: transform ease-in 0.15s;
+  cursor: pointer;
+}
+
+[class^="btn"]:is([disabled]) {
+  transition: transform ease-in 0.15s;
+  cursor: not-allowed;
+}
+
+[class^="btn"]:active:not([disabled]) {
+  transform: scale(0.95);
+}
+
+button[class^="btn"][disabled] {
+  opacity: 0.5;
+  background-color: var(--primary-100);
+  color: var(--primary-300);
+}

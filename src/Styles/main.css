@@ -24,6 +24,10 @@
   --primary-link: var(--blue-500);
 
   color: var(--primary-600);
+
+  --border-radius-sharp: 0px;
+  --border-radius-soft: 0.25rem;
+  --border-radius-round: 1000px;
 }
 
 h1,
@@ -41,5 +45,12 @@ body {
   margin: 0; /* Ta bort eventuella marginaler från body */
   display: flex;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
+}
+
+.scen {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-right: 1rem;
 }
