@@ -36,11 +36,18 @@
 
 .badge {
   height: fit-content;
+  width: fit-content;
+  cursor: default;
+
   background-color: var(--primary-100);
   border-radius: var(--border-radius-soft);
 }
 
 .badge-outline {
+  height: fit-content;
+  width: fit-content;
+  cursor: default;
+
   background-color: transparent;
   border: 1px solid var(--primary-100);
 }

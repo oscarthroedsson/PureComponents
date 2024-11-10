@@ -1,0 +1,183 @@
+/* -----------------Content Board----------------------- */
+/* 
+→ Base styling
+→ Sizes
+→ Generall CSS rules
+
+*/
+/* ----------------------------------------------------- */
+
+:root {
+  /* Small variant */
+  --small-font-size: 0.75rem;
+  --small-padding: 0.6rem 0.6rem;
+  --small-margin-bottom: 8px;
+  --small-icon: 12px;
+
+  /* Medium variant */
+  --medium-font-size: 0.875rem;
+  --medium-padding: 1rem 1.2rem;
+  --small-margin-bottom: 12px;
+  --medium-icon: 16px;
+
+  /* Large variant */
+  --large-font-size: 1rem;
+  --large-padding: 1.4rem 1.6rem;
+  --small-margin-bottom: 16px;
+  --large-icon: 20px;
+}
+
+.accordion {
+  /* ========= Base Styling ========= */
+  background-color: var(--primary-50);
+  border-radius: var(--border-radius-soft);
+  padding: var(--medium-padding);
+  max-height: fit-content;
+  overflow: hidden;
+
+  .accordion-toggle {
+    display: none;
+  }
+
+  .summary {
+    font-size: var(--medium-font-size);
+    display: flex; /* need a display or icon disapears*/
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Handles the toggle */
+  .accordion-content {
+    font-size: calc(var(--medium-font-size) * 0.95);
+    display: none; /* Döljer innehållet som standard */
+    visibility: hidden; /* Innehållet är osynligt för skärmläsare när det är dolt */
+    opacity: 0; /* Gör det osynligt */
+  }
+
+  .accordion-toggle:checked ~ label.summary {
+    margin-bottom: 1rem;
+  }
+
+  /* Makes accordions-content visible when the accordions is toggled */
+  .accordion-toggle:checked + .summary + .accordion-content {
+    display: block; /* Makes the content visible */
+    visibility: visible; /* Makes it visible for screen readers */
+    opacity: 1; /* Makes it fully visible for users */
+  }
+
+  /* Adjust choosen tag for icon in summary */
+  label.summary > :is(svg, span, div, img) {
+    width: var(--medium-icon);
+    height: var(--medium-icon);
+    transition: transform 0.3s ease;
+  }
+
+  /* ====== SIZES ======= */
+  &[class*="accordion"][class*="accordion-small"] {
+    padding: var(--small-padding) !important;
+
+    > .summary {
+      font-size: var(--small-font-size);
+    }
+
+    .accordion-content {
+      font-size: var(--small-font-size);
+    }
+
+    label.summary > :is(svg, span, div, img) {
+      width: var(--small-icon);
+      height: var(--small-icon);
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-toggle:checked ~ .summary {
+      margin-bottom: 0.5rem !important;
+    }
+  }
+
+  &[class*="accordion"][class*="accordion-medium"] {
+    padding: var(--medium-padding) !important;
+
+    > .summary {
+      gap: 0.5rem; /* 6px */
+      font-size: var(--medium-font-size);
+    }
+
+    .accordion-content {
+      font-size: calc(var(--medium-font-size) * 0.95);
+    }
+
+    label.summary > :is(svg, span, div, img) {
+      width: var(--medium-icon);
+      height: var(--medium-icon);
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-toggle:checked ~ .summary {
+      margin-bottom: 1rem !important;
+    }
+  }
+
+  &[class*="accordion"][class*="accordion-large"] {
+    padding: var(--large-padding) !important;
+
+    > .summary {
+      gap: 1rem;
+      font-size: var(--large-font-size);
+    }
+
+    .accordion-content {
+      font-size: calc(var(--large-font-size) * 0.9);
+    }
+
+    label.summary > :is(svg, span, div, img) {
+      width: var(--large-icon);
+      height: var(--large-icon);
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-toggle:checked ~ .summary {
+      margin-bottom: 1rem !important;
+    }
+  }
+
+  /* ====== General Rules ======= */
+
+  /* This class applies styles to the icon elements within the label with the 'summary' class.
+   It adds a pseudo-element (::before) before the content of the label, used for styling the icon. */
+  label.summary[class*="icon"]::before {
+    content: "";
+
+    width: var(--medium-icon); /* Set width */
+    height: var(--medium-icon); /* Set height */
+
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    transition: transform 0.3s ease;
+  }
+
+  /* Rotate icon when detail is open */
+  .accordion-toggle:checked ~ label.summary[class*="icon"]::before {
+    transform: rotate(180deg);
+  }
+
+  /* Rotate icon when detail is open → if icon is in svg, span, div or img tag */
+  .accordion-toggle:checked ~ label.summary > :is(svg, span, div, img) {
+    transform: rotate(180deg);
+  }
+
+  [class*="icon-arrow"]::before {
+    rotate: 180deg;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20stroke-width%3D%221.5%22%20stroke%3D%22currentColor%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22m15%2011.25-3-3m0%200-3%203m3-3v7.5M21%2012a9%209%200%201%201-18%200%209%209%200%200%20118%200Z%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+  }
+
+  [class*="icon-mouse"]::before {
+    transform: rotate(0deg) !important;
+    background-image: url("data:image/svg+xml,%3Csvg%20data-slot%3D%22icon%22%20aria-hidden%3D%22true%22%20fill%3D%22none%22%20stroke-width%3D%221.5%22%20stroke%3D%22currentColor%22%20viewBox%3D%220%200%2024%2024%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M15.042%2021.672%2013.684%2016.6m0%200-2.51%202.225.569-9.47%205.227%207.917-3.286-.672ZM12%202.25V4.5m5.834.166-1.591%201.591M20.25%2010.5H18M7.757%2014.743l-1.59%201.59M6%2010.5H3.75m4.007-4.243-1.59-1.59%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+  }
+
+  .summary[class*="icon-chevron"]::before {
+    background-image: url("data:image/svg+xml,%3Csvg%20data-slot%3D%22icon%22%20aria-hidden%3D%22true%22%20fill%3D%22none%22%20stroke-width%3D%221.5%22%20stroke%3D%22currentColor%22%20viewBox%3D%220%200%2024%2024%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22m4.5%2015.75%207.5-7.5%207.5%207.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+  }
+}

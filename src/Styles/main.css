@@ -39,6 +39,10 @@ h6 {
   color: var(--primary-700);
 }
 
+p {
+  margin: 0px;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   height: 100vh; /* Ta upp hela höjden av webbläsarfönstret */
@@ -53,4 +57,6 @@ body {
   flex-direction: column;
   gap: 1rem;
   margin-right: 1rem;
+  width: 40rem;
+  height: 20rem;
 }

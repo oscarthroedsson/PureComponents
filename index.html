@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./src/Styles/img.css" />
     <link rel="stylesheet" href="./src/Styles/article.css" />
 
+    <link rel="stylesheet" href="./src/Styles/details.css" />
     <link rel="stylesheet" href="./src/Styles/badge.css" />
     <link rel="stylesheet" href="./src/Styles/del.css" />
     <link rel="stylesheet" href="./src/Styles/button.css" />
@@ -20,15 +21,25 @@
   </head>
   <body>
     <div id="app"></div>
-    <div class="scen">
-      <div class="badge badge-sm badge-soft">new message</div>
-      <div class="badge badge-md badge-soft">new message</div>
-      <div class="badge badge-lg badge-soft">new message</div>
-    </div>
-    <div class="scen">
-      <div class="badge-outline badge-sm badge-round">new message</div>
-      <div class="badge-outline badge-md badge-round">new message</div>
-      <div class="badge-outline badge-lg badge-round">new message</div>
+    <div>
+      <div class="scen">
+        <div class="accordion" role="region" aria-labelledby="accordion-toggle">
+          <input
+            type="checkbox"
+            id="accordion-toggle"
+            class="accordion-toggle"
+            aria-expanded="false"
+            aria-controls="accordion-content"
+          />
+          <label for="accordion-toggle" class="summary icon-chevron"> Details </label>
+
+          <div class="accordion-content">
+            Elephants have large feet. Their feet are specially adapted to support their massive weight and to help them
+            move quietly through their environment. The large surface area of their feet helps to distribute their
+            weight evenly, preventing them from sinking into soft ground.
+          </div>
+        </div>
+      </div>
     </div>
 
     <script type="module" src="/src/main.ts"></script>
