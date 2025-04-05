@@ -1,0 +1,204 @@
+/* 
+Attributes
+responsive → Handle spacing and sizing based on our breakpoints
+*/
+
+.avatar {
+  display: block;
+  background-color: var(--color-primary);
+
+  text-align: center;
+  font-size: var(--font-size-2xl);
+  padding: var(--spacing-25) var(--spacing-75);
+  padding-top: 0.5rem;
+
+  height: fit-content;
+  width: fit-content;
+
+  &.sm {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-15) var(--spacing-50);
+    padding-top: 0.4rem;
+  }
+
+  &.md {
+    font-size: var(--font-size-2xl);
+    padding: var(--spacing-25) var(--spacing-75);
+    padding-top: 0.5rem;
+  }
+
+  &.lg {
+    font-size: var(--font-size-3xl);
+    padding: var(--spacing-25) var(--spacing-125);
+    padding-top: 0.7rem;
+  }
+
+  &.sharp {
+    border-radius: var(--radius-none);
+  }
+  &.soft {
+    border-radius: var(--radius-sm);
+  }
+  &.rounded {
+    border-radius: 999px;
+  }
+}
+
+.avatar-group {
+  display: flex;
+  position: relative;
+  & > .avatar {
+    border: 2px solid white;
+
+    &:not(:first-child) {
+      box-shadow: var(--shadow-left);
+    }
+  }
+
+  /* Adjust how tight the avatars should be */
+  &.tight {
+    /* 
+    This is default if we do not provide size on parent  
+    */
+
+    /* children has sm */
+    &:not(:has(> :where(:not(.avatar.sm)))) > .avatar.sm:not(:first-child) {
+      margin-left: -1rem;
+    }
+    /* children has md */
+    &:not(:has(> :where(:not(.avatar.md)))) > .avatar.md:not(:first-child) {
+      margin-left: -1.5rem;
+    }
+    /* children has lg */
+    &:not(:has(> :where(:not(.avatar.lg)))) > .avatar.lg:not(:first-child) {
+      margin-left: -2rem;
+    }
+
+    /* 
+    This overrule size on children if size is written on avatar-group
+    */
+    &.sm > .avatar:not(:first-child) {
+      margin-left: -1rem;
+    }
+
+    &.md > .avatar:not(:first-child) {
+      margin-left: -1.5rem;
+    }
+
+    &.lg > .avatar:not(:first-child) {
+      margin-left: -2rem;
+    }
+  }
+
+  &.base {
+    /* 
+    This is default if we do not provide size on parent  
+    */
+    /* children has sm */
+    &:not(:has(> :where(:not(.avatar.sm)))) > .avatar.sm:not(:first-child) {
+      margin-left: -0.8rem;
+    }
+    /* children has md */
+    &:not(:has(> :where(:not(.avatar.md)))) > .avatar.md:not(:first-child) {
+      margin-left: -1.2rem;
+    }
+    /* children has lg */
+    &:not(:has(> :where(:not(.avatar.lg)))) > .avatar.lg:not(:first-child) {
+      margin-left: -1.7rem;
+    }
+
+    /* 
+    This overrule size on children if size is written on avatar-group
+    */
+    &.sm > .avatar:not(:first-child) {
+      margin-left: -0.8rem;
+    }
+
+    &.md > .avatar:not(:first-child) {
+      margin-left: -1.2rem;
+    }
+
+    &.lg > .avatar:not(:first-child) {
+      margin-left: -1.7rem;
+    }
+  }
+
+  &.loose {
+    /* 
+    This is default if we do not provide size on parent  
+    */
+    /* children has sm */
+    &:not(:has(> :where(:not(.avatar.sm)))) > .avatar.sm:not(:first-child) {
+      margin-left: -0.5rem;
+    }
+    /* children has md */
+    &:not(:has(> :where(:not(.avatar.md)))) > .avatar.md:not(:first-child) {
+      margin-left: -0.9rem;
+    }
+    /* children has lg */
+    &:not(:has(> :where(:not(.avatar.lg)))) > .avatar.lg:not(:first-child) {
+      margin-left: -1.4rem;
+    }
+
+    /* 
+    This overrule size on children if size is written on avatar-group
+    */
+    &.sm > .avatar:not(:first-child) {
+      margin-left: -0.5rem;
+    }
+
+    &.md > .avatar:not(:first-child) {
+      margin-left: -0.9rem;
+    }
+
+    &.lg > .avatar:not(:first-child) {
+      margin-left: -1.4rem;
+    }
+  }
+
+  /* Controll size on avatar children from parent */
+  &.avatar-group.sm {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-15) var(--spacing-50);
+    padding-top: 0.4rem;
+    & > .avatar {
+      font-size: var(--font-size-lg);
+      padding: var(--spacing-15) var(--spacing-50);
+      padding-top: 0.4rem;
+    }
+  }
+
+  &.avatar-group.md {
+    font-size: var(--font-size-2xl);
+    padding: var(--spacing-25) var(--spacing-75);
+    padding-top: 0.5rem;
+
+    & > .avatar {
+      font-size: var(--font-size-2xl);
+      padding: var(--spacing-25) var(--spacing-75);
+      padding-top: 0.5rem;
+    }
+  }
+
+  &.avatar-group.lg {
+    font-size: var(--font-size-3xl);
+    padding: var(--spacing-25) var(--spacing-125);
+    padding-top: 0.7rem;
+
+    & > .avatar {
+      font-size: var(--font-size-3xl);
+      padding: var(--spacing-25) var(--spacing-125);
+      padding-top: 0.7rem;
+    }
+  }
+
+  &.sharp > .avatar {
+    border-radius: var(--radius-none);
+  }
+  &.soft > .avatar {
+    border-radius: var(--radius-sm);
+  }
+  &.rounded > .avatar {
+    border-radius: 999px;
+  }
+}
