@@ -11,20 +11,20 @@
   /* Small variant */
   --small-font-size: 0.75rem;
   --small-padding: 0.6rem 0.6rem;
-  --small-margin-bottom: 8px;
-  --small-icon: 12px;
+  --small-margin-bottom: 0.5rem;
+  --small-icon: 0.75rem;
 
   /* Medium variant */
   --medium-font-size: 0.875rem;
   --medium-padding: 1rem 1.2rem;
-  --small-margin-bottom: 12px;
-  --medium-icon: 16px;
+  --small-margin-bottom: 0.75rem;
+  --medium-icon: 1rem;
 
   /* Large variant */
   --large-font-size: 1rem;
   --large-padding: 1.4rem 1.6rem;
-  --small-margin-bottom: 16px;
-  --large-icon: 20px;
+  --small-margin-bottom: 1rem;
+  --large-icon: 1.25rem;
 }
 
 .accordion {
@@ -66,7 +66,7 @@
   }
 
   /* Adjust choosen tag for icon in summary */
-  label.summary > :is(svg, span, div, img) {
+  label.summary > :is(svg, span, img) {
     width: var(--medium-icon);
     height: var(--medium-icon);
     transition: transform 0.3s ease;

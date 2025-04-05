@@ -8,62 +8,82 @@
 /* ----------------------------------------------------- */
 
 /* ========= Base Styling ========= */
-
-.btn-sm {
-  font-size: 12px;
-  padding: 0.3rem 0.5rem;
-}
-.btn-md {
-  font-size: 14px;
-  padding: 0.5rem 0.8rem;
-}
-.btn-lg {
-  font-size: 16px;
-  padding: 0.6rem 1rem;
-}
+@import "./main.css";
 
 .btn {
+  position: relative;
   border: none;
-  border-radius: 0.25rem;
-  background-color: var(--primary-100);
-  color: var(--primary-900);
-
-  transition: background-color 0.25s;
+  background-color: var(--color-primary);
+  color: var(--color-neutral-100);
+  transition: background-color 0.5s;
 
   &:hover {
-    background-color: var(--primary-200);
+    background-color: color-mix(in hsl, var(--color-primary) 100%, var(--color-neutral-900) 10%);
   }
-}
 
-.btn-outline {
-  background-color: transparent;
-  border-radius: 0.25rem;
-  border: 1px solid var(--primary-100);
-  color: var(--primary-900);
-
-  transition: ease-in 0.1s;
-
-  &:hover {
-    background-color: var(--primary-100);
-    color: var(--primary-900);
+  /* SIZE */
+  &.sm {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-50) var(--spacing-75);
   }
-}
 
-.btn-tertiary {
-  background-color: transparent;
-  border: none;
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+  &.md {
+    font-size: var(--font-size-md);
+    padding: var(--spacing-50) var(--spacing-75);
+  }
+  &.lg {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-75) var(--spacing-100);
+  }
 
-  color: var(--primary-800);
+  &.emphasised {
+    background-color: var(--color-secondary);
+    color: var(--);
+  }
 
-  &:hover {
-    color: var(--primary-900);
+  &.secondary {
+    background-color: var(--color-secondary);
+
+    &:hover {
+      background-color: color-mix(in hsl, var(--color-secondary) 100%, var(--color-neutral-900) 1%);
+    }
+  }
+
+  &.tertiary {
+    background-color: transparent;
+    color: var(--color-neutral-900);
+
+    &:hover {
+      color: var(--color-primary);
+      text-decoration: underline;
+      text-underline-offset: 0.3rem;
+    }
+  }
+
+  &.btn[iconOnly] {
+    &:not(span, i, svg, img) {
+      font-size: 0;
+    }
+
+    &:has(span, i, svg, img) {
+      size: portrait;
+    }
+  }
+
+  &.btn[disabled] {
+    background-color: var(--color-neutral-200);
+    color: var(--color-neutral-400);
+
+    /* Remove BG if user have tertiary applied */
+    &.tertiary {
+      background-color: transparent;
+    }
+    cursor: not-allowed;
   }
 }
 
 /* Btn with an icon in it */
-[class^="btn"]:has(i, span, svg, img) {
+[class^=".btn"]:has(i, span, svg, img) {
   display: flex;
   align-items: center;
   width: fit-content;
@@ -100,25 +120,26 @@
   }
 }
 
-[class^="btn"].icon > :has(span, i, svg, img) {
-  size: portrait;
-
-  .btn-sm:is(span, i, svg, img) {
-    width: 1rem;
-  }
-  .btn-sm {
-    width: 1.5rem;
-  }
-  .btn-sm {
-    width: 1.8rem;
-  }
-}
-
 /* ========= GENERALL CSS RULES  ========= */
+[class^="btn"]:has(i, span, svg, img) {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  gap: var(--spacing-50);
+  white-space: nowrap;
 
-[class^="btn"]:not([disabled]) {
-  transition: transform ease-in 0.15s;
-  cursor: pointer;
+  &.sm > *:is(i, span, svg, img) {
+    width: var(--icon-size-sm-w);
+    height: var(--icon-size-sm-h);
+  }
+  &.md > *:is(i, span, svg, img) {
+    width: var(--icon-size-lg-w);
+    height: var(--icon-size-lg-h);
+  }
+  &.lg > *:is(i, span, svg, img) {
+    width: var(--icon-size-lg-w);
+    height: var(--icon-size-lg-h);
+  }
 }
 
 [class^="btn"]:is([disabled]) {
@@ -126,12 +147,11 @@
   cursor: not-allowed;
 }
 
-[class^="btn"]:active:not([disabled]) {
-  transform: scale(0.95);
+[class^="btn"]:not([disabled]) {
+  transition: transform ease-in 0.15s;
+  cursor: pointer;
 }
 
-button[class^="btn"][disabled] {
-  opacity: 0.5;
-  background-color: var(--primary-100);
-  color: var(--primary-300);
+[class^="btn"]:active:not([disabled]) {
+  transform: scale(0.95);
 }
