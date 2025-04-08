@@ -15,22 +15,51 @@ responsive → Handle spacing and sizing based on our breakpoints
   height: fit-content;
   width: fit-content;
 
+  /* DOES NOT WORK */
+  &:has(img) {
+    /* Neutralize stuff */
+    padding-top: 0rem !important;
+    padding: 0rem !important;
+    font-size: 0 !important;
+  }
+
+  > :is(img) {
+    width: fit-content;
+    object-fit: cover;
+    object-position: center;
+    width: 10rem;
+    aspect-ratio: 1/1;
+    padding: 0px;
+  }
+
   &.sm {
     font-size: var(--font-size-lg);
     padding: var(--spacing-15) var(--spacing-50);
     padding-top: 0.4rem;
+
+    & > :is(img) {
+      width: 4rem;
+    }
   }
 
   &.md {
     font-size: var(--font-size-2xl);
     padding: var(--spacing-25) var(--spacing-75);
     padding-top: 0.5rem;
+
+    & > :is(img) {
+      width: 5rem;
+    }
   }
 
   &.lg {
     font-size: var(--font-size-3xl);
     padding: var(--spacing-25) var(--spacing-125);
     padding-top: 0.7rem;
+
+    & > :is(img) {
+      width: 6rem;
+    }
   }
 
   &.sharp {
@@ -41,6 +70,16 @@ responsive → Handle spacing and sizing based on our breakpoints
   }
   &.rounded {
     border-radius: 999px;
+    > :is(img) {
+      border-radius: 999px;
+    }
+
+    &:has(img) {
+      /* Neutralize stuff */
+      padding-top: 0rem;
+      padding: 0rem;
+      font-size: 0;
+    }
   }
 }
 
