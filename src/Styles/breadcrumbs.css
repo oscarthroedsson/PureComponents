@@ -1,0 +1,93 @@
+.breadcrumbs {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  gap: var(--spacing-1);
+  padding-left: 0px;
+  list-style: none;
+
+  p {
+    margin: 0px;
+  }
+
+  & li:not(:last-child) {
+    &::after {
+      content: ">";
+      padding-inline: var(--spacing-25);
+      color: var(--color-neutral-400);
+    }
+  }
+
+  & > li {
+    display: flex;
+    align-items: center;
+
+    & > *.block {
+      padding: var(--spacing-15) var(--spacing-50);
+      border-radius: var(--radius-md);
+      background-color: var(--color-neutral-200);
+      margin: 0px;
+    }
+
+    /* Styles the element with aria-current */
+    & > *[aria-current="page"] {
+      padding: var(--spacing-15) var(--spacing-50);
+      border-radius: var(--radius-md);
+      background-color: lightgreen;
+
+      &.underline {
+        background-color: transparent;
+        text-decoration: underline;
+        text-underline-offset: var(--spacing-25);
+        text-decoration-color: lime;
+        text-decoration-thickness: 2px;
+
+        padding: var(--spacing-15) var(--spacing-15);
+      }
+    }
+
+    /* 
+    If some element as aria-current style the others
+    does not work in firefox
+    */
+
+    & > *:is(a, img, span, i) {
+      cursor: pointer;
+
+      &:active {
+        transition: scale 0.2s ease, transform 0.2s ease;
+        transform: scale(0.95);
+      }
+    }
+  }
+
+  /* Styles every element that has not or children that has not
+  aria-current="page" */
+  &:has(> li > p[aria-current="page"]) {
+    > li:not(:has(p[aria-current="page"])) {
+      opacity: 0.6;
+    }
+  }
+
+  &.sm > * {
+    font-size: var(--font-size-xs);
+  }
+  &.md > * {
+    font-size: var(--font-size-sm);
+  }
+  &.lg > * {
+    font-size: var(--font-size-md);
+  }
+
+  & .sharp > * {
+    border-radius: var(--radius-none-) !important;
+  }
+  &.soft > * {
+    border-radius: var(--radius-md);
+  }
+  &.rounded > {
+    border-radius: var(--radius-full);
+  }
+}

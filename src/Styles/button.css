@@ -26,15 +26,18 @@ disabled → If we want to disable the btn
   &.sm {
     font-size: var(--font-size-sm);
     padding: var(--spacing-50) var(--spacing-75);
+    border-radius: var(--radius-sm);
   }
 
   &.md {
     font-size: var(--font-size-md);
     padding: var(--spacing-50) var(--spacing-75);
+    border-radius: var(--radius-md);
   }
   &.lg {
     font-size: var(--font-size-base);
     padding: var(--spacing-75) var(--spacing-100);
+    border-radius: var(--radius-lg);
   }
 
   &.emphasised {

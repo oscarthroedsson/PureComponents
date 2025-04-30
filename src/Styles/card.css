@@ -1,0 +1,51 @@
+.card {
+  max-width: var(--card-width-sm);
+  height: fit-content;
+
+  p {
+    margin: 0px;
+  }
+  figure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  & > .cardBody {
+    padding: var(--spacing-75);
+    background-color: rgb(36, 36, 36);
+    height: fit-content;
+    font-size: var(--font-size-sm);
+
+    .title {
+      margin: 0px;
+      font-size: var(--font-size-h6);
+      font-weight: bold;
+    }
+  }
+
+  &.sm {
+    .title {
+      /* Här var det "titel" istället för "title" */
+      font-size: var(--font-size-h6);
+    }
+  }
+
+  &.md {
+    font-size: var(--font-size-md);
+
+    .cardBody .title {
+      /* Här var det "titel" istället för "title" */
+      font-size: var(--font-size-h5);
+    }
+  }
+
+  &.lg {
+  }
+}

@@ -6,16 +6,28 @@
 npm
 */
 /* ----------------------------------------------------- */
-.badge {
-  font-size: 11px;
-  padding: var(--spacing-15) var(--spacing-50);
+button.pill {
+  position: relative;
+
+  font-size: 12px;
+  padding: var(--spacing-50) var(--spacing-100);
+  border: 0px solid transparent;
 
   height: fit-content;
   width: fit-content;
-  cursor: default;
 
   background-color: var(--color-neutral-300);
   border-radius: var(--radius-sm);
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+
+  &:active {
+    transition: filter 0.2s ease, transform 0.2s ease;
+    filter: brightness(0.9);
+    transform: scale(0.95);
+  }
 
   &.outline {
     height: fit-content;
@@ -31,15 +43,15 @@ npm
   }
 
   &.sm {
-    font-size: 10px;
+    font-size: 11px;
     line-height: fit-content;
   }
   &.md {
-    font-size: 11px;
+    font-size: 12px;
   }
   &.lg {
-    font-size: 12px;
-    padding: var(--spacing-15) var(--spacing-50);
+    font-size: 13px;
+    padding: var(--spacing-50) var(--spacing-100);
   }
 
   &.sharp {

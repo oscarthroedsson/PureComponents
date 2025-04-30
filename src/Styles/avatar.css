@@ -6,6 +6,7 @@ responsive → Handle spacing and sizing based on our breakpoints
 .avatar {
   display: block;
   background-color: var(--color-primary);
+  margin: 0px;
 
   text-align: center;
   font-size: var(--font-size-2xl);

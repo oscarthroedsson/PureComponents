@@ -1,0 +1,178 @@
+.menu {
+  position: relative;
+
+  list-style: none;
+  font-size: 14px;
+  background-color: var(--color-neutral-900);
+  color: #f1f5f9;
+  padding: var(--spacing-50);
+  margin: 0px;
+  height: fit-content;
+  min-width: 225px;
+  border-radius: var(--radius-md);
+
+  &.horizontal {
+    display: flex;
+  }
+
+  & ul {
+    list-style: none;
+    padding-left: 0px;
+  }
+
+  & li {
+    position: relative;
+    height: fit-content;
+    position: relative;
+    margin: var(--spacing-15);
+    padding: var(--spacing-25) var(--spacing-50);
+    border-radius: var(--radius-sm);
+
+    &:hover {
+      background-color: var(--color-neutral-800);
+    }
+  }
+
+  /*
+  Applys if li children is not li, ol or element with class .title
+  */
+  li:not(:has(> li, > ol, > .titel)) {
+    display: flex;
+    align-items: center;
+
+    /* if more then 1 children, apply gap */
+    &:has(:nth-child(n + 2)) {
+      gap: var(--spacing-150);
+    }
+  }
+
+  & .menu-line,
+  ul.menu-line,
+  ol.menu-line {
+    position: relative;
+    &::before {
+      content: "";
+      background-color: var(--color-neutral-600);
+      position: absolute;
+      left: auto;
+      top: var(--spacing-50, 8px);
+      bottom: var(--spacing-50, 8px);
+      width: 1px;
+    }
+  }
+
+  & li[aria-disabled] {
+    background-color: var(--color-neutral-800);
+    color: var(--color-neutral-500);
+
+    & * {
+      user-select: none;
+      pointer-events: none;
+      user-select: none;
+      color: inherit;
+      opacity: 1; /* så att bara <li> styr opacity */
+      cursor: not-allowed;
+      text-decoration: none;
+    }
+  }
+
+  .menu-line > li {
+    margin-left: var(--spacing-25);
+  }
+
+  & .titel {
+    margin-top: 0px;
+    margin-bottom: var(--spacing-25);
+    font-size: 1.5em;
+    /* If size is sm */
+    ul.menu.sm {
+      /* styling för en menu med klassen sm */
+    }
+    /* If size is md */
+    ul.menu.md {
+      /* styling för en menu med klassen md */
+    }
+    /* If size is sm */
+    ul.menu.lg {
+      /* styling för en menu med klassen lg */
+    }
+  }
+
+  /* SUB MENU */
+  li > details {
+    width: 100%;
+    position: relative;
+  }
+
+  li > details:not(:first-child) > summary {
+    padding-left: 1em;
+  }
+
+  /* If summary does not have img element inside of it */
+  li > details summary:not(:has(img, svg, i, span)) {
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+
+    &::after {
+      content: "▼";
+      position: absolute;
+      right: 0px;
+    }
+
+    details[open] > &::after {
+      content: "▲";
+    }
+  }
+
+  /* if summary has img */
+  li > details summary:has(img, svg, i, span) {
+    details > summary {
+      position: relative;
+    }
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-150);
+    & > img,
+    & > svg,
+    & > i,
+    & > span {
+      transition: rotate 0.4s ease-in-out;
+      rotate: 0deg;
+    }
+  }
+
+  li > details[open] > summary:has(svg, img, i, span) {
+    & > svg,
+    & > img,
+    & > i,
+    & > span {
+      rotate: 180deg;
+    }
+  }
+
+  /* size */
+  &.sm {
+    min-width: 200px;
+    font-size: 12px;
+    & svg,
+    span,
+    img,
+    i {
+      width: var(--spacing-100);
+    }
+    /* styling för en menu med klassen sm */
+  }
+  /* If size is md */
+  &.md {
+    font-size: 14px;
+    /* styling för en menu med klassen md */
+  }
+  /* If size is sm */
+  &.lg {
+    font-size: 16px;
+    /* styling för en menu med klassen lg */
+  }
+}

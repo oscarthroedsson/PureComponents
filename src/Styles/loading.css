@@ -1,0 +1,23 @@
+.loading {
+  position: relative;
+
+  &[loading="true"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #06b6d4 0%, #0891b2 40%, #0e7490 50%, #155e75 60%, #164e63 100%);
+    background-size: 300% 100%;
+    animation: shimmer 3s infinite linear;
+    z-index: 10;
+    pointer-events: none;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -150% 0;
+  }
+  100% {
+    background-position: 250% 0;
+  }
+}

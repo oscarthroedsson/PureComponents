@@ -1,10 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
 #app {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 2rem;
   height: 100dvh;
 }
+
 body {
+  font-family: "Poppins", sans-serif;
   margin: 0px;
 }
 
@@ -48,10 +53,12 @@ body {
   --font-size-h3: 1.75rem;
   --font-size-h4: 1.5rem;
   --font-size-h5: 1.25rem;
-  --font-size-h6: var(--font-size-base);
+  --font-size-h6: 1.125rem;
 
-  --font-size-sm: 0.75rem;
-  --font-size-md: 0, 875rem;
+  /* Font sizes */
+  --font-size-xs: 0.625rem; /*10px*/
+  --font-size-sm: 0.75rem; /*12px*/
+  --font-size-md: 0.875rem; /*14px*/
   --font-size-base: 1rem;
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
@@ -59,25 +66,41 @@ body {
   --font-size-3xl: 3rem;
   --font-weight-heading: 600;
 
+  /* width */
+  --card-width-xs: calc(var(--spacing-100) * 12.5);
+  --card-width-sm: calc(var(--spacing-100) * 18.75);
+  --card-width-md: calc(var(--spacing-100) * 25);
+  --card-width-lg: calc(var(--spacing-100) * 31.25);
+  --card-width-xl: calc(var(--spacing-100) * 37.5);
+
   /* 📐 Spacing */
   --spacing-0: 0;
   --spacing-1: 0.1rem;
   --spacing-15: 0.15rem;
-  --spacing-25: 0.25rem;
-  --spacing-50: 0.5rem;
-  --spacing-75: 0.75rem;
-  --spacing-100: 1rem;
-  --spacing-125: 1.25rem;
-  --spacing-150: 1.5rem;
-  --spacing-200: 2rem;
-  --spacing-300: 3rem;
-  --spacing-400: 4rem;
+  --spacing-25: 0.25rem; /* 4px */
+  --spacing-50: 0.5rem; /* 8px */
+  --spacing-75: 0.75rem; /* 12px */
+  --spacing-100: 1rem; /* 16px */
+  --spacing-125: 1.25rem; /* 20px */
+  --spacing-150: 1.5rem; /* 24px */
+  --spacing-200: 2rem; /* 32px */
+  --spacing-300: 3rem; /* 48px */
+  --spacing-400: 4rem; /* 64px */
+
+  /* Old values */
+  --spacing-56: 3.5rem; /* 56px */
+  --spacing-72: 4.5rem; /* 72px */
+  --spacing-80: 5rem; /* 80px */
+  --spacing-88: 5.5rem; /* 88px */
+  --spacing-96: 6rem; /* 96px */
 
   /* 🧊 Border radius */
   --radius-none: 0px;
+  --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;
+  --radius-full: 999px;
 
   /* ☁️ Skuggor */
   --shadow-sm: 0px 0px 10px 7px rgba(0, 0, 0, 0.43);
@@ -103,6 +126,14 @@ body {
 
   --icon-size-lg-w: 24px;
   --icon-size-lg-h: 24px;
+
+  --size-icon-sm: var(--size-16);
+  --size-icon-md: var(--size-24);
+  --size-icon-lg: var(--size-32);
+
+  --size-avatar-sm: var(--size-32);
+  --size-avatar-md: var(--size-48);
+  --size-avatar-lg: var(--size-64);
 }
 
 /* 🌍 Global classes */
@@ -114,4 +145,12 @@ body {
 }
 .rounded-lg {
   border-radius: var(--radius-lg);
+}
+
+details:first-of-type summary::marker {
+  content: "";
+}
+
+details:first-of-type summary::-webkit-details-marker {
+  content: "";
 }

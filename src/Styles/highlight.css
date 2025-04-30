@@ -1,0 +1,59 @@
+.highlight {
+  position: relative;
+  padding: 0.75rem;
+  border: 2px solid green;
+
+  h5 {
+    margin: 0px;
+  }
+  p {
+    margin: 0px;
+    font-size: 12px;
+  }
+
+  &::before {
+    content: attr(data-label);
+    font-size: var(--font-size-md);
+    position: absolute;
+    top: -1.5em;
+    z-index: -1;
+    left: 0;
+    translate: var(--spacing-75);
+
+    background-color: green;
+    color: white;
+    padding: 0 1em;
+
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    pointer-events: none;
+  }
+
+  .corner {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: green;
+    z-index: 2;
+    border-radius: 0.1em;
+
+    &.top-left {
+      top: -5px;
+      left: -5px;
+    }
+
+    &.top-right {
+      top: -5px;
+      right: -5px;
+    }
+
+    &.bottom-left {
+      bottom: -5px;
+      left: -5px;
+    }
+
+    &.bottom-right {
+      bottom: -5px;
+      right: -5px;
+    }
+  }
+}

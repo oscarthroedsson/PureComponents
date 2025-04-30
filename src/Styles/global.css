@@ -1,0 +1,11 @@
+.sm {
+  &.sharp {
+    border-radius: var(--radius-sm);
+  }
+  &.soft {
+    border-radius: var(--radius-md);
+  }
+  &.rounded {
+    border-radius: var(--radius-lg);
+  }
+}
