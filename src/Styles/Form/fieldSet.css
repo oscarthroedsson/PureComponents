@@ -1,0 +1,26 @@
+.fieldSet {
+  border: transparent;
+  margin-block: var(--spacing-200);
+  & legend {
+    font-weight: 600;
+  }
+  &.sm {
+    & legend {
+      font-size: var(--font-size-md);
+    }
+    gap: var(--spacing-lg);
+  }
+  &.md {
+    & legend {
+      font-size: var(--font-size-md);
+    }
+  }
+  /* lg should not exist */
+
+  &.sharp {
+    border-radius: var(--radius-none);
+  }
+  &.smooth {
+    border-radius: var(--radius-md);
+  }
+}

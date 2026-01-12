@@ -1,0 +1,26 @@
+input[type="file"].fileInput {
+  display: flex;
+  border: 1px solid var(--color-neutral-200);
+  cursor: auto;
+
+  &::file-selector-button {
+    background: none;
+    padding: var(--spacing-50) var(--spacing-100);
+    border: none;
+    cursor: pointer;
+  }
+  &.sharp {
+    border-radius: var(--radius-none);
+  }
+  &.smooth {
+    border-radius: var(--radius-md);
+  }
+  &.rounded {
+    border-radius: var(--radius-full);
+  }
+
+  &:user-invalid {
+    outline: 1px solid var(--color-error);
+    outline-offset: -1px;
+  }
+}

@@ -9,7 +9,6 @@ disabled → If we want to disable the btn
 /* ----------------------------------------------------- */
 
 /* ========= Base Styling ========= */
-@import "./main.css";
 
 .btn {
   position: relative;

@@ -1,0 +1,239 @@
+.label-container {
+  /* We need this to counter the offset rules */
+  padding: var(--spacing-50);
+
+  p {
+    margin: 0px;
+  }
+
+  /* ⚾︎ Base */
+  &:has(input[type="text"], input[type="number"], input[type="email"], input[type="password"], input[type="tel"]) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-50);
+
+    & :is(input[type="text"], input[type="number"], input[type="email"], input[type="password"], input[type="tel"]) {
+      border: none;
+      outline: 1px solid hsl(0, 0%, 0%, 20%);
+      outline-offset: var(--spacing-25);
+      padding: var(--spacing-25) var(--spacing-50);
+    }
+
+    & input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+
+    /* För Firefox */
+    & input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    & input[type="password"] {
+    }
+  }
+
+  /* 📏  Size */
+  &.sm {
+    font-size: var(--font-size-md);
+    color: var(--color-neutral-800);
+    font-weight: 600;
+
+    & input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+      font-weight: 400;
+      font-size: var(--font-size-sm);
+    }
+    .helpText {
+      color: var(--color-neutral-400);
+    }
+
+    .helpText,
+    .errorText {
+      font-weight: 400;
+      font-size: var(--font-size-sm);
+    }
+    .status {
+      font-size: var(--font-size-sm);
+    }
+  }
+  &.md {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-neutral-800);
+
+    & input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+      font-weight: 400;
+      font-size: var(--font-size-md);
+    }
+    .helpText {
+      color: var(--color-neutral-400);
+    }
+
+    .helpText,
+    .errorText {
+      font-weight: 400;
+      font-size: var(--font-size-sm);
+    }
+    .status {
+      font-size: var(--font-size-md);
+    }
+  }
+  &.lg {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-800);
+    font-weight: 600;
+
+    & input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+      font-weight: 400;
+      font-size: var(--font-size-lg);
+
+      /* padding: var(--spacing-50) var(--spacing-75); */
+    }
+    .helpText {
+      color: var(--color-neutral-400);
+    }
+
+    .helpText,
+    .errorText {
+      font-weight: 400;
+      font-size: var(--font-size-md);
+    }
+  }
+
+  /* 🎭 Form */
+  &.sharp {
+    & input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+      border-radius: var(--radius-sharp);
+    }
+  }
+
+  &.smooth {
+    & input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+      border-radius: var(--radius-smooth);
+    }
+  }
+
+  &.rounded {
+    & input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+      border-radius: var(--radius-rounded);
+    }
+  }
+  /* 📊 State */
+  &:has(input:disabled) {
+    color: var(--color-neutral-500);
+    input {
+      outline: 1px solid var(--color-neutral-400);
+    }
+    .helpText {
+      display: none;
+    }
+
+    margin-block: var(--spacing-50);
+  }
+
+  /* If we have error dont show help-text */
+  &:has(input:user-invalid) .helpText {
+    display: none;
+  }
+
+  & .status {
+    display: none;
+  }
+
+  /* Will overrite warning */
+  &:has(input:user-invalid) input {
+    outline: 1px solid var(--color-error) !important;
+  }
+
+  &:has(input:user-invalid) .status {
+    display: block !important;
+    font-weight: 400;
+    font-size: var(--font-size-md);
+    color: var(--color-error);
+  }
+
+  & input[data-warning="true"] {
+    outline: 1px solid var(--color-warning) !important;
+  }
+}
+
+.input:is(
+    input[type="text"],
+    input[type="month"],
+    input[type="date"],
+    input[type="week"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"]
+  ) {
+  /* Detta bör vara i en egen fil */
+
+  &:is(input[type="date"]) {
+    ::-webkit-calendar-picker-indicator {
+      background-color: red;
+    }
+  }
+  width: 100%;
+  background-color: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-300);
+  padding: var(--spacing-50) var(--spacing-75);
+
+  &.sharp {
+    border-radius: none;
+  }
+  &.smooth {
+    border-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    border-radius: var(--radius-rounded);
+  }
+
+  &.sm {
+    font-size: var(--font-size-sm);
+  }
+
+  &.md {
+    font-size: var(--font-size-md);
+  }
+
+  &.lg {
+    font-size: var(--font-size-lg);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:user-invalid {
+    outline: 1px solid var(--color-error);
+    outline-offset: -1px;
+  }
+}

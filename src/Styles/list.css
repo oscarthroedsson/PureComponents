@@ -1,0 +1,133 @@
+.list {
+  &.list-container {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .list-title {
+    font-weight: bolder;
+    padding: var(--spacing-25) var(--spacing-50);
+    margin-bottom: var(--spacing-50);
+  }
+
+  .item-title {
+    font-weight: var(--font-weight-subheading);
+    font-size: var(--font-size-);
+  }
+
+  list-style-type: none;
+  p {
+    margin: 0px;
+  }
+
+  /*  will let the user add border-radius on the list-items */
+  &.rounded {
+    &.sm > * {
+      border-radius: 8px;
+    }
+    &.md > * {
+      border-radius: 8px;
+    }
+    &.lg > * {
+      border-radius: 8px;
+    }
+  }
+
+  /* Img global */
+  & :is(.item-col, .item-row):has(:is(img, svg)) :is(img, svg) {
+    object-fit: cover;
+  }
+
+  /* If size is given and we have images */
+  &.sm :is(.item-col, .item-row):has(:is(img, svg)) :is(img, svg) {
+    width: 50px;
+    height: auto;
+  }
+  &.md :is(.item-col, .item-row):has(:is(img, svg)) :is(img, svg) {
+    width: 55px;
+    height: auto;
+  }
+  &.lg :is(.item-col, .item-row):has(:is(img, svg)) :is(img, svg) {
+    width: 60px;
+    height: auto;
+  }
+
+  & :is(.item-row) {
+    display: flex;
+    overflow: hidden;
+
+    &.top {
+      align-items: start;
+    }
+    &.center {
+      align-items: center;
+    }
+    &.bottom {
+      align-items: end;
+    }
+  }
+
+  /* Row */
+  &.sm :is(.item-row) {
+    gap: var(--spacing-50);
+    padding: 0 var(--spacing-100) 0 0;
+
+    &:is(:not(:last-child)) {
+      margin-bottom: 8px;
+    }
+
+    & .item-title {
+      font-size: 14px;
+    }
+
+    & .content {
+      font-size: 12px;
+      padding: var(--spacing-50) 0;
+    }
+  }
+
+  &.md :is(.item-row) {
+    gap: var(--spacing-75);
+    padding-inline: 0 var(--spacing-100);
+
+    &:is(:not(:last-child)) {
+      margin-bottom: 10px;
+    }
+
+    & .item-title {
+      font-size: 14px;
+    }
+
+    & .content {
+      font-size: 12px;
+      padding: var(--spacing-50) 0;
+    }
+  }
+
+  &.lg :is(.item-row) {
+    gap: var(--spacing-75);
+    padding: 0 var(--spacing-100) 0 0;
+    &:is(:not(:last-child)) {
+      margin-bottom: 12px;
+    }
+
+    & .item-title {
+      font-size: 16px;
+    }
+
+    & .content {
+      font-size: 14px;
+      padding: var(--spacing-50) 0;
+    }
+  }
+
+  .test {
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 100;
+    color: rgb(87, 87, 87);
+  }
+}

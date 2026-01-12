@@ -1,0 +1,153 @@
+.range:is(input[type="range"]) {
+  width: 100%;
+
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+
+  /* outline: 1px solid var(--color-neutral-200); */
+  outline-offset: -4px;
+  /* Chrome / Safari (WebKit) */
+
+  /* Firefox */
+  &::-moz-range-track {
+    border: 1px solid var(--color-neutral-200);
+    height: var(--spacing-50);
+    border-radius: 0px;
+  }
+
+  /* Chrome / Safari (WebKit) */
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+
+    height: 20px;
+    width: 10px;
+
+    background-color: var(--color-neutral-200);
+    border-radius: var(--radius);
+    margin-top: -5px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  }
+  /* Firefox */
+  &::-moz-range-thumb {
+    height: 100%;
+    width: var(--spacing-50);
+    background-color: var(--color-neutral-300);
+    border-radius: 0px;
+    /* border: 1px solid var(--color-neutral-300); */
+    border: none;
+    box-shadow: 0px 0px 20px 0.1px var(--color-neutral-400);
+  }
+
+  /* Firefox */
+  &::-moz-range-progress {
+    border: 3px solid var(--color-primary);
+    background-color: var(--color-primary);
+    height: var(--spacing-25);
+    border-radius: 0px;
+  }
+
+  /* ⚠️ Have not checked EDGE */
+  /* IE / gamla Edge */
+  &::-ms-track {
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+    height: 10px;
+  }
+
+  /* IE / gamla Edge */
+  &::-ms-fill-lower {
+    background: lime;
+    border-radius: 0px;
+  }
+
+  /* IE / gamla Edge */
+  &::-ms-fill-upper {
+    background: lightgray;
+    border-radius: 0 5px 5px 0;
+  }
+
+  /* IE / gamla Edge */
+  &::-ms-thumb {
+    background: red;
+    border: none;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+  }
+
+  &.sharp {
+    &::-moz-range-progress {
+      border: 3px solid var(--color-primary);
+      background-color: var(--color-primary);
+      height: var(--spacing-25);
+    }
+
+    &::-moz-range-track {
+      border: 1px solid var(--color-neutral-200);
+      height: var(--spacing-50);
+      border-radius: var(--radius-sharp);
+      overflow: hidden;
+    }
+    &&::-webkit-slider-runnable-track {
+      background-color: var(--color-neutral-100);
+      border: 1px solid var(--color-neutral-200);
+      height: var(--spacing-75);
+      border-radius: var(--radius-sharp);
+    }
+
+    &::-moz-range-thumb {
+      border-radius: var(--radius-sharp);
+    }
+
+    &::-webkit-slider-thumb {
+      border-radius: var(--radius-sharp);
+      background-color: var(--color-primary);
+    }
+  }
+
+  &.smooth {
+    &::-moz-range-progress {
+      border: 3px solid var(--color-primary);
+      background-color: var(--color-primary);
+      height: var(--spacing-25);
+      border-radius: var(--spacing-15) 0px 0px var(--spacing-15);
+    }
+
+    &::-moz-range-track {
+      border: 1px solid var(--color-neutral-200);
+
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    &&::-webkit-slider-runnable-track {
+      background-color: var(--color-neutral-100);
+      border: 1px solid var(--color-neutral-200);
+      height: var(--spacing-75);
+      border-radius: var(--radius-sharp);
+    }
+
+    &::-moz-range-thumb {
+      border-radius: 4px;
+    }
+    &::-webkit-slider-thumb {
+      background-color: var(--color-primary);
+    }
+  }
+  &.rounded {
+  }
+}
+
+.range-value {
+  font-weight: 500;
+  .formField.sm & {
+    font-size: var(--font-size-sm);
+  }
+  .formField.md & {
+    font-size: var(--font-size-md);
+  }
+}
