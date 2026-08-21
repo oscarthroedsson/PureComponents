@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkbox — PureComponents</title>
+    <meta name="pc-description" content="Checkboxes must have an associated label element. The label can wrap the checkbox or use for/id association." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/checkbox.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/formField.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Checkbox">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <div class="formField">
+        <label for="agree" class="checkbox-label md">
+          <input type="checkbox" id="agree" class="checkbox md" />
+          I agree to the terms and conditions
+        </label>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+    <p class="pc-note">Checkboxes support three sizes: small (sm), medium (md), and large (lg).</p>
+    <template>
+      <div class="formField">
+        <label for="small-cb" class="checkbox-label sm">
+          <input type="checkbox" id="small-cb" class="checkbox sm" />
+          Small checkbox
+        </label>
+      </div>
+      <div class="formField">
+        <label for="medium-cb" class="checkbox-label md">
+          <input type="checkbox" id="medium-cb" class="checkbox md" />
+          Medium checkbox
+        </label>
+      </div>
+      <div class="formField">
+        <label for="large-cb" class="checkbox-label lg">
+          <input type="checkbox" id="large-cb" class="checkbox lg" />
+          Large checkbox
+        </label>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="checkbox-group" data-title="Checkbox Group">
+    <p class="pc-note">Multiple checkboxes can be grouped together using the <code>checkbox-group</code> class.</p>
+    <template>
+      <div class="checkbox-group md">
+        <label for="option1" class="checkbox-label md">
+          <input type="checkbox" id="option1" class="checkbox md" />
+          Option 1
+        </label>
+        <label for="option2" class="checkbox-label md">
+          <input type="checkbox" id="option2" class="checkbox md" />
+          Option 2
+        </label>
+        <label for="option3" class="checkbox-label md">
+          <input type="checkbox" id="option3" class="checkbox md" />
+          Option 3
+        </label>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="indeterminate-state" data-title="Indeterminate State">
+    <p class="pc-note">Indeterminate checkboxes require <code>aria-checked="mixed"</code> for accessibility.</p>
+    <template>
+      <div class="formField">
+        <label for="indeterminate" class="checkbox-label md">
+          <input type="checkbox" id="indeterminate" class="checkbox md" aria-checked="mixed" />
+          Some items selected (indeterminate)
+        </label>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="error-state" data-title="Error State">
+    <p class="pc-note">Error states require <code>aria-invalid="true"</code> and <code>aria-describedby</code> pointing to the error message.</p>
+    <template>
+      <div class="formField">
+        <label for="error-cb" class="checkbox-label md">
+          <input
+            type="checkbox"
+            id="error-cb"
+            class="checkbox md"
+            aria-invalid="true"
+            aria-describedby="error-msg"
+          />
+          Required checkbox
+        </label>
+        <p id="error-msg" class="status" role="alert">This field is required</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
+    <p class="pc-note">Disabled checkboxes use the native <code>disabled</code> attribute.</p>
+    <template>
+      <div class="formField">
+        <label for="disabled-cb" class="checkbox-label md">
+          <input type="checkbox" id="disabled-cb" class="checkbox md" disabled />
+          Disabled checkbox
+        </label>
+      </div>
+    </template>
+  </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

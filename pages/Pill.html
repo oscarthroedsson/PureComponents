@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pill — PureComponents</title>
+    <meta name="pc-description" content="Pill is the interactive counterpart to Badge — an action, a tag link, a filter that carries its own state, or a removable tag." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../src/Styles/main.css" />
+    <link rel="stylesheet" href="../src/Styles/pill.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Pill">
+    <section class="pc-demo" id="basic-usage" data-title="Basic Usage" data-stage-style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+      <p class="pc-note">The key alone is already <code>md</code> and <code>smooth</code>. A pill is the interactive counterpart to a badge — where a badge annotates something else, a pill is its own object.</p>
+      <template>
+        <button class="pill">Filter</button>
+        <button class="pill">Sort</button>
+        <button class="pill">Export</button>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="elements" data-title="Elements" data-stage-style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+      <p class="pc-note">The key is a look, not an element. Which element it sits on decides what the pill <em>is</em>: <code>button</code> for an action, <code>a</code> for a destination, <code>label</code> for a selection, <code>span</code> or <code>li</code> for a tag that is not itself a control.</p>
+      <template>
+        <button class="pill">Action</button>
+        <a class="pill" href="#elements">Destination</a>
+        <label class="pill">
+          <input type="checkbox" name="element-demo" value="selection" />
+          Selection
+        </label>
+        <span class="pill">Container</span>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">Three sizes: <code>sm</code>, <code>md</code>, <code>lg</code>. Same scale as <code>.btn</code>, because that is what a pill is — a small button. Heights land at 24.8 / 28.6 / 32.4px, so every size clears the 24px target floor.</p>
+      <template>
+        <button class="pill sm">Small</button>
+        <button class="pill md">Medium</button>
+        <button class="pill lg">Large</button>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note"><code>sharp</code>, <code>smooth</code>, <code>rounded</code>. <code>smooth</code> is what the key alone gives.</p>
+      <template>
+        <button class="pill sharp">Sharp</button>
+        <button class="pill smooth">Smooth</button>
+        <button class="pill rounded">Rounded</button>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="variants" data-title="Variants" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">The default is a light neutral box. <code>outline</code> drops the fill and keeps the border; <code>ghost</code> drops both, for a dense row where the boxes would fight each other. Each variant owns its own hover, so hovering an outline pill does not snap it back to the neutral fill.</p>
+      <template>
+        <button class="pill">Default</button>
+        <button class="pill outline">Outline</button>
+        <button class="pill ghost">Ghost</button>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="selection" data-title="Selection — no JavaScript" data-stage-style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">A <code>label</code> with the input inside it. <code>:has(:checked)</code> paints what the checkbox already reports — the control keeps its own role, Tab and Space work because nothing was reconstructed, and the library still ships no JavaScript. Try it with the keyboard.</p>
+      <template>
+        <label class="pill rounded">
+          <input type="checkbox" name="topic" value="css" checked />
+          CSS
+        </label>
+        <label class="pill rounded">
+          <input type="checkbox" name="topic" value="accessibility" />
+          Accessibility
+        </label>
+        <label class="pill rounded">
+          <input type="checkbox" name="topic" value="design" />
+          Design
+        </label>
+        <label class="pill rounded">
+          <input type="checkbox" name="topic" value="tokens" />
+          Tokens
+        </label>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="single-choice" data-title="Single Choice" data-stage-style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">The same pattern with radios instead of checkboxes. One name, one choice — and arrow-key navigation between them, which the browser gives for free.</p>
+      <template>
+        <label class="pill">
+          <input type="radio" name="sort" value="newest" checked />
+          Newest
+        </label>
+        <label class="pill">
+          <input type="radio" name="sort" value="oldest" />
+          Oldest
+        </label>
+        <label class="pill">
+          <input type="radio" name="sort" value="popular" />
+          Most read
+        </label>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="toggle" data-title="Toggle" data-stage-style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">A <code>button</code> with <code>aria-pressed</code>. Same painted state as the label form, for a control that toggles a view rather than submitting a value with a form.</p>
+      <template>
+        <button class="pill" aria-pressed="true">Unread only</button>
+        <button class="pill" aria-pressed="false">Has attachment</button>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="selection-not-colour" data-title="Selection Is Not Only Colour" data-stage-style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">The selected pill fills <em>and</em> shows a marker, so the state survives a colour-blind reader and a greyscale print. The marker occupies its space at both states and only its opacity changes — picking a filter does not resize it, so the row never reflows under the pointer. It appears only where the pill is actually selectable; a plain action pill never grows one.</p>
+      <template>
+        <label class="pill rounded">
+          <input type="checkbox" name="marker" value="on" checked />
+          Selected
+        </label>
+        <label class="pill rounded">
+          <input type="checkbox" name="marker" value="off" />
+          Not selected
+        </label>
+        <button class="pill rounded">No marker here</button>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="removable" data-title="Removable Tags" data-stage-style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">A removable tag is <strong>two controls, never one</strong>. The tag is the text; the remove control is a separate <code>button</code> with its own accessible name. Written as a single <code>&lt;button aria-label="Remove JavaScript"&gt;</code> the tag stops existing as an object and the whole pill becomes destructive — which is also why the key sits on a <code>span</code> here: a <code>button</code> cannot contain a <code>button</code>.</p>
+      <template>
+        <span class="pill">
+          JavaScript
+          <button class="pill-remove" aria-label="Remove JavaScript">&times;</button>
+        </span>
+        <span class="pill">
+          TypeScript
+          <button class="pill-remove" aria-label="Remove TypeScript">&times;</button>
+        </span>
+        <span class="pill outline">
+          CSS
+          <button class="pill-remove" aria-label="Remove CSS">&times;</button>
+        </span>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="tag-list" data-title="A List of Tags" data-stage-style="display: flex;">
+      <p class="pc-note">When the pills are a list, say so. <code>ul</code> with the key on each <code>li</code> gives the count and the position to a screen reader — "list, 4 items" — which a row of loose spans does not.</p>
+      <template>
+        <ul style="display: flex; gap: 0.5rem; flex-wrap: wrap; list-style: none; margin: 0; padding: 0;">
+          <li class="pill ghost">design-systems</li>
+          <li class="pill ghost">css</li>
+          <li class="pill ghost">accessibility</li>
+          <li class="pill ghost">tokens</li>
+        </ul>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="with-icons" data-title="With Icons" data-stage-style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">An icon is sized from the one font-size, so it follows every size class without a second rule. Decorative ones get <code>aria-hidden="true"</code>.</p>
+      <template>
+        <button class="pill sm">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1l2.2 4.5 5 .7-3.6 3.5.9 5L8 12.4 3.5 14.7l.9-5L.8 6.2l5-.7z" /></svg>
+          Starred
+        </button>
+        <button class="pill md">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1l2.2 4.5 5 .7-3.6 3.5.9 5L8 12.4 3.5 14.7l.9-5L.8 6.2l5-.7z" /></svg>
+          Starred
+        </button>
+        <button class="pill lg">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1l2.2 4.5 5 .7-3.6 3.5.9 5L8 12.4 3.5 14.7l.9-5L.8 6.2l5-.7z" /></svg>
+          Starred
+        </button>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="disabled" data-title="Disabled" data-stage-style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">A <code>button</code> can be <code>:disabled</code>; an <code>a</code> never can, so it carries <code>aria-disabled="true"</code> instead. Both are styled.</p>
+      <template>
+        <button class="pill" disabled>Disabled action</button>
+        <a class="pill" href="#disabled" aria-disabled="true">Disabled link</a>
+        <span class="pill">
+          Locked
+          <button class="pill-remove" aria-label="Remove Locked" disabled>&times;</button>
+        </span>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="in-running-text" data-title="In Running Text" data-stage-style="display: block; max-width: 46ch;">
+      <p class="pc-note">The section that keeps the old bug visible. A pill is <code>inline-flex</code>, not <code>inline</code>: on an inline box height and padding-block paint without reserving room in the line, and the pill lays itself over the line above. The dev shell hides it — every stage is a flex container, which blockifies whatever is on it.</p>
+      <template>
+        <p>
+          Everything on this page is filtered by <span class="pill sm rounded">css</span> and
+          <span class="pill sm rounded">tokens</span>, which is why the list is short. Remove one
+          of them and the rest of the library comes back into view.
+        </p>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="beside-a-badge" data-title="Beside a Badge" data-stage-style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">Pill and badge borrow the same height floor and the same em-derived box on purpose, so the pair reads as one library when they share a row. The difference you should see is what they <em>are</em> — the badge does not answer the pointer.</p>
+      <template>
+        <button class="pill">Interactive</button>
+        <span class="pill outline">Removable</span>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="customization" data-title="Customization" data-stage-style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+      <p class="pc-note">Every measurement and colour in the file is a variable on the key block, so a consumer tunes a pill inline rather than writing a rule to fight ours. Even the selection marker is one — it is content, not a colour.</p>
+      <template>
+        <label class="pill rounded" style="--pill-selected-background: var(--color-info); --pill-selected-border-color: var(--color-info);">
+          <input type="checkbox" checked />
+          Another fill
+        </label>
+        <label class="pill rounded" style="--pill-selected-marker: '\2605'">
+          <input type="checkbox" checked />
+          Another marker
+        </label>
+        <button class="pill" style="--pill-padding-inline: 1.5em">Wider</button>
+      </template>
+    </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

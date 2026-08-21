@@ -1,178 +1,557 @@
+/*
+ACCESSIBILITY REQUIREMENTS:
+- Default .menu is a navigation/disclosure menu, NOT an ARIA application menu
+- Use native <button>, <a>, <details> and <summary> elements
+- Do NOT add role="menu" / role="menuitem" unless a behavior layer also implements
+  the required arrow-key and focus-management model
+- Use disabled on native buttons when possible
+- aria-disabled="true" can be used for non-form elements, but does not prevent
+  activation by itself
+- <details>/<summary> handles inline submenu disclosure natively
+- popover="auto" handles popup/flyout menus, light dismiss and Escape natively
+
+THEME:
+- Menu colors automatically adapt through light-dark()
+- light-dark() follows the active CSS color-scheme
+- The application/theme container should set:
+  color-scheme: light;
+  OR
+  color-scheme: dark;
+
+POPUP USAGE:
+
+<button
+  popovertarget="account-menu"
+  interestfor="account-menu"
+>
+  Account
+</button>
+
+<ul
+  id="account-menu"
+  class="menu md"
+  popover="auto"
+>
+  <li><a href="#">Profile</a></li>
+  <li><button type="button">Settings</button></li>
+  <li><button type="button">Sign out</button></li>
+</ul>
+
+
+INLINE SUBMENU:
+
+<ul class="menu md" data-indent="true">
+  <li>
+    <a href="#">Dashboard</a>
+  </li>
+
+  <li>
+    <details>
+      <summary>Settings</summary>
+
+      <ul class="menu" data-submenu="inline">
+        <li><a href="#">General</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">Billing</a></li>
+      </ul>
+    </details>
+  </li>
+</ul>
+
+
+FLYOUT SUBMENU:
+
+<ul
+  id="main-menu"
+  class="menu md"
+  popover="auto"
+>
+  <li>
+    <button
+      type="button"
+      popovertarget="settings-submenu"
+      interestfor="settings-submenu"
+    >
+      Settings
+    </button>
+
+    <ul
+      id="settings-submenu"
+      class="menu"
+      popover="auto"
+      data-submenu="flyout"
+    >
+      <li><button type="button">General</button></li>
+      <li><button type="button">Security</button></li>
+      <li><button type="button">Billing</button></li>
+    </ul>
+  </li>
+</ul>
+
+
+OPTIONS:
+
+SIZE:
+- sm
+- md
+- lg
+
+ORIENTATION:
+- vertical (default)
+- horizontal
+
+SUBMENU:
+- data-submenu="inline"
+- data-submenu="flyout"
+
+INDENT:
+- data-indent="true" (default behavior)
+- data-indent="false"
+
+HOVER / FOCUS OPEN:
+- interestfor is optional progressive enhancement
+- click/tap through popovertarget continues to work independently
+*/
+
 .menu {
-  position: relative;
+
+  /* COLORS */
+
+  --menu-bg: light-dark(var(--color-neutral-100), var(--color-neutral-900));
+
+  --menu-color: light-dark(var(--color-neutral-900), var(--color-neutral-100));
+
+  --menu-muted: light-dark(var(--color-neutral-500), var(--color-neutral-400));
+
+  --menu-hover: light-dark(var(--color-neutral-200), var(--color-neutral-800));
+
+  --menu-active: light-dark(var(--color-neutral-300), var(--color-neutral-700));
+
+  --menu-border: light-dark(var(--color-neutral-300), var(--color-neutral-700));
+
+  --menu-disabled: light-dark(var(--color-neutral-400), var(--color-neutral-500));
+
+  --menu-current-bg: color-mix(in srgb, var(--color-primary) 18%, var(--menu-bg));
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.15em;
+
+  inline-size: max-content;
+  min-inline-size: var(--menu-min-width, 16em);
+  max-inline-size: min(28em, calc(100vw - 1rem));
+
+  margin: 0;
+  padding: 0.35em;
 
   list-style: none;
-  font-size: 14px;
-  background-color: var(--color-neutral-900);
-  color: #f1f5f9;
-  padding: var(--spacing-50);
-  margin: 0px;
-  height: fit-content;
-  min-width: 225px;
-  border-radius: var(--radius-md);
+
+  background-color: var(--menu-bg);
+  color: var(--menu-color);
+
+  border: none;
+  border-radius: var(--menu-radius, var(--radius-md));
+
+  box-shadow: var(--shadow-lg);
+
+  font-size: var(--font-size-md);
+
+  & > li {
+    position: relative;
+
+    min-inline-size: 0;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+  }
+
+  .menu-item,
+  & > li > a,
+  & > li > button,
+  & > li > details > summary {
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+
+    gap: 0.65em;
+
+    inline-size: 100%;
+    min-inline-size: 0;
+
+    padding-block: 0.5em;
+    padding-inline: 0.65em;
+
+    margin: 0;
+
+    border: none;
+    border-radius: var(--menu-item-radius, var(--radius-sm));
+
+    background-color: transparent;
+    color: inherit;
+
+    font: inherit;
+    line-height: 1.25;
+    text-align: start;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+      background-color 140ms ease,
+      color 140ms ease;
+
+    & > :is(svg, img, i, .menu-icon) {
+      inline-size: 1em;
+      block-size: 1em;
+
+      flex: none;
+    }
+
+    & > img {
+      object-fit: contain;
+    }
+
+    .menu-shortcut {
+      margin-inline-start: auto;
+
+      color: var(--menu-muted);
+
+      font-size: 0.8em;
+      white-space: nowrap;
+    }
+  }
+
+  .menu-title {
+    padding-block: 0.55em 0.3em;
+    padding-inline: 0.65em;
+
+    color: var(--menu-muted);
+
+    font-size: 0.78em;
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    user-select: none;
+  }
+
+  .menu-separator {
+    block-size: 1px;
+
+    margin-block: 0.3em;
+    margin-inline: 0.4em;
+
+    padding: 0;
+
+    background-color: var(--menu-border);
+
+    pointer-events: none;
+  }
+
+  /* SIZE */
+
+  &.sm {
+    font-size: var(--font-size-sm);
+  }
+
+  &.md {
+    font-size: var(--font-size-md);
+  }
+
+  &.lg {
+    font-size: var(--font-size-base);
+  }
+
+  /* ORIENTATION */
 
   &.horizontal {
-    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    min-inline-size: 0;
   }
 
-  & ul {
-    list-style: none;
-    padding-left: 0px;
-  }
+  /* POPUP / SUBMENU */
 
-  & li {
-    position: relative;
-    height: fit-content;
-    position: relative;
-    margin: var(--spacing-15);
-    padding: var(--spacing-25) var(--spacing-50);
-    border-radius: var(--radius-sm);
+  &[popover] {
+    position: fixed;
 
-    &:hover {
-      background-color: var(--color-neutral-800);
+    inset: auto;
+
+    margin: var(--menu-offset, 0.4em);
+
+    max-block-size: min(70dvh, 32em);
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    /*
+     * Fallback first.
+     * When an implicit anchor exists, menu width may
+     * also follow the trigger's width.
+     */
+    min-inline-size: var(--menu-min-width, 16em);
+    min-inline-size: max(var(--menu-min-width, 16em), anchor-size(inline));
+
+    opacity: 0;
+    scale: 0.975;
+
+    transition:
+      opacity 130ms ease,
+      scale 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      display 200ms allow-discrete,
+      overlay 200ms allow-discrete;
+
+    &:popover-open {
+      opacity: 1;
+      scale: 1;
+
+      @starting-style {
+        opacity: 0;
+        scale: 0.975;
+      }
     }
   }
 
   /*
-  Applys if li children is not li, ol or element with class .title
-  */
-  li:not(:has(> li, > ol, > .titel)) {
-    display: flex;
-    align-items: center;
+   * Root popup menu.
+   *
+   * Opens below the trigger by default.
+   * If it does not fit, the browser can flip it.
+   */
+  &[popover]:not([data-submenu="flyout"]) {
+    position-area: block-end span-inline-end;
 
-    /* if more then 1 children, apply gap */
-    &:has(:nth-child(n + 2)) {
-      gap: var(--spacing-150);
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
+  }
+
+  /*
+   * Flyout submenu.
+   *
+   * Opens on inline-end (right in LTR).
+   * If there is no room it automatically tries
+   * inline-start instead.
+   */
+  &[popover][data-submenu="flyout"] {
+    position-area: inline-end span-block-end;
+
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-inline flip-block;
+  }
+
+  /*
+   * Inline submenu.
+   *
+   * Remains inside normal layout instead of
+   * entering the top layer.
+   */
+  &[data-submenu="inline"] {
+    inline-size: 100%;
+
+    min-inline-size: 0;
+    max-inline-size: none;
+
+    padding-block: 0.2em 0;
+
+    padding-inline-start: var(--menu-indent, 1.35em);
+    padding-inline-end: 0;
+
+    background-color: transparent;
+
+    border-radius: 0;
+    box-shadow: none;
+
+    overflow: visible;
+  }
+
+  &[data-indent="true"] {
+    --menu-indent: 1.35em;
+  }
+
+  &[data-indent="false"] {
+    --menu-indent: 0;
+  }
+
+  & > li > details {
+    inline-size: 100%;
+
+    /*
+     * Progressive enhancement.
+     * Browsers supporting intrinsic-size interpolation
+     * animate 0 → auto smoothly.
+     */
+    interpolate-size: allow-keywords;
+
+    & > summary {
+      list-style: none;
+
+      &::marker {
+        content: "";
+      }
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &::after {
+        content: "›";
+
+        flex: none;
+
+        margin-inline-start: auto;
+
+        font-size: 1.1em;
+        line-height: 1;
+
+        rotate: 0deg;
+
+        transition: rotate 220ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    }
+
+    &::details-content {
+      block-size: 0;
+
+      overflow: clip;
+
+      opacity: 0;
+
+      transition:
+        block-size 260ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 160ms ease,
+        content-visibility 260ms allow-discrete;
+    }
+
+    &[open] {
+      & > summary::after {
+        rotate: 90deg;
+      }
+
+      &::details-content {
+        block-size: auto;
+        opacity: 1;
+      }
     }
   }
 
-  & .menu-line,
-  ul.menu-line,
-  ol.menu-line {
-    position: relative;
-    &::before {
-      content: "";
-      background-color: var(--color-neutral-600);
-      position: absolute;
-      left: auto;
-      top: var(--spacing-50, 8px);
-      bottom: var(--spacing-50, 8px);
-      width: 1px;
+  /*
+   * Automatic flyout indicator.
+   */
+  & > li:has(> .menu[data-submenu="flyout"]) {
+    & > button[popovertarget]::after {
+      content: "›";
+
+      flex: none;
+
+      margin-inline-start: auto;
+
+      font-size: 1.1em;
+      line-height: 1;
     }
   }
 
-  & li[aria-disabled] {
-    background-color: var(--color-neutral-800);
-    color: var(--color-neutral-500);
+  /*
+   * RTL support for submenu direction indicators.
+   */
+  &:dir(rtl) {
+    & > li > details > summary::after,
+    & > li:has(> .menu[data-submenu="flyout"]) > button[popovertarget]::after {
+      content: "‹";
+    }
 
-    & * {
-      user-select: none;
-      pointer-events: none;
-      user-select: none;
-      color: inherit;
-      opacity: 1; /* så att bara <li> styr opacity */
+    & > li > details[open] > summary::after {
+      rotate: -90deg;
+    }
+  }
+
+  /* STATES */
+
+  .menu-item,
+  & > li > a,
+  & > li > button,
+  & > li > details > summary {
+    &:hover {
+      background-color: var(--menu-hover);
+    }
+
+
+    &:active {
+      background-color: var(--menu-active);
+    }
+
+    &[aria-current="page"],
+    &[data-active] {
+      background-color: var(--menu-current-bg);
+      color: var(--menu-color);
+    }
+
+    &:disabled,
+    &[aria-disabled="true"] {
+      color: var(--menu-disabled);
+
       cursor: not-allowed;
-      text-decoration: none;
+
+      opacity: 0.65;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    &:disabled {
+      pointer-events: none;
     }
   }
 
-  .menu-line > li {
-    margin-left: var(--spacing-25);
+  /*
+   * Keep submenu trigger visually active
+   * while its submenu is open.
+   */
+  & > li > details[open] > summary,
+  & > li:has(> .menu[data-submenu="flyout"]:popover-open) > button[popovertarget] {
+    background-color: var(--menu-hover);
   }
 
-  & .titel {
-    margin-top: 0px;
-    margin-bottom: var(--spacing-25);
-    font-size: 1.5em;
-    /* If size is sm */
-    ul.menu.sm {
-      /* styling för en menu med klassen sm */
-    }
-    /* If size is md */
-    ul.menu.md {
-      /* styling för en menu med klassen md */
-    }
-    /* If size is sm */
-    ul.menu.lg {
-      /* styling för en menu med klassen lg */
-    }
-  }
-
-  /* SUB MENU */
-  li > details {
-    width: 100%;
-    position: relative;
-  }
-
-  li > details:not(:first-child) > summary {
-    padding-left: 1em;
-  }
-
-  /* If summary does not have img element inside of it */
-  li > details summary:not(:has(img, svg, i, span)) {
-    font-weight: 700;
-    cursor: pointer;
-    width: 100%;
-
-    &::after {
-      content: "▼";
-      position: absolute;
-      right: 0px;
+  @media (prefers-reduced-motion: reduce) {
+    &[popover] {
+      transition-duration: 0ms;
     }
 
-    details[open] > &::after {
-      content: "▲";
-    }
-  }
+    & > li > details {
+      &::details-content {
+        transition-duration: 0ms;
+      }
 
-  /* if summary has img */
-  li > details summary:has(img, svg, i, span) {
-    details > summary {
-      position: relative;
-    }
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-150);
-    & > img,
-    & > svg,
-    & > i,
-    & > span {
-      transition: rotate 0.4s ease-in-out;
-      rotate: 0deg;
+      & > summary::after {
+        transition-duration: 0ms;
+      }
     }
   }
+}
 
-  li > details[open] > summary:has(svg, img, i, span) {
-    & > svg,
-    & > img,
-    & > i,
-    & > span {
-      rotate: 180deg;
-    }
-  }
+/*
+Optional progressive enhancement:
 
-  /* size */
-  &.sm {
-    min-width: 200px;
-    font-size: 12px;
-    & svg,
-    span,
-    img,
-    i {
-      width: var(--spacing-100);
-    }
-    /* styling för en menu med klassen sm */
-  }
-  /* If size is md */
-  &.md {
-    font-size: 14px;
-    /* styling för en menu med klassen md */
-  }
-  /* If size is sm */
-  &.lg {
-    font-size: 16px;
-    /* styling för en menu med klassen lg */
+When interestfor is supported, hovering or focusing
+a menu trigger can open the same popover that click/tap
+opens through popovertarget.
+*/
+
+@supports (interest-delay-start: 1ms) {
+  :where([popovertarget][interestfor]) {
+    interest-delay-start: 180ms;
+    interest-delay-end: 280ms;
   }
 }

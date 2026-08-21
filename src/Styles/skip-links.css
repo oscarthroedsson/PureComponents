@@ -1,0 +1,78 @@
+/* 
+ACCESSIBILITY REQUIREMENTS:
+- Skip links MUST be the first focusable elements on the page
+- Skip links MUST be hidden by default, visible on focus
+- Skip links MUST have high contrast
+- Target elements MUST have id attributes
+- Use semantic HTML: <a> elements
+
+USAGE:
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#navigation" class="skip-link">Skip to navigation</a>
+    
+    <nav id="navigation">...</nav>
+    <main id="main-content">...</main>
+  </body>
+*/
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: 10000;
+  padding: var(--spacing-50) var(--spacing-100);
+  background-color: var(--color-primary);
+  color: var(--color-neutral-100);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 0 0 var(--radius-md) 0;
+  box-shadow: var(--shadow-md);
+
+  /* Show on focus - keyboard accessible */
+  &:focus {
+    top: 0;
+  }
+
+  /* Hover state */
+  &:hover {
+    background-color: color-mix(in hsl, var(--color-primary) 100%, var(--color-neutral-900) 10%);
+    color: var(--color-neutral-100);
+  }
+
+  /* Size variants */
+  &.sm {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-25) var(--spacing-75);
+  }
+
+  &.md {
+    font-size: var(--font-size-md);
+    padding: var(--spacing-50) var(--spacing-100);
+  }
+
+  &.lg {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-75) var(--spacing-125);
+  }
+}
+
+/* Skip links container */
+.skip-links {
+  position: relative;
+
+  .skip-link {
+    display: block;
+    margin-bottom: var(--spacing-25);
+
+    &:focus {
+      position: relative;
+      top: 0;
+    }
+  }
+}
+
+/* Ensure target elements have proper scroll behavior */
+:target {
+  scroll-margin-top: 2rem;
+}

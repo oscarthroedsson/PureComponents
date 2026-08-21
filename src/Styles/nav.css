@@ -1,0 +1,215 @@
+/* 
+ACCESSIBILITY REQUIREMENTS:
+- Navigation MUST use <nav> element
+- Navigation MUST have aria-label or aria-labelledby
+- Current page link MUST have aria-current="page"
+- Focus indicators come from main.css. Never draw an outline in this file.
+- Keyboard navigation must be supported
+
+USAGE:
+  <nav aria-label="Main navigation">
+    <ul class="nav">
+      <li><a href="/" aria-current="page">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  OR with nested navigation:
+  <nav aria-label="Main navigation">
+    <ul class="nav">
+      <li>
+        <a href="/products" aria-expanded="false">Products</a>
+        <ul class="nav-submenu">
+          <li><a href="/products/item1">Item 1</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+*/
+
+.nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: var(--spacing-50);
+
+  /* Horizontal navigation (default) */
+  &.horizontal {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  /* Vertical navigation */
+  &.vertical {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Navigation items */
+  & > li {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navigation links */
+  & a {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-50) var(--spacing-75);
+    color: var(--color-neutral-900);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+
+    /* Focus indicator - WCAG 2.1 AA compliant */
+
+    /* Hover state */
+    &:hover:not([aria-current="page"]) {
+      background-color: var(--color-neutral-100);
+      color: var(--color-primary);
+    }
+
+    /* Active/Current page */
+    &[aria-current="page"] {
+      background-color: var(--color-primary);
+      color: var(--color-neutral-100);
+      font-weight: 600;
+    }
+
+    /* Disabled state */
+    &[aria-disabled="true"] {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  /* Size variants */
+  &.sm {
+    gap: var(--spacing-25);
+
+    & > li > a {
+      padding: var(--spacing-25) var(--spacing-50);
+      font-size: var(--font-size-sm);
+    }
+  }
+
+  &.md {
+    gap: var(--spacing-50);
+
+    & > li > a {
+      padding: var(--spacing-50) var(--spacing-75);
+      font-size: var(--font-size-md);
+    }
+  }
+
+  &.lg {
+    gap: var(--spacing-75);
+
+    & > li > a {
+      padding: var(--spacing-75) var(--spacing-100);
+      font-size: var(--font-size-lg);
+    }
+  }
+
+  /* Border radius variants */
+  &.sharp > li > a {
+    border-radius: var(--radius-sharp);
+  }
+
+  &.smooth > li > a {
+    border-radius: var(--radius-sm);
+  }
+
+  &.rounded > li > a {
+    border-radius: var(--radius-md);
+  }
+}
+
+/* Submenu navigation */
+.nav-submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  flex-direction: column;
+  gap: var(--spacing-25);
+  margin-top: var(--spacing-25);
+  padding-left: var(--spacing-75);
+
+  /* Show submenu when parent has aria-expanded="true" */
+  .nav > li[aria-expanded="true"] > &,
+  .nav > li:has(> a[aria-expanded="true"]) > & {
+    display: flex;
+  }
+
+  & > li > a {
+    padding: var(--spacing-25) var(--spacing-50);
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-700);
+
+    &:hover {
+      background-color: var(--color-neutral-100);
+      color: var(--color-primary);
+    }
+  }
+}
+
+/* Mobile menu toggle button */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: var(--spacing-50);
+  cursor: pointer;
+  color: var(--color-neutral-900);
+
+  &:focus-visible {
+    border-radius: var(--radius-sm);
+  }
+
+  &[aria-expanded="true"] {
+    .nav-icon-close {
+      display: block;
+    }
+    .nav-icon-menu {
+      display: none;
+    }
+  }
+
+  &[aria-expanded="false"] {
+    .nav-icon-close {
+      display: none;
+    }
+    .nav-icon-menu {
+      display: block;
+    }
+  }
+}
+
+/* Responsive: Mobile menu */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-neutral-50);
+    flex-direction: column;
+    padding: var(--spacing-50);
+    box-shadow: var(--shadow-md);
+    z-index: var(--z-index-header);
+
+    &[aria-expanded="true"] {
+      display: flex;
+    }
+  }
+}

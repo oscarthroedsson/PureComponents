@@ -1,0 +1,195 @@
+/* 
+ACCESSIBILITY REQUIREMENTS:
+- Radio buttons MUST be grouped in a <fieldset> with <legend>
+- Each radio MUST have an associated <label> element
+- All radios in a group MUST share the same name attribute
+- Focus indicators come from main.css. Never draw an outline in this file.
+- Error states: Use aria-invalid="true" on fieldset or individual radios
+
+USAGE:
+  <fieldset class="radio-group">
+    <legend>Choose an option</legend>
+    <div class="radio-item">
+      <input type="radio" id="option1" name="choice" class="radio" value="1" />
+      <label for="option1" class="radio-label">Option 1</label>
+    </div>
+    <div class="radio-item">
+      <input type="radio" id="option2" name="choice" class="radio" value="2" />
+      <label for="option2" class="radio-label">Option 2</label>
+    </div>
+  </fieldset>
+
+  OR with error:
+  <fieldset class="radio-group" aria-invalid="true" aria-describedby="choice-error">
+    <legend>Choose an option</legend>
+    <p id="choice-error" class="status" role="alert">Please select an option</p>
+    <div class="radio-item">
+      <input type="radio" id="option1" name="choice" class="radio" value="1" />
+      <label for="option1" class="radio-label">Option 1</label>
+    </div>
+  </fieldset>
+*/
+
+.radio-group {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-50);
+
+  legend {
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--spacing-50);
+    padding: 0;
+  }
+
+  /* Size variants */
+  &.sm {
+    legend {
+      font-size: var(--font-size-sm);
+    }
+    gap: var(--spacing-25);
+  }
+
+  &.md {
+    legend {
+      font-size: var(--font-size-md);
+    }
+    gap: var(--spacing-50);
+  }
+
+  &.lg {
+    legend {
+      font-size: var(--font-size-lg);
+    }
+    gap: var(--spacing-75);
+  }
+
+  /* Horizontal layout */
+  &.horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: start;
+  }
+
+  /* Error state */
+  &[aria-invalid="true"] {
+    legend {
+      color: var(--color-error);
+    }
+
+    .radio {
+      border-color: var(--color-error);
+    }
+  }
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-50);
+}
+
+.radio-label {
+  cursor: pointer;
+  font-weight: 400;
+  color: var(--color-neutral-900);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-50);
+
+  /* Size variants */
+  &.sm {
+    font-size: var(--font-size-sm);
+  }
+
+  &.md {
+    font-size: var(--font-size-md);
+  }
+
+  &.lg {
+    font-size: var(--font-size-lg);
+  }
+}
+
+.radio:is(input[type="radio"]) {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+
+  /* Custom styling for better control */
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--color-neutral-50);
+  border: 2px solid var(--color-neutral-300);
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.2s ease;
+
+  /* Selected state */
+  &:checked {
+    border-color: var(--color-primary);
+  }
+
+  &:checked::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.625rem;
+    height: 0.625rem;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Focus indicator - WCAG 2.1 AA compliant */
+
+  /* Disabled state */
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--color-neutral-200);
+    border-color: var(--color-neutral-300);
+  }
+
+  &:disabled + .radio-label {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Error state */
+  &[aria-invalid="true"] {
+    border-color: var(--color-error);
+  }
+
+  /* Size variants */
+  &.sm {
+    width: 1rem;
+    height: 1rem;
+
+    &:checked::after {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+  }
+
+  &.md {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  &.lg {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    &:checked::after {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  }
+}

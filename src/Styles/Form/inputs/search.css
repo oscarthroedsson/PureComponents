@@ -1,0 +1,185 @@
+/* 
+ACCESSIBILITY REQUIREMENTS:
+- Search input MUST have an associated <label> element with for="search-id"
+- Search form SHOULD have role="search" on the form element
+- Search input SHOULD have aria-label or aria-labelledby
+- Focus indicators come from main.css. Never draw an outline in this file.
+
+USAGE:
+  <form role="search" aria-label="Site search">
+    <div class="formField">
+      <label for="search">Search</label>
+      <input 
+        type="search" 
+        id="search" 
+        class="search-input" 
+        aria-label="Search site"
+      />
+      <button type="submit" class="btn">Search</button>
+    </div>
+  </form>
+
+  OR with search icon:
+  <form role="search" class="search-form">
+    <label for="search" class="visually-hidden">Search</label>
+    <div class="search-wrapper">
+      <input 
+        type="search" 
+        id="search" 
+        class="search-input" 
+        placeholder="Search..."
+        aria-label="Search site"
+      />
+      <button type="submit" class="search-button" aria-label="Submit search">
+        <svg aria-hidden="true">...</svg>
+      </button>
+    </div>
+  </form>
+*/
+
+.search-input:is(input[type="search"]) {
+  width: 100%;
+  background-color: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-300);
+  padding: var(--spacing-50) var(--spacing-75);
+  font-family: inherit;
+  font-size: var(--font-size-md);
+  color: var(--color-neutral-900);
+
+  /* Remove default search styling */
+  -webkit-appearance: none;
+  appearance: none;
+
+  /* Border radius variants */
+  &.sharp {
+    border-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    border-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    border-radius: var(--radius-rounded);
+  }
+
+  /* Size variants */
+  &.sm {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-25) var(--spacing-50);
+  }
+
+  &.md {
+    font-size: var(--font-size-md);
+    padding: var(--spacing-50) var(--spacing-75);
+  }
+
+  &.lg {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-75) var(--spacing-100);
+  }
+
+  /* Focus indicator - WCAG 2.1 AA compliant */
+  &:focus-visible {
+    border-color: var(--color-primary);
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  /* Hover state */
+  &:hover:not(:disabled) {
+    border-color: var(--color-neutral-400);
+  }
+
+  /* Disabled state */
+  &:disabled {
+    background-color: var(--color-neutral-200);
+    border-color: var(--color-neutral-300);
+    color: var(--color-neutral-500);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  /* Error state - REQUIRES aria-invalid="true" */
+  &:user-invalid,
+  &[aria-invalid="true"] {
+    border-color: var(--color-error);
+  }
+
+  /* Clear button styling (webkit) */
+  &::-webkit-search-cancel-button {
+    cursor: pointer;
+    margin-right: var(--spacing-25);
+  }
+}
+
+/* Search form wrapper */
+.search-form {
+  display: flex;
+  gap: var(--spacing-50);
+  align-items: end;
+
+  &.inline {
+    flex-direction: row;
+  }
+
+  &.stacked {
+    flex-direction: column;
+  }
+}
+
+/* Search wrapper with icon button */
+.search-wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+
+  .search-input {
+    flex: 1;
+    padding-right: calc(var(--spacing-75) + 2.5rem);
+  }
+
+  .search-button {
+    position: absolute;
+    right: var(--spacing-25);
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: var(--spacing-25);
+    cursor: pointer;
+    color: var(--color-neutral-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+
+    &:focus-visible {
+      border-radius: var(--radius-sm);
+    }
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+}
+
+/* Visually hidden label for icon-only search */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

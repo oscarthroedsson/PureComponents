@@ -1,0 +1,433 @@
+/* -----------------Content Board----------------------- */
+/*
+ACCESSIBILITY REQUIREMENTS:
+- The key goes on <details>, and its first child MUST be <summary>. That pair
+  is the disclosure: the browser reports the expanded state, takes focus, and
+  answers Enter and Space without a line of script. A <div> rebuild carries
+  none of it.
+
+- Do NOT put aria-expanded on the <summary>. The browser already reports
+  expanded and collapsed from the [open] attribute, and an explicit
+  aria-expanded overrides that report. The library ships no JavaScript, so
+  such an attribute could never be updated — it would announce "collapsed"
+  while the panel stands open. role="button" is wrong for the same reason:
+  <summary> has its own role already.
+
+- <summary> is focusable and operated by Enter and Space natively. That is the
+  whole keyboard contract the ARIA APG asks of a disclosure. Nothing to add.
+
+- A heading may go inside <summary> — the HTML spec allows one heading element
+  there — and screen reader users navigate a long page by heading. On a page
+  built out of these it earns the markup. The styling below stops the heading
+  from bringing its own scale with it.
+
+- The marker is decoration. Ours is drawn on ::after with no content and never
+  reaches the accessibility tree. One you bring yourself needs
+  aria-hidden="true".
+
+- State is never carried by colour alone: the marker rotates, and the panel
+  itself appears.
+
+- The open and close motion is silenced under prefers-reduced-motion.
+
+USAGE:
+<details class="collapsible md">
+  <summary>How do I create an account?</summary>
+  <p>Click the "Sign up" button in the top right corner.</p>
+</details>
+
+ATTRIBUTES:
+- open                → native. The panel starts open.
+- name="group"        → native. Joins several panels into one exclusive set,
+                        where opening one closes the rest. No JavaScript.
+- data-marker="start" → the marker leads the row instead of closing it
+- data-marker="none"  → we draw no marker at all
+- data-marker-motion  → how the marker changes: scale (default) · rotate ·
+                        fade · none
+
+SIZE:  sm · md · lg   (md is the default; the key alone is already md)
+SHAPE: sharp · smooth · rounded
+
+PARTS:
+- .collapsible-marker → your own icon, inside the <summary>. Ours stands down
+  on sight, and yours inherits the size, placement, rotation and timing.
+- .open / .closed     → two icons inside .collapsible-marker, one per state.
+  They cross over when the panel opens. Nothing animates inside an icon, so
+  this works for any pair of shapes — a plus and a minus, a chevron and a
+  cross, whatever you draw. The names live only inside .collapsible-marker
+  and cannot reach anything else.
+
+<details class="collapsible md">
+  <summary>
+    A plus that becomes a minus
+    <span class="collapsible-marker" aria-hidden="true">
+      <svg class="closed">…plus…</svg>
+      <svg class="open">…minus…</svg>
+    </span>
+  </summary>
+  <p>…</p>
+</details>
+
+NOT HERE:
+Grouping. Several panels reading as one block is Accordion, in accordion.css.
+This file is one panel and knows nothing about its neighbours.
+*/
+/* ----------------------------------------------------- */
+
+.collapsible {
+  /* VARIABLES */
+
+  --collapsible-font-size: var(--font-size-md);
+  --collapsible-radius: var(--radius-md);
+
+  --collapsible-background: var(--color-neutral-100);
+  --collapsible-border-width: 1px;
+  --collapsible-border-color: var(--color-neutral-300);
+
+  --collapsible-padding-inline: var(--spacing-100);
+  --collapsible-padding-block: var(--spacing-75);
+  --collapsible-gap: var(--spacing-75);
+
+  --collapsible-summary-color: var(--color-neutral-900);
+  --collapsible-summary-weight: 600;
+  --collapsible-summary-hover-background: color-mix(in hsl, transparent, var(--color-neutral-900) 6%);
+
+  --collapsible-content-color: var(--color-neutral-700);
+
+  --collapsible-duration: var(--transition-medium);
+
+  /*
+   * The chevron is a mask, not an image: the shape comes from the data URI and
+   * the colour from --collapsible-marker-color, so the marker goes through a
+   * token like everything else. The black inside the SVG is only the mask's
+   * alpha channel — it is never painted. Swap the whole icon by reassigning
+   * this one variable; you cannot select our ::after yourself.
+   */
+  --collapsible-marker-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  --collapsible-marker-size: 1em;
+  --collapsible-marker-color: var(--color-neutral-500);
+  --collapsible-marker-rotation-open: 180deg;
+  --collapsible-marker-duration: var(--collapsible-duration);
+
+  /*
+   * The swap, for a slot holding two icons. Everything about the motion is
+   * expressed as an exit state — where the outgoing icon goes and where the
+   * incoming one comes from — so data-marker-motion below only has to
+   * reassign these two, never rewrite a rule.
+   */
+  --collapsible-marker-exit-scale: 0.4;
+  --collapsible-marker-exit-rotation: 0deg;
+  --collapsible-marker-exit-duration: 120ms;
+  --collapsible-marker-enter-duration: 220ms;
+  --collapsible-marker-enter-delay: 90ms;
+  --collapsible-marker-enter-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* BASE */
+
+  display: block;
+
+  font-size: var(--collapsible-font-size);
+  line-height: var(--line-height-base);
+
+  background-color: var(--collapsible-background);
+  border: var(--collapsible-border-width) solid var(--collapsible-border-color);
+  border-radius: var(--collapsible-radius);
+
+  /* So the summary's hover fill follows the corner instead of squaring it off. */
+  overflow: hidden;
+
+  /*
+   * Chromium only, and declared here rather than on :root on purpose: this is
+   * what lets block-size travel to `auto`, and one experimental property does
+   * not belong in the global scope for a single component's sake. Firefox and
+   * Safari ignore it and the panel snaps open — correct, just not animated.
+   */
+  interpolate-size: allow-keywords;
+
+  /* SUMMARY */
+
+  & > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--collapsible-gap);
+
+    padding-inline: var(--collapsible-padding-inline);
+    padding-block: var(--collapsible-padding-block);
+
+    color: var(--collapsible-summary-color);
+    font-weight: var(--collapsible-summary-weight);
+
+    cursor: pointer;
+    user-select: none;
+
+    /*
+     * Both lines are needed. `list-style` is the standard way out, WebKit
+     * still ships its own marker pseudo-element, and the vendors have not
+     * agreed on styling the marker itself — so we do not style it, we remove
+     * it and draw our own below.
+     */
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    /* A heading is allowed in here. It must not bring its own scale with it. */
+    & :is(h1, h2, h3, h4, h5, h6) {
+      margin: 0;
+
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: inherit;
+    }
+
+    &:hover {
+      background-color: var(--collapsible-summary-hover-background);
+    }
+
+    /*
+     * The house pattern is 3px at offset 2px. The offset is negative here and
+     * only here: the panel clips its own overflow so the corner stays round,
+     * which would eat an outward ring. Same width, same colour, same 3:1.
+     */
+  }
+
+  /* MARKER — ours, drawn when you bring none */
+
+  & > summary::after {
+    content: "";
+    flex: none;
+    margin-inline-start: auto;
+
+    inline-size: var(--collapsible-marker-size);
+    block-size: var(--collapsible-marker-size);
+
+    background-color: var(--collapsible-marker-color);
+    mask-image: var(--collapsible-marker-icon);
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+
+    transition: rotate var(--collapsible-duration);
+  }
+
+  /* MARKER — yours, when you bring one */
+
+  & > summary .collapsible-marker {
+    flex: none;
+    margin-inline-start: auto;
+
+    inline-size: var(--collapsible-marker-size);
+    block-size: var(--collapsible-marker-size);
+
+    transition: rotate var(--collapsible-marker-duration);
+
+    /*
+     * Two icons instead of one turns the slot into a stack. Grid rather than
+     * absolute positioning: the box keeps taking its size from the icons, so
+     * nothing has to be measured or hard-coded.
+     */
+    &:has(:is(.open, .closed)) {
+      display: grid;
+
+      & > * {
+        grid-area: 1 / 1;
+
+        /*
+         * `display` is declared for defence, not for looks. `.closed { display:
+         * none }` is one of the commonest utility rules in other people's
+         * stylesheets; with no declaration of ours theirs would apply unopposed
+         * and the icon would disappear with nothing on screen to explain why.
+         */
+        display: block;
+
+        inline-size: 100%;
+        block-size: 100%;
+      }
+    }
+  }
+
+  /* Yours stands ours down on sight. There is nothing to switch off. */
+  & > summary:has(.collapsible-marker)::after {
+    content: none;
+  }
+
+  /* MARKER SWAP — one icon per state, crossing over on [open] */
+
+  /*
+   * Read these two as a pair. Each rule lists the icon that is wrong for the
+   * current state beside the icon that is right for it, so the whole swap is
+   * two blocks rather than four.
+   *
+   * The :not([open]) is not strictly required. Every selector in a nested list
+   * keeps its own specificity, so a bare `&` would already lose to its [open]
+   * partner. It is written out because leaning on that is a trap: add one
+   * class to either side later and the swap inverts with nothing to show why.
+   * Spelled out, the two branches are mutually exclusive and specificity stops
+   * being part of the answer at all.
+   */
+
+  /* The icon for the state we are not in. */
+  &:not([open]) > summary .collapsible-marker .open,
+  &[open] > summary .collapsible-marker .closed {
+    opacity: 0;
+    scale: var(--collapsible-marker-exit-scale);
+    rotate: var(--collapsible-marker-exit-rotation);
+
+    transition:
+      opacity var(--collapsible-marker-exit-duration) ease-in,
+      scale var(--collapsible-marker-exit-duration) ease-in,
+      rotate var(--collapsible-marker-exit-duration) ease-in;
+  }
+
+  /* The icon for the state we are in. It arrives a beat after the other leaves. */
+  &:not([open]) > summary .collapsible-marker .closed,
+  &[open] > summary .collapsible-marker .open {
+    opacity: 1;
+    scale: 1;
+    rotate: 0deg;
+
+    transition:
+      opacity var(--collapsible-marker-enter-duration) var(--collapsible-marker-enter-delay),
+      scale var(--collapsible-marker-enter-duration) var(--collapsible-marker-enter-delay)
+        var(--collapsible-marker-enter-easing),
+      rotate var(--collapsible-marker-enter-duration) var(--collapsible-marker-enter-delay)
+        var(--collapsible-marker-enter-easing);
+  }
+
+  /* CONTENT */
+
+  &::details-content {
+    padding-inline: var(--collapsible-padding-inline);
+    padding-block: 0;
+
+    color: var(--collapsible-content-color);
+
+    block-size: 0;
+    overflow: hidden;
+
+    transition:
+      block-size var(--collapsible-duration),
+      padding-block var(--collapsible-duration),
+      content-visibility var(--collapsible-duration);
+    transition-behavior: allow-discrete;
+  }
+
+  /*
+   * Older engines have no ::details-content to hang padding on, so the content
+   * would sit flush against the edge. Reach the children directly there, and
+   * only there.
+   */
+  @supports not selector(::details-content) {
+    & > :not(summary) {
+      margin-inline: var(--collapsible-padding-inline);
+    }
+  }
+
+  /* SIZE */
+
+  &.sm {
+    --collapsible-font-size: var(--font-size-sm);
+    --collapsible-radius: var(--radius-sm);
+    --collapsible-padding-inline: var(--spacing-75);
+    --collapsible-padding-block: var(--spacing-50);
+    --collapsible-gap: var(--spacing-50);
+  }
+
+  &.md {
+    --collapsible-font-size: var(--font-size-md);
+    --collapsible-radius: var(--radius-md);
+    --collapsible-padding-inline: var(--spacing-100);
+    --collapsible-padding-block: var(--spacing-75);
+    --collapsible-gap: var(--spacing-75);
+  }
+
+  &.lg {
+    --collapsible-font-size: var(--font-size-base);
+    --collapsible-radius: var(--radius-lg);
+    --collapsible-padding-inline: var(--spacing-125);
+    --collapsible-padding-block: var(--spacing-100);
+    --collapsible-gap: var(--spacing-100);
+  }
+
+  /* SHAPE */
+
+  &.sharp {
+    --collapsible-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    --collapsible-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    --collapsible-radius: var(--radius-lg);
+  }
+
+  /* STATES */
+
+  &[data-marker="start"] {
+    & > summary::after,
+    & > summary .collapsible-marker {
+      order: -1;
+      margin-inline-start: 0;
+    }
+  }
+
+  &[data-marker="none"] > summary::after {
+    content: none;
+  }
+
+  /*
+   * MOTION. Only the exit state moves; the rules above already say what to do
+   * with it. "scale" is the default and therefore has no block of its own —
+   * writing data-marker-motion="scale" is legal and simply changes nothing.
+   *
+   * A slot holding a single icon is unaffected by these: it has nothing to
+   * cross over with, and keeps turning.
+   */
+
+  &[data-marker-motion="rotate"] {
+    --collapsible-marker-exit-scale: 1;
+    --collapsible-marker-exit-rotation: var(--collapsible-marker-rotation-open);
+  }
+
+  &[data-marker-motion="fade"] {
+    --collapsible-marker-exit-scale: 1;
+    --collapsible-marker-exit-rotation: 0deg;
+    --collapsible-marker-enter-easing: ease-out;
+  }
+
+  &[data-marker-motion="none"] {
+    --collapsible-marker-duration: 0s;
+    --collapsible-marker-exit-duration: 0s;
+    --collapsible-marker-enter-duration: 0s;
+    --collapsible-marker-enter-delay: 0s;
+  }
+
+  &[open] {
+    /*
+     * The single-icon slot turns. A slot holding two does not — the box stays
+     * put and the icons inside it do the moving, or the pair would swap while
+     * the frame spun around them.
+     */
+    & > summary::after,
+    & > summary .collapsible-marker:not(:has(:is(.open, .closed))) {
+      rotate: var(--collapsible-marker-rotation-open);
+    }
+
+    &::details-content {
+      block-size: auto;
+      padding-block: var(--collapsible-padding-block);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::details-content,
+    & > summary::after,
+    & > summary .collapsible-marker,
+    & > summary .collapsible-marker :is(.open, .closed) {
+      transition: none;
+    }
+  }
+}

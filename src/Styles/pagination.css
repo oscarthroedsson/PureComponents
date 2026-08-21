@@ -1,0 +1,184 @@
+/*
+Pagination — the row of page controls.
+
+The class goes on the <ul>. Every clickable cell is a .btn, so this
+file is button.css plus a row: there is no second set of hover,
+focus, active and disabled rules to keep in sync with the first.
+
+  <nav aria-label="Pagination">
+    <ul class="pagination md">
+      <li><a class="btn ghost" href="?page=1" aria-label="Previous page">‹</a></li>
+      <li><a class="btn ghost" href="?page=1">1</a></li>
+      <li><a class="btn" href="?page=2" aria-current="page">2</a></li>
+      <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
+      <li><a class="btn ghost" href="?page=9">9</a></li>
+      <li><a class="btn ghost" href="?page=9" aria-label="Next page">›</a></li>
+    </ul>
+  </nav>
+
+The <nav> and its label belong to the page. Nothing here selects an
+element on its own — the list is reached through .pagination and
+everything else through the list.
+
+
+CURRENT PAGE
+
+The current cell is a plain .btn while the rest are .btn ghost, so
+the difference is made of the button's own variants rather than of
+colours invented here. aria-current="page" is what carries the
+meaning; the fill only follows it.
+
+
+SIZE
+  sm | md (default) | lg
+
+The size sits on the <ul> and reaches the buttons from there. Leave
+the size class off the buttons themselves — .btn.md inside
+.pagination.lg is two sources for one decision.
+
+
+SHAPE
+  sharp | smooth | rounded    replaces the radius the size gives
+
+
+STATE
+
+  aria-current="page"       the page being viewed
+  aria-disabled="true"      previous/next at either end of the range
+
+A link can never match :disabled, which is why the ends take
+aria-disabled — button.css styles it alongside :disabled. The
+attribute stops the pointer, not the keyboard: a disabled <a> that
+keeps its href is still followable with Enter, so drop the href, or
+render a <button disabled> where the control is script-driven.
+Loading the next page is loading.css's to paint, put on top.
+
+
+ACCESSIBILITY
+- The arrows are text or an icon in the markup with aria-hidden, and
+  the link itself takes an aria-label: "Previous page" reads as a
+  destination, "‹" reads as nothing.
+- The ellipsis is decoration between two real page numbers, so it
+  takes aria-hidden="true".
+
+
+VARIABLES
+  --pagination-gap
+  --pagination-font-size
+  --pagination-cell-size     smallest cell, in em so it tracks the type
+  --pagination-radius
+  --pagination-muted-color   the ellipsis
+*/
+
+.pagination {
+  --pagination-gap: var(--spacing-25);
+  --pagination-font-size: var(--font-size-md);
+  --pagination-cell-size: 2.25em;
+  --pagination-radius: var(--radius-md);
+  --pagination-muted-color: var(--color-neutral-500);
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: var(--pagination-gap);
+
+  /* The buttons inherit this: .btn declares no font-size of its own. */
+  font-size: var(--pagination-font-size);
+
+  /* 1 and 10 get the same digit width, so the row holds still between pages. */
+  font-variant-numeric: tabular-nums;
+
+  & > li {
+    display: flex;
+  }
+
+  /*
+   * Reaching through the <li> puts this one step above .btn.sm and
+   * its siblings, so the size on the list wins if a button also
+   * carries one. Only the two things the row decides are set here —
+   * how narrow a cell may get, and its corners. The button keeps
+   * everything else.
+   *
+   * The cell size is in em, so it follows the inherited font-size
+   * instead of needing a value per size class.
+   */
+  & > li > .btn {
+    min-inline-size: var(--pagination-cell-size);
+
+    border-radius: var(--pagination-radius);
+  }
+
+  /*
+   * A floor, not the mechanism: the fill normally comes from the
+   * current cell being a plain .btn. This keeps the mark visible in a
+   * row built entirely from ghosts, and matches :hover as well
+   * because .btn.ghost:hover outweighs a plain attribute selector and
+   * would otherwise wash it off under the pointer. The current page
+   * is where you already are — it does not answer to hover.
+   */
+  & > li > .btn[aria-current="page"] {
+    background-color: var(--color-primary);
+    color: var(--color-neutral-100);
+
+    &:hover {
+      background-color: var(--color-primary);
+    }
+  }
+
+  /* ELLIPSIS */
+
+  & .pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-inline-size: var(--pagination-cell-size);
+
+    /* The button's own padding-block, so the row keeps one height. */
+    padding-block: 0.5em;
+
+    color: var(--pagination-muted-color);
+
+    user-select: none;
+  }
+
+  /* SIZE */
+
+  &.sm {
+    --pagination-gap: var(--spacing-15);
+    --pagination-font-size: var(--font-size-sm);
+    --pagination-radius: var(--radius-sm);
+  }
+
+  &.md {
+    --pagination-gap: var(--spacing-25);
+    --pagination-font-size: var(--font-size-md);
+    --pagination-radius: var(--radius-md);
+  }
+
+  &.lg {
+    --pagination-gap: var(--spacing-50);
+    --pagination-font-size: var(--font-size-base);
+    --pagination-radius: var(--radius-lg);
+  }
+
+  /* SHAPE — after the sizes, so it replaces the radius they set. */
+
+  &.sharp {
+    --pagination-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    --pagination-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    --pagination-radius: var(--radius-full);
+  }
+}

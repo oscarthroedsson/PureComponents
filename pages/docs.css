@@ -1,0 +1,754 @@
+/* ============================================================
+   PURECOMPONENTS — DEV SHELL
+   Dev tooling only. Not part of the published library.
+
+   Everything here is namespaced `pc-` and uses its own `--pc-*`
+   tokens on purpose: the shell must stay readable even when the
+   library's own tokens are mid-refactor or broken.
+   ============================================================ */
+
+:root {
+  --pc-bg: #ffffff;
+  --pc-bg-sunken: #f4f5f7;
+  --pc-bg-raised: #ffffff;
+  --pc-code-bg: #f7f8fa;
+  --pc-text: #14171f;
+  --pc-text-dim: #5b6472;
+  --pc-border: #dfe3e9;
+  --pc-border-strong: #c3cad5;
+  --pc-accent: #1f6feb;
+  --pc-accent-soft: #e8f0fe;
+  --pc-stage-light: snow;
+  --pc-stage-dark: #14171f;
+  --pc-shadow: 0 1px 2px rgba(15, 23, 41, 0.06), 0 4px 12px rgba(15, 23, 41, 0.05);
+
+  --pc-radius: 8px;
+  --pc-radius-sm: 5px;
+  --pc-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --pc-ui: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --pc-topbar-h: 56px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-pc-theme="light"]) {
+    --pc-bg: #0f1218;
+    --pc-bg-sunken: #0a0c11;
+    --pc-bg-raised: #161a22;
+    --pc-code-bg: #12161d;
+    --pc-text: #e6e9ef;
+    --pc-text-dim: #99a2b0;
+    --pc-border: #262c37;
+    --pc-border-strong: #3a4250;
+    --pc-accent: #6aa4ff;
+    --pc-accent-soft: #1b2740;
+    --pc-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+:root[data-pc-theme="dark"] {
+  --pc-bg: #0f1218;
+  --pc-bg-sunken: #0a0c11;
+  --pc-bg-raised: #161a22;
+  --pc-code-bg: #12161d;
+  --pc-text: #e6e9ef;
+  --pc-text-dim: #99a2b0;
+  --pc-border: #262c37;
+  --pc-border-strong: #3a4250;
+  --pc-accent: #6aa4ff;
+  --pc-accent-soft: #1b2740;
+  --pc-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* The library's main.css sets `body { font-family: Poppins }` and
+   `p { margin: 0 }`. The shell restates what it needs rather than
+   assuming either is present.
+
+   Note what is NOT set here: font-family. The preview stage has to
+   render in the library's own font, so the shell claims its font on
+   its own chrome instead of on body — otherwise every component would
+   be previewed in the wrong typeface. */
+body {
+  background-color: var(--pc-bg);
+  color: var(--pc-text);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.pc-topbar,
+.pc-toc,
+.pc-page-head,
+.pc-demo > h2,
+.pc-note,
+.pc-pane-head,
+.pc-footer,
+.pc-home-layout,
+.pc-skip {
+  font-family: var(--pc-ui);
+}
+
+/* Authored source is inert until the shell has assembled the page. */
+body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
+  display: none;
+}
+
+/* ========= Skip link ========= */
+
+.pc-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--pc-accent);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 var(--pc-radius-sm) 0;
+  text-decoration: none;
+}
+.pc-skip:focus {
+  left: 0;
+}
+
+/* ========= Top bar ========= */
+
+.pc-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--pc-bg-raised);
+  border-bottom: 1px solid var(--pc-border);
+}
+
+.pc-topbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 1.25rem;
+  min-height: var(--pc-topbar-h);
+}
+
+.pc-home {
+  color: var(--pc-text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.pc-home:hover {
+  color: var(--pc-accent);
+}
+
+.pc-select {
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--pc-text);
+  background: var(--pc-bg);
+  border: 1px solid var(--pc-border-strong);
+  border-radius: var(--pc-radius-sm);
+  padding: 0.35rem 0.5rem;
+  min-width: 180px;
+}
+
+.pc-controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.pc-seg {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  background: var(--pc-bg-sunken);
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-radius-sm);
+  padding: 0.15rem;
+}
+
+.pc-seg-label {
+  font-size: 0.7rem;
+  color: var(--pc-text-dim);
+  padding: 0 0.35rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pc-seg button {
+  font: inherit;
+  font-size: 0.78rem;
+  line-height: 1;
+  color: var(--pc-text-dim);
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  padding: 0.32rem 0.5rem;
+  cursor: pointer;
+}
+.pc-seg button:hover {
+  color: var(--pc-text);
+}
+.pc-seg button[aria-pressed="true"] {
+  background: var(--pc-bg-raised);
+  color: var(--pc-text);
+  box-shadow: var(--pc-shadow);
+}
+
+/* ========= Layout ========= */
+
+.pc-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 2rem;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 5rem;
+  align-items: start;
+}
+
+.pc-toc {
+  position: sticky;
+  top: calc(var(--pc-topbar-h) + 1rem);
+  font-size: 0.85rem;
+}
+.pc-toc h2 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pc-text-dim);
+  margin: 0 0 0.6rem;
+}
+.pc-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.pc-toc a {
+  display: block;
+  color: var(--pc-text-dim);
+  text-decoration: none;
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--pc-radius-sm);
+  border-left: 2px solid transparent;
+}
+.pc-toc a:hover {
+  color: var(--pc-text);
+  background: var(--pc-bg-sunken);
+}
+.pc-toc a[aria-current="true"] {
+  color: var(--pc-accent);
+  border-left-color: var(--pc-accent);
+  background: var(--pc-accent-soft);
+}
+
+.pc-content {
+  min-width: 0;
+}
+
+/* ========= Page header ========= */
+
+.pc-page-head {
+  border-bottom: 1px solid var(--pc-border);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.pc-page-head h1 {
+  font-size: 2rem;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.02em;
+  color: var(--pc-text);
+}
+.pc-lede {
+  color: var(--pc-text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 70ch;
+  margin: 0 0 1rem;
+}
+
+.pc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+.pc-meta-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pc-text-dim);
+}
+.pc-chip {
+  font-family: var(--pc-mono);
+  font-size: 0.75rem;
+  background: var(--pc-bg-sunken);
+  border: 1px solid var(--pc-border);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  color: var(--pc-text-dim);
+}
+.pc-docs-links {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+}
+.pc-docs-links a {
+  color: var(--pc-accent);
+}
+
+/* ========= Demo section ========= */
+
+.pc-demo,
+.pc-doc {
+  margin-bottom: 3rem;
+  scroll-margin-top: calc(var(--pc-topbar-h) + 1rem);
+}
+
+.pc-demo > h2,
+.pc-doc > h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.35rem;
+  color: var(--pc-text);
+}
+.pc-anchor {
+  color: inherit;
+  text-decoration: none;
+}
+.pc-anchor::after {
+  content: " #";
+  color: var(--pc-border-strong);
+  font-weight: 400;
+}
+.pc-anchor:hover::after {
+  color: var(--pc-accent);
+}
+
+.pc-note {
+  color: var(--pc-text-dim);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  max-width: 70ch;
+  margin: 0 0 0.9rem;
+}
+.pc-note code {
+  font-family: var(--pc-mono);
+  font-size: 0.85em;
+  background: var(--pc-bg-sunken);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+
+/* Code / UI split — stacked on narrow screens, side by side on wide. */
+.pc-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--pc-border);
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-radius);
+  overflow: hidden;
+}
+
+@media (min-width: 1000px) {
+  .pc-split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.pc-pane {
+  background: var(--pc-bg-raised);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pc-pane-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid var(--pc-border);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pc-text-dim);
+  background: var(--pc-bg-sunken);
+  min-height: 34px;
+}
+.pc-pane-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.25rem;
+}
+.pc-pane-actions button {
+  font: inherit;
+  font-size: 0.7rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--pc-text-dim);
+  background: transparent;
+  border: 1px solid var(--pc-border);
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+.pc-pane-actions button:hover {
+  color: var(--pc-text);
+  border-color: var(--pc-border-strong);
+}
+.pc-pane-actions button[hidden] {
+  display: none;
+}
+
+.pc-dirty {
+  font-size: 0.7rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--pc-accent);
+}
+
+/* The editor. Edits here re-render the preview on every keystroke. */
+.pc-editor {
+  font-family: var(--pc-mono);
+  font-size: 0.8rem;
+  line-height: 1.65;
+  tab-size: 2;
+  color: var(--pc-text);
+  background: var(--pc-code-bg);
+  border: 0;
+  border-radius: 0;
+  padding: 0.85rem 0.9rem;
+  resize: vertical;
+  width: 100%;
+  min-height: 120px;
+  max-height: 70vh;
+  flex: 1;
+  /* Wrap rather than scroll sideways: in a half-width pane a long class
+     list is easier to read wrapped than hidden off the edge. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.pc-editor:focus {
+  outline: 2px solid var(--pc-accent);
+  outline-offset: -2px;
+}
+.pc-editor[aria-invalid="true"] {
+  outline: 2px solid #e5484d;
+  outline-offset: -2px;
+}
+
+/* The stage: where the live component actually renders. Its background
+   is switched from the top bar so components can be checked against
+   light and dark. */
+.pc-stage {
+  flex: 1;
+  padding: 1.25rem;
+  overflow: auto;
+  background-color: var(--pc-stage-light);
+  color: #14171f;
+}
+
+:root[data-pc-stage="dark"] .pc-stage {
+  background-color: var(--pc-stage-dark);
+  color: #e6e9ef;
+}
+
+/* Default demo layout: siblings sit in a row and wrap. A section can
+   override it with data-stage-style (see docs.js). */
+.pc-stage-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  max-width: var(--pc-stage-width, none);
+  min-height: 40px;
+}
+
+
+/* Outline every element in the stage — makes box model and spacing
+   visible without opening devtools. */
+:root[data-pc-outline="on"] .pc-stage-inner * {
+  outline: 1px solid rgba(255, 0, 128, 0.35);
+}
+
+/* ========= Start page ========= */
+
+.pc-home-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 5rem;
+}
+.pc-hero h1 {
+  font-size: 2.4rem;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.5rem;
+}
+.pc-hero p {
+  color: var(--pc-text-dim);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 60ch;
+  margin: 0;
+}
+
+.pc-filter {
+  margin: 2rem 0 2.5rem;
+}
+.pc-filter input {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--pc-text);
+  background: var(--pc-bg-raised);
+  border: 1px solid var(--pc-border-strong);
+  border-radius: var(--pc-radius);
+  padding: 0.6rem 0.85rem;
+  width: 100%;
+  max-width: 420px;
+}
+.pc-filter input:focus {
+  outline: 2px solid var(--pc-accent);
+  outline-offset: 1px;
+}
+.pc-filter-count {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--pc-text-dim);
+  margin-top: 0.5rem;
+}
+
+.pc-group {
+  margin-bottom: 2.5rem;
+}
+.pc-group[hidden] {
+  display: none;
+}
+.pc-group h2 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pc-text-dim);
+  margin: 0 0 0.85rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--pc-border);
+}
+.pc-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 0.5rem;
+}
+.pc-group li[hidden] {
+  display: none;
+}
+.pc-group li a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-radius);
+  background: var(--pc-bg-raised);
+  color: var(--pc-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.pc-group li a:hover {
+  border-color: var(--pc-accent);
+  color: var(--pc-accent);
+}
+.pc-group li a:focus-visible {
+  outline: 2px solid var(--pc-accent);
+  outline-offset: 2px;
+}
+.pc-group li a code {
+  font-family: var(--pc-mono);
+  font-size: 0.7rem;
+  color: var(--pc-text-dim);
+  margin-left: auto;
+}
+
+.pc-empty {
+  color: var(--pc-text-dim);
+  font-size: 0.9rem;
+}
+.pc-empty[hidden] {
+  display: none;
+}
+
+/* ========= Token page ========= */
+
+.pc-token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.pc-token {
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-radius);
+  overflow: hidden;
+  background: var(--pc-bg-raised);
+}
+.pc-token-swatch {
+  height: 60px;
+  border-bottom: 1px solid var(--pc-border);
+}
+.pc-token-body {
+  padding: 0.55rem 0.7rem;
+}
+.pc-token-name {
+  font-family: var(--pc-mono);
+  font-size: 0.72rem;
+  color: var(--pc-text);
+  word-break: break-all;
+}
+.pc-token-value {
+  font-family: var(--pc-mono);
+  font-size: 0.7rem;
+  color: var(--pc-text-dim);
+  margin-top: 0.15rem;
+}
+.pc-token-missing .pc-token-value {
+  color: #e5484d;
+}
+.pc-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.3rem 0;
+}
+.pc-bar-row .pc-token-name {
+  min-width: 160px;
+}
+.pc-bar {
+  height: 14px;
+  background: var(--pc-accent);
+  border-radius: 2px;
+}
+.pc-token-bad {
+  color: #e5484d;
+}
+.pc-lint .pc-bar-row {
+  border-bottom: 1px solid var(--pc-border);
+}
+
+/* ========= Footer ========= */
+
+.pc-footer {
+  border-top: 1px solid var(--pc-border);
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  font-size: 0.82rem;
+  color: var(--pc-text-dim);
+}
+.pc-footer a {
+  color: var(--pc-accent);
+}
+
+/* ========= Narrow screens ========= */
+
+@media (max-width: 900px) {
+  .pc-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .pc-toc {
+    display: none;
+  }
+  .pc-controls {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* ========= Reference sections ========= */
+
+.pc-doc-body {
+  font-family: var(--pc-ui);
+  color: var(--pc-text);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.pc-doc-body > p {
+  color: var(--pc-text-dim);
+  max-width: 70ch;
+  margin: 0 0 1.25rem;
+}
+
+.pc-doc-body h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pc-text-dim);
+
+  margin: 1.75rem 0 0.6rem;
+}
+
+.pc-doc-body h3:first-child {
+  margin-top: 0;
+}
+
+/* The table can outgrow a narrow pane; it scrolls inside its own box
+   rather than pushing the page sideways. */
+.pc-doc-table {
+  overflow-x: auto;
+
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-radius);
+
+  background: var(--pc-bg-raised);
+}
+
+.pc-doc-table table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  text-align: start;
+}
+
+.pc-doc-table :is(th, td) {
+  padding: 0.55rem 0.9rem;
+  border-block-end: 1px solid var(--pc-border);
+  vertical-align: top;
+  text-align: start;
+}
+
+.pc-doc-table tr:last-child :is(th, td) {
+  border-block-end: none;
+}
+
+.pc-doc-table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pc-text-dim);
+
+  background: var(--pc-bg-sunken);
+}
+
+.pc-doc-table td:first-child {
+  white-space: nowrap;
+}
+
+.pc-doc-table code,
+.pc-doc-body > p code {
+  font-family: var(--pc-mono);
+  font-size: 0.85em;
+
+  background: var(--pc-bg-sunken);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+
+.pc-doc-table .pc-doc-dim {
+  color: var(--pc-text-dim);
+}

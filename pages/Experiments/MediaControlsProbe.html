@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media controls probe</title>
+<style>
+  :root { color-scheme: light; font-family: ui-sans-serif, system-ui, sans-serif; }
+  body { margin: 0; padding: 2rem; background: #f1f5f9; color: #0f1729; }
+  h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+  p.lede { margin: 0 0 1.5rem; color: #475569; max-width: 60ch; }
+  section { background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+  h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: #475569; margin: 0 0 .75rem; }
+  table { border-collapse: collapse; width: 100%; font-size: .85rem; }
+  td { padding: .3rem .5rem; border-bottom: 1px solid #e1e7ef; vertical-align: top; }
+  td:first-child { font-family: ui-monospace, monospace; color: #334155; }
+  td:last-child { text-align: right; font-weight: 600; white-space: nowrap; }
+  .yes { color: #15803d; } .no { color: #b91c1c; }
+  textarea { width: 100%; min-height: 13rem; font-family: ui-monospace, monospace; font-size: .78rem;
+             border: 1px solid #cbd5e1; border-radius: 6px; padding: .75rem; background: #f8fafc; }
+  button { font: inherit; font-weight: 600; padding: .5rem 1rem; border-radius: 6px;
+           border: 1px solid #1447e6; background: #1447e6; color: #fff; cursor: pointer; }
+  button:focus-visible { outline: 1px solid #1447e6; outline-offset: 2px; }
+  .stage { padding: 1rem; background: #f1f5f9; border-radius: 6px; }
+
+  /* The subject. Deliberately NOT the library stylesheet — this page must work
+     even if audio.css is mid-edit. Mirrors what .audio does today. */
+  audio.subject {
+    display: block;
+    box-sizing: border-box;
+    inline-size: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background-color: #f1f5f9;
+  }
+
+  /* Capability probes. Each paints a background-image the engine must FETCH if
+     the rule actually reaches the shadow node. A 404 still proves the fetch. */
+  audio.subject::-webkit-media-controls-panel     { background-image: url("./__probe-panel.svg"); }
+  audio.subject::-webkit-media-controls-enclosure { background-image: url("./__probe-enclosure.svg"); }
+  audio.subject::-webkit-media-controls-play-button { background-image: url("./__probe-play.svg"); }
+  audio.subject::-webkit-media-controls-mute-button { background-image: url("./__probe-mute.svg"); }
+</style>
+</head>
+<body>
+
+<h1>Media controls probe</h1>
+<p class="lede">
+  Open this page in every browser you care about and press <strong>Copy result</strong>.
+  It reports what this engine actually does with author CSS on native media controls —
+  measured, not assumed.
+</p>
+
+<section>
+  <h2>Subject</h2>
+  <div class="stage">
+    <audio class="subject" controls preload="metadata">
+      <source src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA" type="audio/mpeg">
+    </audio>
+  </div>
+</section>
+
+<section>
+  <h2>Result</h2>
+  <table id="out"></table>
+</section>
+
+<section>
+  <h2>Paste this back</h2>
+  <textarea id="dump" readonly></textarea>
+  <p><button id="copy">Copy result</button></p>
+</section>
+
+<script>
+(function () {
+  var PROBES = ["panel", "enclosure", "play", "mute"];
+
+  function fetched(name) {
+    // Works in every engine: if the engine applied our background-image to the
+    // shadow node, it had to request the file. 404 counts — the request is the proof.
+    var entries = performance.getEntriesByType("resource");
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].name.indexOf("__probe-" + name + ".svg") !== -1) return true;
+    }
+    return false;
+  }
+
+  function supports(cond) {
+    try { return !!(window.CSS && CSS.supports && CSS.supports(cond)); }
+    catch (e) { return false; }
+  }
+
+  function run() {
+    var audio = document.querySelector("audio.subject");
+    var rect = audio.getBoundingClientRect();
+
+    var rows = [];
+    rows.push(["user agent", navigator.userAgent]);
+    rows.push(["rendered height", Math.round(rect.height) + "px"]);
+    rows.push(["--- paint actually applied ---", ""]);
+    PROBES.forEach(function (p) {
+      rows.push(["::-webkit-media-controls-" + p, fetched(p)]);
+    });
+    rows.push(["--- selector parses ---", ""]);
+    [
+      "selector(::-webkit-media-controls-panel)",
+      "selector(::-webkit-media-controls-enclosure)",
+      "selector(::-internal-media-controls-overflow-menu-list)"
+    ].forEach(function (c) { rows.push([c, supports(c)]); });
+    rows.push(["--- engine fingerprints ---", ""]);
+    [
+      "(-webkit-hyphens: none)",
+      "(-moz-appearance: none)",
+      "(background: -webkit-named-image(apple-pay-logo-black))",
+      "(-webkit-app-region: no-drag)",
+      "(font: -apple-system-body)"
+    ].forEach(function (c) { rows.push([c, supports(c)]); });
+
+    var table = document.getElementById("out");
+    var text = [];
+    rows.forEach(function (r) {
+      var tr = document.createElement("tr");
+      var a = document.createElement("td"), b = document.createElement("td");
+      a.textContent = r[0];
+      if (typeof r[1] === "boolean") {
+        b.textContent = r[1] ? "yes" : "no";
+        b.className = r[1] ? "yes" : "no";
+      } else {
+        b.textContent = r[1];
+      }
+      tr.appendChild(a); tr.appendChild(b); table.appendChild(tr);
+      text.push(r[0] + (r[1] === "" ? "" : "\t" + (typeof r[1] === "boolean" ? (r[1] ? "yes" : "no") : r[1])));
+    });
+    document.getElementById("dump").value = text.join("\n");
+  }
+
+  // Give the engine a tick to lay out the shadow tree and issue the requests.
+  window.addEventListener("load", function () { setTimeout(run, 600); });
+
+  document.getElementById("copy").addEventListener("click", function () {
+    var ta = document.getElementById("dump");
+    ta.select();
+    if (navigator.clipboard) navigator.clipboard.writeText(ta.value);
+    else document.execCommand("copy");
+    this.textContent = "Copied";
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+/*
+ACCESSIBILITY REQUIREMENTS:
+- Prefer native <dialog> with showModal()
+- Dialog MUST have aria-labelledby pointing to its title
+- aria-describedby is recommended when a description exists
+- Close button MUST have aria-label="Close dialog" when using icon-only content
+- Native modal <dialog> handles ESC closing and makes content outside the dialog inert
+- Backdrop should use ::backdrop for native dialogs
+
+PLACEMENT:
+- center (default) → grows with content, max 90dvh
+- left / right → full viewport height
+- top / bottom → full viewport width, grows with content
+
+HEIGHT:
+- data-height="auto" → content height, max 90dvh
+- data-height="full" → full viewport height
+
+ANIMATION:
+- center → fade + subtle scale-in / scale-out
+- right → slides from/to right
+- left → slides from/to left
+- top → slides from/to top
+- bottom → slides from/to bottom
+*/
+
+dialog.dialog {
+  --dialog-max-width: 600px;
+  --dialog-radius: var(--radius-md);
+
+  --dialog-enter-transform: scale(0.96);
+  --dialog-exit-transform: scale(1.025);
+
+  --dialog-enter-duration: 280ms;
+  --dialog-exit-duration: 180ms;
+
+  --dialog-enter-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dialog-exit-ease: cubic-bezier(0.4, 0, 1, 1);
+
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+
+  padding: 0;
+  margin: auto;
+  border: none;
+
+  width: min(90vw, var(--dialog-max-width));
+  max-height: 90dvh;
+
+  background-color: var(--color-neutral-100);
+  color: var(--color-neutral-900);
+
+  border-radius: var(--dialog-radius);
+  box-shadow: var(--shadow-lg);
+
+  opacity: 0;
+  transform: var(--dialog-exit-transform);
+
+  transition:
+    opacity var(--dialog-exit-duration) var(--dialog-exit-ease),
+    transform var(--dialog-exit-duration) var(--dialog-exit-ease),
+    display var(--dialog-exit-duration) allow-discrete,
+    overlay var(--dialog-exit-duration) allow-discrete;
+
+  &:open {
+    display: flex;
+
+    opacity: 1;
+    transform: none;
+
+    transition:
+      opacity var(--dialog-enter-duration) var(--dialog-enter-ease),
+      transform var(--dialog-enter-duration) var(--dialog-enter-ease),
+      display var(--dialog-enter-duration) allow-discrete,
+      overlay var(--dialog-enter-duration) allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+      transform: var(--dialog-enter-transform);
+    }
+  }
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 0%);
+    backdrop-filter: blur(0);
+
+    transition:
+      background-color var(--dialog-exit-duration) ease,
+      backdrop-filter var(--dialog-exit-duration) ease,
+      display var(--dialog-exit-duration) allow-discrete,
+      overlay var(--dialog-exit-duration) allow-discrete;
+  }
+
+  &:open::backdrop {
+    background-color: rgb(0 0 0 / 50%);
+    backdrop-filter: blur(2px);
+
+    transition:
+      background-color var(--dialog-enter-duration) ease,
+      backdrop-filter var(--dialog-enter-duration) ease,
+      display var(--dialog-enter-duration) allow-discrete,
+      overlay var(--dialog-enter-duration) allow-discrete;
+  }
+
+  /* PLACEMENT */
+
+  &[data-placement="right"] {
+    --dialog-enter-transform: translateX(100%);
+    --dialog-exit-transform: translateX(100%);
+
+    --dialog-enter-duration: 420ms;
+    --dialog-exit-duration: 280ms;
+
+    margin-inline-start: auto;
+    margin-inline-end: 0;
+
+    height: 100dvh;
+    max-height: 100dvh;
+
+    border-radius: var(--dialog-radius) 0 0 var(--dialog-radius);
+  }
+
+  &[data-placement="left"] {
+    --dialog-enter-transform: translateX(-100%);
+    --dialog-exit-transform: translateX(-100%);
+
+    --dialog-enter-duration: 420ms;
+    --dialog-exit-duration: 280ms;
+
+    margin-inline-start: 0;
+    margin-inline-end: auto;
+
+    height: 100dvh;
+    max-height: 100dvh;
+
+    border-radius: 0 var(--dialog-radius) var(--dialog-radius) 0;
+  }
+
+  &[data-placement="top"] {
+    --dialog-enter-transform: translateY(-100%);
+    --dialog-exit-transform: translateY(-100%);
+
+    --dialog-enter-duration: 420ms;
+    --dialog-exit-duration: 280ms;
+
+    margin-block-start: 0;
+    margin-block-end: auto;
+
+    width: 100vw;
+    max-width: 100vw;
+
+    border-radius: 0 0 var(--dialog-radius) var(--dialog-radius);
+  }
+
+  &[data-placement="bottom"] {
+    --dialog-enter-transform: translateY(100%);
+    --dialog-exit-transform: translateY(100%);
+
+    --dialog-enter-duration: 420ms;
+    --dialog-exit-duration: 280ms;
+
+    margin-block-start: auto;
+    margin-block-end: 0;
+
+    width: 100vw;
+    max-width: 100vw;
+
+    border-radius: var(--dialog-radius) var(--dialog-radius) 0 0;
+  }
+
+  /* SIZE */
+
+  &.sm {
+    --dialog-max-width: 400px;
+    --dialog-radius: var(--radius-sm);
+  }
+
+  &.md {
+    --dialog-max-width: 600px;
+    --dialog-radius: var(--radius-md);
+  }
+
+  &.lg {
+    --dialog-max-width: 800px;
+    --dialog-radius: var(--radius-lg);
+  }
+
+  &.xl {
+    --dialog-max-width: 1200px;
+    --dialog-radius: var(--radius-lg);
+  }
+
+  &.fullscreen {
+    width: 100vw;
+    height: 100dvh;
+
+    max-width: 100vw;
+    max-height: 100dvh;
+
+    margin: 0;
+
+    border-radius: 0;
+  }
+
+  /* HEIGHT */
+
+  &[data-height="auto"] {
+    height: auto;
+    max-height: 90dvh;
+  }
+
+  &[data-height="full"] {
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
+  /* BORDER RADIUS */
+
+  &.sharp {
+    --dialog-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    --dialog-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    --dialog-radius: var(--radius-lg);
+  }
+
+  /* HEADER */
+
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+
+    padding: var(--spacing-100) var(--spacing-150);
+
+    border-bottom: 1px solid var(--color-neutral-200);
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin: 0;
+
+      font-size: var(--font-size-xl);
+      font-weight: 600;
+
+      color: var(--color-neutral-900);
+    }
+
+    [command="close"] {
+      margin-inline-start: auto;
+      flex-shrink: 0;
+    }
+  }
+
+  &.sm {
+    .dialog-header {
+      padding: var(--spacing-75) var(--spacing-100);
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: var(--font-size-lg);
+      }
+    }
+  }
+
+  &.lg {
+    .dialog-header {
+      padding: var(--spacing-125) var(--spacing-200);
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: var(--font-size-2xl);
+      }
+    }
+  }
+
+  /* BODY */
+
+  .dialog-body {
+    flex: 1 1 auto;
+    min-height: 0;
+
+    padding: var(--spacing-150);
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  &.sm {
+    .dialog-body {
+      padding: var(--spacing-100);
+      font-size: var(--font-size-sm);
+    }
+  }
+
+  &.md {
+    .dialog-body {
+      font-size: var(--font-size-md);
+    }
+  }
+
+  &.lg {
+    .dialog-body {
+      padding: var(--spacing-200);
+      font-size: var(--font-size-lg);
+    }
+  }
+
+  /* FOOTER */
+
+  .dialog-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+
+    gap: var(--spacing-50);
+
+    padding: var(--spacing-100) var(--spacing-150);
+
+    border-top: 1px solid var(--color-neutral-200);
+  }
+
+  &.sm {
+    .dialog-footer {
+      padding: var(--spacing-75) var(--spacing-100);
+    }
+  }
+
+  &.lg {
+    .dialog-footer {
+      padding: var(--spacing-125) var(--spacing-200);
+    }
+  }
+
+  /* REDUCED MOTION */
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0ms;
+
+    &::backdrop {
+      transition-duration: 0ms;
+    }
+  }
+}
+
+/* BACKDROP ENTRY STATE */
+
+@starting-style {
+  dialog.dialog:open::backdrop {
+    background-color: rgb(0 0 0 / 0%);
+    backdrop-filter: blur(0);
+  }
+}
+
+/* CUSTOM DIALOG */
+
+.dialog[role="dialog"]:not(dialog) {
+  position: fixed;
+  inset: 0;
+
+  z-index: var(--z-index-modal);
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  &[aria-hidden="false"],
+  &.open {
+    display: flex;
+  }
+
+  .dialog-backdrop {
+    position: fixed;
+    inset: 0;
+
+    z-index: calc(var(--z-index-modal) - 1);
+
+    background-color: rgb(0 0 0 / 50%);
+    backdrop-filter: blur(2px);
+  }
+}

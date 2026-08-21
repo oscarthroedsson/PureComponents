@@ -1,93 +1,176 @@
 .breadcrumbs {
-  position: relative;
+  --breadcrumbs-gap: var(--spacing-0);
+  --breadcrumbs-font-size: var(--font-size-md);
+  --breadcrumbs-radius: var(--radius-md);
 
-  display: flex;
-  align-items: center;
-  height: fit-content;
-  gap: var(--spacing-1);
-  padding-left: 0px;
+  --breadcrumbs-separator: ">";
+  --breadcrumbs-separator-color: var(--color-neutral-400);
+  --breadcrumbs-separator-space: var(--spacing-50);
+
+  --breadcrumbs-crumb-padding-inline: var(--spacing-25);
+  --breadcrumbs-crumb-padding-block: var(--spacing-15);
+  --breadcrumbs-crumb-background: transparent;
+
+  --breadcrumbs-link-color: var(--color-neutral-500);
+  --breadcrumbs-hover-color: var(--color-neutral-900);
+  --breadcrumbs-current-color: var(--color-neutral-900);
+
+  /* BASE */
+  margin: 0;
+  padding: 0;
+
   list-style: none;
 
-  p {
-    margin: 0px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 
-  & li:not(:last-child) {
-    &::after {
-      content: ">";
-      padding-inline: var(--spacing-25);
-      color: var(--color-neutral-400);
-    }
-  }
+  gap: var(--breadcrumbs-gap);
+
+  font-size: var(--breadcrumbs-font-size);
+  line-height: var(--line-height-base);
 
   & > li {
     display: flex;
     align-items: center;
+  }
 
-    & > *.block {
-      padding: var(--spacing-15) var(--spacing-50);
-      border-radius: var(--radius-md);
-      background-color: var(--color-neutral-200);
-      margin: 0px;
+  & > li > :not(.breadcrumbs-separator) {
+    padding-inline: var(--breadcrumbs-crumb-padding-inline);
+    padding-block: var(--breadcrumbs-crumb-padding-block);
+
+    border-radius: var(--breadcrumbs-radius);
+    background-color: var(--breadcrumbs-crumb-background);
+
+    color: var(--breadcrumbs-link-color);
+    text-decoration: none;
+  }
+
+  & > li > a {
+    &:hover {
+      color: var(--breadcrumbs-hover-color);
+
+      text-decoration: underline;
+      text-underline-offset: var(--spacing-25);
     }
 
-    /* Styles the element with aria-current */
-    & > *[aria-current="page"] {
-      padding: var(--spacing-15) var(--spacing-50);
-      border-radius: var(--radius-md);
-      background-color: lightgreen;
+    /* The house pattern: 3px, offset 2px. It follows the radius. */
+  }
 
-      &.underline {
-        background-color: transparent;
-        text-decoration: underline;
-        text-underline-offset: var(--spacing-25);
-        text-decoration-color: lime;
-        text-decoration-thickness: 2px;
+  /* SEPARATOR */
 
-        padding: var(--spacing-15) var(--spacing-15);
-      }
-    }
+  & > li:not(:last-child)::after {
+    content: var(--breadcrumbs-separator);
 
-    /* 
-    If some element as aria-current style the others
-    does not work in firefox
-    */
+    padding-inline: var(--breadcrumbs-separator-space);
 
-    & > *:is(a, img, span, i) {
-      cursor: pointer;
+    color: var(--breadcrumbs-separator-color);
 
-      &:active {
-        transition: scale 0.2s ease, transform 0.2s ease;
-        transform: scale(0.95);
-      }
+    user-select: none;
+  }
+
+  /*
+   * The same mark with its alternative text emptied, so assistive
+   * tech skips it. Kept apart from the rule above: where the syntax
+   * is unknown the declaration is dropped, and dropping this one
+   * only loses the silencing, not the separator.
+   */
+  @supports (content: "x" / "") {
+    & > li:not(:last-child)::after {
+      content: var(--breadcrumbs-separator) / "";
     }
   }
 
-  /* Styles every element that has not or children that has not
-  aria-current="page" */
-  &:has(> li > p[aria-current="page"]) {
-    > li:not(:has(p[aria-current="page"])) {
-      opacity: 0.6;
+  /* A separator the consumer brought stands down our own. */
+  & > li:has(> .breadcrumbs-separator)::after {
+    content: none;
+  }
+
+  & .breadcrumbs-separator {
+    display: inline-flex;
+    align-items: center;
+
+    padding-inline: var(--breadcrumbs-separator-space);
+
+    color: var(--breadcrumbs-separator-color);
+
+    user-select: none;
+  }
+
+  /* Nothing follows the last crumb, whoever drew the mark. */
+  & > li:last-child > .breadcrumbs-separator {
+    display: none;
+  }
+
+  /* SEPARATOR VARIANTS — the list, or a single gap. */
+
+  &.slash,
+  & > li.slash {
+    --breadcrumbs-separator: "/";
+  }
+
+  &.chevron,
+  & > li.chevron {
+    --breadcrumbs-separator: "›";
+  }
+
+  &.arrow,
+  & > li.arrow {
+    --breadcrumbs-separator: "→";
+  }
+
+  &.dot,
+  & > li.dot {
+    --breadcrumbs-separator: "•";
+  }
+
+  /* CURRENT PAGE */
+
+  & > li > [aria-current="page"] {
+    color: var(--breadcrumbs-current-color);
+    font-weight: var(--font-weight-subheading);
+
+    /* Where you already are does not answer to the pointer. */
+    &:hover {
+      color: var(--breadcrumbs-current-color);
+      text-decoration: none;
     }
   }
 
-  &.sm > * {
-    font-size: var(--font-size-xs);
-  }
-  &.md > * {
-    font-size: var(--font-size-sm);
-  }
-  &.lg > * {
-    font-size: var(--font-size-md);
+  /* SIZE */
+
+  &.sm {
+    --breadcrumbs-font-size: var(--font-size-sm);
+    --breadcrumbs-separator-space: var(--spacing-25);
+    --breadcrumbs-radius: var(--radius-sm);
   }
 
-  & .sharp > * {
-    border-radius: var(--radius-none-) !important;
+  &.md {
+    --breadcrumbs-font-size: var(--font-size-md);
+    --breadcrumbs-separator-space: var(--spacing-50);
+    --breadcrumbs-radius: var(--radius-md);
   }
-  &.soft > * {
-    border-radius: var(--radius-md);
+
+  &.lg {
+    --breadcrumbs-font-size: var(--font-size-base);
+    --breadcrumbs-separator-space: var(--spacing-75);
+    --breadcrumbs-radius: var(--radius-lg);
   }
-  &.rounded > {
-    border-radius: var(--radius-full);
+
+  /* SHAPE — after the sizes, so it replaces the radius they set. */
+
+  &.sharp,
+  & .sharp {
+    --breadcrumbs-radius: var(--radius-sharp);
+  }
+
+  &.smooth,
+  & .smooth {
+    --breadcrumbs-radius: var(--radius-md);
+  }
+
+  &.rounded,
+  & .rounded {
+    --breadcrumbs-radius: var(--radius-full);
   }
 }

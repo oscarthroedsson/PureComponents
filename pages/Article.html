@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Article — PureComponents</title>
+    <meta name="pc-description" content="The Article component provides a container for standalone, self-contained content using semantic HTML." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../src/Styles/main.css" />
+    <link rel="stylesheet" href="../src/Styles/article.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Article">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <article data-article="article-container">
+        <header data-article="introduction">
+          <h1>Article Title</h1>
+          <p>Article introduction or summary goes here.</p>
+        </header>
+        <div role="main">
+          <h2>Section Heading</h2>
+          <p>Article content goes here. This is a basic article example.</p>
+        </div>
+      </article>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="with-image" data-title="With Image">
+    <p class="pc-note">Articles can include images in the introduction header.</p>
+    <template>
+      <article data-article="article-container">
+        <header data-article="introduction">
+          <img src="https://picsum.photos/800/400" alt="Article image" />
+          <h1>Article Title</h1>
+          <p>Article introduction with image.</p>
+        </header>
+        <div role="main">
+          <p>Article content goes here.</p>
+        </div>
+      </article>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="with-meta-data" data-title="With Meta Data">
+    <p class="pc-note">Articles can include author and date information in a footer.</p>
+    <template>
+      <article data-article="article-container">
+        <header data-article="introduction">
+          <h1>Article Title</h1>
+          <p>Article introduction.</p>
+        </header>
+        <footer data-article="meta-data">
+          <div data-article="author">
+            <div>
+              <p>Author Name</p>
+              <p>Author Title</p>
+            </div>
+          </div>
+          <time datetime="2024-01-15">January 15, 2024</time>
+        </footer>
+        <div role="main">
+          <p>Article content goes here.</p>
+        </div>
+      </article>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
+    <p class="pc-note">Articles must use proper semantic HTML and heading hierarchy for accessibility.</p>
+    <template>
+      <article data-article="article-container">
+        <header data-article="introduction">
+          <h1>Accessible Article</h1>
+          <p>This article demonstrates proper semantic HTML structure.</p>
+        </header>
+        <div role="main">
+          <h2>Section Heading</h2>
+          <p>Article content with proper heading hierarchy.</p>
+        </div>
+      </article>
+    </template>
+  </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

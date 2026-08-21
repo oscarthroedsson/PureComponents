@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Button — PureComponents</title>
+    <meta name="pc-description" content="The Button component provides accessible, styled buttons for user interactions. All buttons must use the btn class with a size variant." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../src/Styles/main.css" />
+    <link rel="stylesheet" href="../src/Styles/button.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Button">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <button class="btn md">Primary Button</button>
+      <button class="btn md secondary">Secondary Button</button>
+      <button class="btn md tertiary">Tertiary Button</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="size-variants" data-title="Size Variants">
+    <p class="pc-note">Buttons come in three sizes: small (sm), medium (md), and large (lg). Medium is the default size.</p>
+    <template>
+      <button class="btn sm">Small Button</button>
+      <button class="btn md">Medium Button</button>
+      <button class="btn lg">Large Button</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="style-variants" data-title="Style Variants">
+    <p class="pc-note">Buttons support different visual styles: primary (default), secondary, and tertiary.</p>
+    <template>
+      <button class="btn md">Primary</button>
+      <button class="btn md secondary">Secondary</button>
+      <button class="btn md tertiary">Tertiary</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="with-icons" data-title="With Icons">
+    <p class="pc-note">Buttons can contain icons alongside text. Icons should have <code>aria-hidden="true"</code> to hide them from screen readers.</p>
+    <template>
+      <button class="btn md">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 0L10.5 5.5L16 8L10.5 10.5L8 16L5.5 10.5L0 8L5.5 5.5L8 0Z" />
+        </svg>
+        Save
+      </button>
+      <button class="btn md secondary">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 0L10.5 5.5L16 8L10.5 10.5L8 16L5.5 10.5L0 8L5.5 5.5L8 0Z" />
+        </svg>
+        Download
+      </button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="icon-only-buttons" data-title="Icon-Only Buttons">
+    <p class="pc-note">Icon-only buttons <strong>MUST</strong> have an <code>aria-label</code> attribute for screen reader accessibility.</p>
+    <template>
+      <button class="btn sm" aria-label="Close dialog">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 8L2 2M8 8L14 2M8 8L2 14M8 8L14 14" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+      <button class="btn md" aria-label="Edit item">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M2 14L14 2M2 2L14 14" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="toggle-buttons" data-title="Toggle Buttons">
+    <p class="pc-note">Toggle buttons use <code>aria-pressed</code> to indicate their state. Use <code>aria-pressed="true"</code> for pressed state and <code>aria-pressed="false"</code> for unpressed state.</p>
+    <template>
+      <button
+        class="btn md"
+        aria-pressed="false"
+        onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')"
+      >
+        Toggle
+      </button>
+      <button
+        class="btn md"
+        aria-pressed="true"
+        onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')"
+      >
+        Toggle (Pressed)
+      </button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
+    <p class="pc-note">Disabled buttons use the native <code>disabled</code> attribute (not <code>[disabled]</code>). Disabled buttons are not interactive and have reduced opacity.</p>
+    <template>
+      <button class="btn md" disabled>Disabled Primary</button>
+      <button class="btn md secondary" disabled>Disabled Secondary</button>
+      <button class="btn md tertiary" disabled>Disabled Tertiary</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="border-radius-variants" data-title="Border Radius Variants">
+    <p class="pc-note">Buttons support different border radius styles: sharp (no radius), smooth (small radius), and rounded (large radius).</p>
+    <template>
+      <button class="btn md sharp icon">Sharp</button>
+      <button class="btn md smooth">Smooth</button>
+      <button class="btn md rounded">Rounded</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="in-forms" data-title="In Forms">
+    <p class="pc-note">Buttons are commonly used in forms for submit and cancel actions.</p>
+    <template>
+      <form style="display: flex; gap: 0.5rem">
+        <button type="submit" class="btn md">Submit</button>
+        <button type="button" class="btn md tertiary">Cancel</button>
+      </form>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="action-groups" data-title="Action Groups">
+    <p class="pc-note">Multiple buttons can be grouped together for related actions.</p>
+    <template>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap">
+        <button class="btn md">Save</button>
+        <button class="btn md secondary">Cancel</button>
+        <button class="btn md tertiary">Delete</button>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-examples" data-title="Accessibility Examples">
+    <p class="pc-note">All buttons must be keyboard accessible and properly labeled for screen readers.</p>
+    <template>
+      <button class="btn md">Standard Button (accessible by default)</button>
+      <button class="btn md" aria-label="Close dialog">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 8L2 2M8 8L14 2M8 8L2 14M8 8L14 14" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+      <button class="btn md" aria-pressed="false" aria-label="Toggle mute">Mute</button>
+    </template>
+  </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

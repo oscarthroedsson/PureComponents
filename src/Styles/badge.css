@@ -1,54 +1,345 @@
 /* -----------------Content Board----------------------- */
-/* 
-→ Base styling
-→ ...add new here
-→ Generall CSS rules
-npm
+/*
+ACCESSIBILITY REQUIREMENTS:
+- A badge carries its meaning in its text, never in its colour. data-intent
+  fills the box; the word inside is what a screen reader reads and what a
+  colour-blind reader has left. "Failed" filled red, not a red dot.
+
+- aria-label on a bare <span> is not reliably exposed by assistive tech,
+  because a <span> has no role for the name to attach to. Do not reach for
+  it. Where the badge repeats something already written out, hide it with
+  aria-hidden="true" and let the surrounding control carry the name.
+
+- A count that changes while the page is open has to be announced by a
+  container the badge sits inside — role="status" belongs on that container,
+  not on the badge. The badge is the value, not the live region.
+
+- The key may sit on <a> for a tag filter or a category link. It then gets
+  the focus ring from main.css, like every other focusable thing in the
+  library — this file must never draw one of its own. It may not sit on
+  <button> — an interactive chip is Pill.
+
+- Text contrast is 4.5:1 in every variant. Every intent token in main.css is
+  a light pastel, so the text is always the dark end of the scale — plain
+  --color-neutral-900 with no intent, and that intent darkened toward black
+  when there is one. Measured worst case 5.34:1, on error. Light text on any
+  of these fills would land near 1.5:1, which is what the @supports guard
+  below the intents exists to prevent.
+
+- .outline carries the whole box on its border alone. Against a white page
+  that border measures 2.5:1 neutral, and less on an intent, because every
+  intent token in main.css is a pale pastel. WCAG 1.4.11 asks 3:1 of a
+  graphic needed to identify a component — reported, not worked around here,
+  since the fix belongs to the tokens in main.css and not to this file.
+
+
+USAGE:
+
+<span class="badge">New</span>
+<span class="badge lg outline" data-intent="warning">Pending review</span>
+<a class="badge ghost" href="/tags/css">css</a>
+
+<button class="btn" aria-label="Notifications, 3 unread">
+  Notifications
+  <span class="badge sm rounded" aria-hidden="true">3</span>
+</button>
+
+
+SIZE:  sm · md · lg   (md is the default; the key alone is already md)
+
+A badge stays a badge at every size. The scale tops out below body text on
+purpose — lg is a badge you can read across a table, not a heading. One
+variable, --badge-font-size, and the whole box follows it in em.
+
+SHAPE: sharp · smooth · rounded   (smooth is the default, as everywhere else)
+
+VARIANT:
+- (none)    a light neutral box. The default.
+- outline   the fill dropped, the border kept.
+- ghost     both dropped. For a dense list where the boxes would fight each
+            other and the words are enough. Same meaning as .ghost on .btn.
+
+INTENT:
+- data-intent="info" · "success" · "warning" · "error"
+
+Each one sets the fill and the border to its token, and darkens that same
+token for the text, so a red badge reads in dark red and a yellow one in dark
+olive. Nothing else in the file derives a colour.
+
+
+CUSTOMIZATION:
+- --badge-font-size       the one measurement. The box derives from it.
+- --badge-background · --badge-border-color · --badge-color
+- --badge-intent-shade    what an intent's text is darkened toward
+- --badge-padding-inline · --badge-padding-block · --badge-gap
+- --badge-radius · --badge-border-width
+
+
+NOT HERE:
+The corner mark — a presence dot, an unread count hung on an avatar or a
+button. That is anchored to another element's edge, which is a different
+primitive, and it becomes its own component (working name Indicator).
+
+Interaction. A badge does not respond to the pointer and has no hover. A
+chip you can press is Pill; a chip you can dismiss is Pill with a button.
 */
 /* ----------------------------------------------------- */
-.badge {
-  font-size: 11px;
-  padding: var(--spacing-15) var(--spacing-50);
 
-  height: fit-content;
-  width: fit-content;
+.badge {
+  /* VARIABLES */
+
+  --badge-font-size: var(--font-size-sm);
+  --badge-font-weight: var(--font-weight-subheading);
+
+  --badge-padding-inline: 0.7em;
+  --badge-padding-block: 0.35em;
+  --badge-gap: 0.4em;
+
+  --badge-radius: var(--radius-md);
+  --badge-border-width: 1px;
+
+  --badge-background: var(--color-neutral-200);
+  --badge-border-color: var(--color-neutral-400);
+  --badge-color: var(--color-neutral-900);
+
+  /*
+   * The one colour in this file that is not a token. It is the far end an
+   * intent's text is darkened toward, and there is no black token in
+   * main.css. Declared here so a consumer can replace it rather than being
+   * stuck with it — the same escape §4.4 grants a translucent overlay.
+   */
+  --badge-intent-shade: black;
+
+
+  /* BASE */
+
+  box-sizing: border-box;
+
+  /*
+   * inline-flex, not inline. The old file set height and width to
+   * fit-content on an inline box, where both are inert, and padding-block
+   * painted without reserving any room in the line — so a badge in running
+   * text overlapped the line above it. The dev shell hid it: its stage is a
+   * flex container, which blockified every badge on the page.
+   */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /*
+   * Applies between the text run and an icon — a bare text run becomes an
+   * anonymous flex item and is spaced like any other. With text alone there
+   * is nothing to space and the value is inert. Measured both ways.
+   */
+  gap: var(--badge-gap);
+
+  /* Never squeezed by a flex or grid parent. */
+  flex: 0 0 auto;
+
+  padding-inline: var(--badge-padding-inline);
+  padding-block: var(--badge-padding-block);
+
+  border: var(--badge-border-width) solid var(--badge-border-color);
+  border-radius: var(--badge-radius);
+
+  background-color: var(--badge-background);
+  color: var(--badge-color);
+
+  /*
+   * The height a line of this text would take untrimmed. It is a floor, not
+   * a height, and it exists so a badge measures the same whether the
+   * consumer wrote bare text or wrapped it in a <p> — the trim below only
+   * reaches a wrapped child, never the anonymous flex item bare text
+   * becomes. Measured across bare text, <p>, <h1>, <h4> and <span>, with
+   * and without text-box support: 17 / 24.8 / 28.6px in every combination.
+   *
+   * It is also why no @supports guard is needed for the trim. A browser
+   * that cannot trim lands on this floor anyway.
+   */
+  min-block-size: calc(
+    1lh + (var(--badge-padding-block) * 2) + (var(--badge-border-width) * 2)
+  );
+
+  font-size: var(--badge-font-size);
+  font-weight: var(--badge-font-weight);
+  line-height: 1.2;
+
+  /*
+   * A count is read as a number, and numbers that change should not shift
+   * the box under them. 9 and 1 get the same advance.
+   */
+  font-variant-numeric: tabular-nums;
+
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: middle;
+
+  /* The badge is not text you drag-select mid-sentence. */
   cursor: default;
 
-  background-color: var(--color-neutral-300);
-  border-radius: var(--radius-sm);
+  /* CONTENT */
 
-  &.outline {
-    height: fit-content;
-    width: fit-content;
-    cursor: default;
+  /* Icons follow the text, at every size, from the one font-size. */
+  & > :is(svg, img, i) {
+    inline-size: 1em;
+    block-size: 1em;
 
-    background-color: transparent;
-    border: 1px solid var(--color-neutral-300);
-  }
-  &.neutral {
-    background-color: transparent;
-    border: transparent;
+    flex: 0 0 auto;
   }
 
+  & > svg {
+    fill: currentColor;
+  }
+
+  /*
+   * A badge is a leaf, so whatever is inside it has to look like badge
+   * text. Headings arrive with a margin — measured, an <h4> pushed the box
+   * from 24.8px to 56.7px — and with their own size and weight; <h1> is 2em
+   * of the badge, which no reset of the margin alone would have caught.
+   *
+   * The trim only reaches a child like this one, never bare text. The floor
+   * on the key block is what keeps both markups the same height.
+   *
+   * A heading still does not belong in a badge: it puts a phantom entry in
+   * the document outline. This rule stops it rendering broken; it is not an
+   * invitation. Same warning card.css carries for .card-title.
+   */
+  & > :is(h1, h2, h3, h4, h5, h6, p) {
+    margin: 0;
+
+    font-size: inherit;
+    font-weight: inherit;
+
+    text-box: trim-both cap alphabetic;
+  }
+
+  /* SIZE */
+
+  /*
+   * The only size that also tightens the padding. --font-size-xs is the
+   * smallest type token there is, so at sm the box can only get smaller by
+   * giving back some of the em padding — which is the right lever anyway: a
+   * small badge is a tight badge, not just a badge in smaller type.
+   */
   &.sm {
-    font-size: 10px;
-    line-height: fit-content;
+    --badge-font-size: var(--font-size-xs);
+
+    --badge-padding-inline: 0.5em;
+    --badge-padding-block: 0.15em;
   }
+
   &.md {
-    font-size: 11px;
+    --badge-font-size: var(--font-size-sm);
   }
+
   &.lg {
-    font-size: 12px;
-    padding: var(--spacing-15) var(--spacing-50);
+    --badge-font-size: var(--font-size-md);
   }
+
+  /* SHAPE — after the sizes, so it replaces whatever radius they carry. */
 
   &.sharp {
-    border-radius: 0px;
+    --badge-radius: var(--radius-sharp);
   }
-  &.soft {
-    border-radius: var(--radius-md);
+
+  &.smooth {
+    --badge-radius: var(--radius-md);
   }
+
   &.rounded {
-    border-radius: var(--radius-full);
+    --badge-radius: var(--radius-full);
+  }
+
+  /* INTENT */
+
+  &[data-intent="info"] {
+    --badge-background: var(--color-info);
+    --badge-border-color: var(--color-info);
+  }
+
+  &[data-intent="success"] {
+    --badge-background: var(--color-success);
+    --badge-border-color: var(--color-success);
+  }
+
+  &[data-intent="warning"] {
+    --badge-background: var(--color-warning);
+    --badge-border-color: var(--color-warning);
+  }
+
+  &[data-intent="error"] {
+    --badge-background: var(--color-error);
+    --badge-border-color: var(--color-error);
+  }
+
+  /*
+   * INTENT TEXT
+   *
+   * An intent reads in its own colour rather than in neutral black — a red
+   * badge in dark red, a yellow one in dark olive. Only true of an intent,
+   * so it is not at the top of the block.
+   *
+   * Guarded, and the guard is not optional. color-mix() is Chrome 111 /
+   * Safari 16.2, about 93% of traffic. A var() inside a function defers
+   * validation to computed-value time, so an unsupported mix does not fall
+   * back to the declaration above it — `color` falls back to *inherit*.
+   * Measured: on a page with light text that renders a warning badge as
+   * near-white on pale yellow, about 1.4:1. Outside the guard the base
+   * --color-neutral-900 stands instead, 6.46:1 or better on all four fills.
+   *
+   * The mix runs in oklab and toward --badge-intent-shade, not toward a
+   * neutral token. Mixing toward --color-neutral-900 keeps that token's own
+   * blue and lands the text at 3.32:1, muddy and failing; the same mix in
+   * oklch turns all four blue, because black has no hue for a polar space
+   * to interpolate.
+   *
+   * 40% is a ceiling. error is the tightest of the four and measures 5.34:1
+   * there.
+   */
+  @supports (color: color-mix(in oklab, red 40%, black)) {
+    &[data-intent="info"] {
+      --badge-color: color-mix(in oklab, var(--color-info) 40%, var(--badge-intent-shade));
+    }
+
+    &[data-intent="success"] {
+      --badge-color: color-mix(in oklab, var(--color-success) 40%, var(--badge-intent-shade));
+    }
+
+    &[data-intent="warning"] {
+      --badge-color: color-mix(in oklab, var(--color-warning) 40%, var(--badge-intent-shade));
+    }
+
+    &[data-intent="error"] {
+      --badge-color: color-mix(in oklab, var(--color-error) 40%, var(--badge-intent-shade));
+    }
+  }
+
+  /*
+   * VARIANTS — after the intents, so they strip whatever fill an intent
+   * put there. Written before them the two blocks tie on specificity and
+   * source order hands it to the intent, which left .outline and .ghost
+   * silently filled.
+   */
+
+  &.outline {
+    --badge-background: transparent;
+  }
+
+  &.ghost {
+    --badge-background: transparent;
+    --badge-border-width: 0;
+  }
+
+  /* STATES */
+
+  /* The one interactive element the key is allowed on. */
+  &:is(a) {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.25em;
+    }
+
   }
 }

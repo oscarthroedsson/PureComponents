@@ -1,0 +1,200 @@
+/*
+ACCESSIBILITY
+- The native element already exposes value, min and max. Do NOT add
+  aria-valuenow/valuemin/valuemax — they only go stale.
+- Label it: <label for> or aria-label. Keep the number out of the
+  label; put it in visible text beside the gauge.
+- The range state is carried by colour alone, so it needs a second
+  channel: a readout, or wording in the label.
+*/
+
+.meter:is(meter) {
+  /* FRAME */
+  --meter-block-size: 1rem;
+  --meter-padding-block: calc(var(--meter-block-size) * 0.1);
+  --meter-padding-inline: calc(var(--meter-block-size) * 0.3);
+
+  --meter-radius: var(--radius-full);
+
+  /* VALUE */
+  --meter-transition: 300ms ease;
+
+  /* COLORS */
+  --meter-color: var(--color-primary);
+  --meter-suboptimum-color: var(--color-warning);
+  --meter-poor-color: var(--color-error);
+  --meter-track-color: var(--color-neutral-200);
+
+  /* Expands the meter element, to controll its width, controll the wrappers width*/
+  inline-size: 100%;
+
+  box-sizing: content-box;
+  block-size: var(--meter-block-size);
+  padding-block: 0.1rem;
+  padding-inline: 0.3rem;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: none;
+
+  /* Firefox has no groove pseudo-element — this is the groove there. */
+  background-color: var(--meter-track-color);
+
+  border-radius: var(--meter-radius);
+
+  overflow: hidden;
+
+  /* COLOR VARIANTS */
+  &[data-color="primary"] {
+    --meter-color: var(--color-primary);
+  }
+
+  &[data-color="success"] {
+    --meter-color: var(--color-success);
+  }
+
+  &[data-color="error"] {
+    --meter-color: var(--color-error);
+  }
+
+  &[data-color="warning"] {
+    --meter-color: var(--color-warning);
+  }
+
+  &[data-color="info"] {
+    --meter-color: var(--color-info);
+  }
+
+  /* SIZE */
+  &.sm {
+    --meter-block-size: 0.5rem;
+  }
+  &.md {
+    --meter-block-size: 1rem;
+  }
+  &.lg {
+    --meter-block-size: 1.5rem;
+  }
+
+  /* RADIUS */
+  &.sharp {
+    --meter-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    --meter-radius: var(--radius-sm);
+  }
+
+  &.rounded {
+    --meter-radius: var(--radius-full);
+  }
+
+  /*
+   * The engines build a meter differently and their selectors can
+   * never share a rule: a selector list holding one unknown
+   * pseudo-element is dropped whole, so a -webkit- and a -moz-
+   * selector written together apply in neither. One rule each.
+   *
+   * Chromium/WebKit: a groove pseudo-element, one value
+   * pseudo-element per range state.
+   * Firefox: one value pseudo-element, range state as a pseudo-class
+   * on the element.
+   *
+   * The radius is written out on each of them rather than inherited —
+   * a value pseudo-element does not pick up the groove's radius that
+   * way, which leaves the filled bar square at the end it stops at.
+   */
+
+  /* CHROMIUM, WEBKIT */
+
+  &::-webkit-meter-inner-element {
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  &::-webkit-meter-bar {
+    background: var(--meter-track-color);
+    border-radius: var(--meter-radius);
+  }
+
+  &::-webkit-meter-optimum-value {
+    background: var(--meter-color);
+    border-radius: var(--meter-radius);
+    transition: inline-size var(--meter-transition);
+  }
+
+  &::-webkit-meter-suboptimum-value {
+    background: var(--meter-suboptimum-color);
+    border-radius: var(--meter-radius);
+    transition: inline-size var(--meter-transition);
+  }
+
+  &::-webkit-meter-even-less-good-value {
+    background: var(--meter-poor-color);
+    border-radius: var(--meter-radius);
+    transition: inline-size var(--meter-transition);
+  }
+
+  /* FIREFOX */
+
+  &::-moz-meter-bar {
+    background: var(--meter-color);
+    border-radius: var(--meter-radius);
+    transition: inline-size var(--meter-transition);
+  }
+
+  &:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: var(--meter-suboptimum-color);
+  }
+
+  &:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: var(--meter-poor-color);
+  }
+
+  /* REDUCED MOTION */
+
+  @media (prefers-reduced-motion: reduce) {
+    &::-webkit-meter-optimum-value {
+      transition-duration: 0ms;
+    }
+
+    &::-webkit-meter-suboptimum-value {
+      transition-duration: 0ms;
+    }
+
+    &::-webkit-meter-even-less-good-value {
+      transition-duration: 0ms;
+    }
+
+    &::-moz-meter-bar {
+      transition-duration: 0ms;
+    }
+  }
+}
+
+/* LABELLED */
+
+.meter-wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--spacing-25);
+
+  & > .meter {
+    grid-column: 1 / -1;
+  }
+
+  & > .meter-label {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-neutral-700);
+  }
+
+  & > .meter-value {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+}

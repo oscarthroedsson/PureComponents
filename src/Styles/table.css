@@ -1,0 +1,164 @@
+/*
+Table — spacing and alignment for native table markup.
+
+The class goes on the <table>. Everything inside is reached from
+there, so the whole table stays one unit.
+
+  <table class="table md">
+    <thead>…</thead>
+    <tbody>…</tbody>
+  </table>
+
+SIZE
+  sm | md (default) | lg      cell padding and type size
+
+ALIGNMENT
+  start (default) | center | end
+
+  The class works at any level, because text-align inherits: on the
+  table it sets the baseline, on thead/tbody/tfoot it overrides the
+  table, on a tr it overrides the section, on a cell it overrides the
+  row. The nearest ancestor that sets a value wins — no rule per
+  level is needed, and an inherited value always yields to one set
+  directly on the element.
+
+  <table class="table md">                    everything starts at start
+    <tbody>
+      <tr>
+        <td>Ada</td>
+        <td class="end">1284</td>              just this cell
+      </tr>
+    </tbody>
+  </table>
+
+  The baseline is start rather than the browser default, which gives
+  td start and th center — a header centred over left-aligned data,
+  which reads as a mistake. Reaching th takes text-align: inherit on
+  the cells: the browser sets center on th directly, and a value on
+  the element always beats an inherited one.
+
+STYLING
+
+Restrained on purpose: hairlines between rows, a slightly firmer one
+under the header, and header text stepped back so the data reads
+first. No zebra, no vertical rules, no outer frame — those are
+decisions for the page, not defaults for every table.
+
+The lines sit between rows rather than around them: the last row has
+none, so the table ends on data instead of a stray rule.
+
+VARIABLES
+  --table-padding-block
+  --table-padding-inline
+  --table-font-size
+
+  --table-color              body text
+  --table-head-color         header text, stepped back
+  --table-border-color       the hairline between rows
+  --table-head-border-color  under the header, one step firmer
+  --table-border-width
+*/
+
+.table {
+  --table-padding-block: var(--spacing-75);
+  --table-padding-inline: var(--spacing-100);
+  --table-font-size: var(--font-size-md);
+
+  --table-color: var(--color-neutral-800);
+  --table-head-color: var(--color-neutral-600);
+  --table-border-color: var(--color-neutral-200);
+  --table-head-border-color: var(--color-neutral-300);
+  --table-border-width: 1px;
+
+  inline-size: 100%;
+
+  /* The 2px default would show up as gaps between every cell. */
+  border-spacing: 0;
+
+  font-size: var(--table-font-size);
+  color: var(--table-color);
+
+  /* Inherited by every cell, th included. */
+  text-align: start;
+
+  & :is(th, td) {
+    padding: var(--table-padding-block) var(--table-padding-inline);
+
+    /*
+     * th carries text-align: center from the browser, and a value set
+     * on the element beats an inherited one — so the baseline above
+     * would never reach it. inherit hands the cell back to whatever
+     * the nearest ancestor decided, which is the whole point.
+     */
+    text-align: inherit;
+
+    border-block-end: var(--table-border-width) solid var(--table-border-color);
+  }
+
+  /* The table ends on data, not on a stray line. */
+  & tbody tr:last-child :is(th, td) {
+    border-block-end: none;
+  }
+
+  & thead :is(th, td) {
+    color: var(--table-head-color);
+
+    border-block-end-color: var(--table-head-border-color);
+  }
+
+  & tfoot :is(th, td) {
+    border-block-end: none;
+    border-block-start: var(--table-border-width) solid var(--table-head-border-color);
+  }
+
+  /* The browser's bold is heavier than this needs to be. */
+  & th {
+    font-weight: 600;
+  }
+
+  & caption {
+    padding: var(--table-padding-block) var(--table-padding-inline);
+
+    font-weight: 600;
+
+    /* The browser centres captions the same way it centres th. */
+    text-align: inherit;
+  }
+
+  /* SIZE */
+
+  &.sm {
+    --table-padding-block: var(--spacing-50);
+    --table-padding-inline: var(--spacing-75);
+    --table-font-size: var(--font-size-sm);
+  }
+
+  &.md {
+    --table-padding-block: var(--spacing-75);
+    --table-padding-inline: var(--spacing-100);
+    --table-font-size: var(--font-size-md);
+  }
+
+  &.lg {
+    --table-padding-block: var(--spacing-100);
+    --table-padding-inline: var(--spacing-125);
+    --table-font-size: var(--font-size-base);
+  }
+
+  /* ALIGNMENT */
+
+  &.start,
+  & .start {
+    text-align: start;
+  }
+
+  &.center,
+  & .center {
+    text-align: center;
+  }
+
+  &.end,
+  & .end {
+    text-align: end;
+  }
+}

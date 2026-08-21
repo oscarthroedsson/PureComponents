@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-*{
-    box-sizing: border-box
+* {
+  box-sizing: border-box;
 }
+
 #app {
   display: flex;
   justify-content: center;
@@ -14,10 +15,10 @@ body {
   font-family: "Poppins", sans-serif;
   margin: 0px;
 }
-p{
+p {
   margin: 0px;
 }
-fieldset{
+fieldset {
   padding: 0px;
 }
 
@@ -43,13 +44,10 @@ fieldset{
   --color-neutral-900: #0f1729;
 
   /* ===== Semantic Colors (för framtida alerts m.m.) ===== */
-  --color-success: #4ADE80;
-  --color-error: #F87171;
+  --color-success: #4ade80;
+  --color-error: #f87171;
   --color-warning: #facc15;
-  --color-info: #38BDF8
-
-  /* 🧠 Typografi – Global */
-  --font-family-base: "Inter", sans-serif;
+  --color-info: #38bdf8;
   --font-family-heading: "Playfair Display", serif;
 
   --font-size-base: 1rem;
@@ -68,10 +66,10 @@ fieldset{
   --font-size-sm: 0.75rem; /*12px*/
   --font-size-md: 0.875rem; /*14px*/
   --font-size-base: 1rem;
-  --font-size-lg: 1.25rem;
-  --font-size-xl: 1.5rem;
-  --font-size-2xl: 2rem;
-  --font-size-3xl: 3rem;
+  --font-size-lg: 1.25rem; /*20px*/
+  --font-size-xl: 1.5rem; /*24px*/
+  --font-size-2xl: 2rem; /*32px*/
+  --font-size-3xl: 3rem; /*48px*/
   --font-weight-subheading: 600;
 
   /* width */
@@ -95,19 +93,12 @@ fieldset{
   --spacing-300: 3rem; /* 48px */
   --spacing-400: 4rem; /* 64px */
 
-  /* Old values */
-  --spacing-56: 3.5rem; /* 56px */
-  --spacing-72: 4.5rem; /* 72px */
-  --spacing-80: 5rem; /* 80px */
-  --spacing-88: 5.5rem; /* 88px */
-  --spacing-96: 6rem; /* 96px */
-
   /* 🧊 Border radius */
   --radius-none: 0px;
   --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 8px;
-  --radius-lg: 16px;
+  --radius-lg: 12px;
   --radius-full: 999px;
 
   /* Wondering if I should use this borders instead */
@@ -120,6 +111,11 @@ fieldset{
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
   --shadow-left: -21px 0px 10px -15px rgba(0, 0, 0, 0.2);
+
+  /* 🎯 Focus ring */
+  --focus-ring-width: 1px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: #1447e6;
 
   /* 🎬 Transitions */
   --transition-fast: 0.15s ease-in-out;
@@ -139,31 +135,32 @@ fieldset{
 
   --icon-size-lg-w: 24px;
   --icon-size-lg-h: 24px;
-
-  --size-icon-sm: var(--size-16);
-  --size-icon-md: var(--size-24);
-  --size-icon-lg: var(--size-32);
-
-  --size-avatar-sm: var(--size-32);
-  --size-avatar-md: var(--size-48);
-  --size-avatar-lg: var(--size-64);
 }
 
-/* 🌍 Global classes */
-.rounded-sm {
-  border-radius: var(--radius-sm);
-}
-.rounded-md {
-  border-radius: var(--radius-md);
-}
-.rounded-lg {
-  border-radius: var(--radius-lg);
+/* ====================
+   FOCUS RING
+   ==================== */
+
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
 }
 
-details:first-of-type summary::marker {
-  content: "";
-}
+/*
+Measured against the worse of a white page and the #f1f5f9 stage. WCAG 2.1 AA
+asks 3:1 of a focus indicator (1.4.11), and that ratio is a property of the
+colour alone — a thicker ring does not raise it.
 
-details:first-of-type summary::-webkit-details-marker {
-  content: "";
-}
+  #193cb8  blue-800     8.05:1   in use
+  #1447e6  blue-700     6.24:1
+  #4f39f6  indigo-600   5.90:1
+  #8e51ff  violet-500   4.02:1
+  #ad46ff  purple-500   3.76:1
+
+Below 3:1 at every width, colour is why:
+
+  #00a6f4  sky-500      2.47:1
+  #00d3f2  cyan-400     1.65:1
+  #05df72  green-400    1.62:1
+  #9ae600  lime-400     1.40:1
+*/

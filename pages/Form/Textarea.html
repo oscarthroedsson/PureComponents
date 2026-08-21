@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Textarea — PureComponents</title>
+    <meta name="pc-description" content="Textareas must have an associated label element with proper for and id attributes." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/textarea.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/formField.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Textarea">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <div class="formField">
+        <label for="message-basic">Message</label>
+        <textarea
+          id="message-basic"
+          class="textarea md"
+          rows="4"
+          aria-describedby="message-help"
+        ></textarea>
+        <p id="message-help" class="helpText">Enter your message here</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+    <p class="pc-note">Textareas support three sizes: small (sm), medium (md), and large (lg).</p>
+    <template>
+      <div class="formField">
+        <label for="small-ta">Small</label>
+        <textarea id="small-ta" class="textarea sm" rows="3"></textarea>
+      </div>
+      <div class="formField">
+        <label for="medium-ta">Medium</label>
+        <textarea id="medium-ta" class="textarea md" rows="4"></textarea>
+      </div>
+      <div class="formField">
+        <label for="large-ta">Large</label>
+        <textarea id="large-ta" class="textarea lg" rows="5"></textarea>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="resize-variants" data-title="Resize Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+    <p class="pc-note">Textareas support different resize behaviors: vertical (default), horizontal, both, and none.</p>
+    <template>
+      <div class="formField">
+        <label for="resize-vertical">Vertical Resize (default)</label>
+        <textarea id="resize-vertical" class="textarea md" rows="3" style="resize: vertical;"></textarea>
+      </div>
+      <div class="formField">
+        <label for="resize-none">No Resize</label>
+        <textarea id="resize-none" class="textarea md" rows="3" style="resize: none;"></textarea>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="character-count" data-title="Character Count">
+    <p class="pc-note">Textareas can display character count using <code>aria-describedby</code> and <code>aria-live="polite"</code>.</p>
+    <template>
+      <div class="formField">
+        <label for="count-ta">Message</label>
+        <textarea
+          id="count-ta"
+          class="textarea md"
+          rows="4"
+          maxlength="500"
+          aria-describedby="count-help count-display"
+        ></textarea>
+        <div class="textarea-footer">
+          <p id="count-help" class="helpText">Enter your message</p>
+          <span id="count-display" class="char-count" aria-live="polite">0 / 500</span>
+        </div>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="error-state" data-title="Error State">
+    <p class="pc-note">Error states require <code>aria-invalid="true"</code> and <code>aria-describedby</code> pointing to the error message.</p>
+    <template>
+      <div class="formField">
+        <label for="error-ta">Message</label>
+        <textarea
+          id="error-ta"
+          class="textarea md"
+          rows="4"
+          aria-invalid="true"
+          aria-describedby="ta-error"
+        ></textarea>
+        <p id="ta-error" class="status" role="alert">Message is required</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
+    <p class="pc-note">Textareas can be disabled using the native <code>disabled</code> attribute.</p>
+    <template>
+      <div class="formField">
+        <label for="disabled-ta">Disabled Textarea</label>
+        <textarea id="disabled-ta" class="textarea md" rows="4" disabled>This field is disabled</textarea>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
+    <p class="pc-note">Textareas must have proper labels and ARIA attributes for screen reader support.</p>
+    <template>
+      <div class="formField">
+        <label for="accessible-ta">Accessible Textarea</label>
+        <textarea
+          id="accessible-ta"
+          class="textarea md"
+          rows="4"
+          aria-describedby="help-text error-text"
+          aria-required="true"
+        ></textarea>
+        <p id="help-text" class="helpText">Enter your message</p>
+        <p id="error-text" class="status" role="alert" style="display: none;">Error message</p>
+      </div>
+    </template>
+  </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

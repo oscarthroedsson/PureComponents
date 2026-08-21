@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table — PureComponents</title>
+    <meta name="pc-description" content="Table spacing. The class goes on the table and reaches every cell from there." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../src/Styles/main.css" />
+    <link rel="stylesheet" href="../src/Styles/table.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+
+  <body data-component="Table">
+    <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+      <p class="pc-note">The class goes on the <code>&lt;table&gt;</code>. Every cell is reached from there.</p>
+
+      <template>
+        <table class="table md">
+          <caption>Team members</caption>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">Commits</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Ada Lovelace</th>
+              <td>Engineering</td>
+              <td>1284</td>
+            </tr>
+            <tr>
+              <th scope="row">Grace Hopper</th>
+              <td>Compilers</td>
+              <td>907</td>
+            </tr>
+            <tr>
+              <th scope="row">Alan Turing</th>
+              <td>Research</td>
+              <td>42</td>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="alignment" data-title="Alignment">
+      <p class="pc-note">
+        <code>start</code> (default), <code>center</code> and <code>end</code>. The class works at any level, because
+        <code>text-align</code> inherits — the nearest ancestor that sets a value wins, and a value set directly on an
+        element always beats an inherited one.
+      </p>
+
+      <p class="pc-note">
+        The baseline is <code>start</code> rather than the browser default, which gives <code>td</code> start and
+        <code>th</code> center — a header centred over left-aligned data.
+      </p>
+
+      <template>
+        <table class="table md">
+          <caption>One cell overridden</caption>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+              <th scope="col" class="end">Commits</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Ada Lovelace</th>
+              <td>Engineering</td>
+              <td class="end">1284</td>
+            </tr>
+            <tr>
+              <th scope="row">Grace Hopper</th>
+              <td>Compilers</td>
+              <td class="end">907</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table md center">
+          <caption>Table set to center, one row back to start</caption>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ada Lovelace</td>
+              <td>Engineering</td>
+            </tr>
+            <tr class="start">
+              <td>Grace Hopper</td>
+              <td>Compilers</td>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="size-variants" data-title="Size Variants">
+      <p class="pc-note">
+        <code>sm</code>, <code>md</code> (default) and <code>lg</code> move cell padding and type size together.
+      </p>
+
+      <template>
+        <table class="table sm">
+          <caption>sm</caption>
+          <thead>
+            <tr>
+              <th scope="col">Package</th>
+              <th scope="col">Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>core</td>
+              <td>12.4 kB</td>
+            </tr>
+            <tr>
+              <td>icons</td>
+              <td>88.1 kB</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table md">
+          <caption>md</caption>
+          <thead>
+            <tr>
+              <th scope="col">Package</th>
+              <th scope="col">Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>core</td>
+              <td>12.4 kB</td>
+            </tr>
+            <tr>
+              <td>icons</td>
+              <td>88.1 kB</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table lg">
+          <caption>lg</caption>
+          <thead>
+            <tr>
+              <th scope="col">Package</th>
+              <th scope="col">Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>core</td>
+              <td>12.4 kB</td>
+            </tr>
+            <tr>
+              <td>icons</td>
+              <td>88.1 kB</td>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+    </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

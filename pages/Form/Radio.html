@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Radio — PureComponents</title>
+    <meta name="pc-description" content="Radio buttons must be grouped in a &amp;lt;fieldset&amp;gt; with a &amp;lt;legend&amp;gt;. All radios in a group must share the same name attribute." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/radio.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/fieldSet.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Radio">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <fieldset class="radio-group md">
+        <legend>Choose an option</legend>
+        <div class="radio-item">
+          <input type="radio" id="option1" name="choice" class="radio md" value="1" />
+          <label for="option1" class="radio-label md">Option 1</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="option2" name="choice" class="radio md" value="2" />
+          <label for="option2" class="radio-label md">Option 2</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="option3" name="choice" class="radio md" value="3" />
+          <label for="option3" class="radio-label md">Option 3</label>
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <p class="pc-note">Radio buttons support three sizes: small (sm), medium (md), and large (lg).</p>
+    <template>
+      <fieldset class="radio-group sm">
+        <legend>Small</legend>
+        <div class="radio-item">
+          <input type="radio" id="small1" name="small" class="radio sm" />
+          <label for="small1" class="radio-label sm">Option 1</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="small2" name="small" class="radio sm" />
+          <label for="small2" class="radio-label sm">Option 2</label>
+        </div>
+      </fieldset>
+      <fieldset class="radio-group md">
+        <legend>Medium</legend>
+        <div class="radio-item">
+          <input type="radio" id="medium1" name="medium" class="radio md" />
+          <label for="medium1" class="radio-label md">Option 1</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="medium2" name="medium" class="radio md" />
+          <label for="medium2" class="radio-label md">Option 2</label>
+        </div>
+      </fieldset>
+      <fieldset class="radio-group lg">
+        <legend>Large</legend>
+        <div class="radio-item">
+          <input type="radio" id="large1" name="large" class="radio lg" />
+          <label for="large1" class="radio-label lg">Option 1</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="large2" name="large" class="radio lg" />
+          <label for="large2" class="radio-label lg">Option 2</label>
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="horizontal-layout" data-title="Horizontal Layout">
+    <p class="pc-note">Radio groups can be displayed horizontally using the <code>horizontal</code> class.</p>
+    <template>
+      <fieldset class="radio-group md horizontal">
+        <legend>Choose an option</legend>
+        <div class="radio-item">
+          <input type="radio" id="h1" name="horizontal" class="radio md" />
+          <label for="h1" class="radio-label md">Option 1</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="h2" name="horizontal" class="radio md" />
+          <label for="h2" class="radio-label md">Option 2</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="h3" name="horizontal" class="radio md" />
+          <label for="h3" class="radio-label md">Option 3</label>
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="error-state" data-title="Error State">
+    <p class="pc-note">Error states require <code>aria-invalid="true"</code> on the fieldset and <code>aria-describedby</code> pointing to the error message.</p>
+    <template>
+      <fieldset class="radio-group md" aria-invalid="true" aria-describedby="radio-error">
+        <legend>Choose an option</legend>
+        <p id="radio-error" class="status" role="alert">Please select an option</p>
+        <div class="radio-item">
+          <input type="radio" id="error1" name="error" class="radio md" />
+          <label for="error1" class="radio-label md">Option 1</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="error2" name="error" class="radio md" />
+          <label for="error2" class="radio-label md">Option 2</label>
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
+    <p class="pc-note">Individual radio buttons can be disabled using the native <code>disabled</code> attribute.</p>
+    <template>
+      <fieldset class="radio-group md">
+        <legend>Choose an option</legend>
+        <div class="radio-item">
+          <input type="radio" id="enabled" name="disabled" class="radio md" />
+          <label for="enabled" class="radio-label md">Enabled</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="disabled-radio" name="disabled" class="radio md" disabled />
+          <label for="disabled-radio" class="radio-label md">Disabled</label>
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
+    <p class="pc-note">Radio buttons must be properly grouped and labeled for screen reader support.</p>
+    <template>
+      <fieldset class="radio-group md">
+        <legend>Accessible Radio Group</legend>
+        <div class="radio-item">
+          <input type="radio" id="acc1" name="accessible" class="radio md" />
+          <label for="acc1" class="radio-label md">Option 1</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="acc2" name="accessible" class="radio md" />
+          <label for="acc2" class="radio-label md">Option 2</label>
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

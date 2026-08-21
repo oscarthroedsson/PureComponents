@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Del — PureComponents</title>
+    <meta name="pc-description" content="The Del component provides strikethrough styling for deleted text using the &amp;lt;del&amp;gt; element." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../src/Styles/main.css" />
+    <link rel="stylesheet" href="../src/Styles/del.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Del">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <p>Regular price: <del>$100</del> Sale price: $75</p>
+      <p>This text has <del>deleted content</del> that is crossed out.</p>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="with-insert" data-title="With Insert">
+    <p class="pc-note">Del can be used with <code>&lt;ins&gt;</code> to show both deleted and inserted text.</p>
+    <template>
+      <p>Price changed from <del>$100</del> <ins>$75</ins></p>
+      <p>Text was changed from <del>old text</del> to <ins>new text</ins></p>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="in-lists" data-title="In Lists">
+    <p class="pc-note">Del can be used in lists to show removed items.</p>
+    <template>
+      <ul>
+        <li>Active item</li>
+        <li><del>Removed item</del></li>
+        <li>Another active item</li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
+    <p class="pc-note">Del elements should be used semantically to indicate deleted content.</p>
+    <template>
+      <p>This demonstrates proper use of <del>deleted text</del> for accessibility.</p>
+    </template>
+  </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

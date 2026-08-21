@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Input — PureComponents</title>
+    <meta name="pc-description" content="File inputs must have an associated label element with proper for and id attributes." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/file.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/formField.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/File">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <div class="formField">
+        <label for="file-basic">Upload File</label>
+        <input type="file" id="file-basic" class="fileInput" aria-describedby="file-help" />
+        <p id="file-help" class="helpText">Select a file to upload</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="border-radius-variants" data-title="Border Radius Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+    <p class="pc-note">File inputs support different border radius styles: sharp, smooth, and rounded.</p>
+    <template>
+      <div class="formField">
+        <label for="sharp-file">Sharp</label>
+        <input type="file" id="sharp-file" class="fileInput sharp" />
+      </div>
+      <div class="formField">
+        <label for="smooth-file">Smooth</label>
+        <input type="file" id="smooth-file" class="fileInput smooth" />
+      </div>
+      <div class="formField">
+        <label for="rounded-file">Rounded</label>
+        <input type="file" id="rounded-file" class="fileInput rounded" />
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="multiple-files" data-title="Multiple Files">
+    <p class="pc-note">File inputs can accept multiple files using the <code>multiple</code> attribute.</p>
+    <template>
+      <div class="formField">
+        <label for="multi-file">Upload Multiple Files</label>
+        <input type="file" id="multi-file" class="fileInput" multiple aria-describedby="multi-help" />
+        <p id="multi-help" class="helpText">Hold Ctrl (Cmd on Mac) to select multiple files</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="file-type-restrictions" data-title="File Type Restrictions" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+    <p class="pc-note">File inputs can restrict file types using the <code>accept</code> attribute.</p>
+    <template>
+      <div class="formField">
+        <label for="image-file">Images Only</label>
+        <input type="file" id="image-file" class="fileInput" accept="image/*" />
+      </div>
+      <div class="formField">
+        <label for="pdf-file">PDF Only</label>
+        <input type="file" id="pdf-file" class="fileInput" accept=".pdf" />
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="error-state" data-title="Error State">
+    <p class="pc-note">File inputs show error states when validation fails.</p>
+    <template>
+      <div class="formField">
+        <label for="error-file">Upload File</label>
+        <input
+          type="file"
+          id="error-file"
+          class="fileInput"
+          aria-invalid="true"
+          aria-describedby="file-error"
+        />
+        <p id="file-error" class="status" role="alert">Please select a valid file</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
+    <p class="pc-note">File inputs must have proper labels and ARIA attributes for screen reader support.</p>
+    <template>
+      <div class="formField">
+        <label for="accessible-file">Accessible File Input</label>
+        <input
+          type="file"
+          id="accessible-file"
+          class="fileInput"
+          aria-describedby="file-help file-error"
+          aria-required="true"
+        />
+        <p id="file-help" class="helpText">Select a file to upload (max 10MB)</p>
+        <p id="file-error" class="status" role="alert" style="display: none;">Error message</p>
+      </div>
+    </template>
+  </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

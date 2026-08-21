@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Menu — PureComponents</title>
+
+    <meta
+      name="pc-description"
+      content="Native CSS menus with inline and flyout submenus, popovers, automatic anchor positioning, configurable indentation and responsive placement."
+    />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../src/Styles/main.css" />
+    <link rel="stylesheet" href="../src/Styles/Menu/menu.css" />
+    <link rel="stylesheet" href="../src/Styles/button.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+
+  <body data-component="Menu">
+    <section
+      class="pc-demo"
+      id="basic-usage"
+      data-title="Basic Usage"
+      data-stage-style="display: flex; justify-content: center; padding: 3rem;"
+    >
+      <template>
+        <ul class="menu md">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="popup-menu"
+      data-title="Popup Menu"
+      data-stage-style="display: flex; justify-content: center; align-items: center; min-height: 14rem;"
+    >
+      <p class="pc-note">
+        Popup menus use native <code>popover="auto"</code>, giving light dismiss, Escape handling and top-layer
+        rendering without JavaScript.
+      </p>
+
+      <template>
+        <button class="btn md" popovertarget="account-menu" interestfor="account-menu">Open Menu</button>
+
+        <ul id="account-menu" class="menu md" popover="auto">
+          <li class="menu-title">Account</li>
+
+          <li><a href="#profile">Profile</a></li>
+          <li><button type="button">Settings</button></li>
+          <li><button type="button">Billing</button></li>
+
+          <li class="menu-separator"></li>
+
+          <li><button type="button">Sign out</button></li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="size-variants"
+      data-title="Size Variants"
+      data-stage-style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; align-items: flex-start; padding: 3rem;"
+    >
+      <p class="pc-note">Menus support small, medium and large typography. Spacing scales with the menu font size.</p>
+
+      <template>
+        <ul class="menu sm">
+          <li class="menu-title">Small</li>
+          <li><a href="#sm-1">Item 1</a></li>
+          <li><a href="#sm-2">Item 2</a></li>
+        </ul>
+
+        <ul class="menu md">
+          <li class="menu-title">Medium</li>
+          <li><a href="#md-1">Item 1</a></li>
+          <li><a href="#md-2">Item 2</a></li>
+        </ul>
+
+        <ul class="menu lg">
+          <li class="menu-title">Large</li>
+          <li><a href="#lg-1">Item 1</a></li>
+          <li><a href="#lg-2">Item 2</a></li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="inline-submenu"
+      data-title="Inline Submenu"
+      data-stage-style="display: flex; justify-content: center; padding: 3rem;"
+    >
+      <p class="pc-note">Inline submenus use native <code>&lt;details&gt;</code> and expand inside the menu.</p>
+
+      <template>
+        <ul class="menu md" data-indent="true">
+          <li><a href="#dashboard">Dashboard</a></li>
+
+          <li>
+            <details>
+              <summary>Products</summary>
+
+              <ul class="menu" data-submenu="inline">
+                <li><a href="#product-1">Product 1</a></li>
+                <li><a href="#product-2">Product 2</a></li>
+                <li><a href="#product-3">Product 3</a></li>
+              </ul>
+            </details>
+          </li>
+
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="submenu-indent"
+      data-title="Submenu Indentation"
+      data-stage-style="display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center; align-items: flex-start; padding: 3rem;"
+    >
+      <p class="pc-note">Inline submenus can be indented or aligned with the parent menu.</p>
+
+      <template>
+        <ul class="menu md" data-indent="true">
+          <li class="menu-title">Indented</li>
+
+          <li>
+            <details open>
+              <summary>Settings</summary>
+
+              <ul class="menu" data-submenu="inline">
+                <li><a href="#general-a">General</a></li>
+                <li><a href="#security-a">Security</a></li>
+                <li><a href="#billing-a">Billing</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+
+        <ul class="menu md" data-indent="false">
+          <li class="menu-title">Not indented</li>
+
+          <li>
+            <details open>
+              <summary>Settings</summary>
+
+              <ul class="menu" data-submenu="inline">
+                <li><a href="#general-b">General</a></li>
+                <li><a href="#security-b">Security</a></li>
+                <li><a href="#billing-b">Billing</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="flyout-submenu"
+      data-title="Flyout Submenu"
+      data-stage-style="display: flex; justify-content: center; align-items: center; min-height: 18rem;"
+    >
+      <p class="pc-note">Flyout submenus use nested native popovers and CSS Anchor Positioning.</p>
+
+      <template>
+        <button class="btn md" popovertarget="main-menu" interestfor="main-menu">Open Menu</button>
+
+        <ul id="main-menu" class="menu md" popover="auto">
+          <li><a href="#dashboard-flyout">Dashboard</a></li>
+
+          <li>
+            <button type="button" popovertarget="products-submenu" interestfor="products-submenu">Products</button>
+
+            <ul id="products-submenu" class="menu" popover="auto" data-submenu="flyout">
+              <li><a href="#product-a">Product A</a></li>
+              <li><a href="#product-b">Product B</a></li>
+              <li><a href="#product-c">Product C</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#contact-flyout">Contact</a></li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="nested-flyouts"
+      data-title="Nested Flyouts"
+      data-stage-style="display: flex; justify-content: center; align-items: center; min-height: 20rem;"
+    >
+      <p class="pc-note">Flyout menus can contain additional flyout levels while the parent popovers remain open.</p>
+
+      <template>
+        <button class="btn md" popovertarget="nested-root" interestfor="nested-root">Development</button>
+
+        <ul id="nested-root" class="menu md" popover="auto">
+          <li>
+            <button type="button" popovertarget="frontend-submenu" interestfor="frontend-submenu">Frontend</button>
+
+            <ul id="frontend-submenu" class="menu" popover="auto" data-submenu="flyout">
+              <li>
+                <button type="button" popovertarget="framework-submenu" interestfor="framework-submenu">
+                  Frameworks
+                </button>
+
+                <ul id="framework-submenu" class="menu" popover="auto" data-submenu="flyout">
+                  <li><a href="#react">React</a></li>
+                  <li><a href="#vue">Vue</a></li>
+                  <li><a href="#svelte">Svelte</a></li>
+                </ul>
+              </li>
+
+              <li><a href="#css">CSS</a></li>
+              <li><a href="#javascript">JavaScript</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#backend">Backend</a></li>
+          <li><a href="#devops">DevOps</a></li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="automatic-positioning"
+      data-title="Automatic Flyout Placement"
+      data-stage-style="display: flex; justify-content: flex-end; align-items: center; min-height: 18rem; padding: 2rem 0.5rem;"
+    >
+      <p class="pc-note">
+        Flyouts prefer the right side. If there is not enough room, CSS Anchor Positioning automatically tries
+        alternative placements.
+      </p>
+
+      <template>
+        <button class="btn md" popovertarget="edge-menu">Edge Menu</button>
+
+        <ul id="edge-menu" class="menu md" popover="auto">
+          <li>
+            <button type="button" popovertarget="edge-submenu">Open Flyout</button>
+
+            <ul id="edge-submenu" class="menu" popover="auto" data-submenu="flyout">
+              <li><a href="#edge-1">First Item</a></li>
+              <li><a href="#edge-2">Second Item</a></li>
+              <li><a href="#edge-3">Third Item</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#edge-other">Another Item</a></li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="mixed-submenus"
+      data-title="Inline + Flyout"
+      data-stage-style="display: flex; justify-content: center; padding: 3rem;"
+    >
+      <p class="pc-note">Each submenu can independently choose between inline expansion and flyout behavior.</p>
+
+      <template>
+        <ul class="menu md" data-indent="true">
+          <li><a href="#overview">Overview</a></li>
+
+          <li>
+            <details>
+              <summary>Account</summary>
+
+              <ul class="menu" data-submenu="inline">
+                <li><a href="#profile-mixed">Profile</a></li>
+                <li><a href="#sessions">Sessions</a></li>
+              </ul>
+            </details>
+          </li>
+
+          <li>
+            <button type="button" popovertarget="advanced-submenu" interestfor="advanced-submenu">Advanced</button>
+
+            <ul id="advanced-submenu" class="menu" popover="auto" data-submenu="flyout">
+              <li><a href="#integrations">Integrations</a></li>
+              <li><a href="#api-keys">API Keys</a></li>
+              <li><a href="#webhooks">Webhooks</a></li>
+            </ul>
+          </li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="horizontal-menu"
+      data-title="Horizontal Menu"
+      data-stage-style="display: flex; justify-content: center; padding: 3rem;"
+    >
+      <p class="pc-note">Add the <code>horizontal</code> class to change the menu flow.</p>
+
+      <template>
+        <ul class="menu md horizontal">
+          <li><a href="#horizontal-home">Home</a></li>
+          <li><a href="#horizontal-products">Products</a></li>
+          <li><a href="#horizontal-pricing">Pricing</a></li>
+          <li><a href="#horizontal-docs">Docs</a></li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="menu-content"
+      data-title="Icons & Shortcuts"
+      data-stage-style="display: flex; justify-content: center; padding: 3rem;"
+    >
+      <template>
+        <ul class="menu md">
+          <li class="menu-title">File</li>
+
+          <li>
+            <button type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 5v14" />
+                <path d="M5 12h14" />
+              </svg>
+
+              New File
+
+              <span class="menu-shortcut">⌘N</span>
+            </button>
+          </li>
+
+          <li>
+            <button type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 3v12" />
+                <path d="m7 8 5-5 5 5" />
+                <path d="M5 21h14" />
+              </svg>
+
+              Upload
+
+              <span class="menu-shortcut">⇧⌘U</span>
+            </button>
+          </li>
+
+          <li class="menu-separator"></li>
+
+          <li>
+            <button type="button">Preferences</button>
+          </li>
+        </ul>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="states"
+      data-title="States"
+      data-stage-style="display: flex; justify-content: center; padding: 3rem;"
+    >
+      <template>
+        <ul class="menu md">
+          <li>
+            <a href="#current" aria-current="page"> Current Page </a>
+          </li>
+
+          <li>
+            <button type="button" data-active>Active Item</button>
+          </li>
+
+          <li>
+            <button type="button">Normal Item</button>
+          </li>
+
+          <li>
+            <button type="button" disabled>Disabled Item</button>
+          </li>
+        </ul>
+      </template>
+    </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

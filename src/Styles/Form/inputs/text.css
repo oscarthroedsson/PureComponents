@@ -1,3 +1,20 @@
+/* 
+ACCESSIBILITY REQUIREMENTS:
+- ALL inputs MUST have an associated <label> element with for="input-id"
+- Error messages MUST use aria-describedby pointing to error message id
+- Inputs with errors MUST have aria-invalid="true"
+- Help text should use aria-describedby
+- Focus indicators come from main.css. Never draw an outline in this file.
+
+USAGE:
+  <div class="label-container">
+    <label for="email">Email</label>
+    <input type="email" id="email" aria-describedby="email-help email-error" />
+    <p id="email-help" class="helpText">Enter your email address</p>
+    <p id="email-error" class="status" role="alert">Error message</p>
+  </div>
+*/
+
 .label-container {
   /* We need this to counter the offset rules */
   padding: var(--spacing-50);
@@ -13,9 +30,14 @@
     gap: var(--spacing-50);
 
     & :is(input[type="text"], input[type="number"], input[type="email"], input[type="password"], input[type="tel"]) {
-      border: none;
-      outline: 1px solid hsl(0, 0%, 0%, 20%);
-      outline-offset: var(--spacing-25);
+      /*
+       * A border, not an outline. Written as an outline this rule sat at
+       * a higher specificity than the global :focus-visible in main.css
+       * and won even while the field had focus — so a text field never
+       * showed the focus ring at all. outline is the ring's property; a
+       * component that needs a visible edge uses border.
+       */
+      border: 1px solid hsl(0, 0%, 0%, 20%);
       padding: var(--spacing-25) var(--spacing-50);
     }
 
@@ -148,7 +170,7 @@
   &:has(input:disabled) {
     color: var(--color-neutral-500);
     input {
-      outline: 1px solid var(--color-neutral-400);
+      border: 1px solid var(--color-neutral-400);
     }
     .helpText {
       display: none;
@@ -166,20 +188,23 @@
     display: none;
   }
 
-  /* Will overrite warning */
-  &:has(input:user-invalid) input {
-    outline: 1px solid var(--color-error) !important;
+  /* Error state - REQUIRES aria-invalid="true" and aria-describedby on input */
+  &:has(input:user-invalid) input,
+  &:has(input[aria-invalid="true"]) input {
+    border-color: var(--color-error) !important;
   }
 
-  &:has(input:user-invalid) .status {
+  &:has(input:user-invalid) .status,
+  &:has(input[aria-invalid="true"]) .status {
     display: block !important;
     font-weight: 400;
     font-size: var(--font-size-md);
     color: var(--color-error);
   }
 
+  /* Warning state */
   & input[data-warning="true"] {
-    outline: 1px solid var(--color-warning) !important;
+    border-color: var(--color-warning) !important;
   }
 }
 
@@ -206,7 +231,7 @@
   padding: var(--spacing-50) var(--spacing-75);
 
   &.sharp {
-    border-radius: none;
+    border-radius: var(--radius-sharp);
   }
   &.smooth {
     border-radius: var(--radius-md);
@@ -228,12 +253,16 @@
     font-size: var(--font-size-lg);
   }
 
-  &:focus {
+  /* The focus ring comes from main.css. This only clears the browser's
+     own outline for a mouse click, where :focus-visible never matches. */
+
+  &:focus:not(:focus-visible) {
     outline: none;
   }
 
-  &:user-invalid {
-    outline: 1px solid var(--color-error);
-    outline-offset: -1px;
+  /* Error state - REQUIRES aria-invalid="true" */
+  &:user-invalid,
+  &[aria-invalid="true"] {
+    border-color: var(--color-error);
   }
 }

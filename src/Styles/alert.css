@@ -1,0 +1,323 @@
+/*
+ACCESSIBILITY REQUIREMENTS:
+- Use role="alert" for important, time-sensitive messages
+- Use role="status" for non-urgent status updates
+- role="alert" already provides assertive live-region behavior
+- role="status" already provides polite live-region behavior
+- Do not add aria-live unless intentionally overriding the role's default behavior
+- Icons that only communicate the alert intent should use aria-hidden="true"
+- Dismiss buttons MUST have an accessible name
+- Use the existing .btn component for alert actions and dismiss buttons
+- Alert itself should not receive focus unless there is a specific interaction reason
+
+USAGE:
+
+<div
+  class="alert md"
+  data-intent="error"
+  role="alert"
+>
+  <div class="alert-icon" aria-hidden="true">
+    ...
+  </div>
+
+  <div class="alert-content">
+    <h3 class="alert-title">Something went wrong</h3>
+    <p class="alert-message">
+      We could not save your changes.
+    </p>
+  </div>
+
+  <div class="alert-actions">
+    <button
+      class="btn ghost sm"
+      type="button"
+      aria-label="Dismiss alert"
+    >
+      ...
+    </button>
+  </div>
+</div>
+
+
+STATUS USAGE:
+
+<div
+  class="alert md"
+  data-intent="success"
+  role="status"
+>
+  <div class="alert-content">
+    <p class="alert-message">
+      Your changes have been saved.
+    </p>
+  </div>
+</div>
+
+
+INTENT:
+- data-intent="info" (default)
+- data-intent="success"
+- data-intent="warning"
+- data-intent="error"
+
+STYLE:
+- soft (default)
+- outline
+- filled
+
+SIZE:
+- sm
+- md
+- lg
+
+SHAPE:
+- sharp
+- smooth
+- rounded
+
+THEME:
+- Colors automatically adapt through light-dark()
+- The application should provide the active color-scheme
+*/
+
+.alert {
+  --alert-accent: var(--color-info);
+  --alert-surface: light-dark(var(--color-neutral-100), var(--color-neutral-900));
+  --alert-text: light-dark(var(--color-neutral-900), var(--color-neutral-100));
+  --alert-muted: light-dark(var(--color-neutral-600), var(--color-neutral-300));
+  --alert-bg: color-mix(in oklab, var(--alert-accent) 12%, var(--alert-surface));
+  --alert-border: color-mix(in oklab, var(--alert-accent) 48%, var(--alert-surface));
+  --alert-radius: var(--radius-md);
+
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "content";
+
+  align-items: start;
+
+  gap: 0.75em;
+
+  width: 100%;
+
+  padding-block: 0.85em;
+  padding-inline: 1em;
+
+  border: 1px solid var(--alert-border);
+  border-inline-start-width: 0.3em;
+
+  border-radius: var(--alert-radius);
+
+  background-color: var(--alert-bg);
+  color: var(--alert-text);
+
+  font-size: var(--font-size-md);
+  line-height: 1.45;
+
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+
+  transition:
+    opacity 160ms ease,
+    translate 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    scale 240ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  @starting-style {
+    opacity: 0;
+    translate: 0 -0.4em;
+    scale: 0.985;
+  }
+
+  &:has(> .alert-icon) {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "icon content";
+  }
+
+  &:has(> .alert-actions) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "content actions";
+  }
+
+  &:has(> .alert-icon):has(> .alert-actions) {
+    grid-template-columns:
+      auto
+      minmax(0, 1fr)
+      auto;
+
+    grid-template-areas: "icon content actions";
+  }
+
+  & > .alert-icon {
+    grid-area: icon;
+
+    display: grid;
+    place-items: center;
+
+    flex: none;
+
+    inline-size: 1.4em;
+    block-size: 1.4em;
+
+    margin-block-start: 0.05em;
+
+    color: var(--alert-accent);
+
+    & > :is(svg, img, i) {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+
+    & > svg {
+      stroke: currentColor;
+    }
+  }
+
+  & > .alert-content {
+    grid-area: content;
+
+    min-width: 0;
+  }
+
+  .alert-title {
+    margin: 0;
+
+    color: inherit;
+
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .alert-title + .alert-message {
+    margin-block-start: 0.25em;
+  }
+
+  .alert-message {
+    margin: 0;
+
+    color: var(--alert-text);
+
+    font-size: 0.95em;
+    line-height: 1.5;
+  }
+
+  & > .alert-actions {
+    grid-area: actions;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 0.35em;
+
+    min-width: max-content;
+  }
+
+  /* SIZE */
+
+  &.sm {
+    font-size: var(--font-size-sm);
+  }
+
+  &.md {
+    font-size: var(--font-size-md);
+  }
+
+  &.lg {
+    font-size: var(--font-size-lg);
+  }
+
+  /* VARIANTS */
+
+  &[data-intent="info"] {
+    --alert-accent: var(--color-info);
+  }
+
+  &[data-intent="success"] {
+    --alert-accent: var(--color-success);
+  }
+
+  &[data-intent="warning"] {
+    --alert-accent: var(--color-warning);
+  }
+
+  &[data-intent="error"] {
+    --alert-accent: var(--color-error);
+  }
+
+  &.outline {
+    background-color: transparent;
+
+    border-color: var(--alert-accent);
+  }
+
+  &.filled {
+    background-color: var(--alert-accent);
+    border-color: var(--alert-accent);
+
+    color: var(--color-neutral-900);
+    color: contrast-color(var(--alert-accent));
+
+    --alert-text: currentColor;
+    --alert-muted: currentColor;
+
+    .alert-icon {
+      color: currentColor;
+    }
+  }
+
+  &.sharp {
+    --alert-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    --alert-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    --alert-radius: var(--radius-lg);
+  }
+
+  /* STATES */
+
+  &[data-state="closing"] {
+    opacity: 0;
+    translate: 0 -0.35em;
+    scale: 0.985;
+
+    pointer-events: none;
+  }
+
+  &:has(.btn:focus-visible) {
+    border-color: color-mix(in oklab, var(--alert-accent) 75%, var(--alert-surface));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0ms;
+
+    @starting-style {
+      opacity: 1;
+      translate: 0;
+      scale: 1;
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    border-width: 2px;
+    border-inline-start-width: 0.35em;
+  }
+
+  @media (forced-colors: active) {
+    background-color: Canvas;
+    color: CanvasText;
+
+    border-color: CanvasText;
+
+    .alert-icon {
+      color: currentColor;
+    }
+  }
+}

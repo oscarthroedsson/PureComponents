@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select — PureComponents</title>
+    <meta name="pc-description" content="Select dropdowns must have an associated label element with proper for and id attributes." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/select.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/formField.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Select">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <div class="formField">
+        <label for="country-basic">Country</label>
+        <select id="country-basic" class="select md" aria-describedby="country-help">
+          <option value="">Choose a country</option>
+          <option value="us">United States</option>
+          <option value="uk">United Kingdom</option>
+          <option value="ca">Canada</option>
+        </select>
+        <p id="country-help" class="helpText">Select your country</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+    <p class="pc-note">Select dropdowns support three sizes: small (sm), medium (md), and large (lg).</p>
+    <template>
+      <div class="formField">
+        <label for="small-select">Small</label>
+        <select id="small-select" class="select sm">
+          <option>Option 1</option>
+          <option>Option 2</option>
+        </select>
+      </div>
+      <div class="formField">
+        <label for="medium-select">Medium</label>
+        <select id="medium-select" class="select md">
+          <option>Option 1</option>
+          <option>Option 2</option>
+        </select>
+      </div>
+      <div class="formField">
+        <label for="large-select">Large</label>
+        <select id="large-select" class="select lg">
+          <option>Option 1</option>
+          <option>Option 2</option>
+        </select>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="border-radius-variants" data-title="Border Radius Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+    <p class="pc-note">Select dropdowns support different border radius styles: sharp, smooth, and rounded.</p>
+    <template>
+      <div class="formField">
+        <label for="sharp-select">Sharp</label>
+        <select id="sharp-select" class="select md sharp">
+          <option>Option 1</option>
+        </select>
+      </div>
+      <div class="formField">
+        <label for="smooth-select">Smooth</label>
+        <select id="smooth-select" class="select md smooth">
+          <option>Option 1</option>
+        </select>
+      </div>
+      <div class="formField">
+        <label for="rounded-select">Rounded</label>
+        <select id="rounded-select" class="select md rounded">
+          <option>Option 1</option>
+        </select>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="multiple-selection" data-title="Multiple Selection">
+    <p class="pc-note">Select elements can allow multiple selections using the <code>multiple</code> attribute.</p>
+    <template>
+      <div class="formField">
+        <label for="multi-select">Select multiple options</label>
+        <select id="multi-select" class="select md" multiple>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+          <option>Option 4</option>
+        </select>
+        <p class="helpText">Hold Ctrl (Cmd on Mac) to select multiple options</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="error-state" data-title="Error State">
+    <p class="pc-note">Error states require <code>aria-invalid="true"</code> and <code>aria-describedby</code> pointing to the error message.</p>
+    <template>
+      <div class="formField">
+        <label for="error-select">Country</label>
+        <select
+          id="error-select"
+          class="select md"
+          aria-invalid="true"
+          aria-describedby="select-error"
+        >
+          <option value="">Choose a country</option>
+        </select>
+        <p id="select-error" class="status" role="alert">Please select a country</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
+    <p class="pc-note">Select elements can be disabled using the native <code>disabled</code> attribute.</p>
+    <template>
+      <div class="formField">
+        <label for="disabled-select">Disabled Select</label>
+        <select id="disabled-select" class="select md" disabled>
+          <option>Option 1</option>
+          <option>Option 2</option>
+        </select>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
+    <p class="pc-note">Select elements must have proper labels and ARIA attributes for screen reader support.</p>
+    <template>
+      <div class="formField">
+        <label for="accessible-select">Accessible Select</label>
+        <select
+          id="accessible-select"
+          class="select md"
+          aria-describedby="help-text error-text"
+          aria-required="true"
+        >
+          <option value="">Choose an option</option>
+          <option value="1">Option 1</option>
+        </select>
+        <p id="help-text" class="helpText">Select an option</p>
+        <p id="error-text" class="status" role="alert" style="display: none;">Error message</p>
+      </div>
+    </template>
+  </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

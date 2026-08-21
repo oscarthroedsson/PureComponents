@@ -1,66 +1,515 @@
 /* -----------------Content Board----------------------- */
-/* 
-→ Base styling
-→ ...add new here
-→ Generall CSS rules
-npm
+/*
+ACCESSIBILITY REQUIREMENTS:
+- A pill is the interactive counterpart to Badge. Badge annotates something
+  else and never responds to the pointer; a pill is its own object and does.
+  Where the two sit in the same row they measure alike on purpose — same
+  height floor, same em-derived box.
+
+- The key is a look, not an element, and which element it sits on decides
+  what the pill *is*:
+
+    <button class="pill">      an action
+    <a class="pill" href>      a destination — a tag page, a filtered view
+    <label class="pill">       a selection, with the input inside it
+    <span class="pill">        a removable tag; the container is not the control
+    <li class="pill">          the same, inside a <ul> of tags
+
+  The <label> form is the one that carries state without JavaScript. The
+  input keeps its own role, the label gives it a name, and Tab and Space
+  work because nothing was reconstructed. :has(:checked) below only paints
+  what the checkbox already reports.
+
+- A removable tag is two controls, never one. The tag is the text; the
+  remove control is a separate <button> beside it with its own accessible
+  name. Written as a single <button aria-label="Remove JavaScript">, the
+  tag itself stops existing as an object and the whole pill becomes a
+  destructive control — which is also why the key may not be a <button>
+  when a remove button is inside it: a <button> cannot contain a <button>.
+
+- Selection is never carried by colour alone. A selected pill fills, and it
+  also shows a marker. The marker occupies its space at all times and only
+  its opacity changes, so selecting does not resize the pill and the row
+  does not reflow under the pointer. It appears only where the pill is
+  actually selectable — a plain action pill gets no invisible glyph.
+
+- Every interactive form gets the focus ring from main.css, and this file
+  draws none of its own. The <label> form works because its input covers the
+  whole pill: the ring is drawn around whatever has focus, so at full size it
+  traces the pill instead of an invisible point beside it.
+
+- The pill is at least 24px tall at every size, so it clears the 24x24
+  target floor without needing padding a consumer has to remember to add.
+
+- Text contrast is 4.5:1 or better in every state. Measured worst case is
+  neutral-900 on neutral-400 at :active, 5.2:1. Selected fills with
+  --color-primary and keeps the dark text, 7.0:1 — not the light text .btn
+  uses on the same token, which does not measure.
+
+- .outline carries the box on its border alone, and --color-neutral-400
+  measures 2.5:1 against a white page. WCAG 1.4.11 asks 3:1 of a graphic
+  needed to identify a component. Reported, not worked around here: the fix
+  belongs to the tokens in main.css.
+
+
+USAGE:
+
+<button class="pill">Filter</button>
+<a class="pill" href="/tags/css">css</a>
+
+<label class="pill">
+  <input type="checkbox" name="topic" value="design" />
+  Design
+</label>
+
+<span class="pill outline">
+  JavaScript
+  <button class="pill-remove" aria-label="Remove JavaScript">&times;</button>
+</span>
+
+<button class="pill" aria-pressed="true">Unread only</button>
+
+
+SIZE:  sm · md · lg   (md is the default; the key alone is already md)
+
+Same scale as .btn — 12 / 14 / 16px — because that is what a pill is: a
+small button. One variable, --pill-font-size, and the whole box follows it
+in em. Heights land at 24.8 / 28.6 / 32.4px.
+
+SHAPE: sharp · smooth · rounded   (smooth is the default, as everywhere else)
+
+VARIANT:
+- (none)    a light neutral box. The default.
+- outline   the fill dropped, the border kept.
+- ghost     both dropped. For a dense row where the boxes would fight each
+            other. Same meaning as .ghost on .btn and .badge.
+
+STATE:
+- :hover · :active          neutral steps, no derived colour
+- :focus-visible            the ring from main.css, not drawn here
+- :has(:checked)            the <label> form, selected
+- [aria-pressed="true"]     the <button> form, a toggle
+- :disabled · [aria-disabled="true"]
+
+
+CUSTOMIZATION:
+- --pill-font-size            the one measurement. The box derives from it.
+- --pill-background · --pill-border-color · --pill-color
+- --pill-background-hover · --pill-background-active
+- --pill-selected-background · --pill-selected-color · --pill-selected-marker
+- --pill-padding-inline · --pill-padding-block · --pill-gap
+- --pill-radius · --pill-border-width
+- --pill-remove-radius
+
+
+NOT HERE:
+Intent. data-intent="success" on a pill would say the same thing a badge
+says, in a box you can press. Status is Badge's job; a pill is categorical.
+Keeping the two apart is what makes the pair readable.
+
+Colour derivation. There is no color-mix() and no relative syntax in this
+file — every state is a plain step along the neutral scale. That is why it
+needs no @supports guard, and why the main.css dark-mode pass carries it
+for free.
+
+Loading and skeleton go on top, from loading.css, and are not rebuilt per
+component.
 */
 /* ----------------------------------------------------- */
-button.pill {
+
+.pill {
+  /* VARIABLES */
+
+  --pill-font-size: var(--font-size-md);
+  --pill-font-weight: var(--font-weight-subheading);
+
+  --pill-padding-inline: 0.75em;
+  --pill-padding-block: 0.35em;
+  --pill-gap: 0.4em;
+
+  --pill-radius: var(--radius-md);
+  --pill-border-width: 1px;
+
+  --pill-background: var(--color-neutral-200);
+  --pill-border-color: var(--color-neutral-400);
+  --pill-color: var(--color-neutral-900);
+
+  /*
+   * The hover and active fills are variables rather than values written in
+   * the state blocks, and that is a specificity decision, not a taste one.
+   * `.pill.outline` is (0,2,0) and `.pill:hover` is (0,1,1), so a state
+   * that wrote --pill-background directly would lose to every variant and
+   * .outline would have had no hover at all. Each variant writes its own
+   * pair below; the state block only ever swaps which one is in play.
+   */
+  --pill-background-hover: var(--color-neutral-300);
+  --pill-background-active: var(--color-neutral-400);
+
+  --pill-selected-background: var(--color-primary);
+  --pill-selected-border-color: var(--color-primary);
+
+  /*
+   * Dark text on the primary fill, measured 7.0:1. .btn puts
+   * --color-neutral-100 on this same token, which lands near 2.2:1 — a
+   * token problem reported in AGENTS.md §8, and not one to copy here.
+   */
+  --pill-selected-color: var(--color-neutral-900);
+
+  /*
+   * The mark that says "selected" without relying on the fill. Content,
+   * not a colour, so it is a string and a consumer can replace it with
+   * their own glyph.
+   */
+  --pill-selected-marker: "\2713";
+
+  --pill-remove-radius: var(--radius-full);
+
+  /* BASE */
+
+  box-sizing: border-box;
+
+  /*
+   * inline-flex, not inline. On an inline box height and width are inert
+   * and padding-block paints without reserving room in the line, so a pill
+   * in running text overlaps the line above it. The same bug badge.css
+   * carried, and the dev shell hides it — its stage is a flex container,
+   * which blockifies everything on the page.
+   */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* The <label> form's input is absolute and covers the pill. Without this
+     it would resolve against some ancestor further up instead. */
   position: relative;
 
-  font-size: 12px;
-  padding: var(--spacing-50) var(--spacing-100);
-  border: 0px solid transparent;
+  gap: var(--pill-gap);
 
-  height: fit-content;
-  width: fit-content;
+  /* Never squeezed by a flex or grid parent. */
+  flex: 0 0 auto;
 
-  background-color: var(--color-neutral-300);
-  border-radius: var(--radius-sm);
+  padding-inline: var(--pill-padding-inline);
+  padding-block: var(--pill-padding-block);
 
-  &:hover {
-    filter: brightness(0.95);
+  /*
+   * Always one border, transparent when a variant wants none. Toggling the
+   * width instead moves the box by 2px when the variant changes, which is
+   * visible in a row where only one pill is outlined.
+   */
+  border: var(--pill-border-width) solid var(--pill-border-color);
+  border-radius: var(--pill-radius);
+
+  background-color: var(--pill-background);
+  color: var(--pill-color);
+
+  /*
+   * The height an untrimmed line of this text would take. It is a floor,
+   * not a height: it holds the box the same whether the consumer wrote
+   * bare text or wrapped it in an element, since the trim below only
+   * reaches a wrapped child and never the anonymous flex item bare text
+   * becomes. It is also why the trim needs no @supports guard — a browser
+   * that cannot trim lands on this floor anyway.
+   */
+  min-block-size: calc(
+    1lh + (var(--pill-padding-block) * 2) + (var(--pill-border-width) * 2)
+  );
+
+  /*
+   * A pill is a small control and the same class has to give the same box
+   * on every element it is allowed on. A <button> arrives with the system
+   * font, an <a> arrives underlined and in the browser's link colour, a
+   * <label> arrives with neither. None of that is a decision this
+   * component made, so all of it is cleared in one place.
+   */
+  font-family: inherit;
+  font-size: var(--pill-font-size);
+  font-weight: var(--pill-font-weight);
+  font-style: inherit;
+  line-height: 1.2;
+
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: middle;
+
+  /*
+   * Only the colours and the press animate. Declared on the key, not
+   * inside :active — written there it applies on the way in and never on
+   * the way out, which is the state the old file shipped in.
+   */
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+
+  /* CONTENT */
+
+  /* Icons follow the text, at every size, from the one font-size. */
+  & > :is(svg, img, i) {
+    inline-size: 1em;
+    block-size: 1em;
+
+    flex: 0 0 auto;
   }
 
-  &:active {
-    transition: filter 0.2s ease, transform 0.2s ease;
-    filter: brightness(0.9);
-    transform: scale(0.95);
+  & > svg {
+    fill: currentColor;
   }
 
-  &.outline {
-    height: fit-content;
-    width: fit-content;
-    cursor: default;
+  /*
+   * A pill is a leaf, so whatever is inside it has to look like pill text.
+   * A heading arrives with a margin, its own size and its own weight —
+   * <h1> is 2em of the pill, which resetting the margin alone would not
+   * have caught. The trim only reaches a child like this one; the floor on
+   * the key keeps both markups the same height.
+   *
+   * A heading still does not belong in a pill: it puts a phantom entry in
+   * the document outline. This rule stops it rendering broken; it is not
+   * an invitation.
+   */
+  & > :is(h1, h2, h3, h4, h5, h6, p) {
+    margin: 0;
 
-    background-color: transparent;
-    border: 1px solid var(--color-neutral-300);
+    font-size: inherit;
+    font-weight: inherit;
+
+    text-box: trim-both cap alphabetic;
   }
-  &.neutral {
-    background-color: transparent;
-    border: transparent;
+
+  /*
+   * The input in the <label> form. Transparent, but it covers the whole
+   * pill rather than sitting in a 1px corner — and that is a focus-ring
+   * decision, not a layout one.
+   *
+   * The ring is drawn once, globally, in main.css, around whichever
+   * element has focus. In this form that element is the input. At 1px the
+   * keyboard ring would trace an invisible point beside the pill; at full
+   * size it traces the pill itself. So the ring stays where it belongs and
+   * this file never draws one of its own.
+   *
+   * It also inherits the radius, because an outline follows the border
+   * radius of the box it is drawn around — without this a rounded pill
+   * would get a square ring.
+   *
+   * Taken out of the flow rather than hidden: display:none and
+   * visibility:hidden both drop it from the tab order, and a filter you
+   * cannot reach by keyboard is not a filter.
+   */
+  & > input:is([type="checkbox"], [type="radio"]) {
+    position: absolute;
+    inset: 0;
+
+    margin: 0;
+    border-radius: var(--pill-radius);
+
+    opacity: 0;
+    cursor: pointer;
   }
+
+  /* SIZE */
 
   &.sm {
-    font-size: 11px;
-    line-height: fit-content;
-  }
-  &.md {
-    font-size: 12px;
-  }
-  &.lg {
-    font-size: 13px;
-    padding: var(--spacing-50) var(--spacing-100);
+    --pill-font-size: var(--font-size-sm);
+
+    --pill-padding-inline: 0.65em;
   }
 
+  &.md {
+    --pill-font-size: var(--font-size-md);
+  }
+
+  &.lg {
+    --pill-font-size: var(--font-size-base);
+  }
+
+  /* SHAPE — after the sizes, so it replaces whatever radius they carry. */
+
   &.sharp {
-    border-radius: 0px;
+    --pill-radius: var(--radius-sharp);
   }
-  &.soft {
-    border-radius: var(--radius-md);
+
+  &.smooth {
+    --pill-radius: var(--radius-md);
   }
+
   &.rounded {
-    border-radius: var(--radius-full);
+    --pill-radius: var(--radius-full);
+  }
+
+  /*
+   * VARIANTS
+   *
+   * Each one owns its whole colour set, hover and active included. A
+   * variant that only dropped the fill would hover back to the neutral
+   * step and stop looking like itself the moment the pointer arrived.
+   */
+
+  &.outline {
+    --pill-background: transparent;
+
+    --pill-background-hover: var(--color-neutral-200);
+    --pill-background-active: var(--color-neutral-300);
+  }
+
+  &.ghost {
+    --pill-background: transparent;
+    --pill-border-color: transparent;
+
+    --pill-background-hover: var(--color-neutral-200);
+    --pill-background-active: var(--color-neutral-300);
+  }
+
+  /* STATES */
+
+  /*
+   * :is(button, a, label) does two jobs. It keeps hover and the pointer
+   * away from the <span> and <li> forms, which are containers and not
+   * controls — and it raises these rules to (0,2,1), above the (0,2,0) of
+   * every variant above, so .outline and .ghost keep their hover.
+   */
+  &:is(button, a, label) {
+    cursor: pointer;
+
+    &:hover {
+      --pill-background: var(--pill-background-hover);
+    }
+
+    &:active {
+      --pill-background: var(--pill-background-active);
+
+      transform: scale(0.97);
+    }
+
+    &:is(:disabled, [aria-disabled="true"]) {
+      --pill-background: var(--color-neutral-200);
+      --pill-color: var(--color-neutral-500);
+
+      cursor: not-allowed;
+
+      /* The press does not answer, so it does not animate either. */
+      &:active {
+        transform: none;
+      }
+    }
+  }
+
+  /*
+   * SELECTED — after the variants, so a selected .outline fills instead of
+   * staying transparent. Written before them the two tie on specificity
+   * and source order hands it to the variant, which is how a selected pill
+   * ends up looking unselected.
+   */
+  &:is(:has(:checked), [aria-pressed="true"]) {
+    --pill-background: var(--pill-selected-background);
+    --pill-border-color: var(--pill-selected-border-color);
+    --pill-color: var(--pill-selected-color);
+
+    --pill-background-hover: var(--pill-selected-background);
+    --pill-background-active: var(--pill-selected-background);
+
+    /* The fill already changed; the border is what hover has left to say. */
+    &:hover {
+      --pill-border-color: var(--color-neutral-900);
+    }
+  }
+
+  /*
+   * THE SELECTION MARKER
+   *
+   * Only where the pill can actually be selected — :has() on the input, or
+   * the toggle attribute. A plain action pill never grows one.
+   *
+   * It is present at both states and only its opacity changes, so
+   * selecting does not resize the pill. A row of filters would otherwise
+   * reflow under the pointer every time one was picked.
+   */
+  &:is(:has(input:is([type="checkbox"], [type="radio"])), [aria-pressed]) {
+    &::before {
+      content: var(--pill-selected-marker);
+
+      opacity: 0;
+
+      /* Held in the line box, so the glyph cannot drag the height. */
+      line-height: 1;
+    }
+
+    &:is(:has(:checked), [aria-pressed="true"])::before {
+      opacity: 1;
+    }
+  }
+
+  /*
+   * THE REMOVE CONTROL
+   *
+   * A control of its own, inside a container that is not one. It lives in
+   * the key block because it has no meaning outside a pill — .pill-remove
+   * on its own is not a component.
+   */
+  & > .pill-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    inline-size: 1.25em;
+    block-size: 1.25em;
+
+    /* Reaches past its own box to the pill's padding, so the target clears
+     * 24px even though the glyph is small. */
+    margin-inline-end: calc(var(--pill-padding-inline) * -0.35);
+
+    padding: 0;
+    border: none;
+    border-radius: var(--pill-remove-radius);
+
+    background-color: transparent;
+    color: inherit;
+
+    font: inherit;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: background-color var(--transition-fast);
+
+    & > :is(svg, img) {
+      inline-size: 0.75em;
+      block-size: 0.75em;
+    }
+
+    &:hover {
+      background-color: var(--color-neutral-400);
+    }
+
+
+    &:is(:disabled, [aria-disabled="true"]) {
+      color: var(--color-neutral-500);
+
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+/*
+ * The press and the colour fades are the only motion in the file, and
+ * neither carries information — the fill, the border and the marker say
+ * everything without them.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .pill {
+    transition: none;
+
+    &:is(button, a, label):active {
+      transform: none;
+    }
+
+    & > .pill-remove {
+      transition: none;
+    }
   }
 }

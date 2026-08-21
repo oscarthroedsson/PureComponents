@@ -1,66 +1,157 @@
-/* 
-TODO
-JS needs to say that we can only use this on a standard html element becuase of the psudoElements
+/*
+ACCESSIBILITY REQUIREMENTS:
+- Tooltip element MUST have role="tooltip" and an id
+- Trigger MUST have aria-describedby pointing to the tooltip id
+- Tooltip MUST appear on hover and keyboard focus
+- Tooltip MUST NOT contain interactive content
+- Tooltip content should only provide supplemental information
+- Tooltip should remain visible while pointer is over the tooltip
+
+RECOMMENDED USAGE:
+
+<button
+  aria-describedby="save-tooltip"
+  interestfor="save-tooltip"
+>
+  Save
+
+  <span
+    id="save-tooltip"
+    class="tooltip"
+    role="tooltip"
+    popover="hint"
+  >
+    Save changes
+  </span>
+</button>
+
+PLACEMENT:
+- top (default)
+- right
+- bottom
+- left
+
+The browser automatically tries fallback positions if
+the preferred placement would overflow the viewport.
 */
 
+/* TRIGGER */
+
+:where([aria-describedby]:has(> .tooltip)) {
+  anchor-scope: --tooltip-anchor;
+  anchor-name: --tooltip-anchor;
+}
+
+/* TOOLTIP */
+
 .tooltip {
-  position: relative;
+  --tooltip-offset: 0.5em;
 
-  &::before {
-    content: attr(data-tip);
-    min-width: 100%;
-    text-align: center;
-    font-size: var(--font-size-sm);
+  position: fixed;
+  position-anchor: --tooltip-anchor;
+  position-area: top;
 
-    opacity: 0;
-    padding: var(--spacing-25) var(--spacing-50);
+  inset: auto;
+  margin: var(--tooltip-offset);
 
-    position: absolute;
-    top: -100%;
-    left: 50%;
-    z-index: 99;
+  width: max-content;
+  max-width: min(24rem, calc(100vw - 1rem));
 
-    background-color: #333;
-    color: #fff;
+  padding-block: 0.35em;
+  padding-inline: 0.6em;
 
-    border-radius: 0.25rem;
-    white-space: nowrap;
+  border: none;
+  border-radius: 0.35em;
 
-    pointer-events: none;
-    transform: translateX(-50%);
-    transition: opacity 0.2s ease;
+  background-color: var(--color-neutral-900);
+  color: var(--color-neutral-100);
+
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+  text-align: center;
+
+  overflow-wrap: anywhere;
+
+  z-index: var(--z-index-tooltip, 999);
+
+  opacity: 0;
+  scale: 0.96;
+
+  transition:
+    opacity 140ms ease,
+    scale 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    display 180ms allow-discrete,
+    overlay 180ms allow-discrete;
+
+  /* PLACEMENT */
+
+  &[data-placement="top"] {
+    position-area: top;
+    position-try-fallbacks: bottom, right, left;
   }
 
-  &.right::before {
-    top: 50%;
-    left: 100%;
-    transform: translateY(-50%) translateX(0.5rem);
-  }
-  &.left::before {
-    top: 50%;
-    right: 100%;
-    left: auto;
-    transform: translateY(-50%) translateX(-0.5rem);
-  }
-  &.bottom::before {
-    top: 100%;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%) translateY(0.5rem);
+  &[data-placement="right"] {
+    position-area: right;
+    position-try-fallbacks: left, top, bottom;
   }
 
-  &:hover::before {
-    opacity: 1;
+  &[data-placement="bottom"] {
+    position-area: bottom;
+    position-try-fallbacks: top, right, left;
   }
 
-  .sm {
+  &[data-placement="left"] {
+    position-area: left;
+    position-try-fallbacks: right, top, bottom;
+  }
+
+  /* SIZE */
+
+  &.sm {
     font-size: var(--font-size-xs);
-    & > button.sm {
-      font-size: var(--font-size-sm);
+  }
+
+  &.md {
+    font-size: var(--font-size-sm);
+  }
+
+  &.lg {
+    font-size: var(--font-size-base);
+  }
+
+  /* STATES */
+
+  &:popover-open {
+    opacity: 1;
+    scale: 1;
+
+    @starting-style {
+      opacity: 0;
+      scale: 0.96;
     }
   }
-  .md {
+
+  /* REDUCED MOTION */
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0ms;
   }
-  .lg {
+}
+
+/* INTEREST */
+
+@supports selector(:interest-source) {
+  :where([interestfor]:has(> .tooltip)) {
+    interest-delay: 400ms 120ms;
+  }
+}
+
+/* FALLBACK */
+
+@supports not selector(:interest-source) {
+  :where([aria-describedby]:has(> .tooltip)):is(:hover, :focus-visible) > .tooltip {
+    display: block;
+    opacity: 1;
+    scale: 1;
   }
 }

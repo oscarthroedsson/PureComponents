@@ -1,7 +1,6 @@
 -✅ **a**
 
 - ✋🏼 **abbr**
-- ✅ **address**
 - **area** / - **map**
 - **article**
 - **aside**

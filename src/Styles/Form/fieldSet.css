@@ -18,7 +18,7 @@
   /* lg should not exist */
 
   &.sharp {
-    border-radius: var(--radius-none);
+    border-radius: var(--radius-sharp);
   }
   &.smooth {
     border-radius: var(--radius-md);

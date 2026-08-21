@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navigation — PureComponents</title>
+    <meta name="pc-description" content="The Navigation component provides accessible navigation menus with proper semantic HTML and ARIA attributes." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../src/Styles/main.css" />
+    <link rel="stylesheet" href="../src/Styles/nav.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Navigation">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <nav aria-label="Main navigation">
+        <ul class="nav md">
+          <li><a href="#home" aria-current="page">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="layout-variants" data-title="Layout Variants" data-stage-style="display: flex; flex-direction: column; gap: 2rem">
+    <p class="pc-note">Navigation supports both horizontal (default) and vertical layouts.</p>
+    <template>
+      <nav aria-label="Horizontal navigation">
+        <ul class="nav md horizontal">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Vertical navigation">
+        <ul class="nav md vertical">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem">
+    <p class="pc-note">Navigation supports three sizes: small (sm), medium (md), and large (lg).</p>
+    <template>
+      <nav aria-label="Small navigation">
+        <ul class="nav sm">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Medium navigation">
+        <ul class="nav md">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Large navigation">
+        <ul class="nav lg">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="current-page-indication" data-title="Current Page Indication">
+    <p class="pc-note">Use <code>aria-current="page"</code> to indicate the current page in navigation.</p>
+    <template>
+      <nav aria-label="Navigation with current page">
+        <ul class="nav md">
+          <li><a href="#home" aria-current="page">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="border-radius-variants" data-title="Border Radius Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem">
+    <p class="pc-note">Navigation links support different border radius styles: sharp, smooth, and rounded.</p>
+    <template>
+      <nav aria-label="Sharp navigation">
+        <ul class="nav md sharp">
+          <li><a href="#home">Sharp</a></li>
+          <li><a href="#about">Links</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Smooth navigation">
+        <ul class="nav md smooth">
+          <li><a href="#home">Smooth</a></li>
+          <li><a href="#about">Links</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Rounded navigation">
+        <ul class="nav md rounded">
+          <li><a href="#home">Rounded</a></li>
+          <li><a href="#about">Links</a></li>
+        </ul>
+      </nav>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
+    <p class="pc-note">Navigation must use proper semantic HTML and ARIA attributes for screen reader support.</p>
+    <template>
+      <nav aria-label="Accessible navigation">
+        <ul class="nav md">
+          <li><a href="#home" aria-current="page">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </template>
+  </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

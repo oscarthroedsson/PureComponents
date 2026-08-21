@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Breadcrumbs — PureComponents</title>
+    <meta name="pc-description" content="The trail that says where on the site you are. Wrap it in &lt;nav aria-label=&quot;Breadcrumb&quot;&gt;, put role=&quot;list&quot; on the &lt;ol&gt;, and aria-current=&quot;page&quot; on the current crumb." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../src/Styles/main.css" />
+    <link rel="stylesheet" href="../src/Styles/breadcrumbs.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Breadcrumbs">
+    <section class="pc-doc" id="reference" data-title="Reference">
+      <p>
+        The class goes on the <code>&lt;ol&gt;</code>. An <code>&lt;ol&gt;</code> and not a
+        <code>&lt;ul&gt;</code>: the order is the hierarchy, not a presentation choice. The numbers
+        are turned off; the order is not.
+      </p>
+
+      <h3>Class names</h3>
+      <div class="pc-doc-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>breadcrumbs</code></td>
+              <td class="pc-doc-dim">Component</td>
+              <td>The trail. Goes on the <code>&lt;ol&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td><code>breadcrumbs-separator</code></td>
+              <td class="pc-doc-dim">Part</td>
+              <td>
+                Optional. Your own mark, inside the <code>&lt;li&gt;</code>. Stands our own mark
+                down on sight.
+              </td>
+            </tr>
+            <tr>
+              <td><code>sm</code></td>
+              <td class="pc-doc-dim">Size</td>
+              <td>On the <code>&lt;ol&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td><code>md</code></td>
+              <td class="pc-doc-dim">Size</td>
+              <td>Default.</td>
+            </tr>
+            <tr>
+              <td><code>lg</code></td>
+              <td class="pc-doc-dim">Size</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><code>sharp</code></td>
+              <td class="pc-doc-dim">Shape</td>
+              <td>Square corners. On the <code>&lt;ol&gt;</code> or on a single crumb.</td>
+            </tr>
+            <tr>
+              <td><code>smooth</code></td>
+              <td class="pc-doc-dim">Shape</td>
+              <td>Default corner, whatever the size gives.</td>
+            </tr>
+            <tr>
+              <td><code>rounded</code></td>
+              <td class="pc-doc-dim">Shape</td>
+              <td>Pill.</td>
+            </tr>
+            <tr>
+              <td><code>slash</code></td>
+              <td class="pc-doc-dim">Separator</td>
+              <td><code>/</code> instead of the default <code>&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td><code>chevron</code></td>
+              <td class="pc-doc-dim">Separator</td>
+              <td><code>›</code></td>
+            </tr>
+            <tr>
+              <td><code>arrow</code></td>
+              <td class="pc-doc-dim">Separator</td>
+              <td><code>→</code></td>
+            </tr>
+            <tr>
+              <td><code>dot</code></td>
+              <td class="pc-doc-dim">Separator</td>
+              <td><code>•</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        The shape and separator classes work on the <code>&lt;ol&gt;</code> and one level down, on a
+        single <code>&lt;li&gt;</code>. A crumb that carries its own wins; one that does not falls
+        back to the list's.
+      </p>
+
+      <h3>Sizes</h3>
+      <div class="pc-doc-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Font size</th>
+              <th>Separator space</th>
+              <th>Radius</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>sm</code></td>
+              <td><code>--font-size-sm</code></td>
+              <td><code>--spacing-25</code></td>
+              <td><code>--radius-sm</code></td>
+            </tr>
+            <tr>
+              <td><code>md</code></td>
+              <td><code>--font-size-md</code></td>
+              <td><code>--spacing-50</code></td>
+              <td><code>--radius-md</code></td>
+            </tr>
+            <tr>
+              <td><code>lg</code></td>
+              <td><code>--font-size-base</code></td>
+              <td><code>--spacing-75</code></td>
+              <td><code>--radius-lg</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Markup the library cannot supply</h3>
+      <div class="pc-doc-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Goes on</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>aria-label="Breadcrumb"</code></td>
+              <td class="pc-doc-dim">the <code>&lt;nav&gt;</code></td>
+              <td>Tells this landmark from the page's other navs.</td>
+            </tr>
+            <tr>
+              <td><code>role="list"</code></td>
+              <td class="pc-doc-dim">the <code>&lt;ol&gt;</code></td>
+              <td>
+                <code>list-style: none</code> makes WebKit stop announcing it as a list at all. This
+                writes the role back without bringing the numbers with it.
+              </td>
+            </tr>
+            <tr>
+              <td><code>aria-current="page"</code></td>
+              <td class="pc-doc-dim">the current crumb</td>
+              <td>On the element, never on the <code>&lt;li&gt;</code>. Carries the meaning; the colour only follows it.</td>
+            </tr>
+            <tr>
+              <td><code>aria-hidden="true"</code></td>
+              <td class="pc-doc-dim">your own separator</td>
+              <td>Decoration. Ours is kept away from assistive tech already.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Variables</h3>
+      <div class="pc-doc-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Default</th>
+              <th>What it moves</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>--breadcrumbs-gap</code></td>
+              <td><code>var(--spacing-0)</code></td>
+              <td>Extra space between crumbs. The separator's padding carries the normal gap.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-font-size</code></td>
+              <td><code>var(--font-size-md)</code></td>
+              <td>The size classes replace it.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-radius</code></td>
+              <td><code>var(--radius-md)</code></td>
+              <td>The corner of every crumb. The shape classes replace it; set it on an <code>&lt;li&gt;</code> for one crumb.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-separator</code></td>
+              <td><code>"&gt;"</code></td>
+              <td>The mark between two crumbs. A string or a <code>url()</code>.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-separator-color</code></td>
+              <td><code>var(--color-neutral-400)</code></td>
+              <td>Decoration, so it may be lighter than the text floor.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-separator-space</code></td>
+              <td><code>var(--spacing-50)</code></td>
+              <td>Space either side of the mark. This is the gap between crumbs.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-crumb-padding-inline</code></td>
+              <td><code>var(--spacing-25)</code></td>
+              <td>Room inside a crumb, so a background lands on a shape that fits.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-crumb-padding-block</code></td>
+              <td><code>var(--spacing-15)</code></td>
+              <td>The same, vertically.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-crumb-background</code></td>
+              <td><code>transparent</code></td>
+              <td>Set it and every crumb becomes a chip.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-link-color</code></td>
+              <td><code>var(--color-neutral-500)</code></td>
+              <td>The crumbs behind you. 4.8:1 on white — do not go lighter.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-hover-color</code></td>
+              <td><code>var(--color-neutral-900)</code></td>
+              <td>A crumb under the pointer.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-current-color</code></td>
+              <td><code>var(--color-neutral-900)</code></td>
+              <td>The page you are on.</td>
+            </tr>
+            <tr>
+              <td><code>--breadcrumbs-focus-color</code></td>
+              <td><code>var(--color-primary)</code></td>
+              <td>The focus ring. 3px, offset 2px, following the radius.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+      <p class="pc-note">
+        The class goes on the <code>&lt;ol&gt;</code>. The <code>&lt;nav&gt;</code> and its label belong to
+        the page, and so does <code>role="list"</code> — see Accessibility below.
+      </p>
+      <template>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">Current page</span></li>
+          </ol>
+        </nav>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+      <p class="pc-note">
+        <code>sm</code>, <code>md</code>, <code>lg</code>. <code>md</code> is what the key class alone
+        gives you — the class is there to say it out loud.
+      </p>
+      <template>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs sm" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">Small</span></li>
+          </ol>
+        </nav>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">Medium</span></li>
+          </ol>
+        </nav>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs lg" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">Large</span></li>
+          </ol>
+        </nav>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="separator-variants" data-title="Separator Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+      <p class="pc-note">
+        The default mark is <code>&gt;</code>. Four variant classes reassign it and do nothing else:
+        <code>slash</code>, <code>chevron</code>, <code>arrow</code>, <code>dot</code>.
+      </p>
+      <template>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">Default</span></li>
+          </ol>
+        </nav>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md slash" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">slash</span></li>
+          </ol>
+        </nav>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md chevron" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">chevron</span></li>
+          </ol>
+        </nav>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md arrow" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">arrow</span></li>
+          </ol>
+        </nav>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md dot" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">dot</span></li>
+          </ol>
+        </nav>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="your-own-mark" data-title="Your Own Mark" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+      <p class="pc-note">
+        For a mark we do not ship, set <code>--breadcrumbs-separator</code> yourself. On the
+        <code>&lt;ol&gt;</code> it changes every gap; on a single <code>&lt;li&gt;</code> it changes only
+        the gap after that crumb, because custom properties inherit.
+      </p>
+      <template>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md" role="list" style="--breadcrumbs-separator: '»'">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">Whole trail</span></li>
+          </ol>
+        </nav>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md" role="list">
+            <li style="--breadcrumbs-separator: '|'"><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">One gap only</span></li>
+          </ol>
+        </nav>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="separator-element" data-title="Separator As An Element">
+      <p class="pc-note">
+        When the mark has to be an icon or an SVG, put it in the <code>&lt;li&gt;</code> as
+        <code>.breadcrumbs-separator</code>. Our own mark stands down on its own — nothing to switch
+        off — and the last crumb hides its separator either way, so a loop can emit the same markup
+        for every item.
+      </p>
+      <template>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md" role="list">
+            <li>
+              <a href="#home">Home</a>
+              <span class="breadcrumbs-separator" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+              </span>
+            </li>
+            <li>
+              <a href="#category">Category</a>
+              <span class="breadcrumbs-separator" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+              </span>
+            </li>
+            <li>
+              <span aria-current="page">Current page</span>
+              <span class="breadcrumbs-separator" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+              </span>
+            </li>
+          </ol>
+        </nav>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="shape" data-title="Shape" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+      <p class="pc-note">
+        <code>sharp</code>, <code>smooth</code>, <code>rounded</code>. Corners only show once something
+        is drawn behind them, so these demos set
+        <code>--breadcrumbs-crumb-background</code>. The crumbs already carry the padding.
+      </p>
+      <template>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md sharp" role="list" style="--breadcrumbs-crumb-background: var(--color-neutral-200)">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">sharp</span></li>
+          </ol>
+        </nav>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md smooth" role="list" style="--breadcrumbs-crumb-background: var(--color-neutral-200)">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">smooth</span></li>
+          </ol>
+        </nav>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md rounded" role="list" style="--breadcrumbs-crumb-background: var(--color-neutral-200)">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">rounded</span></li>
+          </ol>
+        </nav>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="shape-per-crumb" data-title="Shape Per Crumb">
+      <p class="pc-note">
+        The same three words work one level down. A crumb that carries its own shape wins; one that
+        does not falls back to the list's. The list below is <code>sharp</code> — only the middle
+        crumb is <code>rounded</code>.
+      </p>
+      <template>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md sharp" role="list" style="--breadcrumbs-crumb-background: var(--color-neutral-200)">
+            <li><a href="#home">Home</a></li>
+            <li class="rounded"><a href="#category">Category</a></li>
+            <li><span aria-current="page">Current page</span></li>
+          </ol>
+        </nav>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="current-page" data-title="Current Page">
+      <p class="pc-note">
+        <code>aria-current="page"</code> goes on the element, never on the <code>&lt;li&gt;</code>. It
+        is what the styling hangs on — leave it off and the crumb renders as a plain link, which is
+        the honest result: without it the page has not been marked as current for anyone.
+      </p>
+      <template>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><a href="#current" aria-current="page">A current page that is still a link</a></li>
+          </ol>
+        </nav>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="wrapping" data-title="Long Trails">
+      <p class="pc-note">
+        The row wraps rather than overflowing. Narrow the width control above to see it.
+      </p>
+      <template>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#a">Documentation</a></li>
+            <li><a href="#b">Components</a></li>
+            <li><a href="#c">Navigation patterns</a></li>
+            <li><a href="#d">Breadcrumbs</a></li>
+            <li><span aria-current="page">Separator variants</span></li>
+          </ol>
+        </nav>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="accessibility" data-title="Accessibility Requirements">
+      <p class="pc-note">
+        Three things belong to the markup, not to us:
+        <code>&lt;nav aria-label="Breadcrumb"&gt;</code> so the landmark can be told from the page's
+        other navs; <code>role="list"</code> on the <code>&lt;ol&gt;</code>, because
+        <code>list-style: none</code> makes WebKit stop announcing it as a list at all; and
+        <code>aria-current="page"</code> on the current crumb. The separator is decoration and is
+        kept away from assistive tech.
+      </p>
+      <template>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumbs md" role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#category">Category</a></li>
+            <li><span aria-current="page">Current page</span></li>
+          </ol>
+        </nav>
+      </template>
+    </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

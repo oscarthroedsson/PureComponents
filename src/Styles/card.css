@@ -1,51 +1,407 @@
+/*
+Card — a surface that groups related content into one unit.
+
+The class goes on the container; the parts inside are reached from
+there, so the whole card stays one block.
+
+  <article class="card md">
+    <figure class="card-media">…</figure>
+    <header class="card-header">
+      <h3 class="card-title">…</h3>
+      <p class="card-subtitle">…</p>
+    </header>
+    <div class="card-body">…</div>
+    <footer class="card-footer">…</footer>
+  </article>
+
+Every part is optional and independent. A card with nothing but a
+.card-body has to look finished, and it does.
+
+ACCESSIBILITY REQUIREMENTS:
+- The card is a container, not a widget. It gets no role of its own.
+  Use <article> for something that stands on its own, <li> inside a
+  list of cards, <div> when it is only a visual grouping.
+- .card-title carries no heading semantics. Put it on a real <h2>–<h6>
+  chosen to fit the page outline, never picked for its size.
+- Images in .card-media need alt text. Decorative ones take alt="".
+- A whole-card link (data-interactive) must be exactly one <a> — the
+  one marked .card-link. Everything else stays out of the tab order,
+  or the card turns into one tab stop per element.
+- The focus ring comes from main.css and is drawn on whatever has
+  focus. This file draws none of its own.
+- The card clips its overflow, so --card-padding-block and
+  --card-padding-inline must stay above the ring's reach — its width
+  plus its offset — or a ring on a control inside the card gets cut.
+  The smallest size is 12px, which clears the current 1px + 2px.
+
+ORDER:
+  DOM order decides. .card-header above .card-media and below it are
+  both valid, and .horizontal reads the order to pick the media side.
+
+SIZE
+  sm | md (default) | lg      padding and type scale, not width
+
+  Width is the parent's decision. Set --card-max-width to cap it.
+
+ORIENTATION
+  (default)                   parts stacked in a column
+  horizontal                  media beside the content
+
+SHAPE
+  sharp | smooth (default) | rounded
+
+EMPHASIS
+  (default)                   surface with a border
+  outline                     border only, no fill
+  ghost                       neither
+  elevated                    surface with a shadow
+
+STATE
+  data-interactive            whole card is the hit area for .card-link
+
+VARIABLES
+  --card-max-width            none; the parent sizes the card
+  --card-surface              the fill
+  --card-color                body text
+  --card-title-color          title text
+  --card-subtitle-color       subtitle, footer and other muted text
+  --card-border-color
+  --card-border-width
+  --card-radius
+  --card-shadow               only drawn by .elevated and on hover
+  --card-padding-block        also the seam between two parts
+  --card-padding-inline
+  --card-font-size
+  --card-title-size
+  --card-media-aspect-ratio   auto; set 16/9 to crop every image alike
+  --card-media-inline-size    the media column width in .horizontal
+*/
+
 .card {
-  max-width: var(--card-width-sm);
-  height: fit-content;
+  /* VARIABLES */
 
-  p {
-    margin: 0px;
+  --card-max-width: none;
+
+  --card-surface: var(--color-neutral-100);
+  --card-color: var(--color-neutral-800);
+  --card-title-color: var(--color-neutral-900);
+  --card-subtitle-color: var(--color-neutral-600);
+
+  --card-border-color: var(--color-neutral-200);
+  --card-border-width: 1px;
+  --card-radius: var(--radius-md);
+  --card-shadow: var(--shadow-md);
+
+  --card-padding-block: var(--spacing-100);
+  --card-padding-inline: var(--spacing-100);
+
+  --card-font-size: var(--font-size-md);
+  --card-title-size: var(--font-size-h6);
+
+  --card-media-aspect-ratio: auto;
+  --card-media-inline-size: 40%;
+
+  /* BASE */
+
+  display: flex;
+  flex-direction: column;
+
+  /* Cards live in rows. Filling the height lets a grid hand every card
+     in a row the same one, which is what makes the footers line up. On
+     its own, with nothing to fill, this resolves to the content height. */
+  block-size: 100%;
+
+  inline-size: 100%;
+  max-inline-size: var(--card-max-width);
+
+  /* No padding here. The parts carry it, and that is what lets
+     .card-media reach the edges without fighting anything. */
+  padding: 0;
+
+  /* So the media respects the radius. Safe for focus rings because the
+     padded parts keep every control clear of the edge — see the header. */
+  overflow: hidden;
+
+  border: var(--card-border-width) solid var(--card-border-color);
+  border-radius: var(--card-radius);
+
+  background-color: var(--card-surface);
+  color: var(--card-color);
+
+  font-size: var(--card-font-size);
+  line-height: var(--line-height-base);
+
+  /* PARTS */
+
+  & > .card-media {
+    /* <figure> brings its own. */
+    margin: 0;
+
+    display: block;
+
+    /* A media band on top must not stretch to fill the card's height. */
+    flex: none;
+
+    overflow: hidden;
+
+    background-color: var(--color-neutral-200);
+
+    & > :is(img, video, picture, svg, canvas) {
+      display: block;
+
+      inline-size: 100%;
+      block-size: 100%;
+
+      /* At the default of auto this is the image's own shape and
+         object-fit never bites. Set the variable and every image in the
+         row crops to the same box instead. */
+      aspect-ratio: var(--card-media-aspect-ratio);
+      object-fit: cover;
+    }
+
+    & > figcaption {
+      padding: var(--card-padding-block) var(--card-padding-inline);
+
+      color: var(--card-subtitle-color);
+
+      font-size: 0.9em;
+    }
   }
-  figure {
+
+  & > :is(.card-header, .card-body, .card-footer) {
+    padding: var(--card-padding-block) var(--card-padding-inline);
+  }
+
+  /* Two padded parts in a row would stack two paddings into the seam and
+     make it twice the size of the card's own edge padding. Drop the
+     upper one and the seam measures exactly one padding, same as every
+     edge. .card-media is deliberately absent from the list, so a part
+     that follows the media keeps its full top padding. */
+  & > :is(.card-header, .card-body, .card-footer) + :is(.card-header, .card-body, .card-footer) {
+    padding-block-start: 0;
+  }
+
+  & > .card-header {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+
+    gap: var(--spacing-25);
+  }
+
+  /* The class sets the size, the element sets the outline level. Kept
+     apart on purpose so a card can sit at any depth of a page. */
+  .card-title {
+    margin: 0;
+
+    color: var(--card-title-color);
+
+    font-size: var(--card-title-size);
+    font-weight: var(--font-weight-subheading);
+    line-height: 1.3;
+  }
+
+  .card-subtitle {
+    margin: 0;
+
+    color: var(--card-subtitle-color);
+
+    font-size: 0.9em;
+    line-height: 1.4;
+  }
+
+  & > .card-body {
+    /* Takes the slack when the card is taller than its content, so the
+       footer has something to be pushed away from. */
+    flex: 1 1 auto;
+
+    min-inline-size: 0;
+
+    & > * {
+      margin-block: 0;
+    }
+
+    & > * + * {
+      margin-block-start: var(--spacing-50);
+    }
+  }
+
+  & > .card-footer {
+    /* Bottom of the card whatever the body did. This is the whole reason
+       a row of cards with unequal text still lines up. */
+    margin-block-start: auto;
+
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    margin: 0px;
 
-    img {
-      max-width: 100%;
-      height: auto;
-    }
+    gap: var(--spacing-50);
+
+    color: var(--card-subtitle-color);
+
+    font-size: 0.9em;
   }
 
-  & > .cardBody {
-    padding: var(--spacing-75);
-    background-color: rgb(36, 36, 36);
-    height: fit-content;
-    font-size: var(--font-size-sm);
-
-    .title {
-      margin: 0px;
-      font-size: var(--font-size-h6);
-      font-weight: bold;
-    }
-  }
+  /* SIZE */
 
   &.sm {
-    .title {
-      /* Här var det "titel" istället för "title" */
-      font-size: var(--font-size-h6);
-    }
+    --card-padding-block: var(--spacing-75);
+    --card-padding-inline: var(--spacing-75);
+
+    --card-font-size: var(--font-size-sm);
+    --card-title-size: var(--font-size-base);
   }
 
   &.md {
-    font-size: var(--font-size-md);
+    --card-padding-block: var(--spacing-100);
+    --card-padding-inline: var(--spacing-100);
 
-    .cardBody .title {
-      /* Här var det "titel" istället för "title" */
-      font-size: var(--font-size-h5);
-    }
+    --card-font-size: var(--font-size-md);
+    --card-title-size: var(--font-size-h6);
   }
 
   &.lg {
+    --card-padding-block: var(--spacing-150);
+    --card-padding-inline: var(--spacing-150);
+
+    --card-font-size: var(--font-size-base);
+    --card-title-size: var(--font-size-h5);
+  }
+
+  /* ORIENTATION */
+
+  &.horizontal {
+    /* Row direction alone would put the parts beside each other instead
+       of beside the media. Grid areas keep the media in one column and
+       let the parts go on stacking in the other. */
+    display: grid;
+
+    grid-template-columns: var(--card-media-inline-size) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+
+    grid-template-areas:
+      "media header"
+      "media body"
+      "media footer";
+
+    & > .card-media {
+      grid-area: media;
+
+      block-size: 100%;
+    }
+
+    & > .card-header {
+      grid-area: header;
+    }
+
+    & > .card-body {
+      grid-area: body;
+    }
+
+    & > .card-footer {
+      grid-area: footer;
+
+      /* The grid row already puts it last. */
+      margin-block-start: 0;
+    }
+
+    /* Media after the content in the DOM puts it on the trailing side.
+       Same markup, no extra class. */
+    &:has(> :is(.card-header, .card-body, .card-footer) ~ .card-media) {
+      grid-template-columns: minmax(0, 1fr) var(--card-media-inline-size);
+
+      grid-template-areas:
+        "header media"
+        "body   media"
+        "footer media";
+    }
+  }
+
+  /* SHAPE */
+
+  &.sharp {
+    --card-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    --card-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    --card-radius: var(--radius-lg);
+  }
+
+  /* EMPHASIS */
+
+  &.outline {
+    --card-surface: transparent;
+    --card-border-color: var(--color-neutral-300);
+  }
+
+  &.ghost {
+    --card-surface: transparent;
+    --card-border-width: 0;
+  }
+
+  &.elevated {
+    box-shadow: var(--card-shadow);
+  }
+
+  /* STATES */
+
+  &[data-interactive] {
+    /* The overlay below is positioned against this. */
+    position: relative;
+
+    cursor: pointer;
+
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+
+    /* One link, the whole card as its hit area. The link keeps the
+       accessible name and stays the only thing in the tab order. */
+    .card-link::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      z-index: 0;
+    }
+
+    /* Anything else clickable has to sit above that overlay to stay
+       reachable with a mouse. */
+    & :is(a:not(.card-link), button, input, select, textarea, label, summary) {
+      position: relative;
+
+      z-index: 1;
+    }
+
+    &:hover {
+      --card-border-color: var(--color-neutral-400);
+
+      box-shadow: var(--card-shadow);
+    }
+
+    .card-link {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0ms;
+  }
+
+  @media (prefers-contrast: more) {
+    --card-border-width: 2px;
+    --card-border-color: var(--color-neutral-600);
+  }
+
+  @media (forced-colors: active) {
+    background-color: Canvas;
+    color: CanvasText;
+
+    border-color: CanvasText;
   }
 }

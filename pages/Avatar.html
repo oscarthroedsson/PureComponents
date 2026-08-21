@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avatar — PureComponents</title>
+    <meta name="pc-description" content="A person as a square: one measurement, three shapes, and a group that lists or stacks in any direction." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../src/Styles/main.css" />
+    <link rel="stylesheet" href="../src/Styles/avatar.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Avatar">
+
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">The key alone is already <code>md</code> and <code>soft</code>. Initials or a picture — the box is the same square either way.</p>
+    <template>
+      <span class="avatar">JD</span>
+      <span class="avatar">
+        <img src="https://i.pravatar.cc/150?img=12" alt="Jane Doe" />
+      </span>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">Three sizes: <code>sm</code>, <code>md</code>, <code>lg</code>. The initials are a fraction of the box, so they scale with it instead of coming from a table.</p>
+    <template>
+      <span class="avatar sm">JD</span>
+      <span class="avatar md">JD</span>
+      <span class="avatar lg">JD</span>
+      <span class="avatar sm"><img src="https://i.pravatar.cc/150?img=5" alt="Ada Byron" /></span>
+      <span class="avatar md"><img src="https://i.pravatar.cc/150?img=5" alt="Ada Byron" /></span>
+      <span class="avatar lg"><img src="https://i.pravatar.cc/150?img=5" alt="Ada Byron" /></span>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note"><code>sharp</code>, <code>soft</code>, <code>rounded</code>. <code>soft</code> is what the key alone gives. The picture follows the shape — it inherits the radius rather than being rounded separately.</p>
+    <template>
+      <span class="avatar sharp">JD</span>
+      <span class="avatar soft">JD</span>
+      <span class="avatar rounded">JD</span>
+      <span class="avatar sharp"><img src="https://i.pravatar.cc/150?img=33" alt="Raj Patel" /></span>
+      <span class="avatar soft"><img src="https://i.pravatar.cc/150?img=33" alt="Raj Patel" /></span>
+      <span class="avatar rounded"><img src="https://i.pravatar.cc/150?img=33" alt="Raj Patel" /></span>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="size-and-shape" data-title="Size and Shape Are Independent" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">Each is one variable, so every combination falls out on its own. There is no nine-cell table behind this.</p>
+    <template>
+      <span class="avatar sm rounded">AB</span>
+      <span class="avatar md sharp">CD</span>
+      <span class="avatar lg soft">EF</span>
+      <span class="avatar lg rounded">GH</span>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="custom-size" data-title="A Size We Never Named" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">Set <code>--avatar-size</code> and everything follows — the box, the picture, and the initials. This is what the fraction buys you.</p>
+    <template>
+      <span class="avatar rounded" style="--avatar-size: 1.5rem">JD</span>
+      <span class="avatar rounded" style="--avatar-size: 5rem">JD</span>
+      <span class="avatar rounded" style="--avatar-size: 7rem">JD</span>
+      <span class="avatar rounded" style="--avatar-size: 7rem">
+        <img src="https://i.pravatar.cc/300?img=47" alt="Mira Sund" />
+      </span>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="colours" data-title="Colours" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">Two variables. This is also all the &ldquo;+3&rdquo; counter needs — it is an avatar, not a new class.</p>
+    <template>
+      <span class="avatar rounded">JD</span>
+      <span class="avatar rounded" style="--avatar-background: var(--color-primary); --avatar-color: var(--color-neutral-900)">AB</span>
+      <span class="avatar rounded" style="--avatar-background: var(--color-secondary); --avatar-color: var(--color-neutral-900)">CD</span>
+      <span class="avatar rounded" style="--avatar-background: var(--color-neutral-700); --avatar-color: var(--color-neutral-100)">+3</span>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="group-list" data-title="Group — list" data-stage-style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">The default layout. A set of people is a list, so the group is a <code>&lt;ul&gt;</code> — and <code>role="list"</code> is written out because WebKit drops list semantics when <code>list-style: none</code> is set.</p>
+    <template>
+      <ul class="avatar-group rounded" role="list">
+        <li><span class="avatar"><img src="https://i.pravatar.cc/150?img=12" alt="Jane Doe" /></span></li>
+        <li><span class="avatar"><img src="https://i.pravatar.cc/150?img=33" alt="Raj Patel" /></span></li>
+        <li><span class="avatar"><img src="https://i.pravatar.cc/150?img=47" alt="Mira Sund" /></span></li>
+        <li><span class="avatar">+3</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="group-stacked" data-title="Group — stacked" data-stage-style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">Avatars overlap and each gets a ring. Set <code>--avatar-group-ring-color</code> to whatever surface the group sits on. The first avatar paints on top, which is also what makes the pointer land where the eye says it should.</p>
+    <template>
+      <ul class="avatar-group rounded" role="list" data-layout="stacked">
+        <li><span class="avatar"><img src="https://i.pravatar.cc/150?img=12" alt="Jane Doe" /></span></li>
+        <li><span class="avatar"><img src="https://i.pravatar.cc/150?img=33" alt="Raj Patel" /></span></li>
+        <li><span class="avatar"><img src="https://i.pravatar.cc/150?img=47" alt="Mira Sund" /></span></li>
+        <li><span class="avatar">+3</span></li>
+      </ul>
+
+      <ul class="avatar-group soft" role="list" data-layout="stacked">
+        <li><span class="avatar">AB</span></li>
+        <li><span class="avatar">CD</span></li>
+        <li><span class="avatar">EF</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="group-overlap" data-title="Group — how much they overlap" data-stage-style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">One variable rather than three classes. It is measured from the avatar, so it stays proportional at every size.</p>
+    <template>
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" style="--avatar-group-overlap: calc(var(--avatar-group-size) / 6)">
+        <li><span class="avatar">AB</span></li>
+        <li><span class="avatar">CD</span></li>
+        <li><span class="avatar">EF</span></li>
+      </ul>
+
+      <ul class="avatar-group rounded" role="list" data-layout="stacked">
+        <li><span class="avatar">AB</span></li>
+        <li><span class="avatar">CD</span></li>
+        <li><span class="avatar">EF</span></li>
+      </ul>
+
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" style="--avatar-group-overlap: calc(var(--avatar-group-size) / 2)">
+        <li><span class="avatar">AB</span></li>
+        <li><span class="avatar">CD</span></li>
+        <li><span class="avatar">EF</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="group-hover-expand" data-title="Group — data-hover=&quot;expand&quot;" data-stage-style="display: flex; gap: 4rem; align-items: flex-start; flex-wrap: wrap; min-height: 15rem;">
+    <p class="pc-note">Point at the stack and it lays itself out as a list. Tab into it and the same thing happens — the group answers <code>:focus-within</code>, not only the pointer. It opens along whichever axis the group runs on: the distance between two neighbours is a single value, and <code>data-direction</code> only decides which side it lands on.</p>
+    <template>
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-direction="row" data-hover="expand">
+        <li><a href="#" class="avatar" aria-label="Jane Doe"><img src="https://i.pravatar.cc/150?img=12" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Raj Patel"><img src="https://i.pravatar.cc/150?img=33" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Mira Sund"><img src="https://i.pravatar.cc/150?img=47" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Show 3 more">+3</a></li>
+      </ul>
+
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-direction="column" data-hover="expand">
+        <li><a href="#" class="avatar" aria-label="Jane Doe"><img src="https://i.pravatar.cc/150?img=12" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Raj Patel"><img src="https://i.pravatar.cc/150?img=33" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Mira Sund"><img src="https://i.pravatar.cc/150?img=47" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Show 3 more">+3</a></li>
+      </ul>
+
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-direction="row-reverse" data-hover="expand">
+        <li><a href="#" class="avatar" aria-label="One">1</a></li>
+        <li><a href="#" class="avatar" aria-label="Two">2</a></li>
+        <li><a href="#" class="avatar" aria-label="Three">3</a></li>
+      </ul>
+
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-direction="column-reverse" data-hover="expand">
+        <li><a href="#" class="avatar" aria-label="One">1</a></li>
+        <li><a href="#" class="avatar" aria-label="Two">2</a></li>
+        <li><a href="#" class="avatar" aria-label="Three">3</a></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="group-hover-lift" data-title="Group — data-hover=&quot;lift&quot;" data-stage-style="display: flex; gap: 4rem; align-items: flex-start; flex-wrap: wrap;">
+    <p class="pc-note">Point at one avatar and it comes to the front of the stack — even the one furthest back. It keeps its place in the row or column: what changes is the stacking order, not the layout. Two things carry the highlight besides the order — it grows and its ring changes — so it never rests on colour alone. It works on either axis, because coming forward has nothing to do with direction.</p>
+    <template>
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-direction="row" data-hover="lift">
+        <li><a href="#" class="avatar" aria-label="Jane Doe"><img src="https://i.pravatar.cc/150?img=12" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Raj Patel"><img src="https://i.pravatar.cc/150?img=33" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Mira Sund"><img src="https://i.pravatar.cc/150?img=47" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Ada Byron"><img src="https://i.pravatar.cc/150?img=5" alt="" /></a></li>
+      </ul>
+
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-direction="column" data-hover="lift">
+        <li><a href="#" class="avatar" aria-label="Jane Doe"><img src="https://i.pravatar.cc/150?img=12" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Raj Patel"><img src="https://i.pravatar.cc/150?img=33" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Mira Sund"><img src="https://i.pravatar.cc/150?img=47" alt="" /></a></li>
+        <li><a href="#" class="avatar" aria-label="Ada Byron"><img src="https://i.pravatar.cc/150?img=5" alt="" /></a></li>
+      </ul>
+
+      <ul class="avatar-group lg soft" role="list" data-layout="stacked" data-direction="column" data-hover="lift">
+        <li><a href="#" class="avatar" aria-label="One">1</a></li>
+        <li><a href="#" class="avatar" aria-label="Two">2</a></li>
+        <li><a href="#" class="avatar" aria-label="Three">3</a></li>
+        <li><a href="#" class="avatar" aria-label="Four">4</a></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="group-direction" data-title="Group — direction" data-stage-style="display: flex; gap: 3rem; align-items: flex-start; flex-wrap: wrap;">
+    <p class="pc-note"><code>row</code> follows the writing direction, so RTL needs nothing from you. The overlap follows the axis it is given.</p>
+    <template>
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-direction="row">
+        <li><span class="avatar">1</span></li>
+        <li><span class="avatar">2</span></li>
+        <li><span class="avatar">3</span></li>
+      </ul>
+
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-direction="row-reverse">
+        <li><span class="avatar">1</span></li>
+        <li><span class="avatar">2</span></li>
+        <li><span class="avatar">3</span></li>
+      </ul>
+
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-direction="column">
+        <li><span class="avatar">1</span></li>
+        <li><span class="avatar">2</span></li>
+        <li><span class="avatar">3</span></li>
+      </ul>
+
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-direction="column-reverse">
+        <li><span class="avatar">1</span></li>
+        <li><span class="avatar">2</span></li>
+        <li><span class="avatar">3</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="group-stack-order" data-title="Group — stack order" data-stage-style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">First on top by default. <code>data-stack-order="last"</code> hands it back to DOM order.</p>
+    <template>
+      <ul class="avatar-group rounded" role="list" data-layout="stacked">
+        <li><span class="avatar">1</span></li>
+        <li><span class="avatar">2</span></li>
+        <li><span class="avatar">3</span></li>
+        <li><span class="avatar">4</span></li>
+      </ul>
+
+      <ul class="avatar-group rounded" role="list" data-layout="stacked" data-stack-order="last">
+        <li><span class="avatar">1</span></li>
+        <li><span class="avatar">2</span></li>
+        <li><span class="avatar">3</span></li>
+        <li><span class="avatar">4</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="group-size-shape" data-title="Group — size and shape" data-stage-style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">The group owns both and writes them onto its children, so a stack is always one uniform square. Mixed sizes inside a group are not supported — the overlap is measured from a single box.</p>
+    <template>
+      <ul class="avatar-group sm rounded" role="list" data-layout="stacked">
+        <li><span class="avatar">AB</span></li>
+        <li><span class="avatar">CD</span></li>
+        <li><span class="avatar">EF</span></li>
+      </ul>
+
+      <ul class="avatar-group md soft" role="list" data-layout="stacked">
+        <li><span class="avatar">AB</span></li>
+        <li><span class="avatar">CD</span></li>
+        <li><span class="avatar">EF</span></li>
+      </ul>
+
+      <ul class="avatar-group lg sharp" role="list" data-layout="stacked">
+        <li><span class="avatar">AB</span></li>
+        <li><span class="avatar">CD</span></li>
+        <li><span class="avatar">EF</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="interactive" data-title="Interactive" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">The key sits on the <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code> itself for a user menu. Tab to these — the focus indicator is the house pattern, 3px at 2px offset. Give the control a name; a picture with <code>alt=""</code> does not carry one.</p>
+    <template>
+      <a href="#" class="avatar rounded" aria-label="Jane Doe's profile">
+        <img src="https://i.pravatar.cc/150?img=12" alt="" />
+      </a>
+      <button type="button" class="avatar rounded" aria-label="Open account menu">JD</button>
+      <button type="button" class="avatar soft" aria-label="Open account menu">AB</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="key-on-image" data-title="The Key on an Image" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <p class="pc-note">A picture with nothing to fall back to needs no wrapper. The same block serves both markups.</p>
+    <template>
+      <img class="avatar rounded" src="https://i.pravatar.cc/150?img=12" alt="Jane Doe" />
+      <img class="avatar lg soft" src="https://i.pravatar.cc/150?img=33" alt="Raj Patel" />
+    </template>
+  </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

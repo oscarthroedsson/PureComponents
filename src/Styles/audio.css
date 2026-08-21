@@ -1,0 +1,81 @@
+.audio {
+  /* VARIABLES */
+
+  --audio-inline-size: 50rem;
+  --audio-max-inline-size: 100%;
+  --audio-control-gap: var(--spacing-50);
+
+  --audio-border-color: var(--color-neutral-300);
+  --audio-border-width: 1px;
+  --audio-radius: var(--radius-md);
+
+  --audio-shadow: none;
+
+  --audio-surface: var(--color-neutral-100);
+  --audio-color: var(--color-neutral-900);
+
+  /* BASE */
+
+  display: block;
+
+  box-sizing: border-box;
+
+  inline-size: var(--audio-inline-size);
+  max-inline-size: var(--audio-max-inline-size);
+
+  border: var(--audio-border-width) solid var(--audio-border-color);
+  border-radius: var(--audio-radius);
+
+  background-color: var(--audio-surface);
+  color: var(--audio-color);
+
+  box-shadow: var(--audio-shadow);
+
+  /* SIZE */
+
+  &.sm {
+    --audio-control-gap: var(--spacing-25);
+  }
+
+  &.md {
+    --audio-control-gap: var(--spacing-50);
+  }
+
+  &.lg {
+    --audio-control-gap: var(--spacing-75);
+  }
+
+  /* SHAPE */
+
+  &.sharp {
+    --audio-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    --audio-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    --audio-radius: var(--radius-full);
+  }
+
+  /* CHROMIUM — PRIVATE, PROGRESSIVE PAINT ONLY */
+
+  &::-webkit-media-controls-enclosure {
+    border-radius: var(--audio-radius);
+    background-color: var(--audio-surface);
+  }
+
+  &::-webkit-media-controls-panel {
+    background-color: var(--audio-surface);
+    gap: var(--audio-control-gap);
+    color: var(--audio-color);
+  }
+
+  &::-webkit-media-controls-current-time-display,
+  &::-webkit-media-controls-time-remaining-display {
+    color: var(--audio-color);
+
+    text-shadow: none;
+  }
+}

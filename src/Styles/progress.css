@@ -1,0 +1,284 @@
+/*
+ACCESSIBILITY REQUIREMENTS:
+- Prefer the native <progress> element. It already exposes its value
+  and max to assistive technology, so aria-valuenow, aria-valuemin
+  and aria-valuemax must NOT be added — they only go stale.
+- Progress MUST be labelled: <label for> or aria-label.
+- Keep the number out of the label. "Upload progress" stays true,
+  "Upload progress: 45%" is a lie the moment the value moves. Put
+  the number in visible text beside the bar instead.
+- Indeterminate progress is a <progress> with no value attribute.
+- A non-native bar (.progress-bar) is the one case that needs
+  role="progressbar" with aria-valuenow/valuemin/valuemax, kept in
+  sync by whatever moves the bar.
+
+RADIUS:
+- sharp | smooth | rounded (default)
+
+STATE:
+- :indeterminate — no value attribute
+*/
+
+:is(.progress, .progress-bar) {
+  --progress-base: var(--color-primary);
+  --progress-fill: var(--progress-color, var(--progress-base));
+  --progress-track: var(--progress-track-color, color-mix(in oklab, var(--progress-fill) 18%, transparent));
+  --progress-radius: var(--radius-full);
+  --progress-size: 1rem;
+
+  /* NAMED COLORS */
+  &[data-color="primary"] {
+    --progress-base: var(--color-primary);
+  }
+
+  &[data-color="success"] {
+    --progress-base: var(--color-success);
+  }
+
+  &[data-color="error"] {
+    --progress-base: var(--color-error);
+  }
+
+  &[data-color="warning"] {
+    --progress-base: var(--color-warning);
+  }
+
+  &[data-color="info"] {
+    --progress-base: var(--color-info);
+  }
+
+  /* Kept as aliases so existing markup goes on working. */
+
+  &.success {
+    --progress-base: var(--color-success);
+  }
+
+  &.error {
+    --progress-base: var(--color-error);
+  }
+
+  &.warning {
+    --progress-base: var(--color-warning);
+  }
+
+  /* SIZE */
+
+  &.sm {
+    --progress-size: 0.5rem;
+  }
+
+  &.md {
+    --progress-size: 1rem;
+  }
+
+  &.lg {
+    --progress-size: 1.5rem;
+  }
+
+  /* RADIUS */
+
+  &.sharp {
+    --progress-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    --progress-radius: var(--radius-sm);
+  }
+
+  &.rounded {
+    --progress-radius: var(--radius-full);
+  }
+}
+
+/* NATIVE */
+
+.progress:is(progress) {
+  inline-size: 100%;
+  block-size: var(--progress-size);
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: none;
+
+  background-color: var(--progress-track);
+
+  border-radius: var(--progress-radius);
+
+  overflow: hidden;
+
+  /*
+   * The vendor pseudo-elements can never share a rule. A selector
+   * list holding one unknown pseudo-element is dropped whole, so a
+   * -webkit- and a -moz- selector written together apply in neither
+   * engine. They get one rule each, always.
+   *
+   * border-radius: inherit is what keeps the radius variants down
+   * to a single custom property instead of a rule per engine.
+   */
+
+  &::-webkit-progress-bar {
+    background-color: var(--progress-track);
+
+    border-radius: inherit;
+  }
+
+  &::-webkit-progress-value {
+    background-color: var(--progress-fill);
+
+    border-radius: inherit;
+
+    transition:
+      inline-size 300ms ease,
+      background-color 300ms ease;
+  }
+
+  &::-moz-progress-bar {
+    background-color: var(--progress-fill);
+
+    border-radius: inherit;
+
+    transition:
+      inline-size 300ms ease,
+      background-color 300ms ease;
+  }
+
+  /* STATE */
+
+  /*
+   * A <progress> with no value. The sweep rides on the element's own
+   * background, so both engines show the same thing once their value
+   * pseudo-element is taken out of the way.
+   */
+
+  &:indeterminate {
+    background-image: linear-gradient(90deg, transparent 0%, var(--progress-fill) 50%, transparent 100%);
+
+    background-size: 40% 100%;
+    background-repeat: no-repeat;
+
+    animation: progress-indeterminate 1.4s ease-in-out infinite;
+
+    &::-webkit-progress-bar {
+      background-color: transparent;
+    }
+
+    &::-webkit-progress-value {
+      background-color: transparent;
+    }
+
+    &::-moz-progress-bar {
+      background-color: transparent;
+    }
+  }
+
+  /* REDUCED MOTION */
+
+  @media (prefers-reduced-motion: reduce) {
+    &::-webkit-progress-value {
+      transition-duration: 0ms;
+    }
+
+    &::-moz-progress-bar {
+      transition-duration: 0ms;
+    }
+
+    /*
+     * A still sweep would read as a half-filled bar, which is a
+     * different claim. Indeterminate falls back to a plain track.
+     */
+
+    &:indeterminate {
+      background-image: none;
+
+      animation: none;
+    }
+  }
+}
+
+@keyframes progress-indeterminate {
+  from {
+    background-position: -20% 0;
+  }
+
+  to {
+    background-position: 120% 0;
+  }
+}
+
+/* NON-NATIVE */
+
+/*
+A div-based bar for the cases the native element cannot cover —
+segments, a value that has to animate on its own terms, content
+inside the bar. It carries the ARIA the native element gets for free.
+*/
+
+.progress-bar {
+  position: relative;
+
+  inline-size: 100%;
+  block-size: var(--progress-size);
+
+  background-color: var(--progress-track);
+
+  border-radius: var(--progress-radius);
+
+  overflow: hidden;
+
+  & > .progress-fill {
+    display: block;
+
+    block-size: 100%;
+
+    inline-size: 0%;
+    max-inline-size: 100%;
+
+    background-color: var(--progress-fill);
+
+    border-radius: inherit;
+
+    transition:
+      inline-size 300ms ease,
+      background-color 300ms ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    & > .progress-fill {
+      transition-duration: 0ms;
+    }
+  }
+}
+
+/* LABELLED */
+
+.progress-wrapper {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) auto;
+
+  align-items: baseline;
+
+  gap: var(--spacing-25);
+
+  & > :is(.progress, .progress-bar) {
+    grid-column: 1 / -1;
+  }
+
+  & > .progress-label {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+
+    color: var(--color-neutral-700);
+  }
+
+  & > .progress-value {
+    font-size: var(--font-size-sm);
+
+    color: var(--color-neutral-600);
+
+    text-align: end;
+
+    font-variant-numeric: tabular-nums;
+  }
+}

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Button sizing — PureComponents</title>
+    <meta
+      name="pc-description"
+      content="Experiment: a button with no size classes and no fixed height. Its size comes from its text, and its spacing is expressed in that text's own metrics. Not part of the library — compare it against the current .btn before promoting anything."
+    />
+
+    <!-- Library tokens only; .btn is loaded for side-by-side comparison -->
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/button.css" />
+
+    <!-- The experiment itself -->
+    <link rel="stylesheet" href="./button-intrinsic.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Experiments/ButtonSizing">
+    <section
+      class="pc-demo"
+      id="one-knob"
+      data-title="One knob: font-size"
+      data-stage-style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap"
+    >
+      <p class="pc-note">
+        Same class on all three. No <code>sm</code>/<code>md</code>/<code>lg</code>, no height, no padding
+        values in the markup — only <code>font-size</code>. Padding, gap, icon size and radius all derive
+        from it.
+      </p>
+      <template>
+        <button class="ibtn" style="font-size: 0.75rem">Small</button>
+        <button class="ibtn" style="font-size: 1rem">Medium</button>
+        <button class="ibtn" style="font-size: 1.5rem">Large</button>
+        <button class="ibtn" style="font-size: 2.5rem">Huge</button>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="half-leading"
+      data-title="Why em alone is not enough"
+      data-stage-style="display: flex; flex-direction: column; gap: 1.25rem; align-items: flex-start"
+    >
+      <p class="pc-note">
+        Both rows have identical padding. The top row is trimmed with
+        <code>text-box: trim-both cap alphabetic</code>, the bottom is not. Raising
+        <code>line-height</code> from 1.2 to 2 changes the untrimmed button's height but leaves the trimmed
+        one alone — that is the difference between padding measured from the letters and padding measured
+        from the font's metric box.
+      </p>
+      <template>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button class="ibtn">trimmed, lh 1.2</button>
+          <button class="ibtn ibtn--loose">trimmed, lh 2</button>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button class="ibtn ibtn--no-trim">untrimmed, lh 1.2</button>
+          <button class="ibtn ibtn--no-trim ibtn--loose">untrimmed, lh 2</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="flex-trap"
+      data-title="The flex trap"
+      data-stage-style="display: flex; flex-direction: column; gap: 1.25rem; align-items: flex-start"
+    >
+      <p class="pc-note">
+        <code>text-box-trim</code> applies to block containers only. Give the button
+        <code>display: inline-flex</code> and the label becomes an anonymous flex item with nothing to trim —
+        the declaration is still there, still valid, and silently does nothing. Both rows below declare the
+        trim; only the first one is <code>inline-block</code>. Watch what raising the line-height does to the
+        second.
+      </p>
+      <template>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button class="ibtn">inline-block, lh 1.2</button>
+          <button class="ibtn ibtn--loose">inline-block, lh 2</button>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button class="ibtn ibtn--flex">inline-flex, lh 1.2</button>
+          <button class="ibtn ibtn--flex ibtn--loose">inline-flex, lh 2</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="cap-vs-em"
+      data-title="cap vs em when the font changes"
+      data-stage-style="display: flex; flex-direction: column; gap: 1.25rem; align-items: flex-start"
+    >
+      <p class="pc-note">
+        <code>em</code> scales with the font-size number. <code>cap</code> scales with the height of an
+        actual capital letter. At the same font-size, Georgia's letters are smaller than the page font's —
+        the <code>em</code> button keeps its padding and looks puffy, the <code>cap</code> button tracks the
+        letterforms.
+      </p>
+      <template>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button class="ibtn">cap · page font</button>
+          <button class="ibtn font-georgia">cap · Georgia</button>
+          <button class="ibtn font-system">cap · system-ui</button>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button class="ibtn ibtn--em">em · page font</button>
+          <button class="ibtn ibtn--em font-georgia">em · Georgia</button>
+          <button class="ibtn ibtn--em font-system">em · system-ui</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="damped"
+      data-title="Damped scale"
+      data-stage-style="display: flex; flex-direction: column; gap: 1.25rem; align-items: flex-start"
+    >
+      <p class="pc-note">
+        Strictly proportional padding makes a large button look bloated. Mixing a fixed part with a
+        text-relative one — <code>calc(0.2rem + 0.45cap)</code> — makes padding grow more slowly than the
+        type. Top row is proportional, bottom row is damped.
+      </p>
+      <template>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button class="ibtn" style="font-size: 0.75rem">Proportional</button>
+          <button class="ibtn" style="font-size: 1.25rem">Proportional</button>
+          <button class="ibtn" style="font-size: 2.5rem">Proportional</button>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button class="ibtn ibtn--damped" style="font-size: 0.75rem">Damped</button>
+          <button class="ibtn ibtn--damped" style="font-size: 1.25rem">Damped</button>
+          <button class="ibtn ibtn--damped" style="font-size: 2.5rem">Damped</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="icons"
+      data-title="Icons and icon-only"
+      data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap"
+    >
+      <p class="pc-note">
+        Since the button is <code>inline-block</code> rather than flex, icons are laid out inline: sized
+        <code>1cap</code> and aligned on the baseline, so they span exactly the band the capital letters do.
+        No icon size classes, and a button with an icon comes out the same height as one without. An
+        icon-only button has no text to size it, so it matches its inline padding to its block padding and
+        takes <code>aspect-ratio: 1</code>.
+      </p>
+      <template>
+        <button class="ibtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          With icon
+        </button>
+        <button class="ibtn" style="font-size: 1.75rem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Larger
+        </button>
+        <button class="ibtn ibtn--square" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="target-size"
+      data-title="Target size floor"
+      data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap"
+    >
+      <p class="pc-note">
+        Text-driven sizing has no lower bound, and WCAG 2.2 §2.5.8 asks for a 24×24 CSS px target. A
+        <code>min-block-size</code> is a floor rather than a fixed height: it does nothing until the text
+        gets small enough that the button would be untappable.
+      </p>
+      <template>
+        <button class="ibtn" style="font-size: 0.5rem">Tiny, floored at 24px</button>
+        <button class="ibtn ibtn--square" style="font-size: 0.5rem" aria-label="Tiny square">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14" stroke-linecap="round" />
+          </svg>
+        </button>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="side-by-side"
+      data-title="Against the current .btn"
+      data-stage-style="display: flex; flex-direction: column; gap: 1.25rem; align-items: flex-start"
+    >
+      <p class="pc-note">
+        The current <code>.btn</code> sets padding in fixed rem values, so raising the font-size grows the
+        text but not the box. The intrinsic button keeps its proportions at any size.
+      </p>
+      <template>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button class="btn md">.btn md</button>
+          <button class="btn md" style="font-size: 2rem">.btn md at 2rem</button>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button class="ibtn">.ibtn</button>
+          <button class="ibtn" style="font-size: 2rem">.ibtn at 2rem</button>
+        </div>
+      </template>
+    </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

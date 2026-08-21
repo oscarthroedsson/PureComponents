@@ -1,244 +1,509 @@
-/* 
-Attributes
-responsive → Handle spacing and sizing based on our breakpoints
+/* -----------------Content Board----------------------- */
+/*
+ACCESSIBILITY REQUIREMENTS:
+- An avatar is a picture of a person, and a picture needs a name. An <img>
+  inside carries it in alt. Initials do not: "JD" read aloud is two letters,
+  not a person. Where the surrounding markup does not already name whoever
+  this is, the avatar has to — through alt on an image, or through the
+  accessible name of the link or button it sits in.
+
+- Decorative only: an avatar repeated beside a name that is already written
+  out is decoration. Give it alt="" so it is not read twice.
+
+- .avatar-group belongs on a <ul> with role="list". A set of people is a
+  list, and the role is written out because WebKit drops list semantics the
+  moment list-style: none is set — the same trap already noted for
+  breadcrumbs in SemanticNotes/semantics-breadcrumbs.md.
+
+- The key may sit on <a> or <button> for a user menu. It then gets the focus
+  ring from main.css, and this file must never draw one of its own. The ring
+  in a group is drawn with box-shadow, never outline, so the focus indicator
+  always has the outline to itself.
+
+- data-hover answers :focus-within and :focus-visible as well as the pointer.
+  A stack that only opens for a mouse is a stack keyboard users cannot read.
+
+- All motion is silenced under prefers-reduced-motion. The state change still
+  happens — expanding is behaviour, not decoration. Only the travel is cut.
+
+- Initials are 1–2 characters. The box is a fixed square and does not grow to
+  fit; longer text spills out of it.
+
+
+USAGE:
+
+<span class="avatar">JD</span>
+
+<span class="avatar">
+  <img src="jane.jpg" alt="Jane Doe" />
+</span>
+
+<ul class="avatar-group" role="list" data-layout="stacked" data-hover="lift">
+  <li><span class="avatar"><img src="jane.jpg" alt="Jane Doe" /></span></li>
+  <li><span class="avatar"><img src="raj.jpg"  alt="Raj Patel" /></span></li>
+  <li><span class="avatar">+3</span></li>
+</ul>
+
+
+SIZE:  sm · md · lg   (md is the default; the key alone is already md)
+SHAPE: sharp · soft · rounded   (soft is the default, as everywhere else)
+
+Size and shape are independent. Each is one variable, so the three sizes and
+the three shapes are three rules each — not a nine-cell table. `sm rounded`
+and `lg sharp` fall out on their own.
+
+
+GROUP ATTRIBUTES:
+- data-layout="list"       → default. Avatars sit apart, separated by the gap.
+- data-layout="stacked"    → avatars overlap, and each gets a ring so the
+                             shapes stay apart.
+
+- data-direction="row"     → default. Follows the writing direction, so RTL
+                             needs nothing.
+- data-direction="row-reverse" · "column" · "column-reverse"
+
+- data-stack-order="last"  → the last avatar paints on top instead of the
+                             first. Stacked only.
+
+- data-hover="expand"      → pointing at the stack lays it out as a list, along
+                             whichever axis data-direction gave it.
+- data-hover="lift"        → pointing at one avatar brings it to the front of
+                             the stack. It keeps its place in the row — it is
+                             the stacking order that changes, not the layout —
+                             and it grows and changes its ring so it is
+                             unmistakable which one is in front.
+
+Those two are one attribute on purpose: an opening stack and a lifted avatar
+compete for the same glance.
+
+Both work on either axis without a rule of their own. Expanding only reassigns
+the one distance between neighbours, and direction decides which side that
+lands on; coming to the front is z-index, which has no direction at all.
+
+
+THE GROUP OWNS THE SIZE AND THE SHAPE.
+It writes --avatar-size and --avatar-radius on its children, the way
+accordion.css writes .collapsible's variables — a custom property declared ON
+an element cannot be reached by inheriting from the parent, so setting it has
+to be a rule. The consequence is deliberate: mixed sizes inside one group are
+not supported. The overlap is measured from one square, and squares of
+different sizes do not stack into anything readable.
+
+
+NOT HERE:
+The dot in the corner — presence, unread count, anything anchored to an edge.
+That is the same primitive a notification button needs, so it becomes its own
+component and composes onto this one. It is why nothing here clips its
+overflow: a mark hung on the corner has to be able to hang outside the box.
+
+
+CUSTOMIZATION:
+- --avatar-size           the one measurement. Everything else derives from it.
+- --avatar-radius
+- --avatar-background · --avatar-color
+- --avatar-font-scale     initials as a fraction of the box, so a size the
+                          library never named still gets the right text
+- --avatar-group-overlap · --avatar-group-gap
+- --avatar-group-ring-color   set this to the surface the group sits on
 */
+/* ----------------------------------------------------- */
 
 .avatar {
-  display: block;
-  background-color: var(--color-primary);
-  margin: 0px;
+  /* VARIABLES */
+
+  --avatar-size: 3rem;
+  --avatar-radius: var(--radius-md);
+
+  --avatar-background: var(--color-neutral-200);
+  --avatar-color: var(--color-neutral-700);
+
+  /*
+   * Initials are sized as a fraction of the box rather than from a table of
+   * three font sizes. That is what lets a consumer write
+   * style="--avatar-size: 8rem" and get text that still fits.
+   */
+  --avatar-font-scale: 0.4;
+  --avatar-font-weight: var(--font-weight-subheading);
+
+
+  /* BASE */
+
+  box-sizing: border-box;
+
+  display: inline-grid;
+  place-items: center;
+
+  inline-size: var(--avatar-size);
+  aspect-ratio: 1;
+
+  /* Never squeezed by the flex container in .avatar-group. */
+  flex: 0 0 auto;
+
+  border-radius: var(--avatar-radius);
+
+  background-color: var(--avatar-background);
+  color: var(--avatar-color);
+
+  font-size: calc(var(--avatar-size) * var(--avatar-font-scale));
+  font-weight: var(--avatar-font-weight);
+  line-height: 1;
 
   text-align: center;
-  font-size: var(--font-size-2xl);
-  padding: var(--spacing-25) var(--spacing-75);
-  padding-top: 0.5rem;
+  text-decoration: none;
+  white-space: nowrap;
 
-  height: fit-content;
-  width: fit-content;
+  user-select: none;
 
-  /* DOES NOT WORK */
-  &:has(img) {
-    /* Neutralize stuff */
-    padding-top: 0rem !important;
-    padding: 0rem !important;
-    font-size: 0 !important;
-  }
+  /*
+   * Inert on a container, and exactly what is needed when the key sits on an
+   * <img> directly. One block serves both markups.
+   */
+  object-fit: cover;
+  object-position: center;
 
-  > :is(img) {
-    width: fit-content;
+  /* CONTENT */
+
+  /*
+   * border-radius: inherit is what keeps the picture inside the shape. The
+   * old file only rounded the image under .rounded, so a soft avatar had
+   * square picture corners inside a rounded box.
+   *
+   * Overflow is deliberately left alone — see NOT HERE above.
+   */
+  & :is(img, svg, video) {
+    display: block;
+
+    inline-size: 100%;
+    block-size: 100%;
+
     object-fit: cover;
     object-position: center;
-    width: 10rem;
-    aspect-ratio: 1/1;
-    padding: 0px;
+
+    border-radius: inherit;
   }
 
-  &.sm {
-    font-size: var(--font-size-lg);
-    padding: var(--spacing-15) var(--spacing-50);
-    padding-top: 0.4rem;
+  /* Lets the <img> inside be the grid item, so it centres like any other. */
+  & > picture {
+    display: contents;
+  }
 
-    & > :is(img) {
-      width: 4rem;
-    }
+  /* SIZE */
+
+  &.sm {
+    --avatar-size: 2rem;
   }
 
   &.md {
-    font-size: var(--font-size-2xl);
-    padding: var(--spacing-25) var(--spacing-75);
-    padding-top: 0.5rem;
-
-    & > :is(img) {
-      width: 5rem;
-    }
+    --avatar-size: 3rem;
   }
 
   &.lg {
-    font-size: var(--font-size-3xl);
-    padding: var(--spacing-25) var(--spacing-125);
-    padding-top: 0.7rem;
-
-    & > :is(img) {
-      width: 6rem;
-    }
+    --avatar-size: 4rem;
   }
+
+  /* SHAPE — after the sizes, so it replaces whatever radius they carry. */
 
   &.sharp {
-    border-radius: var(--radius-none);
+    --avatar-radius: var(--radius-sharp);
   }
-  &.soft {
-    border-radius: var(--radius-sm);
-  }
-  &.rounded {
-    border-radius: 999px;
-    > :is(img) {
-      border-radius: 999px;
-    }
 
-    &:has(img) {
-      /* Neutralize stuff */
-      padding-top: 0rem;
-      padding: 0rem;
-      font-size: 0;
-    }
+  &.soft {
+    --avatar-radius: var(--radius-md);
   }
+
+  &.rounded {
+    --avatar-radius: var(--radius-full);
+  }
+
+  /* STATES */
+
+  &:is(a, button) {
+    cursor: pointer;
+  }
+
 }
 
 .avatar-group {
+  /* VARIABLES */
+
+  --avatar-group-size: 3rem;
+  --avatar-group-radius: var(--radius-md);
+
+  --avatar-group-gap: var(--spacing-50);
+  --avatar-group-overlap: calc(var(--avatar-group-size) / 3);
+
+  /*
+   * One value decides the distance between two neighbours, and every layout
+   * only reassigns it: the gap in a list, a negative overlap in a stack, the
+   * gap again while the stack is open. The margin that reads it is what
+   * animates, so opening and closing is a single transition on a single
+   * property.
+   */
+  --avatar-group-space: var(--avatar-group-gap);
+
+  /*
+   * Which side the distance lands on. Reverse directions have to use the end
+   * margin: in row-reverse a negative start margin lands past the neighbour
+   * it was meant to slide under, and the first two avatars never overlap.
+   */
+  --avatar-group-space-inline-start: var(--avatar-group-space);
+  --avatar-group-space-inline-end: 0px;
+  --avatar-group-space-block-start: 0px;
+  --avatar-group-space-block-end: 0px;
+
+  /*
+   * The ring separates two overlapping shapes, so it has to read as the
+   * surface behind the group — which we cannot know. Set it to yours.
+   *
+   * box-shadow and not border, which would change the size of the square,
+   * and not outline, which is spoken for by the focus indicator.
+   */
+  --avatar-group-ring-width: 2px;
+  --avatar-group-ring-color: var(--color-neutral-100);
+
+  /*
+   * A bare duration, not --transition-medium. That token is "0.3s ease" —
+   * duration and easing in one — so pairing it with an easing of our own
+   * puts two timing functions in the same declaration and the whole
+   * shorthand is thrown away. toast.css writes its durations out for the
+   * same reason.
+   */
+  --avatar-group-duration: 280ms;
+  --avatar-group-easing: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* LIFT */
+  --avatar-group-lift-z: 20;
+  --avatar-group-lift-scale: 1.12;
+  --avatar-group-lift-ring-color: var(--color-primary);
+  --avatar-group-lift-shadow: var(--shadow-md);
+
+  /* BASE */
+
+  /* It is a <ul>. */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
   display: flex;
-  position: relative;
-  & > .avatar {
-    border: 2px solid white;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
 
-    &:not(:first-child) {
-      box-shadow: var(--shadow-left);
+  /*
+   * Size and shape are handed down from here rather than being left to the
+   * avatar, for the reason set out in the header: a custom property declared
+   * on an element cannot be reached by inheriting from the parent.
+   */
+  & .avatar {
+    --avatar-size: var(--avatar-group-size);
+    --avatar-radius: var(--avatar-group-radius);
+  }
+
+  /*
+   * Written against every direct child, not against .avatar, so an avatar
+   * wrapped in an <li>, in a link, or in the coming indicator is carried by
+   * the same rules.
+   */
+  & > * {
+    flex: 0 0 auto;
+
+    /* Flex items answer to z-index without being positioned. */
+    z-index: 1;
+
+    scale: 1;
+
+    /*
+     * The logical longhands are named one by one. The `margin` shorthand
+     * stands for the four physical sides and does not carry
+     * margin-inline-start, which is the property that actually moves here.
+     */
+    transition-property:
+      margin-inline-start, margin-inline-end,
+      margin-block-start, margin-block-end,
+      scale, filter;
+    transition-duration: var(--avatar-group-duration);
+    transition-timing-function: var(--avatar-group-easing);
+  }
+
+  & > * + * {
+    margin-inline-start: var(--avatar-group-space-inline-start);
+    margin-inline-end: var(--avatar-group-space-inline-end);
+    margin-block-start: var(--avatar-group-space-block-start);
+    margin-block-end: var(--avatar-group-space-block-end);
+  }
+
+  /* SIZE */
+
+  &.sm {
+    --avatar-group-size: 2rem;
+  }
+
+  &.md {
+    --avatar-group-size: 3rem;
+  }
+
+  &.lg {
+    --avatar-group-size: 4rem;
+  }
+
+  /* SHAPE */
+
+  &.sharp {
+    --avatar-group-radius: var(--radius-sharp);
+  }
+
+  &.soft {
+    --avatar-group-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    --avatar-group-radius: var(--radius-full);
+  }
+
+  /* DIRECTION */
+
+  &[data-direction="row"] {
+    flex-direction: row;
+  }
+
+  &[data-direction="row-reverse"] {
+    flex-direction: row-reverse;
+
+    --avatar-group-space-inline-start: 0px;
+    --avatar-group-space-inline-end: var(--avatar-group-space);
+  }
+
+  &[data-direction="column"] {
+    flex-direction: column;
+
+    --avatar-group-space-inline-start: 0px;
+    --avatar-group-space-block-start: var(--avatar-group-space);
+  }
+
+  &[data-direction="column-reverse"] {
+    flex-direction: column-reverse;
+
+    --avatar-group-space-inline-start: 0px;
+    --avatar-group-space-block-end: var(--avatar-group-space);
+  }
+
+  /* LAYOUT */
+
+  /* list needs no rules — the base already is the list. */
+
+  &[data-layout="stacked"] {
+    --avatar-group-space: calc(-1 * var(--avatar-group-overlap));
+
+    & .avatar {
+      box-shadow: 0 0 0 var(--avatar-group-ring-width) var(--avatar-group-ring-color);
+    }
+
+    /*
+     * Flex items paint in DOM order, so with no z-index the LAST avatar
+     * would cover every one before it. The stack descends from the first
+     * instead — which is also what makes the pointer land where the eye
+     * says it should: a round avatar still has square corners, and in the
+     * overlap the corner of the avatar behind sits over the circle of the
+     * one in front. Whoever paints on top takes the pointer too.
+     *
+     * Enumerated rather than computed, like toast.css. sibling-index()
+     * would write this as one calc(), but it is Chromium only and not
+     * Baseline. Deeper than this and the avatars are fully covered anyway.
+     */
+    & > *:nth-child(1) {
+      z-index: 9;
+    }
+    & > *:nth-child(2) {
+      z-index: 8;
+    }
+    & > *:nth-child(3) {
+      z-index: 7;
+    }
+    & > *:nth-child(4) {
+      z-index: 6;
+    }
+    & > *:nth-child(5) {
+      z-index: 5;
+    }
+    & > *:nth-child(6) {
+      z-index: 4;
+    }
+    & > *:nth-child(7) {
+      z-index: 3;
+    }
+    & > *:nth-child(8) {
+      z-index: 2;
+    }
+
+    &[data-stack-order="last"] > * {
+      z-index: auto;
+    }
+
+    /* STATE — the stack opens into a list. */
+
+    &[data-hover="expand"]:is(:hover, :focus-within) {
+      --avatar-group-space: var(--avatar-group-gap);
+    }
+
+    /*
+     * STATE — the hovered avatar comes to the front.
+     *
+     * This rule exists separately from the lift block below, and it is
+     * qualified with BOTH attributes on purpose. The enumeration above is
+     * (0,3,0) because of :nth-child; the lift block is deliberately kept at
+     * (0,2,0) by :where(), so on its own it can never outrank the stacking
+     * order it is trying to change — the avatar would scale and stay put.
+     * Naming both attributes here makes this (0,4,0), which beats the
+     * enumeration and data-stack-order alike no matter where the rules sit
+     * in the file.
+     *
+     * :is() rather than :where() for the same reason: its specificity has to
+     * count.
+     */
+    &[data-hover="lift"] > *:is(:hover, :focus-visible, :has(:focus-visible)) {
+      z-index: var(--avatar-group-lift-z);
     }
   }
 
-  /* Adjust how tight the avatars should be */
-  &.tight {
-    /* 
-    This is default if we do not provide size on parent  
-    */
+  /* STATE — how the avatar in front is marked out. */
 
-    /* children has sm */
-    &:not(:has(> :where(:not(.avatar.sm)))) > .avatar.sm:not(:first-child) {
-      margin-left: -1rem;
-    }
-    /* children has md */
-    &:not(:has(> :where(:not(.avatar.md)))) > .avatar.md:not(:first-child) {
-      margin-left: -1.5rem;
-    }
-    /* children has lg */
-    &:not(:has(> :where(:not(.avatar.lg)))) > .avatar.lg:not(:first-child) {
-      margin-left: -2rem;
-    }
+  /*
+   * The avatar keeps its place in the row. It is not nudged out of line — it
+   * comes forward, grows, and changes its ring, and the row it belongs to
+   * stays a row. Coming forward is the z-index above; the rest is here.
+   *
+   * :where() keeps this at the group class, so a consumer can still override
+   * any of it with one plain class of their own. It carries no z-index, which
+   * is exactly why it can afford to stay that low.
+   *
+   * In the list layout, where nothing is enumerated, this block is the whole
+   * effect and the z-index on the base child is already enough.
+   *
+   * The ring colour is handed down as a custom property rather than being
+   * restyled here: it inherits to the .avatar whether the avatar is this
+   * child itself or sits somewhere inside it.
+   *
+   * drop-shadow and not box-shadow, which the ring is already using — and it
+   * follows the silhouette, so a rounded avatar casts a round shadow.
+   */
+  &[data-hover="lift"] > *:where(:hover, :focus-visible, :has(:focus-visible)) {
+    scale: var(--avatar-group-lift-scale);
 
-    /* 
-    This overrule size on children if size is written on avatar-group
-    */
-    &.sm > .avatar:not(:first-child) {
-      margin-left: -1rem;
-    }
+    --avatar-group-ring-color: var(--avatar-group-lift-ring-color);
 
-    &.md > .avatar:not(:first-child) {
-      margin-left: -1.5rem;
-    }
-
-    &.lg > .avatar:not(:first-child) {
-      margin-left: -2rem;
-    }
+    filter: drop-shadow(var(--avatar-group-lift-shadow));
   }
 
-  &.base {
-    /* 
-    This is default if we do not provide size on parent  
-    */
-    /* children has sm */
-    &:not(:has(> :where(:not(.avatar.sm)))) > .avatar.sm:not(:first-child) {
-      margin-left: -0.8rem;
-    }
-    /* children has md */
-    &:not(:has(> :where(:not(.avatar.md)))) > .avatar.md:not(:first-child) {
-      margin-left: -1.2rem;
-    }
-    /* children has lg */
-    &:not(:has(> :where(:not(.avatar.lg)))) > .avatar.lg:not(:first-child) {
-      margin-left: -1.7rem;
-    }
+  /* REDUCED MOTION */
 
-    /* 
-    This overrule size on children if size is written on avatar-group
-    */
-    &.sm > .avatar:not(:first-child) {
-      margin-left: -0.8rem;
+  /*
+   * The travel goes, the behaviour stays. A stack still opens, an avatar
+   * still comes forward and is still ringed — it simply arrives there
+   * without moving.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    & > * {
+      transition-duration: 0ms;
     }
-
-    &.md > .avatar:not(:first-child) {
-      margin-left: -1.2rem;
-    }
-
-    &.lg > .avatar:not(:first-child) {
-      margin-left: -1.7rem;
-    }
-  }
-
-  &.loose {
-    /* 
-    This is default if we do not provide size on parent  
-    */
-    /* children has sm */
-    &:not(:has(> :where(:not(.avatar.sm)))) > .avatar.sm:not(:first-child) {
-      margin-left: -0.5rem;
-    }
-    /* children has md */
-    &:not(:has(> :where(:not(.avatar.md)))) > .avatar.md:not(:first-child) {
-      margin-left: -0.9rem;
-    }
-    /* children has lg */
-    &:not(:has(> :where(:not(.avatar.lg)))) > .avatar.lg:not(:first-child) {
-      margin-left: -1.4rem;
-    }
-
-    /* 
-    This overrule size on children if size is written on avatar-group
-    */
-    &.sm > .avatar:not(:first-child) {
-      margin-left: -0.5rem;
-    }
-
-    &.md > .avatar:not(:first-child) {
-      margin-left: -0.9rem;
-    }
-
-    &.lg > .avatar:not(:first-child) {
-      margin-left: -1.4rem;
-    }
-  }
-
-  /* Controll size on avatar children from parent */
-  &.avatar-group.sm {
-    font-size: var(--font-size-lg);
-    padding: var(--spacing-15) var(--spacing-50);
-    padding-top: 0.4rem;
-    & > .avatar {
-      font-size: var(--font-size-lg);
-      padding: var(--spacing-15) var(--spacing-50);
-      padding-top: 0.4rem;
-    }
-  }
-
-  &.avatar-group.md {
-    font-size: var(--font-size-2xl);
-    padding: var(--spacing-25) var(--spacing-75);
-    padding-top: 0.5rem;
-
-    & > .avatar {
-      font-size: var(--font-size-2xl);
-      padding: var(--spacing-25) var(--spacing-75);
-      padding-top: 0.5rem;
-    }
-  }
-
-  &.avatar-group.lg {
-    font-size: var(--font-size-3xl);
-    padding: var(--spacing-25) var(--spacing-125);
-    padding-top: 0.7rem;
-
-    & > .avatar {
-      font-size: var(--font-size-3xl);
-      padding: var(--spacing-25) var(--spacing-125);
-      padding-top: 0.7rem;
-    }
-  }
-
-  &.sharp > .avatar {
-    border-radius: var(--radius-none);
-  }
-  &.soft > .avatar {
-    border-radius: var(--radius-sm);
-  }
-  &.rounded > .avatar {
-    border-radius: 999px;
   }
 }

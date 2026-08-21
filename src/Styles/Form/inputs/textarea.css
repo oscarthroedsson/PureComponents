@@ -1,0 +1,174 @@
+/* 
+ACCESSIBILITY REQUIREMENTS:
+- Textarea MUST have an associated <label> element with for="textarea-id"
+- Error messages MUST use aria-describedby pointing to error message id
+- Textareas with errors MUST have aria-invalid="true"
+- Help text should use aria-describedby
+- Character count (if implemented) should use aria-describedby
+- Focus indicators come from main.css. Never draw an outline in this file.
+
+USAGE:
+  <div class="formField">
+    <label for="message">Message</label>
+    <textarea 
+      id="message" 
+      class="textarea" 
+      rows="4"
+      aria-describedby="message-help"
+    ></textarea>
+    <p id="message-help" class="helpText">Enter your message here</p>
+  </div>
+
+  OR with error:
+  <div class="formField">
+    <label for="message">Message</label>
+    <textarea 
+      id="message" 
+      class="textarea" 
+      rows="4"
+      aria-invalid="true"
+      aria-describedby="message-error"
+    ></textarea>
+    <p id="message-error" class="status" role="alert">Message is required</p>
+  </div>
+
+  WITH character count:
+  <div class="formField">
+    <label for="message">Message</label>
+    <textarea 
+      id="message" 
+      class="textarea" 
+      rows="4"
+      maxlength="500"
+      aria-describedby="message-help message-count"
+    ></textarea>
+    <div class="textarea-footer">
+      <p id="message-help" class="helpText">Enter your message</p>
+      <span id="message-count" class="char-count" aria-live="polite">0 / 500</span>
+    </div>
+  </div>
+*/
+
+.textarea:is(textarea) {
+  width: 100%;
+  background-color: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-300);
+  padding: var(--spacing-50) var(--spacing-75);
+  font-family: inherit;
+  font-size: var(--font-size-md);
+  color: var(--color-neutral-900);
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 6rem;
+
+  /* Border radius variants */
+  &.sharp {
+    border-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    border-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    border-radius: var(--radius-rounded);
+  }
+
+  /* Size variants */
+  &.sm {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-25) var(--spacing-50);
+    min-height: 4rem;
+  }
+
+  &.md {
+    font-size: var(--font-size-md);
+    padding: var(--spacing-50) var(--spacing-75);
+    min-height: 6rem;
+  }
+
+  &.lg {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-75) var(--spacing-100);
+    min-height: 8rem;
+  }
+
+  /* Focus indicator - WCAG 2.1 AA compliant */
+  &:focus-visible {
+    border-color: var(--color-primary);
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  /* Hover state */
+  &:hover:not(:disabled) {
+    border-color: var(--color-neutral-400);
+  }
+
+  /* Disabled state */
+  &:disabled {
+    background-color: var(--color-neutral-200);
+    border-color: var(--color-neutral-300);
+    color: var(--color-neutral-500);
+    cursor: not-allowed;
+    opacity: 0.6;
+    resize: none;
+  }
+
+  /* Error state - REQUIRES aria-invalid="true" */
+  &:user-invalid,
+  &[aria-invalid="true"] {
+    border-color: var(--color-error);
+  }
+
+  /* Resize control variants */
+  &.resize-none {
+    resize: none;
+  }
+
+  &.resize-both {
+    resize: both;
+  }
+
+  &.resize-horizontal {
+    resize: horizontal;
+  }
+
+  &.resize-vertical {
+    resize: vertical;
+  }
+}
+
+/* Textarea footer for help text and character count */
+.textarea-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-25);
+  gap: var(--spacing-50);
+
+  .helpText {
+    color: var(--color-neutral-400);
+    font-size: var(--font-size-sm);
+    margin: 0;
+  }
+
+  .char-count {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-500);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Character count warning (near limit) */
+  .char-count[data-warning="true"] {
+    color: var(--color-warning);
+  }
+
+  /* Character count error (over limit) */
+  .char-count[data-error="true"] {
+    color: var(--color-error);
+  }
+}

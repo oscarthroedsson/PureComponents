@@ -1,65 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
-    <link rel="stylesheet" href="./src/Styles/main.css" />
-    <link rel="stylesheet" href="./src/Styles/list.css" />
-    <link rel="stylesheet" href="./src/Styles/global.css" />
-    <link rel="stylesheet" href="./src/Styles/img.css" />
-    <link rel="stylesheet" href="./src/Styles/article.css" />
-    <link rel="stylesheet" href="./src/Styles/details.css" />
-    <link rel="stylesheet" href="./src/Styles/badge.css" />
-    <link rel="stylesheet" href="./src/Styles/pill.css" />
-    <link rel="stylesheet" href="./src/Styles/del.css" />
-    <link rel="stylesheet" href="./src/Styles/button.css" />
-    <link rel="stylesheet" href="./src/Styles/a-tag.css" />
-    <link rel="stylesheet" href="./src/Styles/address.css" />
-    <link rel="stylesheet" href="./src/Styles/avatar.css" />
-    <link rel="stylesheet" href="./src/Styles/loading.css" />
-    <link rel="stylesheet" href="./src/Styles/Menu/menu.css" />
-    <link rel="stylesheet" href="./src/Styles/Menu/menu-grid.css" />
-    <link rel="stylesheet" href="./src/Styles/breadcrumbs.css" />
-    <link rel="stylesheet" href="./src/Styles/card.css" />
-    <link rel="stylesheet" href="./src/Styles/tooltip.css" />
-    <link rel="stylesheet" href="./src/Styles/highlight.css" />
-    <link rel="stylesheet" href="./src/Styles/highlight.css" />
-    <link rel="stylesheet" href="./src/Styles/button.css" />
-    <link rel="stylesheet" href="./src/Styles/Form/inputs/formField.css" />
-    <link rel="stylesheet" href="./src/Styles/Form/inputs/text.css" />
-    <link rel="stylesheet" href="./src/Styles/Form/inputs/file.css" />
-    <link rel="stylesheet" href="./src/Styles/Form/inputs/range.css" />
-    <link rel="stylesheet" href="./src/Styles/Form/fieldSet.css" />
-    <link rel="stylesheet" href="./src/Styles/test.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🧽....Pure Components</title>
+    <title>PureComponents</title>
+
+    <!-- Dev shell only. The start page deliberately loads no library CSS,
+         so a broken stylesheet can never take the navigation down with it. -->
+    <link rel="stylesheet" href="./pages/docs.css" />
   </head>
-  <body class="body">
-    <div class="gameBoi">
-      <div class="screenFrame">
-        <div class="screen">
-          <div class="reflex"></div>
-        </div>
-      </div>
-      <div class="bContainer">
-        <div class="controlls">
-          <div class="sticks">
-            <div class="stick stickX"></div>
-            <div class="stick stickY"></div>
-          </div>
-          <div class="btns">
-            <div class="btn btnl"></div>
-            <div class="btn"></div>
-          </div>
-        </div>
-        <div class="controllfooter">
-          <div class="controllfootersticks">
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script type="module" src="/src/main.ts"></script>
+  <body data-page="home">
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui">
+        The component index is built from <code>pages/components.js</code> and needs JavaScript.
+        The component pages themselves are in <code>pages/</code>.
+      </p>
+    </noscript>
+
+    <script src="./pages/components.js"></script>
+    <script src="./pages/docs.js"></script>
   </body>
 </html>

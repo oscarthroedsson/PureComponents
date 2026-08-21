@@ -19,32 +19,32 @@ article > header[data-article="introduction"] > img {
 }
 
 /* === META DATA ABOUT THE ARTICLE */
-article > address[data-article="meta-data"] {
+article > footer[data-article="meta-data"] {
   display: flex;
   justify-content: space-between;
   align-items: end;
 }
 
 /* === AUTHOR CONTAINER === */
-article > address :is(div)[data-article="author"] {
+article > footer :is(div)[data-article="author"] {
   display: flex;
   align-items: center;
 }
 
 /*  */
-article > address :is(div)[data-article="author"] :is(div, span) {
+article > footer :is(div)[data-article="author"] :is(div, span) {
   font-size: 14px;
 }
 
-article > address :is(div)[data-article="author"] :is(div, span) > :first-child {
+article > footer :is(div)[data-article="author"] :is(div, span) > :first-child {
   margin-bottom: 0.3rem;
 }
 
-article > address :is(div)[data-article="author"] :is(div, span) > * {
+article > footer :is(div)[data-article="author"] :is(div, span) > * {
   margin: 0px;
 }
 
-article > address :is(time) {
+article > footer :is(time) {
   font-size: 0.875rem;
 }
 

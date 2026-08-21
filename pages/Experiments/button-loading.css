@@ -1,0 +1,101 @@
+/* -----------------Content Board----------------------- */
+/*
+LOADING & SKELETON — experiment
+
+States are driven by attributes, never classes. Everything is nested
+inside .btn, so the effect cannot reach a non-button.
+
+  <button class="btn md" aria-busy="true" disabled>Saving…</button>
+  <button class="btn md" aria-busy="true" data-skeleton disabled>Saving…</button>
+
+aria-busy is the platform's own word for "this is working". It is an
+enumerated string, not an HTML boolean, so it needs the literal ="true";
+`aria-busy` on its own does nothing. There is no ARIA for "skeleton" —
+it is purely how the busy state is painted — so that one is data-*.
+
+CSS cannot disable anything. `disabled` stays the consumer's job.
+*/
+/* ----------------------------------------------------- */
+
+/* ========= Keyframes =========
+   Must sit outside .btn. @keyframes defines a globally scoped name, and
+   nesting it inside a style rule makes the parser drop it silently — the
+   animation name is then never registered and nothing moves. */
+
+@keyframes btn-sweep {
+  from {
+    translate: -120% 0;
+  }
+  to {
+    translate: 270% 0;
+  }
+}
+
+/* ========= Base Styling ========= */
+
+.btn {
+  /* ---- shared by both states ---- */
+  &[aria-busy="true"] {
+    --sweep-color: rgb(255 255 255 / 0.5);
+    --sweep-width: 40%;
+    --sweep-duration: 1.4s;
+
+    position: relative;
+    overflow: hidden; /* clips the sweep to the button's radius */
+    cursor: progress;
+
+    /* &::after, not ::after — a nested selector that does not start with
+       & gets an implicit descendant combinator, so `::after {}` styles a
+       CHILD's pseudo-element instead of the button's own. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0;
+      inline-size: var(--sweep-width);
+      pointer-events: none;
+
+      background: linear-gradient(100deg, transparent, var(--sweep-color), transparent);
+      filter: blur(0.5px);
+
+      animation: btn-sweep var(--sweep-duration) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    /* WCAG 2.2.2 — moving decoration stops for anyone who asked it to.
+       @media nests fine; only @keyframes does not. */
+    @media (prefers-reduced-motion: reduce) {
+      &::after {
+        animation: none;
+        translate: 0 0;
+        inline-size: 100%;
+        background: var(--sweep-color);
+        opacity: 0.35;
+      }
+    }
+  }
+
+  /* ---- LOADING ----
+     Keeps the button's own colours; the gloss rides on top, so a primary
+     button still reads as primary while it works. */
+  &[aria-busy="true"]:not([data-skeleton]) {
+    opacity: 0.85;
+  }
+
+  /* ---- SKELETON ----
+     Flat grey, no label. color:transparent rather than visibility:hidden
+     so the text still sizes the box — the placeholder is exactly as wide
+     as the real button, and nothing shifts when the data lands. */
+  &[aria-busy="true"][data-skeleton] {
+    --sweep-color: rgb(255 255 255 / 0.75);
+
+    background-color: var(--color-neutral-200);
+    background-image: none;
+    color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+
+    & :is(svg, img, i) {
+      visibility: hidden;
+    }
+  }
+}

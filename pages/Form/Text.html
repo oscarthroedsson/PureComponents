@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Input — PureComponents</title>
+    <meta name="pc-description" content="Text inputs must have an associated label element with proper for and id attributes for accessibility." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/text.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Text">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <div class="label-container md">
+        <label for="email-basic">Email</label>
+        <input type="email" id="email-basic" aria-describedby="email-help" />
+        <p id="email-help" class="helpText">Enter your email address</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="input-types" data-title="Input Types" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+    <p class="pc-note">Text inputs support various HTML5 input types: text, email, password, tel, and number.</p>
+    <template>
+      <div class="label-container md">
+        <label for="text-input">Text</label>
+        <input type="text" id="text-input" />
+      </div>
+      <div class="label-container md">
+        <label for="email-input">Email</label>
+        <input type="email" id="email-input" />
+      </div>
+      <div class="label-container md">
+        <label for="password-input">Password</label>
+        <input type="password" id="password-input" />
+      </div>
+      <div class="label-container md">
+        <label for="tel-input">Phone</label>
+        <input type="tel" id="tel-input" />
+      </div>
+      <div class="label-container md">
+        <label for="number-input">Number</label>
+        <input type="number" id="number-input" />
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+    <p class="pc-note">Text inputs support three sizes: small (sm), medium (md), and large (lg).</p>
+    <template>
+      <div class="label-container sm">
+        <label for="small-input">Small</label>
+        <input type="text" id="small-input" />
+      </div>
+      <div class="label-container md">
+        <label for="medium-input">Medium</label>
+        <input type="text" id="medium-input" />
+      </div>
+      <div class="label-container lg">
+        <label for="large-input">Large</label>
+        <input type="text" id="large-input" />
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="border-radius-variants" data-title="Border Radius Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
+    <p class="pc-note">Text inputs support different border radius styles: sharp, smooth, and rounded.</p>
+    <template>
+      <div class="label-container md sharp">
+        <label for="sharp-input">Sharp</label>
+        <input type="text" id="sharp-input" />
+      </div>
+      <div class="label-container md smooth">
+        <label for="smooth-input">Smooth</label>
+        <input type="text" id="smooth-input" />
+      </div>
+      <div class="label-container md rounded">
+        <label for="rounded-input">Rounded</label>
+        <input type="text" id="rounded-input" />
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="error-state" data-title="Error State">
+    <p class="pc-note">Error states require <code>aria-invalid="true"</code> and <code>aria-describedby</code> pointing to the error message.</p>
+    <template>
+      <div class="label-container md">
+        <label for="error-input">Email</label>
+        <input type="email" id="error-input" aria-invalid="true" aria-describedby="error-message" />
+        <p id="error-message" class="status" role="alert">Please enter a valid email address</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
+    <p class="pc-note">Disabled inputs use the native <code>disabled</code> attribute.</p>
+    <template>
+      <div class="label-container md">
+        <label for="disabled-input">Disabled Input</label>
+        <input type="text" id="disabled-input" disabled value="This field is disabled" />
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
+    <p class="pc-note">All text inputs must have proper labels and ARIA attributes for screen reader support.</p>
+    <template>
+      <div class="label-container md">
+        <label for="accessible-input">Accessible Input</label>
+        <input
+          type="text"
+          id="accessible-input"
+          aria-describedby="help-text error-text"
+          aria-required="true"
+        />
+        <p id="help-text" class="helpText">Enter your name</p>
+        <p id="error-text" class="status" role="alert" style="display: none;">Error message</p>
+      </div>
+    </template>
+  </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fieldset — PureComponents</title>
+    <meta name="pc-description" content="The Fieldset component groups related form controls together with a &amp;lt;legend&amp;gt; element for the group label." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/fieldSet.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/formField.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Fieldset">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <fieldset class="fieldSet md">
+        <legend>Contact Information</legend>
+        <div class="formField">
+          <label for="name">Name</label>
+          <input type="text" id="name" />
+        </div>
+        <div class="formField">
+          <label for="email">Email</label>
+          <input type="email" id="email" />
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <p class="pc-note">Fieldset supports small (sm) and medium (md) sizes.</p>
+    <template>
+      <fieldset class="fieldSet sm">
+        <legend>Small Fieldset</legend>
+        <div class="formField">
+          <label for="small-name">Name</label>
+          <input type="text" id="small-name" />
+        </div>
+      </fieldset>
+      <fieldset class="fieldSet md">
+        <legend>Medium Fieldset</legend>
+        <div class="formField">
+          <label for="medium-name">Name</label>
+          <input type="text" id="medium-name" />
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="border-radius-variants" data-title="Border Radius Variants" data-stage-style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <p class="pc-note">Fieldset supports different border radius styles: sharp and smooth.</p>
+    <template>
+      <fieldset class="fieldSet md sharp">
+        <legend>Sharp Fieldset</legend>
+        <div class="formField">
+          <label for="sharp-name">Name</label>
+          <input type="text" id="sharp-name" />
+        </div>
+      </fieldset>
+      <fieldset class="fieldSet md smooth">
+        <legend>Smooth Fieldset</legend>
+        <div class="formField">
+          <label for="smooth-name">Name</label>
+          <input type="text" id="smooth-name" />
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="with-radio-buttons" data-title="With Radio Buttons">
+    <p class="pc-note">Fieldset is commonly used to group radio buttons together.</p>
+    <template>
+      <fieldset class="fieldSet md">
+        <legend>Choose an option</legend>
+        <div class="formField">
+          <label for="radio1">
+            <input type="radio" id="radio1" name="choice" value="1" />
+            Option 1
+          </label>
+        </div>
+        <div class="formField">
+          <label for="radio2">
+            <input type="radio" id="radio2" name="choice" value="2" />
+            Option 2
+          </label>
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
+    <p class="pc-note">Fieldset must have a <code>&lt;legend&gt;</code> element for proper accessibility.</p>
+    <template>
+      <fieldset class="fieldSet md">
+        <legend>Accessible Fieldset</legend>
+        <div class="formField">
+          <label for="acc-name">Name</label>
+          <input type="text" id="acc-name" />
+        </div>
+        <div class="formField">
+          <label for="acc-email">Email</label>
+          <input type="email" id="acc-email" />
+        </div>
+      </fieldset>
+    </template>
+  </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

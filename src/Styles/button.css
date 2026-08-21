@@ -1,47 +1,113 @@
 /* -----------------Content Board----------------------- */
 /* 
+ACCESSIBILITY REQUIREMENTS:
+- Icon-only buttons MUST have aria-label attribute for screen readers
+- Toggle buttons should use aria-pressed="true/false" to indicate state
+- All buttons must be keyboard accessible (native button element)
+- Focus indicators come from main.css. Never draw an outline in this file.
 
-attributes
-iconOnly → If we only want to show an icon
-disabled → If we want to disable the btn
+ATTRIBUTES:
+- data-icon-only → If we only want to show an icon (requires aria-label)
+- disabled → Disabled state on a <button>
+- aria-disabled="true" → Disabled state on an <a>, which can never be :disabled
+- aria-pressed → For toggle buttons ("true" | "false")
+- aria-label → Required for icon-only buttons
+- data-intent="destructive" → Destructive action
 
+ELEMENTS:
+.btn is a look, not an element. It goes on a <button> for an action
+and on an <a> for a destination — pagination needs both. The two
+arrive with different browser defaults, so the base neutralises them
+in one place and everything below describes only the look.
+
+NOT HERE:
+Loading and skeleton are put on top, from loading.css, and are not
+rebuilt per component.
 */
 /* ----------------------------------------------------- */
 
-/* ========= Base Styling ========= */
-
 .btn {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+
   border: none;
+
   background-color: var(--color-primary);
   color: var(--color-neutral-100);
-  transition: background-color 0.5s;
 
-  &:hover {
-    background-color: color-mix(in hsl, var(--color-primary) 100%, var(--color-neutral-900) 10%);
+  padding-block: 0.5em;
+  padding-inline: 0.75em;
+  gap: 0.5em;
+
+  white-space: nowrap;
+  cursor: pointer;
+
+  /*
+   * The same class has to give the same box whichever element carries
+   * it. A <button> does not inherit type — it arrives with the system
+   * font, so the row would be Arial 13px beside Poppins 14px. An <a>
+   * arrives underlined and in the browser's link colour. Neither is a
+   * decision this component made, so both are cleared here.
+   */
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  line-height: inherit;
+  text-decoration: none;
+
+  transition:
+    background-color 0.5s,
+    color 0.2s,
+    transform 0.15s ease-in;
+
+  /* ICON */
+
+  & > :is(svg, img, i) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
   }
 
   /* SIZE */
+
   &.sm {
     font-size: var(--font-size-sm);
-    padding: var(--spacing-50) var(--spacing-75);
     border-radius: var(--radius-sm);
   }
 
   &.md {
     font-size: var(--font-size-md);
-    padding: var(--spacing-50) var(--spacing-75);
     border-radius: var(--radius-md);
   }
+
   &.lg {
     font-size: var(--font-size-base);
-    padding: var(--spacing-75) var(--spacing-100);
     border-radius: var(--radius-lg);
   }
 
+  /* SHAPE */
+
+  &.sharp {
+    border-radius: var(--radius-sharp);
+  }
+
+  &.smooth {
+    border-radius: var(--radius-md);
+  }
+
+  &.rounded {
+    border-radius: var(--radius-full);
+  }
+
+  /* VARIANTS — each one owns what it changes about the states below */
+
   &.emphasised {
     background-color: var(--color-secondary);
-    color: var(--);
+    color: var(--color-neutral-100);
   }
 
   &.secondary {
@@ -50,6 +116,7 @@ disabled → If we want to disable the btn
     &:hover {
       background-color: color-mix(in hsl, var(--color-secondary) 100%, var(--color-neutral-900) 1%);
     }
+
   }
 
   &.tertiary {
@@ -57,104 +124,63 @@ disabled → If we want to disable the btn
     color: var(--color-neutral-900);
 
     &:hover {
+      background-color: transparent;
       color: var(--color-primary);
       text-decoration: underline;
-      text-underline-offset: 0.3rem;
-    }
-  }
-
-  &.btn[iconOnly] {
-    &:not(span, i, svg, img) {
-      font-size: 0;
+      text-underline-offset: 0.3em;
     }
 
-    &:has(span, i, svg, img) {
-      size: portrait;
-    }
-  }
 
-  &.btn[disabled] {
-    background-color: var(--color-neutral-200);
-    color: var(--color-neutral-400);
-
-    /* Remove BG if user have tertiary applied */
-    &.tertiary {
+    /* Nothing to grey out when there was no fill to begin with. */
+    &:is(:disabled, [aria-disabled="true"]) {
       background-color: transparent;
     }
+  }
+
+  &.ghost {
+    background-color: transparent;
+    color: var(--color-neutral-900);
+
+    &:hover {
+      background-color: var(--color-neutral-100);
+    }
+
+    &:is(:disabled, [aria-disabled="true"]) {
+      background-color: transparent;
+    }
+  }
+
+  &[data-intent="destructive"] {
+    background-color: var(--color-destructive);
+  }
+
+  &[data-icon-only="true"] {
+    aspect-ratio: 1;
+    padding: 0.5em;
+  }
+
+  /* ACTIONS — what the pointer and the keyboard do */
+
+  &:hover {
+    background-color: color-mix(in hsl, var(--color-primary) 100%, var(--color-neutral-900) 10%);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+
+  /* STATE — last, so it settles what the actions above proposed */
+
+  &[aria-pressed="true"] {
+    background-color: color-mix(in hsl, var(--color-primary) 100%, var(--color-neutral-900) 20%);
+  }
+
+  &:is(:disabled, [aria-disabled="true"]) {
+    background-color: var(--color-neutral-200);
+    color: var(--color-neutral-400);
     cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
   }
-}
-
-/* Btn with an icon in it */
-[class^=".btn"]:has(i, span, svg, img) {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  gap: 0.5rem;
-  white-space: nowrap;
-
-  /* Styles apply at small */
-  &.btn-sm {
-    & > span,
-    & > i,
-    & > svg,
-    & > img {
-      width: 0.75rem;
-    }
-  }
-
-  /* Styles apply at small */
-  &.btn-md {
-    & > span,
-    & > i,
-    & > svg,
-    & > img {
-      width: 1rem;
-    }
-  }
-  /* Styles apply at small */
-  &.btn-lg {
-    & > span,
-    & > i,
-    & > svg,
-    & > img {
-      width: 1.2rem;
-    }
-  }
-}
-
-/* ========= GENERALL CSS RULES  ========= */
-[class^="btn"]:has(i, span, svg, img) {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  gap: var(--spacing-50);
-  white-space: nowrap;
-
-  &.sm > *:is(i, span, svg, img) {
-    width: var(--icon-size-sm-w);
-    height: var(--icon-size-sm-h);
-  }
-  &.md > *:is(i, span, svg, img) {
-    width: var(--icon-size-lg-w);
-    height: var(--icon-size-lg-h);
-  }
-  &.lg > *:is(i, span, svg, img) {
-    width: var(--icon-size-lg-w);
-    height: var(--icon-size-lg-h);
-  }
-}
-
-[class^="btn"]:is([disabled]) {
-  transition: transform ease-in 0.15s;
-  cursor: not-allowed;
-}
-
-[class^="btn"]:not([disabled]) {
-  transition: transform ease-in 0.15s;
-  cursor: pointer;
-}
-
-[class^="btn"]:active:not([disabled]) {
-  transform: scale(0.95);
 }

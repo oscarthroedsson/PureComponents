@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collapsible — PureComponents</title>
+    <meta name="pc-description" content="One panel that opens and closes. The class goes on a native &lt;details&gt;, so the browser supplies the state, the keyboard and the semantics — and we supply the look." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../src/Styles/main.css" />
+    <link rel="stylesheet" href="../src/Styles/collapsible.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Collapsible">
+    <section class="pc-doc" id="reference" data-title="Reference">
+      <p>
+        The class goes on <code>&lt;details&gt;</code>, and the first child must be
+        <code>&lt;summary&gt;</code>. That pair is the component. The browser reports the open
+        state, takes focus, and answers Enter and Space on its own — none of it is ours to build,
+        and none of it needs JavaScript.
+      </p>
+      <p>
+        One panel is a <em>disclosure</em>. Several that read as one block is an
+        <a href="./Accordion.html">Accordion</a>, which groups these and adds nothing they already
+        do.
+      </p>
+
+      <h3>Class names</h3>
+      <div class="pc-doc-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>collapsible</code></td>
+              <td class="pc-doc-dim">Component</td>
+              <td>The panel. Goes on the <code>&lt;details&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td><code>collapsible-marker</code></td>
+              <td class="pc-doc-dim">Part</td>
+              <td>
+                Optional. Your own icon, inside the <code>&lt;summary&gt;</code>. Stands our own
+                marker down on sight and inherits its size, placement and rotation.
+              </td>
+            </tr>
+            <tr>
+              <td><code>closed</code></td>
+              <td class="pc-doc-dim">Part</td>
+              <td>
+                The icon shown while the panel is closed. Only inside
+                <code>.collapsible-marker</code>, where it cannot reach anything else.
+              </td>
+            </tr>
+            <tr>
+              <td><code>open</code></td>
+              <td class="pc-doc-dim">Part</td>
+              <td>The icon shown while it is open. Pair it with <code>closed</code>.</td>
+            </tr>
+            <tr>
+              <td><code>sm</code></td>
+              <td class="pc-doc-dim">Size</td>
+              <td>On the <code>&lt;details&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td><code>md</code></td>
+              <td class="pc-doc-dim">Size</td>
+              <td>Default.</td>
+            </tr>
+            <tr>
+              <td><code>lg</code></td>
+              <td class="pc-doc-dim">Size</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><code>sharp</code></td>
+              <td class="pc-doc-dim">Shape</td>
+              <td>Square corners.</td>
+            </tr>
+            <tr>
+              <td><code>smooth</code></td>
+              <td class="pc-doc-dim">Shape</td>
+              <td>Default corner, whatever the size gives.</td>
+            </tr>
+            <tr>
+              <td><code>rounded</code></td>
+              <td class="pc-doc-dim">Shape</td>
+              <td>The widest corner.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Attributes</h3>
+      <div class="pc-doc-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Goes on</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>open</code></td>
+              <td class="pc-doc-dim">the <code>&lt;details&gt;</code></td>
+              <td>Native. The panel starts open. The browser writes and removes it for you after that.</td>
+            </tr>
+            <tr>
+              <td><code>name="group"</code></td>
+              <td class="pc-doc-dim">the <code>&lt;details&gt;</code></td>
+              <td>
+                Native. Panels sharing a name form one exclusive set — opening one closes the rest.
+                No JavaScript, no class.
+              </td>
+            </tr>
+            <tr>
+              <td><code>data-marker="start"</code></td>
+              <td class="pc-doc-dim">the <code>&lt;details&gt;</code></td>
+              <td>The marker leads the row instead of closing it.</td>
+            </tr>
+            <tr>
+              <td><code>data-marker="none"</code></td>
+              <td class="pc-doc-dim">the <code>&lt;details&gt;</code></td>
+              <td>No marker of ours at all.</td>
+            </tr>
+            <tr>
+              <td><code>data-marker-motion</code></td>
+              <td class="pc-doc-dim">the <code>&lt;details&gt;</code></td>
+              <td>
+                How the marker changes: <code>scale</code> (default) · <code>rotate</code> ·
+                <code>fade</code> · <code>none</code>. Applies to a slot holding two icons; a
+                single icon has nothing to cross over with and keeps turning.
+              </td>
+            </tr>
+            <tr>
+              <td><code>aria-hidden="true"</code></td>
+              <td class="pc-doc-dim">your own marker</td>
+              <td>Decoration. Ours is kept away from assistive tech already.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Sizes</h3>
+      <div class="pc-doc-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Font size</th>
+              <th>Padding inline</th>
+              <th>Padding block</th>
+              <th>Radius</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>sm</code></td>
+              <td><code>--font-size-sm</code></td>
+              <td><code>--spacing-75</code></td>
+              <td><code>--spacing-50</code></td>
+              <td><code>--radius-sm</code></td>
+            </tr>
+            <tr>
+              <td><code>md</code></td>
+              <td><code>--font-size-md</code></td>
+              <td><code>--spacing-100</code></td>
+              <td><code>--spacing-75</code></td>
+              <td><code>--radius-md</code></td>
+            </tr>
+            <tr>
+              <td><code>lg</code></td>
+              <td><code>--font-size-base</code></td>
+              <td><code>--spacing-125</code></td>
+              <td><code>--spacing-100</code></td>
+              <td><code>--radius-lg</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Variables</h3>
+      <div class="pc-doc-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Default</th>
+              <th>What it moves</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>--collapsible-font-size</code></td>
+              <td><code>var(--font-size-md)</code></td>
+              <td>The size classes replace it.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-radius</code></td>
+              <td><code>var(--radius-md)</code></td>
+              <td>The corner. Size and shape classes both replace it.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-background</code></td>
+              <td><code>var(--color-neutral-100)</code></td>
+              <td>Behind the whole panel, summary included.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-border-width</code></td>
+              <td><code>1px</code></td>
+              <td>Set it to <code>0</code> for a borderless panel. Accordion does exactly that.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-border-color</code></td>
+              <td><code>var(--color-neutral-300)</code></td>
+              <td>The frame.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-padding-inline</code></td>
+              <td><code>var(--spacing-100)</code></td>
+              <td>Room either side, in the summary and the panel alike.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-padding-block</code></td>
+              <td><code>var(--spacing-75)</code></td>
+              <td>The same, vertically. The panel animates from zero to this.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-gap</code></td>
+              <td><code>var(--spacing-75)</code></td>
+              <td>Least space between the title and the marker.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-summary-color</code></td>
+              <td><code>var(--color-neutral-900)</code></td>
+              <td>The title.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-summary-weight</code></td>
+              <td><code>600</code></td>
+              <td>The title's weight, heading or not.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-summary-hover-background</code></td>
+              <td class="pc-doc-dim">6% of neutral-900</td>
+              <td>The row under the pointer.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-content-color</code></td>
+              <td><code>var(--color-neutral-700)</code></td>
+              <td>The panel's text. 8.9:1 on the default background.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-focus-color</code></td>
+              <td><code>var(--color-primary)</code></td>
+              <td>The focus ring. 3px, drawn inside the corner.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-duration</code></td>
+              <td><code>var(--transition-medium)</code></td>
+              <td>Open, close, and the marker's turn.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-icon</code></td>
+              <td class="pc-doc-dim">a chevron</td>
+              <td>
+                A <code>url()</code> used as a mask, so the shape is yours and the colour stays
+                ours. You cannot select our marker — this is how you change it.
+              </td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-size</code></td>
+              <td><code>1em</code></td>
+              <td>Scales with the text by default.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-color</code></td>
+              <td><code>var(--color-neutral-500)</code></td>
+              <td>Decoration, so it may be lighter than the text floor.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-rotation-open</code></td>
+              <td><code>180deg</code></td>
+              <td>Set <code>90deg</code> with a right-pointing icon for the file-tree reading.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-duration</code></td>
+              <td><code>var(--collapsible-duration)</code></td>
+              <td>A single icon's turn. Split from the panel's own timing so they can differ.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-exit-scale</code></td>
+              <td><code>0.4</code></td>
+              <td>How small the leaving icon gets. <code>1</code> means it does not scale.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-exit-rotation</code></td>
+              <td><code>0deg</code></td>
+              <td>How far the leaving icon turns, and where the arriving one comes from.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-exit-duration</code></td>
+              <td><code>120ms</code></td>
+              <td>Short on purpose. The old icon should be gone before the new one lands.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-enter-duration</code></td>
+              <td><code>220ms</code></td>
+              <td>The arriving icon takes longer than the leaving one.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-enter-delay</code></td>
+              <td><code>90ms</code></td>
+              <td>The beat between the two. Set it to <code>0s</code> for a true cross-fade.</td>
+            </tr>
+            <tr>
+              <td><code>--collapsible-marker-enter-easing</code></td>
+              <td class="pc-doc-dim">a gentle overshoot</td>
+              <td>The curve the arriving icon rides in on.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>About the animation</h3>
+      <p>
+        The open and close travel is a real height transition, built on
+        <code>::details-content</code> — available everywhere since September 2025 — and
+        <code>interpolate-size</code>, which is Chromium only. In Firefox and Safari the panel snaps
+        open instead. Everything else is identical, so the animation is an enhancement and never a
+        requirement. The marker's rotation animates everywhere; it is an ordinary transform.
+      </p>
+      <p>
+        <code>interpolate-size</code> is declared on the component rather than on
+        <code>:root</code>, so one experimental property does not sit in the global scope for a
+        single component's sake.
+      </p>
+    </section>
+
+    <section class="pc-demo" id="basic-usage" data-title="Basic Usage" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        The class on <code>&lt;details&gt;</code>, the title in <code>&lt;summary&gt;</code>, the
+        rest is the panel. Click it, or tab to it and press Enter.
+      </p>
+      <template>
+        <details class="collapsible md">
+          <summary>How do I create an account?</summary>
+          <p>Click the "Sign up" button in the top right corner and follow the steps.</p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="open-by-default" data-title="Open By Default" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        The native <code>open</code> attribute. Put it on the one panel that should already be
+        showing; the browser takes it from there.
+      </p>
+      <template>
+        <details class="collapsible md" open>
+          <summary>Where does the state live?</summary>
+          <p>
+            In the <code>open</code> attribute, which the browser writes and removes as you click.
+            Our CSS reads it. Nothing else keeps track.
+          </p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        <code>sm</code>, <code>md</code>, <code>lg</code>. <code>md</code> is what the key class
+        alone gives you — the class is there to say it out loud. The marker is sized in
+        <code>em</code>, so it follows.
+      </p>
+      <template>
+        <details class="collapsible sm">
+          <summary>Small</summary>
+          <p>Tighter padding, smaller type, smaller corner.</p>
+        </details>
+        <details class="collapsible md">
+          <summary>Medium</summary>
+          <p>The default.</p>
+        </details>
+        <details class="collapsible lg">
+          <summary>Large</summary>
+          <p>More room to breathe.</p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="shape" data-title="Shape" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        <code>sharp</code>, <code>smooth</code>, <code>rounded</code> — the same three words as
+        everywhere else in the library.
+      </p>
+      <template>
+        <details class="collapsible md sharp" open>
+          <summary>sharp</summary>
+          <p>Square corners.</p>
+        </details>
+        <details class="collapsible md smooth" open>
+          <summary>smooth</summary>
+          <p>The default corner.</p>
+        </details>
+        <details class="collapsible md rounded" open>
+          <summary>rounded</summary>
+          <p>The widest corner.</p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="marker-position" data-title="Marker Position" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        By default the marker closes the row: it reads as "there is more below". Move it to the
+        front with <code>data-marker="start"</code> when the panel is really a branch in a tree, or
+        drop it entirely with <code>data-marker="none"</code>.
+      </p>
+      <template>
+        <details class="collapsible md">
+          <summary>Default — the marker closes the row</summary>
+          <p>The convention for FAQs and content panels.</p>
+        </details>
+        <details class="collapsible md" data-marker="start">
+          <summary>data-marker="start"</summary>
+          <p>The marker leads. This is the file-tree reading.</p>
+        </details>
+        <details class="collapsible md" data-marker="none">
+          <summary>data-marker="none"</summary>
+          <p>No marker at all. The panel still opens and closes.</p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="your-own-icon" data-title="Your Own Icon" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        For an icon we do not ship, put it in the <code>&lt;summary&gt;</code> as
+        <code>.collapsible-marker</code>. Ours stands down on its own — nothing to switch off — and
+        yours picks up the size, the placement, the rotation and the timing without you writing any
+        of it. Mark it <code>aria-hidden="true"</code>: it is decoration, and the state is already
+        announced.
+      </p>
+      <template>
+        <details class="collapsible md">
+          <summary>
+            One icon, so it turns
+            <svg class="collapsible-marker" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <p>
+            A single icon rotates by <code>--collapsible-marker-rotation-open</code>, exactly as our
+            own marker does. That only reads as a change if the shape has a direction — see below
+            for what to do when it does not.
+          </p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="two-icons" data-title="Two Icons, One Per State" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        A plus has fourfold symmetry: turn it and nothing appears to happen. So rather than animate
+        something <em>inside</em> an icon, give the slot <strong>two</strong> icons and let them
+        cross over. Mark them <code>.closed</code> and <code>.open</code> — the names live only
+        inside <code>.collapsible-marker</code> and cannot reach anything else on your page.
+      </p>
+      <p class="pc-note">
+        This works for any pair of shapes, because nothing inside either icon has to be animatable.
+        The <code>aria-hidden</code> goes on the wrapper; both icons are decoration.
+      </p>
+      <template>
+        <details class="collapsible md">
+          <summary>
+            A plus that becomes a minus
+            <span class="collapsible-marker" aria-hidden="true">
+              <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
+            </span>
+          </summary>
+          <p>
+            The plus scales away, the minus scales in a beat later with a slight overshoot. No
+            rotation at all — the shape carries the change on its own.
+          </p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="marker-motion" data-title="Marker Motion" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        <code>data-marker-motion</code> picks how the pair crosses over. Everything is expressed as
+        an exit state — where the outgoing icon goes and where the incoming one comes from — so the
+        four values only reassign two variables between them.
+      </p>
+      <template>
+        <details class="collapsible md">
+          <summary>
+            scale — the default
+            <span class="collapsible-marker" aria-hidden="true">
+              <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
+            </span>
+          </summary>
+          <p>Out fast and small, in slower with a little overshoot.</p>
+        </details>
+        <details class="collapsible md" data-marker-motion="rotate">
+          <summary>
+            rotate
+            <span class="collapsible-marker" aria-hidden="true">
+              <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
+            </span>
+          </summary>
+          <p>The pair turns through the swap. Best when the shapes have a direction.</p>
+        </details>
+        <details class="collapsible md" data-marker-motion="fade">
+          <summary>
+            fade
+            <span class="collapsible-marker" aria-hidden="true">
+              <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
+            </span>
+          </summary>
+          <p>Opacity only. The quietest of the four.</p>
+        </details>
+        <details class="collapsible md" data-marker-motion="none">
+          <summary>
+            none
+            <span class="collapsible-marker" aria-hidden="true">
+              <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
+            </span>
+          </summary>
+          <p>A hard cut. This is also what every value above becomes under <code>prefers-reduced-motion</code>.</p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="icon-by-variable" data-title="Icon By Variable" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        You cannot select our marker — it is a pseudo-element. So the icon is a variable instead.
+        <code>--collapsible-marker-icon</code> takes a <code>url()</code> used as a mask, which is
+        why the colour keeps coming from <code>--collapsible-marker-color</code> and not from the
+        file.
+      </p>
+      <template>
+        <details class="collapsible md" style="--collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M12 16 6 10h12z'/%3E%3C/svg%3E&quot;)">
+          <summary>A solid triangle</summary>
+          <p>Same rotation, same size, different shape.</p>
+        </details>
+        <details class="collapsible md" data-marker="start" style="--collapsible-marker-rotation-open: 90deg; --collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E&quot;)">
+          <summary>Right-pointing, turning 90°</summary>
+          <p>The file-tree reading, assembled from two variables and one attribute.</p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="heading-in-summary" data-title="Heading In The Summary" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        The HTML spec allows one heading element inside <code>&lt;summary&gt;</code>, and screen
+        reader users move through a long page by heading. On a page built out of these it is worth
+        the markup. The heading keeps its rank and gives up its scale.
+      </p>
+      <template>
+        <details class="collapsible md">
+          <summary><h3>Shipping and returns</h3></summary>
+          <p>Delivery takes three to five working days. Returns are free within 30 days.</p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="colours" data-title="Recolouring" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        Every colour is a variable, so a panel can be restyled without a new class. This one is set
+        inline; in a real project it would sit in your own stylesheet.
+      </p>
+      <template>
+        <details class="collapsible md" open style="--collapsible-background: var(--color-neutral-200); --collapsible-border-color: var(--color-primary); --collapsible-marker-color: var(--color-primary)">
+          <summary>A panel that carries an intent</summary>
+          <p>Background, border and marker, all reassigned. No override of ours needed.</p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="exclusive" data-title="Exclusive Without JavaScript" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        The native <code>name</code> attribute joins panels into one set: opening one closes the
+        rest. It works on loose panels like these, and it is the whole mechanism behind
+        <a href="./Accordion.html">Accordion</a>. No script, no class.
+      </p>
+      <template>
+        <details class="collapsible md" name="loose-demo">
+          <summary>First</summary>
+          <p>Open the second and this one closes itself.</p>
+        </details>
+        <details class="collapsible md" name="loose-demo">
+          <summary>Second</summary>
+          <p>And the browser did all of it.</p>
+        </details>
+        <details class="collapsible md" name="loose-demo">
+          <summary>Third</summary>
+          <p>Same name, same group.</p>
+        </details>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="accessibility" data-title="Accessibility Requirements" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
+      <p class="pc-note">
+        The important instruction here is a negative one: <strong>do not add
+        <code>aria-expanded</code> to the <code>&lt;summary&gt;</code></strong>. The browser already
+        reports open and closed from the <code>open</code> attribute, and an explicit
+        <code>aria-expanded</code> overrides that report. We ship no JavaScript, so it could never
+        be updated — it would announce "collapsed" while the panel stands open. The same goes for
+        <code>role="button"</code>: <code>&lt;summary&gt;</code> has its own role. Tab to the panel
+        below and press Enter; that keyboard contract is everything the ARIA APG asks of a
+        disclosure, and it arrived for free.
+      </p>
+      <template>
+        <details class="collapsible md">
+          <summary>Nothing added, nothing missing</summary>
+          <p>
+            Focusable, operable by Enter and Space, announced with its state. Optionally add
+            <code>role="region"</code> with an <code>aria-labelledby</code> to a panel worth
+            reaching as a landmark — but only to a few, or the landmark list turns to noise.
+          </p>
+        </details>
+      </template>
+    </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

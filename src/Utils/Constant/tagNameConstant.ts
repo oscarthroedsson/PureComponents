@@ -1,7 +1,6 @@
 export const elementLocalName = {
   a: "a",
   abbr: "abbr",
-  address: "address",
   area: "area",
   article: "article",
   aside: "aside",

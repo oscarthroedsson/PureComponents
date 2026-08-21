@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Range — PureComponents</title>
+    <meta name="pc-description" content="Range inputs must have proper ARIA attributes (aria-valuemin, aria-valuemax, aria-valuenow) and an associated label." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/range.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/inputs/formField.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Range">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <template>
+      <div class="formField">
+        <label for="range-basic">Volume</label>
+        <input
+          type="range"
+          id="range-basic"
+          class="range md"
+          min="0"
+          max="100"
+          value="50"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+          aria-describedby="range-help"
+        />
+        <p id="range-help" class="helpText">Adjust the volume (0-100)</p>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <p class="pc-note">Range inputs support three sizes: small (sm), medium (md), and large (lg).</p>
+    <template>
+      <div class="formField">
+        <label for="small-range">Small</label>
+        <input
+          type="range"
+          id="small-range"
+          class="range sm"
+          min="0"
+          max="100"
+          value="50"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+        />
+      </div>
+      <div class="formField">
+        <label for="medium-range">Medium</label>
+        <input
+          type="range"
+          id="medium-range"
+          class="range md"
+          min="0"
+          max="100"
+          value="50"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+        />
+      </div>
+      <div class="formField">
+        <label for="large-range">Large</label>
+        <input
+          type="range"
+          id="large-range"
+          class="range lg"
+          min="0"
+          max="100"
+          value="50"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+        />
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="with-value-display" data-title="With Value Display">
+    <p class="pc-note">Range inputs can display the current value using <code>aria-valuetext</code> or a separate element.</p>
+    <template>
+      <div class="formField">
+        <label for="value-range">Volume: <span id="value-display">50</span>%</label>
+        <input
+          type="range"
+          id="value-range"
+          class="range md"
+          min="0"
+          max="100"
+          value="50"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+          aria-valuetext="50 percent"
+          oninput="document.getElementById('value-display').textContent = this.value"
+        />
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
+    <p class="pc-note">Range inputs can be disabled using the native <code>disabled</code> attribute.</p>
+    <template>
+      <div class="formField">
+        <label for="disabled-range">Disabled Range</label>
+        <input
+          type="range"
+          id="disabled-range"
+          class="range md"
+          min="0"
+          max="100"
+          value="50"
+          disabled
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+        />
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
+    <p class="pc-note">Range inputs must have proper ARIA attributes for screen reader support.</p>
+    <template>
+      <div class="formField">
+        <label for="accessible-range">Accessible Range</label>
+        <input
+          type="range"
+          id="accessible-range"
+          class="range md"
+          min="0"
+          max="100"
+          value="50"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+          aria-valuetext="50 percent"
+          aria-describedby="range-help"
+        />
+        <p id="range-help" class="helpText">Use arrow keys to adjust</p>
+      </div>
+    </template>
+  </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

@@ -1,133 +1,171 @@
+/*
+List — spacing and a hairline for native list markup.
+
+The class goes on the <ul> or <ol>. Every item is reached from
+there, so the whole list stays one unit.
+
+  <ul class="list md">
+    <li>Item</li>
+    <li>Item</li>
+  </ul>
+
+Markers are removed: this is a list of rows, not a bulleted list of
+prose. A reading list with bullets is a different thing and should
+keep its markers.
+
+Each <li> is a row on its own — padding and a hairline between it
+and the next. .item-row is only needed when a row holds media beside
+its text.
+
+  <li class="item-row">
+    <img src="…" alt="" />
+    <div>
+      <p class="item-title">Ada Lovelace</p>
+      <p class="item-text">Engineering</p>
+    </div>
+  </li>
+
+
+SIZE
+  sm | md (default) | lg      item padding, type size, media size
+
+ALIGNMENT
+  .item-row takes top | center (default) | bottom for how the media
+  and the text line up against each other.
+
+
+ACCESSIBILITY
+- .list-title is an <li>, so a screen reader counts it as an item.
+  A heading before the list is the better answer where it matters.
+- An <img> that only decorates a row takes alt="".
+
+
+VARIABLES
+  --list-padding-block
+  --list-padding-inline
+  --list-gap                 between media and text in a row
+  --list-font-size
+  --list-title-font-size
+  --list-media-size
+
+  --list-color               item text
+  --list-muted-color         secondary text
+  --list-border-color        the hairline between items
+  --list-border-width
+*/
+
 .list {
-  &.list-container {
-    padding: 0px;
-    margin: 0px;
+  --list-padding-block: var(--spacing-75);
+  --list-padding-inline: var(--spacing-100);
+  --list-gap: var(--spacing-75);
+  --list-font-size: var(--font-size-md);
+  --list-title-font-size: var(--font-size-md);
+  --list-media-size: 2.5rem;
+
+  --list-color: var(--color-neutral-800);
+  --list-muted-color: var(--color-neutral-600);
+  --list-border-color: var(--color-neutral-200);
+  --list-border-width: 1px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  font-size: var(--list-font-size);
+  color: var(--list-color);
+
+  /* ITEMS */
+  & > li {
+    padding: var(--list-padding-block) var(--list-padding-inline);
+
+    border-block-end: var(--list-border-width) solid var(--list-border-color);
   }
 
-  .list-title {
-    font-weight: bolder;
-    padding: var(--spacing-25) var(--spacing-50);
-    margin-bottom: var(--spacing-50);
+  /* The list ends on content, not on a stray line. */
+  & > li:last-child {
+    border-block-end: none;
   }
 
-  .item-title {
+  & p {
+    margin: 0;
+  }
+
+  /* TITLE */
+  & .list-title {
+    font-size: var(--list-title-font-size);
     font-weight: var(--font-weight-subheading);
-    font-size: var(--font-size-);
+
+    color: var(--list-color);
   }
 
-  list-style-type: none;
-  p {
-    margin: 0px;
-  }
-
-  /*  will let the user add border-radius on the list-items */
-  &.rounded {
-    &.sm > * {
-      border-radius: 8px;
-    }
-    &.md > * {
-      border-radius: 8px;
-    }
-    &.lg > * {
-      border-radius: 8px;
-    }
-  }
-
-  /* Img global */
-  & :is(.item-col, .item-row):has(:is(img, svg)) :is(img, svg) {
-    object-fit: cover;
-  }
-
-  /* If size is given and we have images */
-  &.sm :is(.item-col, .item-row):has(:is(img, svg)) :is(img, svg) {
-    width: 50px;
-    height: auto;
-  }
-  &.md :is(.item-col, .item-row):has(:is(img, svg)) :is(img, svg) {
-    width: 55px;
-    height: auto;
-  }
-  &.lg :is(.item-col, .item-row):has(:is(img, svg)) :is(img, svg) {
-    width: 60px;
-    height: auto;
-  }
-
-  & :is(.item-row) {
+  /* ROW */
+  & .item-row {
     display: flex;
-    overflow: hidden;
+    align-items: center;
+
+    gap: var(--list-gap);
+
+    & > :is(img, svg) {
+      inline-size: var(--list-media-size);
+      block-size: var(--list-media-size);
+
+      flex: none;
+
+      object-fit: cover;
+    }
+
+    & > :not(img, svg) {
+      min-inline-size: 0;
+    }
 
     &.top {
       align-items: start;
     }
+
     &.center {
       align-items: center;
     }
+
     &.bottom {
       align-items: end;
     }
   }
 
-  /* Row */
-  &.sm :is(.item-row) {
-    gap: var(--spacing-50);
-    padding: 0 var(--spacing-100) 0 0;
-
-    &:is(:not(:last-child)) {
-      margin-bottom: 8px;
-    }
-
-    & .item-title {
-      font-size: 14px;
-    }
-
-    & .content {
-      font-size: 12px;
-      padding: var(--spacing-50) 0;
-    }
+  & .item-title {
+    font-weight: var(--font-weight-subheading);
   }
 
-  &.md :is(.item-row) {
-    gap: var(--spacing-75);
-    padding-inline: 0 var(--spacing-100);
-
-    &:is(:not(:last-child)) {
-      margin-bottom: 10px;
-    }
-
-    & .item-title {
-      font-size: 14px;
-    }
-
-    & .content {
-      font-size: 12px;
-      padding: var(--spacing-50) 0;
-    }
+  & .item-text {
+    color: var(--list-muted-color);
   }
 
-  &.lg :is(.item-row) {
-    gap: var(--spacing-75);
-    padding: 0 var(--spacing-100) 0 0;
-    &:is(:not(:last-child)) {
-      margin-bottom: 12px;
-    }
+  /* SIZE */
 
-    & .item-title {
-      font-size: 16px;
-    }
-
-    & .content {
-      font-size: 14px;
-      padding: var(--spacing-50) 0;
-    }
+  &.sm {
+    --list-padding-block: var(--spacing-50);
+    --list-padding-inline: var(--spacing-75);
+    --list-gap: var(--spacing-50);
+    --list-font-size: var(--font-size-sm);
+    --list-title-font-size: var(--font-size-sm);
+    --list-media-size: 2rem;
   }
 
-  .test {
-    font-size: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &.md {
+    --list-padding-block: var(--spacing-75);
+    --list-padding-inline: var(--spacing-100);
+    --list-gap: var(--spacing-75);
+    --list-font-size: var(--font-size-md);
+    --list-title-font-size: var(--font-size-md);
+    --list-media-size: 2.5rem;
+  }
 
-    font-weight: 100;
-    color: rgb(87, 87, 87);
+  &.lg {
+    --list-padding-block: var(--spacing-100);
+    --list-padding-inline: var(--spacing-125);
+    --list-gap: var(--spacing-100);
+    --list-font-size: var(--font-size-base);
+    --list-title-font-size: var(--font-size-base);
+    --list-media-size: 3rem;
   }
 }
