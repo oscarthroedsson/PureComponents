@@ -61,6 +61,11 @@ ACCESSIBILITY REQUIREMENTS:
   name away.
 - Do not nest a fieldset inside a fieldset to get indentation. Nest it only
   when the questions really are nested; every level is announced.
+- A message for the whole group is a .field-error placed as a direct child of
+  the fieldset, and the fieldset carries aria-invalid="true" while it applies.
+  That is the correct ARIA for a group-level error, and it is also the only
+  trigger there is: :user-invalid fires on a control, never on the group
+  around it, so a group error cannot be reached without JavaScript.
 - <fieldset disabled> is a real disabled state, so :disabled styling in every
   control file applies with nothing extra written here. Controls inside the
   FIRST legend stay enabled — that is native, and it is how a "turn this
@@ -90,11 +95,12 @@ VARIABLES
   /* 1. VARIABLES */
   --fieldset-gap: var(--form-gap, var(--spacing-100));
 
-  /* Half the gap between two fields, deliberately. A legend that sits as far
-     from its first field as two fields sit from each other belongs to
-     nothing — it has to bind downward to the group it names. shadcn lands on
-     the same 2:1 (gap-6 between fields, mb-3 under the legend). */
-  --fieldset-legend-gap: var(--spacing-50);
+  /* Quarter of the gap between two fields. The legend belongs to what
+     follows it, so it has to sit closer to its first field than the fields
+     sit to each other. DaisyUI gets there with py-2 and a -mb-1 that pulls
+     the legend back down onto the content. */
+  --fieldset-legend-gap: var(--spacing-25);
+  --fieldset-legend-hint-gap: var(--spacing-1);
 
   /* Extra air above the group, on top of the form's gap. Pulling the legend
      down onto its fields made the boundary upward the weak one: a group
@@ -102,18 +108,19 @@ VARIABLES
      margin does not collapse, so this adds cleanly to --form-gap and stays
      predictable. */
   --fieldset-space-before: var(--spacing-100);
-  --fieldset-legend-color: var(--form-label-color, var(--color-neutral-900));
+
+  /* SMALLER than a field label, not larger. The first attempt scaled the
+     legend up to 1.15em to separate it from a label, and it read as a
+     heading shouting over the fields it names. A group marker works the
+     other way: small, semibold, muted, quiet enough to scan past. DaisyUI
+     does not scale its legend up either — it is weight 600 at the group's
+     own size, and that is what makes it look considered.
+     Floored at --font-size-sm so it stays legible at .sm. */
+  --fieldset-legend-color: var(--color-neutral-600);
   --fieldset-legend-weight: 600;
-
-  /* A legend at the same size and weight as a field label is invisible as a
-     group — it reads as one more label in the column. One step up in em, so
-     it tracks whatever size the group is set to. */
-  --fieldset-legend-font-size: 1.15em;
-
-  /* line-height: normal gave a 16px legend a 24px line box, which is a
-     paragraph's leading on a one-line heading. It is what made the top of a
-     fieldset look empty. */
+  --fieldset-legend-font-size: max(0.85em, var(--font-size-sm));
   --fieldset-legend-line-height: 1.2;
+  --fieldset-legend-letter-spacing: 0.02em;
 
   --fieldset-padding-block: var(--spacing-100);
   --fieldset-padding-inline: var(--spacing-100);
@@ -141,12 +148,31 @@ VARIABLES
     margin-block-start: var(--fieldset-space-before);
   }
 
+  /* A hint describing the whole group belongs to the legend, so the legend
+     gives up almost all of its own gap and the hint takes the group's. */
+  &:has(> .field-hint) > legend {
+    margin-block-end: var(--fieldset-legend-hint-gap);
+  }
+
+  /* A group message answers for the QUESTION, so the group has to be marked
+     invalid itself — a child going wrong is the child's business.
+     :has(:is(...)) was wrong here and shipped for exactly one commit: it
+     matches any descendant, so one bad postcode inside a field lit the
+     group's message too.
+     There is no native equivalent. :user-invalid fires on a control, never
+     on the fieldset around it, so a group error needs the consumer to set
+     aria-invalid — which is the correct ARIA for it in any case. */
+  &[aria-invalid="true"] > .field-error {
+    visibility: visible;
+  }
+
   & > legend {
     padding-inline: 0;
     color: var(--fieldset-legend-color);
     font-weight: var(--fieldset-legend-weight);
     font-size: var(--fieldset-legend-font-size);
     line-height: var(--fieldset-legend-line-height);
+    letter-spacing: var(--fieldset-legend-letter-spacing);
 
     /* The legend sits outside the grid, so `gap` never reaches it. */
     margin-block-end: var(--fieldset-legend-gap);

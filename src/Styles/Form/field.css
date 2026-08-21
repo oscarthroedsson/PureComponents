@@ -12,8 +12,10 @@ Field — one control and everything that explains it.
 Every part is optional. A .field with nothing but a label and a control has
 to look finished, and it does.
 
-.field-hint and .field-error live inside the key block, so they only style
-inside a .field — the same contract .card-title has with .card.
+.field-hint and .field-error are keys of their own, not parts nested in
+.field. They have to work in two places — inside a field, and as a direct
+child of a .fieldset describing the whole group. Whoever contains them owns
+the reveal, and neither owner can reach into the other's.
 
 
 ORDER
@@ -132,26 +134,6 @@ VARIABLES
     font-weight: var(--field-label-weight);
   }
 
-  & :is(.field-hint, .field-error) {
-    margin: 0;
-    font-size: var(--field-message-font-size);
-    font-weight: 400;
-    line-height: var(--field-message-line-height);
-  }
-
-  & .field-hint {
-    color: var(--field-hint-color);
-  }
-
-  & .field-error {
-    color: var(--field-error-color);
-
-    /* 1lh is one line of this element's own line-height — not a guessed
-       pixel value, so it tracks every size class for free. */
-    min-block-size: 1lh;
-    visibility: hidden;
-  }
-
   /* 3. SIZE — a group rewrites the channel, so the control follows too. */
   &.sm {
     --form-font-size: var(--font-size-sm);
@@ -175,11 +157,56 @@ VARIABLES
   }
 
   /* 5. STATES */
-  &:has(:is(:user-invalid, [aria-invalid="true"])) .field-error {
+  &:has(:is(:user-invalid, [aria-invalid="true"])) > .field-error {
     visibility: visible;
   }
 
   &:has(:disabled) > label {
     color: var(--color-neutral-500);
   }
+}
+
+/*
+The two message parts are keys of their own, not parts nested inside .field.
+They have to work in two places: inside a .field, describing one control, and
+as a direct child of a .fieldset, describing the whole group — which is what
+a radio group needs, where the message belongs to the question and not to any
+one option.
+
+Both read --field-message-* when a .field declares it above them, and fall
+back to their own scale when they sit straight in a group. Whoever owns them
+owns the reveal: .field lights its own > .field-error, .fieldset lights its
+own, and neither can reach into the other.
+*/
+
+.field-hint,
+.field-error {
+  --field-message-scale: var(--field-message-font-size, max(0.85em, var(--font-size-sm)));
+  --field-message-leading: var(--field-message-line-height, 1.2);
+
+  margin: 0;
+  font-size: var(--field-message-scale);
+  font-weight: 400;
+  line-height: var(--field-message-leading);
+}
+
+.field-hint {
+  --field-hint-text: var(--form-hint-color, var(--color-neutral-500));
+
+  color: var(--field-hint-text);
+}
+
+.field-error {
+  --field-error-text: var(--form-error-color, var(--color-error));
+
+  color: var(--field-error-text);
+
+  /* One line of this element's own line-height — not a guessed pixel value,
+     so the reserved row tracks every size class for free. */
+  min-block-size: 1lh;
+
+  /* Hidden until whatever owns it says otherwise. visibility keeps the row
+     and takes the text out of the accessibility tree; display would drop the
+     row, opacity would leave the text being announced. */
+  visibility: hidden;
 }

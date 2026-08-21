@@ -25,24 +25,23 @@
         <form class="form">
           <div class="field">
             <label for="fm-name">Full name</label>
-            <input class="input" type="text" id="fm-name" autocomplete="name" />
+            <input class="input" type="text" id="fm-name" />
           </div>
           <div class="field">
             <label for="fm-email">Email</label>
             <p class="field-hint" id="fm-email-hint">We only use it for receipts.</p>
-            <input class="input" type="email" id="fm-email" required
-                   autocomplete="email" aria-describedby="fm-email-hint fm-email-err" />
+            <input class="input" type="email" id="fm-email" required aria-describedby="fm-email-hint fm-email-err" />
             <p class="field-error" id="fm-email-err">Enter a valid email address.</p>
           </div>
           <fieldset class="fieldset">
             <legend>Delivery address</legend>
             <div class="field">
               <label for="fm-street">Street</label>
-              <input class="input" type="text" id="fm-street" autocomplete="street-address" />
+              <input class="input" type="text" id="fm-street" />
             </div>
             <div class="field">
               <label for="fm-city">City</label>
-              <input class="input" type="text" id="fm-city" autocomplete="address-level2" />
+              <input class="input" type="text" id="fm-city" />
             </div>
           </fieldset>
           <button class="btn" type="submit">Continue</button>

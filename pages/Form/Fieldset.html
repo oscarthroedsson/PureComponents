@@ -23,15 +23,15 @@
           <legend>Delivery address</legend>
           <div class="field">
             <label for="b-street">Street</label>
-            <input class="input" type="text" id="b-street" value="Storgatan 14" autocomplete="street-address" />
+            <input class="input" type="text" id="b-street" value="Storgatan 14" />
           </div>
           <div class="field">
             <label for="b-zip">Postcode</label>
-            <input class="input" type="text" id="b-zip" value="114 55" autocomplete="postal-code" />
+            <input class="input" type="text" id="b-zip" value="114 55" />
           </div>
           <div class="field">
             <label for="b-city">City</label>
-            <input class="input" type="text" id="b-city" value="Stockholm" autocomplete="address-level2" />
+            <input class="input" type="text" id="b-city" value="Stockholm" />
           </div>
         </fieldset>
       </template>
@@ -43,7 +43,7 @@
         <form class="form">
           <div class="field">
             <label for="t-email">Email</label>
-            <input class="input" type="email" id="t-email" value="anna@example.se" autocomplete="email" />
+            <input class="input" type="email" id="t-email" value="anna@example.se" />
           </div>
           <fieldset class="fieldset">
             <legend>Delivery address</legend>
@@ -68,6 +68,58 @@
             </div>
           </fieldset>
           <button class="btn" type="submit">Continue</button>
+        </form>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="group-hint" data-title="Hint On The Group" data-stage-style="display:block; max-width:24rem;">
+      <p class="pc-note">A hint straight in the fieldset describes the whole group. It sits tight under the legend, and the fields keep the group's normal gap.</p>
+      <template>
+        <form class="form">
+          <fieldset class="fieldset">
+            <legend>Delivery address</legend>
+            <p class="field-hint" id="gh-hint">We deliver Monday to Friday. A PO box will not work.</p>
+            <div class="field">
+              <label for="gh-street">Street</label>
+              <input class="input" type="text" id="gh-street" value="Storgatan 14" aria-describedby="gh-hint" />
+            </div>
+            <div class="field">
+              <label for="gh-city">City</label>
+              <p class="field-hint" id="gh-city-hint">The city on the postcode, not the district.</p>
+              <input class="input" type="text" id="gh-city" value="Stockholm" aria-describedby="gh-city-hint" />
+            </div>
+          </fieldset>
+        </form>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="group-error" data-title="Error On The Group" data-stage-style="display:block; max-width:24rem;">
+      <p class="pc-note">The message is a direct child of the fieldset, so it belongs to the question rather than to any one control — which is what a choice group needs. The postcode below carries its own, and the two do not reach into each other.</p>
+      <template>
+        <form class="form">
+          <fieldset class="fieldset" aria-invalid="true">
+            <legend>Delivery window</legend>
+            <p class="field-hint">Pick the one that suits you.</p>
+            <div class="field">
+              <label for="ge-a">Morning, 08–12</label>
+              <input class="input" type="text" id="ge-a" placeholder="Stands in for a radio, until Radio is rebuilt" />
+            </div>
+            <p class="field-error">Choose a delivery window.</p>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>Delivery address</legend>
+            <div class="field">
+              <label for="ge-zip">Postcode</label>
+              <input class="input" type="text" id="ge-zip" value="114" aria-invalid="true" aria-describedby="ge-zip-err" />
+              <p class="field-error" id="ge-zip-err">A postcode is five digits.</p>
+            </div>
+            <div class="field">
+              <label for="ge-city">City</label>
+              <input class="input" type="text" id="ge-city" value="Stockholm" aria-describedby="ge-city-err" />
+              <p class="field-error" id="ge-city-err">Unknown city.</p>
+            </div>
+            <p class="field-error">And this one, which belongs to the group, stays hidden — the group itself is not marked invalid.</p>
+          </fieldset>
         </form>
       </template>
     </section>

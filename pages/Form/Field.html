@@ -38,7 +38,7 @@
       <template>
         <div class="field">
           <label for="a-name">Full name</label>
-          <input class="input" type="text" id="a-name" autocomplete="name" />
+          <input class="input" type="text" id="a-name" />
         </div>
       </template>
     </section>
@@ -65,8 +65,7 @@
           <div class="field">
             <label for="h-pw">Password</label>
             <p class="field-hint" id="h-pw-hint">At least 8 characters, one number.</p>
-            <input class="input" type="password" id="h-pw" minlength="8"
-                   autocomplete="new-password" aria-describedby="h-pw-hint" />
+            <input class="input" type="password" id="h-pw" minlength="8" aria-describedby="h-pw-hint" />
           </div>
           <div class="field">
             <label for="h-vat">VAT number</label>
@@ -88,7 +87,7 @@
         <div class="field">
           <label for="a-email">Email</label>
           <p class="field-hint" id="a-email-hint">We only use it for receipts.</p>
-          <input class="input" type="email" id="a-email" autocomplete="email"
+          <input class="input" type="email" id="a-email"
                  aria-describedby="a-email-hint a-email-err" />
           <p class="field-error" id="a-email-err">Enter a valid email address.</p>
         </div>
@@ -177,27 +176,26 @@
         <form class="form">
           <div class="field">
             <label for="p-name">Full name</label>
-            <input class="input" type="text" id="p-name" value="Anna Lindqvist" autocomplete="name" />
+            <input class="input" type="text" id="p-name" value="Anna Lindqvist" />
           </div>
           <div class="field">
             <label for="p-email">Email</label>
             <p class="field-hint" id="p-email-hint">Your receipt goes here.</p>
-            <input class="input" type="email" id="p-email" value="anna@" aria-invalid="true"
-                   autocomplete="email" aria-describedby="p-email-hint p-email-err" />
+            <input class="input" type="email" id="p-email" value="anna@" aria-invalid="true" aria-describedby="p-email-hint p-email-err" />
             <p class="field-error" id="p-email-err">Enter a valid email address.</p>
           </div>
           <fieldset class="fieldset">
             <legend>Delivery address</legend>
             <div class="field">
-              <input class="input" type="text" value="Storgatan 14" aria-label="Street" autocomplete="street-address" />
+              <input class="input" type="text" value="Storgatan 14" aria-label="Street" />
             </div>
             <div class="field">
               <label for="p-zip">Postcode</label>
-              <input class="input" type="text" id="p-zip" value="114 55" autocomplete="postal-code" />
+              <input class="input" type="text" id="p-zip" value="114 55" />
             </div>
             <div class="field">
               <label for="p-city">City</label>
-              <input class="input" type="text" id="p-city" value="Stockholm" autocomplete="address-level2" />
+              <input class="input" type="text" id="p-city" value="Stockholm" />
             </div>
           </fieldset>
           <button class="btn" type="submit">Save address</button>
