@@ -86,6 +86,11 @@ VARIABLES
   --fieldset-legend-color: var(--form-label-color, var(--color-neutral-900));
   --fieldset-legend-weight: 600;
 
+  /* A legend at the same size and weight as a field label is invisible as a
+     group — it reads as one more label in the column. One step up in em, so
+     it tracks whatever size the group is set to. */
+  --fieldset-legend-font-size: 1.15em;
+
   --fieldset-padding-block: var(--spacing-100);
   --fieldset-padding-inline: var(--spacing-100);
   /* One step darker than --form-surface, so the fields inside a panel keep
@@ -112,6 +117,7 @@ VARIABLES
     padding-inline: 0;
     color: var(--fieldset-legend-color);
     font-weight: var(--fieldset-legend-weight);
+    font-size: var(--fieldset-legend-font-size);
 
     /* The legend sits outside the grid, so `gap` never reaches it. */
     margin-block-end: var(--fieldset-legend-gap);

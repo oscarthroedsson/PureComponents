@@ -11,106 +11,187 @@
     <link rel="stylesheet" href="../../src/Styles/Form/fieldset.css" />
     <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
     <link rel="stylesheet" href="../../src/Styles/Form/input.css" />
+    <link rel="stylesheet" href="../../src/Styles/button.css" />
 
     <link rel="stylesheet" href="../docs.css" />
   </head>
   <body data-component="Form/Fieldset">
-    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:block; max-width:26rem;">
-      <p class="pc-note">
-        No border. A fieldset is a semantic frame — the legend names the group and is read before
-        every control inside it.
-      </p>
+    <section class="pc-demo" id="basic" data-title="Legend And Fields" data-stage-style="display:block; max-width:24rem;">
+      <p class="pc-note">No border. The legend names the group and is read before every control in it.</p>
       <template>
         <fieldset class="fieldset">
           <legend>Delivery address</legend>
           <div class="field">
-            <label for="fs-street">Street</label>
-            <input class="input" type="text" id="fs-street" autocomplete="street-address" />
+            <label for="b-street">Street</label>
+            <input class="input" type="text" id="b-street" value="Storgatan 14" autocomplete="street-address" />
           </div>
           <div class="field">
-            <label for="fs-city">City</label>
-            <input class="input" type="text" id="fs-city" autocomplete="address-level2" />
+            <label for="b-zip">Postcode</label>
+            <input class="input" type="text" id="b-zip" value="114 55" autocomplete="postal-code" />
+          </div>
+          <div class="field">
+            <label for="b-city">City</label>
+            <input class="input" type="text" id="b-city" value="Stockholm" autocomplete="address-level2" />
           </div>
         </fieldset>
       </template>
     </section>
 
-    <section class="pc-demo" id="panel" data-title="Panel" data-stage-style="display:block; max-width:26rem;">
-      <p class="pc-note">
-        <code>panel</code> draws a whole surface — fill, border, radius and padding — not a
-        hairline. A bare border would sit flush with the rest of the form while the fields inside
-        were pushed in by the padding, and the group would look narrower for no visible reason.
-      </p>
+    <section class="pc-demo" id="two-groups" data-title="Two Groups In One Form" data-stage-style="display:block; max-width:24rem;">
+      <p class="pc-note">The rhythm has to hold across the seam between them.</p>
+      <template>
+        <form class="form">
+          <div class="field">
+            <label for="t-email">Email</label>
+            <input class="input" type="email" id="t-email" value="anna@example.se" autocomplete="email" />
+          </div>
+          <fieldset class="fieldset">
+            <legend>Delivery address</legend>
+            <div class="field">
+              <label for="t-d-street">Street</label>
+              <input class="input" type="text" id="t-d-street" value="Storgatan 14" />
+            </div>
+            <div class="field">
+              <label for="t-d-city">City</label>
+              <input class="input" type="text" id="t-d-city" value="Stockholm" />
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>Billing address</legend>
+            <div class="field">
+              <label for="t-b-street">Street</label>
+              <input class="input" type="text" id="t-b-street" />
+            </div>
+            <div class="field">
+              <label for="t-b-city">City</label>
+              <input class="input" type="text" id="t-b-city" />
+            </div>
+          </fieldset>
+          <button class="btn" type="submit">Continue</button>
+        </form>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="panel" data-title="Panel" data-stage-style="display:block; max-width:24rem;">
+      <p class="pc-note">A whole surface, not a hairline — otherwise the fields inside just look narrower than their neighbours.</p>
       <template>
         <fieldset class="fieldset panel">
           <legend>Billing address</legend>
           <div class="field">
-            <label for="fs-b-street">Street</label>
-            <input class="input" type="text" id="fs-b-street" />
+            <label for="p-street">Street</label>
+            <input class="input" type="text" id="p-street" value="Storgatan 14" />
           </div>
           <div class="field">
-            <label for="fs-b-city">City</label>
-            <input class="input" type="text" id="fs-b-city" />
+            <label for="p-city">City</label>
+            <input class="input" type="text" id="p-city" value="Stockholm" />
           </div>
         </fieldset>
       </template>
     </section>
 
-    <section class="pc-demo" id="disabled" data-title="Native Disabled" data-stage-style="display:block; max-width:26rem;">
-      <p class="pc-note">
-        <code>&lt;fieldset disabled&gt;</code> disables the whole subtree for real — the controls
-        match <code>:disabled</code>, leave the tab order and are left out of the submitted data.
-        This file writes nothing for it. It is the reason the component is a native fieldset and
-        not a div with <code>role="group"</code>.
-      </p>
+    <section class="pc-demo" id="hairline" data-title="Why Not A Hairline" data-stage-style="display:block; max-width:24rem;">
+      <p class="pc-note">The group on top is a bare border. Its fields sit inside the padding while the border sits flush with the field above — that misalignment is the whole reason .panel draws a fill.</p>
+      <template>
+        <form class="form">
+          <div class="field">
+            <label for="h-email">Email</label>
+            <input class="input" type="email" id="h-email" value="anna@example.se" />
+          </div>
+          <fieldset class="fieldset" style="border: 1px solid var(--color-neutral-400); padding: 1rem">
+            <legend>A bare border</legend>
+            <div class="field">
+              <label for="h-street">Street</label>
+              <input class="input" type="text" id="h-street" value="Storgatan 14" />
+            </div>
+          </fieldset>
+          <fieldset class="fieldset panel">
+            <legend>A panel</legend>
+            <div class="field">
+              <label for="h2-street">Street</label>
+              <input class="input" type="text" id="h2-street" value="Storgatan 14" />
+            </div>
+          </fieldset>
+        </form>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="disabled" data-title="Native Disabled" data-stage-style="display:block; max-width:24rem;">
+      <p class="pc-note">&lt;fieldset disabled&gt; disables the subtree for real. This file writes nothing for it.</p>
       <template>
         <fieldset class="fieldset panel" disabled>
           <legend>Card details</legend>
           <div class="field">
-            <label for="fs-card">Card number</label>
-            <input class="input" type="text" id="fs-card" value="4111 1111 1111 1111" />
+            <label for="d-card">Card number</label>
+            <input class="input" type="text" id="d-card" value="4111 1111 1111 1111" />
           </div>
           <div class="field">
-            <label for="fs-exp">Expiry</label>
-            <input class="input" type="text" id="fs-exp" value="12/29" />
+            <label for="d-exp">Expiry</label>
+            <input class="input" type="text" id="d-exp" value="12/29" />
           </div>
         </fieldset>
       </template>
     </section>
 
-    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:2rem; max-width:26rem;">
-      <p class="pc-note">The size goes on the group and every field in it follows.</p>
+    <section class="pc-demo" id="invalid" data-title="A Group With An Error" data-stage-style="display:block; max-width:24rem;">
+      <p class="pc-note">The message belongs to one field, not to the group — the valid siblings stay untouched.</p>
+      <template>
+        <fieldset class="fieldset">
+          <legend>Delivery address</legend>
+          <div class="field">
+            <label for="i-street">Street</label>
+            <input class="input" type="text" id="i-street" value="Storgatan 14" aria-describedby="i-street-err" />
+            <p class="field-error" id="i-street-err">We do not deliver to this street.</p>
+          </div>
+          <div class="field">
+            <label for="i-zip">Postcode</label>
+            <input class="input" type="text" id="i-zip" value="114" aria-invalid="true" aria-describedby="i-zip-err" />
+            <p class="field-error" id="i-zip-err">A postcode is five digits.</p>
+          </div>
+          <div class="field">
+            <label for="i-city">City</label>
+            <input class="input" type="text" id="i-city" value="Stockholm" aria-describedby="i-city-err" />
+            <p class="field-error" id="i-city-err">Unknown city.</p>
+          </div>
+        </fieldset>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; grid-template-columns: repeat(3, 1fr); gap:2rem; align-items:start;">
+      <p class="pc-note">Size on the group; every field in it follows.</p>
       <template>
         <fieldset class="fieldset sm">
-          <legend>Small group</legend>
+          <legend>Small</legend>
           <div class="field">
-            <label for="fs-sm">Street</label>
-            <input class="input" type="text" id="fs-sm" />
+            <label for="zz-sm">Street</label>
+            <input class="input" type="text" id="zz-sm" value="Storgatan 14" />
+          </div>
+        </fieldset>
+        <fieldset class="fieldset md">
+          <legend>Medium</legend>
+          <div class="field">
+            <label for="zz-md">Street</label>
+            <input class="input" type="text" id="zz-md" value="Storgatan 14" />
           </div>
         </fieldset>
         <fieldset class="fieldset lg">
-          <legend>Large group</legend>
+          <legend>Large</legend>
           <div class="field">
-            <label for="fs-lg">Street</label>
-            <input class="input" type="text" id="fs-lg" />
+            <label for="zz-lg">Street</label>
+            <input class="input" type="text" id="zz-lg" value="Storgatan 14" />
           </div>
         </fieldset>
       </template>
     </section>
 
     <section class="pc-demo" id="narrow" data-title="Narrow Parent" data-stage-style="display:block;">
-      <p class="pc-note">
-        A fieldset has <code>min-width: min-content</code> in the UA sheet and refuses to shrink
-        below its widest child. <code>min-inline-size: 0</code> in the base is what keeps this one
-        inside its 200px grid column instead of bursting out of it.
-      </p>
+      <p class="pc-note">min-inline-size: 0 keeps it inside the 200px column instead of bursting out.</p>
       <template>
         <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border: 1px dashed #999; padding: 0.5rem">
           <fieldset class="fieldset">
             <legend>Boxed in</legend>
             <div class="field">
-              <label for="fs-narrow">A rather long label</label>
-              <input class="input" type="text" id="fs-narrow" />
+              <label for="n-street">A rather long label</label>
+              <input class="input" type="text" id="n-street" />
             </div>
           </fieldset>
           <p style="margin: 0; font-size: 0.8rem">The second column.</p>

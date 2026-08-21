@@ -4,109 +4,180 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Field — PureComponents</title>
-    <meta name="pc-description" content="One control and everything that explains it: label, hint and message." />
+    <meta name="pc-description" content="One control and everything that explains it." />
 
     <link rel="stylesheet" href="../../src/Styles/main.css" />
     <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/fieldset.css" />
     <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
     <link rel="stylesheet" href="../../src/Styles/Form/input.css" />
+    <link rel="stylesheet" href="../../src/Styles/button.css" />
 
     <link rel="stylesheet" href="../docs.css" />
+
+    <!--
+      TEMPORARY — not part of the library, and not loaded by any other page.
+      Flattens .input to a plain box so this page shows the FIELD's spacing,
+      rhythm and type rather than the input's own design. Delete it when the
+      input is what is being judged.
+    -->
+    <style>
+      /* :where() keeps this at (0,1,0) so it replaces only the BASE. At
+         (0,2,0) it tied with .input:disabled and the invalid rule and won on
+         source order, which silently flattened both states. */
+      .pc-stage :where(.input) {
+        --input-surface: transparent;
+        --input-border-color: var(--color-neutral-400);
+        --input-radius: 2px;
+      }
+    </style>
   </head>
   <body data-component="Form/Field">
-    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">Label and control. Every other part is optional and the field still looks finished.</p>
+    <section class="pc-demo" id="basic" data-title="Label And Control" data-stage-style="display:block; max-width:22rem;">
+      <p class="pc-note">The minimum.</p>
       <template>
         <div class="field">
-          <label for="f-name">Full name</label>
-          <input class="input" type="text" id="f-name" autocomplete="name" />
+          <label for="a-name">Full name</label>
+          <input class="input" type="text" id="a-name" autocomplete="name" />
         </div>
       </template>
     </section>
 
-    <section class="pc-demo" id="parts" data-title="All Parts" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">
-        Label → hint → control → message. DOM order decides placement; this file sets no
-        <code>order</code>. <code>aria-describedby</code> lists both ids — CSS cannot write that,
-        so it is the consumer's markup.
-      </p>
+    <section class="pc-demo" id="no-label" data-title="Without A Label" data-stage-style="display:block; max-width:22rem;">
+      <p class="pc-note">A second address line, or anything the label above already named. The group carries the name.</p>
+      <template>
+        <fieldset class="fieldset">
+          <legend>Street address</legend>
+          <div class="field">
+            <input class="input" type="text" value="Storgatan 14" aria-label="Address line 1" />
+          </div>
+          <div class="field">
+            <input class="input" type="text" placeholder="Apartment, floor (optional)" aria-label="Address line 2" />
+          </div>
+        </fieldset>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="parts" data-title="All Parts" data-stage-style="display:block; max-width:22rem;">
+      <p class="pc-note">Label, hint, control, message.</p>
       <template>
         <div class="field">
-          <label for="f-email">Email</label>
-          <p class="field-hint" id="f-email-hint">We only use it for receipts.</p>
-          <input class="input" type="email" id="f-email" autocomplete="email"
-                 aria-describedby="f-email-hint f-email-err" />
-          <p class="field-error" id="f-email-err">Enter a valid email address.</p>
+          <label for="a-email">Email</label>
+          <p class="field-hint" id="a-email-hint">We only use it for receipts.</p>
+          <input class="input" type="email" id="a-email" autocomplete="email"
+                 aria-describedby="a-email-hint a-email-err" />
+          <p class="field-error" id="a-email-err">Enter a valid email address.</p>
         </div>
       </template>
     </section>
 
-    <section class="pc-demo" id="reserved" data-title="The Reserved Message Row" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">
-        Both fields carry a message. The first is valid, so the row is reserved but hidden — and
-        hidden with <code>visibility</code>, so it is out of the accessibility tree too. The
-        second is marked <code>aria-invalid="true"</code>. Neither one moves when the state
-        changes: <strong>the two controls sit at exactly the same height.</strong>
-      </p>
+    <section class="pc-demo" id="states" data-title="States" data-stage-style="display:block; max-width:22rem;">
+      <p class="pc-note">Read-only, disabled, and invalid two ways. Tab out of the last one to fire the native check.</p>
       <template>
-        <div class="field">
-          <label for="f-ok">Username</label>
-          <input class="input" type="text" id="f-ok" value="oscar" aria-describedby="f-ok-err" />
-          <p class="field-error" id="f-ok-err">That username is taken.</p>
-        </div>
-        <div class="field">
-          <label for="f-bad">Username</label>
-          <input class="input" type="text" id="f-bad" value="oscar" aria-invalid="true" aria-describedby="f-bad-err" />
-          <p class="field-error" id="f-bad-err">That username is taken.</p>
-        </div>
+        <form class="form">
+          <div class="field">
+            <label for="s-normal">Default</label>
+            <input class="input" type="text" id="s-normal" value="Anna Lindqvist" />
+          </div>
+          <div class="field">
+            <label for="s-ro">Read only</label>
+            <p class="field-hint">Set when the account was created.</p>
+            <input class="input" type="text" id="s-ro" value="anna.lindqvist" readonly />
+          </div>
+          <div class="field">
+            <label for="s-dis">Disabled</label>
+            <p class="field-hint">Ask support to change this.</p>
+            <input class="input" type="text" id="s-dis" value="8901-2345" disabled />
+          </div>
+          <div class="field">
+            <label for="s-aria">Invalid — set by a validator</label>
+            <input class="input" type="text" id="s-aria" value="ann@" aria-invalid="true"
+                   aria-describedby="s-aria-err" />
+            <p class="field-error" id="s-aria-err">Enter a valid email address.</p>
+          </div>
+          <div class="field">
+            <label for="s-nat">Invalid — native, after you leave it</label>
+            <input class="input" type="email" id="s-nat" required aria-describedby="s-nat-err" />
+            <p class="field-error" id="s-nat-err">Enter a valid email address.</p>
+          </div>
+        </form>
       </template>
     </section>
 
-    <section class="pc-demo" id="native" data-title="Native Validation" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">
-        No <code>aria-invalid</code> here — <code>required</code> and <code>type="email"</code> do
-        it. Type something wrong and tab out: <code>:user-invalid</code> fires only after you have
-        interacted, which is why <code>:invalid</code> is not used. It would paint this red on page
-        load, before you touched it.
-      </p>
+    <section class="pc-demo" id="reserved" data-title="The Message Row Is Reserved" data-stage-style="display:block; max-width:22rem;">
+      <p class="pc-note">Same markup, one valid and one not. Measured: both fields 80.4px, controls at the same offset. Nothing moves.</p>
       <template>
-        <div class="field">
-          <label for="f-nat">Email</label>
-          <input class="input" type="email" id="f-nat" required aria-describedby="f-nat-err" />
-          <p class="field-error" id="f-nat-err">Enter a valid email address.</p>
-        </div>
+        <form class="form">
+          <div class="field">
+            <label for="r-ok">Username</label>
+            <input class="input" type="text" id="r-ok" value="oscar" aria-describedby="r-ok-err" />
+            <p class="field-error" id="r-ok-err">That username is taken.</p>
+          </div>
+          <div class="field">
+            <label for="r-bad">Username</label>
+            <input class="input" type="text" id="r-bad" value="oscar" aria-invalid="true"
+                   aria-describedby="r-bad-err" />
+            <p class="field-error" id="r-bad-err">That username is taken.</p>
+          </div>
+        </form>
       </template>
     </section>
 
-    <section class="pc-demo" id="sizes" data-title="Sizes Cascade" data-stage-style="display:grid; gap:1.5rem; max-width:26rem;">
-      <p class="pc-note">
-        The size class goes on the field, and the label, hint, control and message all follow.
-        Nothing is written twice — the field rewrites one inherited variable.
-      </p>
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; grid-template-columns: repeat(3, 1fr); gap:2rem; align-items:start;">
+      <p class="pc-note">Size on the field. Label, hint, control and message all follow.</p>
       <template>
         <div class="field sm">
-          <label for="f-sm">Small</label>
-          <p class="field-hint">Hint text follows the field.</p>
-          <input class="input" type="text" id="f-sm" />
+          <label for="z-sm">Small</label>
+          <p class="field-hint">Hint follows the field.</p>
+          <input class="input" type="text" id="z-sm" value="sm" aria-invalid="true" />
+          <p class="field-error">So does the message.</p>
+        </div>
+        <div class="field md">
+          <label for="z-md">Medium</label>
+          <p class="field-hint">Hint follows the field.</p>
+          <input class="input" type="text" id="z-md" value="md" aria-invalid="true" />
           <p class="field-error">So does the message.</p>
         </div>
         <div class="field lg">
-          <label for="f-lg">Large</label>
-          <p class="field-hint">Hint text follows the field.</p>
-          <input class="input" type="text" id="f-lg" />
+          <label for="z-lg">Large</label>
+          <p class="field-hint">Hint follows the field.</p>
+          <input class="input" type="text" id="z-lg" value="lg" aria-invalid="true" />
           <p class="field-error">So does the message.</p>
         </div>
       </template>
     </section>
 
-    <section class="pc-demo" id="disabled" data-title="Disabled" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">The field reads the control's own state — no class to remember.</p>
+    <section class="pc-demo" id="fragment" data-title="A Real Fragment" data-stage-style="display:block; max-width:24rem;">
+      <p class="pc-note">Fields, a group, and a button. No tuning.</p>
       <template>
-        <div class="field">
-          <label for="f-dis">Account number</label>
-          <p class="field-hint">Set by your bank.</p>
-          <input class="input" type="text" id="f-dis" value="8901-2345" disabled />
-        </div>
+        <form class="form">
+          <div class="field">
+            <label for="p-name">Full name</label>
+            <input class="input" type="text" id="p-name" value="Anna Lindqvist" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="p-email">Email</label>
+            <p class="field-hint" id="p-email-hint">Your receipt goes here.</p>
+            <input class="input" type="email" id="p-email" value="anna@" aria-invalid="true"
+                   autocomplete="email" aria-describedby="p-email-hint p-email-err" />
+            <p class="field-error" id="p-email-err">Enter a valid email address.</p>
+          </div>
+          <fieldset class="fieldset">
+            <legend>Delivery address</legend>
+            <div class="field">
+              <input class="input" type="text" value="Storgatan 14" aria-label="Street" autocomplete="street-address" />
+            </div>
+            <div class="field">
+              <label for="p-zip">Postcode</label>
+              <input class="input" type="text" id="p-zip" value="114 55" autocomplete="postal-code" />
+            </div>
+            <div class="field">
+              <label for="p-city">City</label>
+              <input class="input" type="text" id="p-city" value="Stockholm" autocomplete="address-level2" />
+            </div>
+          </fieldset>
+          <button class="btn" type="submit">Save address</button>
+        </form>
       </template>
     </section>
 
