@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form — PureComponents</title>
+    <meta name="pc-description" content="The frame around a set of fields, and the node that sets the scale for everything inside it." />
+
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/fieldset.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/input.css" />
+    <link rel="stylesheet" href="../../src/Styles/button.css" />
+
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Form">
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:block; max-width:26rem;">
+      <p class="pc-note">
+        Nothing is styled on the form itself. It spaces its children and sets the scale for
+        everything under it. This is the whole library with no tuning at all.
+      </p>
+      <template>
+        <form class="form">
+          <div class="field">
+            <label for="fm-name">Full name</label>
+            <input class="input" type="text" id="fm-name" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="fm-email">Email</label>
+            <p class="field-hint" id="fm-email-hint">We only use it for receipts.</p>
+            <input class="input" type="email" id="fm-email" required
+                   autocomplete="email" aria-describedby="fm-email-hint fm-email-err" />
+            <p class="field-error" id="fm-email-err">Enter a valid email address.</p>
+          </div>
+          <fieldset class="fieldset">
+            <legend>Delivery address</legend>
+            <div class="field">
+              <label for="fm-street">Street</label>
+              <input class="input" type="text" id="fm-street" autocomplete="street-address" />
+            </div>
+            <div class="field">
+              <label for="fm-city">City</label>
+              <input class="input" type="text" id="fm-city" autocomplete="address-level2" />
+            </div>
+          </fieldset>
+          <button class="btn" type="submit">Continue</button>
+        </form>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="cascade" data-title="The Cascade" data-stage-style="display:block; max-width:30rem;">
+      <p class="pc-note">
+        <code>.form.lg</code> sets the scale once. The fieldset inside it says <code>sm</code> and
+        wins for its own subtree; the last field says <code>sm</code> and wins over both. Nearest
+        declaration wins, at any depth — no descendant selector anywhere in the family.
+      </p>
+      <template>
+        <form class="form lg">
+          <div class="field">
+            <label for="c-1">Inherits lg from the form</label>
+            <input class="input" type="text" id="c-1" />
+          </div>
+          <fieldset class="fieldset sm">
+            <legend>Group says sm</legend>
+            <div class="field">
+              <label for="c-2">Inherits sm from the fieldset</label>
+              <input class="input" type="text" id="c-2" />
+            </div>
+            <div class="field lg">
+              <label for="c-3">Field says lg, and wins</label>
+              <input class="input" type="text" id="c-3" />
+            </div>
+          </fieldset>
+        </form>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="leaf" data-title="Group Versus Leaf" data-stage-style="display:block; max-width:30rem;">
+      <p class="pc-note">
+        A group retunes its subtree; a leaf changes only itself. Put <code>lg</code> on the field
+        and the label grows with the control. Put it on the input and only the input grows — which
+        is the difference between the two, made visible.
+      </p>
+      <template>
+        <form class="form">
+          <div class="field lg">
+            <label for="l-1">lg on the field — label follows</label>
+            <input class="input" type="text" id="l-1" />
+          </div>
+          <div class="field">
+            <label for="l-2">lg on the input — label does not</label>
+            <input class="input lg" type="text" id="l-2" />
+          </div>
+        </form>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="shape" data-title="Shape Cascades Too" data-stage-style="display:block; max-width:26rem;">
+      <p class="pc-note">Same mechanism, same rules — one variable, set once on the form.</p>
+      <template>
+        <form class="form rounded">
+          <div class="field">
+            <label for="s-1">Rounded from the form</label>
+            <input class="input" type="text" id="s-1" />
+          </div>
+          <div class="field">
+            <label for="s-2">And this one</label>
+            <input class="input" type="text" id="s-2" />
+          </div>
+          <fieldset class="fieldset panel">
+            <legend>The panel follows as well</legend>
+            <div class="field">
+              <label for="s-3">Street</label>
+              <input class="input" type="text" id="s-3" />
+            </div>
+          </fieldset>
+        </form>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="tuning" data-title="Tuning The Whole Form" data-stage-style="display:block; max-width:26rem;">
+      <p class="pc-note">
+        Every variable in the channel can be set on the form and reaches every control below it.
+        No control is named, and no selector is written.
+      </p>
+      <template>
+        <form class="form" style="--form-gap: 2rem; --form-border-color: #334155; --form-surface: transparent">
+          <div class="field">
+            <label for="t-1">Roomier, on a transparent fill</label>
+            <input class="input" type="text" id="t-1" />
+          </div>
+          <div class="field">
+            <label for="t-2">Set once, on the form</label>
+            <input class="input" type="text" id="t-2" />
+          </div>
+        </form>
+      </template>
+    </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

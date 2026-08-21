@@ -1,0 +1,158 @@
+/*
+Input — the single-line text box, in every type that renders as one.
+
+  <input class="input" type="email">
+  <input class="input lg" type="search">
+  <input class="input" type="date">
+
+text · email · password · tel · url · search · number
+date · time · datetime-local · month · week
+
+Not here: checkbox, radio, range and file. They are not text boxes, they
+render nothing alike, and each has its own file.
+
+The box is not described in this file. Every measurement comes from the
+--form-* channel, so an .input, a .select and a .textarea in the same form
+are the same height and the same shape without any of them knowing about the
+others. See form.css for how the channel works.
+
+
+ACCESSIBILITY REQUIREMENTS:
+- MUST be named by a <label for>. A placeholder is not a label.
+- Fields collecting the user's own data MUST carry autocomplete (WCAG 1.3.5,
+  Level AA).
+- Error state is written on the control itself with aria-invalid="true", and
+  the message pointed at with aria-describedby. See field.css.
+- The focus ring comes from main.css. This file draws none. The border is a
+  border, never an outline — an outline written here would sit at a higher
+  specificity than the global :focus-visible and the field would show no
+  ring at all while focused. That has happened in this repo before.
+- The border is the box's only edge against the page, so it carries the
+  1.4.11 3:1 requirement on its own. --color-neutral-500 measures 4.76:1 on
+  white and is the lightest neutral in main.css that clears it;
+  --color-neutral-400 is 2.33:1 and --color-neutral-300 is 1.49:1.
+- KNOWN, MEASURED FAILURE: --color-error is #f87171, which measures 2.77:1
+  on white. As an invalid border it is under the 3:1 of 1.4.11. It is used
+  anyway by decision, pending a darker error token in main.css. The invalid
+  state is never carried by that colour alone — the message appears and
+  aria-invalid is set.
+- :disabled is exempt from contrast (1.4.3), so the greyed box is not a
+  failure.
+
+SIZE:  sm · md (default) · lg
+  A leaf, so a size class rewrites only this control's own variables. To
+  resize a whole form or group, put the class on .form, .fieldset or .field.
+
+SHAPE: sharp · smooth (default) · rounded
+
+STATE
+  :hover · :disabled · :read-only
+  :user-invalid / [aria-invalid="true"]   both, always. Native constraint
+  validation fires the first; Zod, Yup and React Hook Form set no native
+  constraints and fire only the second.
+
+VARIABLES
+  --input-font-size          --input-surface
+  --input-padding-block      --input-color
+  --input-padding-inline     --input-placeholder-color
+  --input-radius             --input-line-height
+  --input-border-width       --input-min-block-size
+  --input-border-color
+*/
+
+.input {
+  /* 1. VARIABLES — each one reads the channel, with its own default as the
+     fallback so a bare .input works with no .form around it. Never declare
+     a --form-* variable here; that would shadow the group's value. */
+  --input-font-size: var(--form-font-size, var(--font-size-md));
+  --input-padding-block: var(--form-padding-block, 0.5em);
+  --input-padding-inline: var(--form-padding-inline, 0.75em);
+  --input-radius: var(--form-radius, var(--radius-md));
+  --input-border-width: var(--form-border-width, 1px);
+  --input-border-color: var(--form-border-color, var(--color-neutral-500));
+  --input-surface: var(--form-surface, var(--color-neutral-100));
+  --input-color: var(--form-color, var(--color-neutral-900));
+  --input-placeholder-color: var(--color-neutral-500);
+  --input-line-height: var(--line-height-base);
+
+  /* One line of text plus the box around it. Derived, not tabulated, so an
+     .input, a .select and a .btn line up at any size the consumer invents. */
+  --input-min-block-size: calc(
+    1lh + (var(--input-padding-block) * 2) + (var(--input-border-width) * 2)
+  );
+
+  /* 2. BASE */
+  inline-size: 100%;
+  min-block-size: var(--input-min-block-size);
+
+  /* A form control arrives with the system font, not the page's. */
+  font-family: inherit;
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
+  color: var(--input-color);
+
+  background-color: var(--input-surface);
+  border: var(--input-border-width) solid var(--input-border-color);
+  border-radius: var(--input-radius);
+  padding-block: var(--input-padding-block);
+  padding-inline: var(--input-padding-inline);
+
+  transition: border-color var(--transition-fast);
+
+  &::placeholder {
+    color: var(--input-placeholder-color);
+    opacity: 1; /* Firefox dims it a second time */
+  }
+
+  /* 3. SIZE */
+  &.sm {
+    --input-font-size: var(--font-size-sm);
+  }
+  &.md {
+    /* base is already md */
+  }
+  &.lg {
+    --input-font-size: var(--font-size-base);
+  }
+
+  /* 4. SHAPE */
+  &.sharp {
+    --input-radius: var(--radius-sharp);
+  }
+  &.smooth {
+    --input-radius: var(--radius-md);
+  }
+  &.rounded {
+    --input-radius: var(--radius-rounded);
+  }
+
+  /* 5. STATES */
+  &:hover:not(:disabled, :read-only) {
+    --input-border-color: var(--color-neutral-700);
+  }
+
+  &:is(:user-invalid, [aria-invalid="true"]) {
+    --input-border-color: var(--color-error);
+  }
+
+  &:read-only:not(:disabled) {
+    --input-surface: var(--color-neutral-200);
+  }
+
+  &:disabled {
+    --input-surface: var(--color-neutral-200);
+    --input-border-color: var(--color-neutral-400);
+    --input-color: var(--color-neutral-500);
+    cursor: not-allowed;
+  }
+
+  /* The ring is main.css's job. This only clears the browser's own outline
+     for a mouse click, where :focus-visible never matches. */
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

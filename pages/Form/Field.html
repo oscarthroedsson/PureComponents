@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Field — PureComponents</title>
+    <meta name="pc-description" content="One control and everything that explains it: label, hint and message." />
+
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/input.css" />
+
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Field">
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">Label and control. Every other part is optional and the field still looks finished.</p>
+      <template>
+        <div class="field">
+          <label for="f-name">Full name</label>
+          <input class="input" type="text" id="f-name" autocomplete="name" />
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="parts" data-title="All Parts" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Label → hint → control → message. DOM order decides placement; this file sets no
+        <code>order</code>. <code>aria-describedby</code> lists both ids — CSS cannot write that,
+        so it is the consumer's markup.
+      </p>
+      <template>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <p class="field-hint" id="f-email-hint">We only use it for receipts.</p>
+          <input class="input" type="email" id="f-email" autocomplete="email"
+                 aria-describedby="f-email-hint f-email-err" />
+          <p class="field-error" id="f-email-err">Enter a valid email address.</p>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="reserved" data-title="The Reserved Message Row" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Both fields carry a message. The first is valid, so the row is reserved but hidden — and
+        hidden with <code>visibility</code>, so it is out of the accessibility tree too. The
+        second is marked <code>aria-invalid="true"</code>. Neither one moves when the state
+        changes: <strong>the two controls sit at exactly the same height.</strong>
+      </p>
+      <template>
+        <div class="field">
+          <label for="f-ok">Username</label>
+          <input class="input" type="text" id="f-ok" value="oscar" aria-describedby="f-ok-err" />
+          <p class="field-error" id="f-ok-err">That username is taken.</p>
+        </div>
+        <div class="field">
+          <label for="f-bad">Username</label>
+          <input class="input" type="text" id="f-bad" value="oscar" aria-invalid="true" aria-describedby="f-bad-err" />
+          <p class="field-error" id="f-bad-err">That username is taken.</p>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="native" data-title="Native Validation" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        No <code>aria-invalid</code> here — <code>required</code> and <code>type="email"</code> do
+        it. Type something wrong and tab out: <code>:user-invalid</code> fires only after you have
+        interacted, which is why <code>:invalid</code> is not used. It would paint this red on page
+        load, before you touched it.
+      </p>
+      <template>
+        <div class="field">
+          <label for="f-nat">Email</label>
+          <input class="input" type="email" id="f-nat" required aria-describedby="f-nat-err" />
+          <p class="field-error" id="f-nat-err">Enter a valid email address.</p>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sizes Cascade" data-stage-style="display:grid; gap:1.5rem; max-width:26rem;">
+      <p class="pc-note">
+        The size class goes on the field, and the label, hint, control and message all follow.
+        Nothing is written twice — the field rewrites one inherited variable.
+      </p>
+      <template>
+        <div class="field sm">
+          <label for="f-sm">Small</label>
+          <p class="field-hint">Hint text follows the field.</p>
+          <input class="input" type="text" id="f-sm" />
+          <p class="field-error">So does the message.</p>
+        </div>
+        <div class="field lg">
+          <label for="f-lg">Large</label>
+          <p class="field-hint">Hint text follows the field.</p>
+          <input class="input" type="text" id="f-lg" />
+          <p class="field-error">So does the message.</p>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="disabled" data-title="Disabled" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">The field reads the control's own state — no class to remember.</p>
+      <template>
+        <div class="field">
+          <label for="f-dis">Account number</label>
+          <p class="field-hint">Set by your bank.</p>
+          <input class="input" type="text" id="f-dis" value="8901-2345" disabled />
+        </div>
+      </template>
+    </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

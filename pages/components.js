@@ -20,16 +20,10 @@ window.PC_COMPONENTS = [
   { id: "SkipLinks",  title: "Skip Links",  group: "Core interactive", file: "SkipLinks.html",  css: ["skip-links.css"] },
 
   // ---------- Form ----------
-  { id: "Form/Text",      title: "Text Input",   group: "Form", file: "Form/Text.html",      css: ["Form/inputs/text.css"] },
-  { id: "Form/Textarea",  title: "Textarea",     group: "Form", file: "Form/Textarea.html",  css: ["Form/inputs/textarea.css", "Form/inputs/formField.css"] },
-  { id: "Form/Select",    title: "Select",       group: "Form", file: "Form/Select.html",    css: ["Form/inputs/select.css", "Form/inputs/formField.css"] },
-  { id: "Form/Checkbox",  title: "Checkbox",     group: "Form", file: "Form/Checkbox.html",  css: ["Form/inputs/checkbox.css", "Form/inputs/formField.css"] },
-  { id: "Form/Radio",     title: "Radio",        group: "Form", file: "Form/Radio.html",     css: ["Form/inputs/radio.css", "Form/fieldSet.css"] },
-  { id: "Form/Range",     title: "Range",        group: "Form", file: "Form/Range.html",     css: ["Form/inputs/range.css", "Form/inputs/formField.css"] },
-  { id: "Form/File",      title: "File Input",   group: "Form", file: "Form/File.html",      css: ["Form/inputs/file.css", "Form/inputs/formField.css"] },
-  { id: "Form/Search",    title: "Search Input", group: "Form", file: "Form/Search.html",    css: ["Form/inputs/search.css", "Form/inputs/formField.css", "button.css"] },
-  { id: "Form/FormField", title: "Form Field",   group: "Form", file: "Form/FormField.html", css: ["Form/inputs/formField.css", "Form/inputs/text.css"] },
-  { id: "Form/Fieldset",  title: "Fieldset",     group: "Form", file: "Form/Fieldset.html",  css: ["Form/fieldSet.css", "Form/inputs/formField.css"] },
+  { id: "Form/Form",     title: "Form",     group: "Form", file: "Form/Form.html",     css: ["Form/form.css", "Form/fieldset.css", "Form/field.css", "Form/input.css", "button.css"] },
+  { id: "Form/Field",    title: "Field",    group: "Form", file: "Form/Field.html",    css: ["Form/form.css", "Form/field.css", "Form/input.css"] },
+  { id: "Form/Fieldset", title: "Fieldset", group: "Form", file: "Form/Fieldset.html", css: ["Form/form.css", "Form/fieldset.css", "Form/field.css", "Form/input.css"] },
+  { id: "Form/Input",    title: "Input",    group: "Form", file: "Form/Input.html",    css: ["Form/form.css", "Form/input.css"] },
 
   // ---------- Feedback ----------
   { id: "Alert",    title: "Alert",    group: "Feedback", file: "Alert.html",    css: ["alert.css"] },

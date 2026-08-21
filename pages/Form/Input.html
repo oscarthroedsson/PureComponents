@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input — PureComponents</title>
+    <meta name="pc-description" content="The single-line text box, in every type that renders as one." />
+
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/input.css" />
+
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Input">
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">The key alone is already <code>md</code>. Width comes from the parent — the input fills it.</p>
+      <template>
+        <input class="input" type="text" placeholder="Placeholder text" aria-label="Example" />
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        <code>sm</code> · <code>md</code> · <code>lg</code> — 12 / 14 / 16px. Only the font size is
+        set; padding and the height floor are in <code>em</code> and follow it.
+      </p>
+      <template>
+        <input class="input sm" type="text" value="Small" aria-label="Small" />
+        <input class="input md" type="text" value="Medium" aria-label="Medium" />
+        <input class="input lg" type="text" value="Large" aria-label="Large" />
+      </template>
+    </section>
+
+    <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note"><code>sharp</code> · <code>smooth</code> (default) · <code>rounded</code>.</p>
+      <template>
+        <input class="input sharp" type="text" value="sharp" aria-label="Sharp" />
+        <input class="input smooth" type="text" value="smooth" aria-label="Smooth" />
+        <input class="input rounded" type="text" value="rounded" aria-label="Rounded" />
+      </template>
+    </section>
+
+    <section class="pc-demo" id="states" data-title="States" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Hover, read-only and disabled. The invalid border is set two ways —
+        <code>:user-invalid</code> for native constraints, <code>aria-invalid="true"</code> for a
+        JS validator that sets no native ones. Tab through and back out of the email field to see
+        the first fire.
+      </p>
+      <template>
+        <input class="input" type="text" value="Normal" aria-label="Normal" />
+        <input class="input" type="text" value="Read only" readonly aria-label="Read only" />
+        <input class="input" type="text" value="Disabled" disabled aria-label="Disabled" />
+        <input class="input" type="email" value="not-an-email" aria-label="Native invalid after blur" />
+        <input class="input" type="text" value="aria-invalid" aria-invalid="true" aria-label="Aria invalid" />
+      </template>
+    </section>
+
+    <section class="pc-demo" id="types" data-title="Types" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">Every type that renders as one line shares the box. The date and time pickers keep their native controls.</p>
+      <template>
+        <input class="input" type="email" placeholder="email" aria-label="Email" />
+        <input class="input" type="password" value="password" aria-label="Password" />
+        <input class="input" type="number" value="42" aria-label="Number" />
+        <input class="input" type="search" placeholder="search" aria-label="Search" />
+        <input class="input" type="date" aria-label="Date" />
+        <input class="input" type="time" aria-label="Time" />
+      </template>
+    </section>
+
+    <section class="pc-demo" id="tuning" data-title="Tuning" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Every measurement is a variable. A size the library never named is one inline declaration
+        away, and the height floor follows it without being told.
+      </p>
+      <template>
+        <input class="input" type="text" value="--input-font-size: 22px" style="--input-font-size: 22px" aria-label="Custom size" />
+        <input class="input" type="text" value="--input-border-width: 3px" style="--input-border-width: 3px" aria-label="Custom border" />
+      </template>
+    </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

@@ -4,110 +4,119 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fieldset — PureComponents</title>
-    <meta name="pc-description" content="The Fieldset component groups related form controls together with a &amp;lt;legend&amp;gt; element for the group label." />
+    <meta name="pc-description" content="Several fields that answer one question, held together." />
 
-    <!-- Library CSS under test -->
     <link rel="stylesheet" href="../../src/Styles/main.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/fieldSet.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/inputs/formField.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/fieldset.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/input.css" />
 
-    <!-- Dev shell (not part of the library) -->
     <link rel="stylesheet" href="../docs.css" />
   </head>
   <body data-component="Form/Fieldset">
-  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
-    <template>
-      <fieldset class="fieldSet md">
-        <legend>Contact Information</legend>
-        <div class="formField">
-          <label for="name">Name</label>
-          <input type="text" id="name" />
-        </div>
-        <div class="formField">
-          <label for="email">Email</label>
-          <input type="email" id="email" />
-        </div>
-      </fieldset>
-    </template>
-  </section>
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:block; max-width:26rem;">
+      <p class="pc-note">
+        No border. A fieldset is a semantic frame — the legend names the group and is read before
+        every control inside it.
+      </p>
+      <template>
+        <fieldset class="fieldset">
+          <legend>Delivery address</legend>
+          <div class="field">
+            <label for="fs-street">Street</label>
+            <input class="input" type="text" id="fs-street" autocomplete="street-address" />
+          </div>
+          <div class="field">
+            <label for="fs-city">City</label>
+            <input class="input" type="text" id="fs-city" autocomplete="address-level2" />
+          </div>
+        </fieldset>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1.5rem;">
-    <p class="pc-note">Fieldset supports small (sm) and medium (md) sizes.</p>
-    <template>
-      <fieldset class="fieldSet sm">
-        <legend>Small Fieldset</legend>
-        <div class="formField">
-          <label for="small-name">Name</label>
-          <input type="text" id="small-name" />
-        </div>
-      </fieldset>
-      <fieldset class="fieldSet md">
-        <legend>Medium Fieldset</legend>
-        <div class="formField">
-          <label for="medium-name">Name</label>
-          <input type="text" id="medium-name" />
-        </div>
-      </fieldset>
-    </template>
-  </section>
+    <section class="pc-demo" id="panel" data-title="Panel" data-stage-style="display:block; max-width:26rem;">
+      <p class="pc-note">
+        <code>panel</code> draws a whole surface — fill, border, radius and padding — not a
+        hairline. A bare border would sit flush with the rest of the form while the fields inside
+        were pushed in by the padding, and the group would look narrower for no visible reason.
+      </p>
+      <template>
+        <fieldset class="fieldset panel">
+          <legend>Billing address</legend>
+          <div class="field">
+            <label for="fs-b-street">Street</label>
+            <input class="input" type="text" id="fs-b-street" />
+          </div>
+          <div class="field">
+            <label for="fs-b-city">City</label>
+            <input class="input" type="text" id="fs-b-city" />
+          </div>
+        </fieldset>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="border-radius-variants" data-title="Border Radius Variants" data-stage-style="display: flex; flex-direction: column; gap: 1.5rem;">
-    <p class="pc-note">Fieldset supports different border radius styles: sharp and smooth.</p>
-    <template>
-      <fieldset class="fieldSet md sharp">
-        <legend>Sharp Fieldset</legend>
-        <div class="formField">
-          <label for="sharp-name">Name</label>
-          <input type="text" id="sharp-name" />
-        </div>
-      </fieldset>
-      <fieldset class="fieldSet md smooth">
-        <legend>Smooth Fieldset</legend>
-        <div class="formField">
-          <label for="smooth-name">Name</label>
-          <input type="text" id="smooth-name" />
-        </div>
-      </fieldset>
-    </template>
-  </section>
+    <section class="pc-demo" id="disabled" data-title="Native Disabled" data-stage-style="display:block; max-width:26rem;">
+      <p class="pc-note">
+        <code>&lt;fieldset disabled&gt;</code> disables the whole subtree for real — the controls
+        match <code>:disabled</code>, leave the tab order and are left out of the submitted data.
+        This file writes nothing for it. It is the reason the component is a native fieldset and
+        not a div with <code>role="group"</code>.
+      </p>
+      <template>
+        <fieldset class="fieldset panel" disabled>
+          <legend>Card details</legend>
+          <div class="field">
+            <label for="fs-card">Card number</label>
+            <input class="input" type="text" id="fs-card" value="4111 1111 1111 1111" />
+          </div>
+          <div class="field">
+            <label for="fs-exp">Expiry</label>
+            <input class="input" type="text" id="fs-exp" value="12/29" />
+          </div>
+        </fieldset>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="with-radio-buttons" data-title="With Radio Buttons">
-    <p class="pc-note">Fieldset is commonly used to group radio buttons together.</p>
-    <template>
-      <fieldset class="fieldSet md">
-        <legend>Choose an option</legend>
-        <div class="formField">
-          <label for="radio1">
-            <input type="radio" id="radio1" name="choice" value="1" />
-            Option 1
-          </label>
-        </div>
-        <div class="formField">
-          <label for="radio2">
-            <input type="radio" id="radio2" name="choice" value="2" />
-            Option 2
-          </label>
-        </div>
-      </fieldset>
-    </template>
-  </section>
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:2rem; max-width:26rem;">
+      <p class="pc-note">The size goes on the group and every field in it follows.</p>
+      <template>
+        <fieldset class="fieldset sm">
+          <legend>Small group</legend>
+          <div class="field">
+            <label for="fs-sm">Street</label>
+            <input class="input" type="text" id="fs-sm" />
+          </div>
+        </fieldset>
+        <fieldset class="fieldset lg">
+          <legend>Large group</legend>
+          <div class="field">
+            <label for="fs-lg">Street</label>
+            <input class="input" type="text" id="fs-lg" />
+          </div>
+        </fieldset>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
-    <p class="pc-note">Fieldset must have a <code>&lt;legend&gt;</code> element for proper accessibility.</p>
-    <template>
-      <fieldset class="fieldSet md">
-        <legend>Accessible Fieldset</legend>
-        <div class="formField">
-          <label for="acc-name">Name</label>
-          <input type="text" id="acc-name" />
+    <section class="pc-demo" id="narrow" data-title="Narrow Parent" data-stage-style="display:block;">
+      <p class="pc-note">
+        A fieldset has <code>min-width: min-content</code> in the UA sheet and refuses to shrink
+        below its widest child. <code>min-inline-size: 0</code> in the base is what keeps this one
+        inside its 200px grid column instead of bursting out of it.
+      </p>
+      <template>
+        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border: 1px dashed #999; padding: 0.5rem">
+          <fieldset class="fieldset">
+            <legend>Boxed in</legend>
+            <div class="field">
+              <label for="fs-narrow">A rather long label</label>
+              <input class="input" type="text" id="fs-narrow" />
+            </div>
+          </fieldset>
+          <p style="margin: 0; font-size: 0.8rem">The second column.</p>
         </div>
-        <div class="formField">
-          <label for="acc-email">Email</label>
-          <input type="email" id="acc-email" />
-        </div>
-      </fieldset>
-    </template>
-  </section>
+      </template>
+    </section>
 
     <script src="../components.js"></script>
     <script src="../docs.js"></script>
