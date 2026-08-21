@@ -58,6 +58,30 @@
       </template>
     </section>
 
+    <section class="pc-demo" id="hint" data-title="Hint" data-stage-style="display:block; max-width:24rem;">
+      <p class="pc-note">Always visible, one step down in size, muted. It says what is expected before you type — which is why it sits above the control, not below it.</p>
+      <template>
+        <form class="form">
+          <div class="field">
+            <label for="h-pw">Password</label>
+            <p class="field-hint" id="h-pw-hint">At least 8 characters, one number.</p>
+            <input class="input" type="password" id="h-pw" minlength="8"
+                   autocomplete="new-password" aria-describedby="h-pw-hint" />
+          </div>
+          <div class="field">
+            <label for="h-vat">VAT number</label>
+            <p class="field-hint" id="h-vat-hint">Starts with SE and ends with 01. We check it against Bolagsverket.</p>
+            <input class="input" type="text" id="h-vat" value="SE556677889901"
+                   aria-describedby="h-vat-hint" />
+          </div>
+          <div class="field">
+            <label for="h-none">No hint at all</label>
+            <input class="input" type="text" id="h-none" />
+          </div>
+        </form>
+      </template>
+    </section>
+
     <section class="pc-demo" id="parts" data-title="All Parts" data-stage-style="display:block; max-width:22rem;">
       <p class="pc-note">Label, hint, control, message.</p>
       <template>
@@ -72,7 +96,7 @@
     </section>
 
     <section class="pc-demo" id="states" data-title="States" data-stage-style="display:block; max-width:22rem;">
-      <p class="pc-note">Read-only, disabled, and invalid two ways. Tab out of the last one to fire the native check.</p>
+      <p class="pc-note">Read-only is drawn as an ordinary field — it is focusable and submitted; only the cursor differs. Disabled is not. Tab out of the last one to fire the native check.</p>
       <template>
         <form class="form">
           <div class="field">

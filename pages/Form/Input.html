@@ -42,18 +42,24 @@
     </section>
 
     <section class="pc-demo" id="states" data-title="States" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">
-        Hover, read-only and disabled. The invalid border is set two ways —
-        <code>:user-invalid</code> for native constraints, <code>aria-invalid="true"</code> for a
-        JS validator that sets no native ones. Tab through and back out of the email field to see
-        the first fire.
-      </p>
+      <p class="pc-note">Read-only looks like a normal field — only the cursor differs. Invalid is set two ways: <code>:user-invalid</code> natively, <code>aria-invalid="true"</code> from a validator.</p>
       <template>
         <input class="input" type="text" value="Normal" aria-label="Normal" />
         <input class="input" type="text" value="Read only" readonly aria-label="Read only" />
         <input class="input" type="text" value="Disabled" disabled aria-label="Disabled" />
         <input class="input" type="email" value="not-an-email" aria-label="Native invalid after blur" />
         <input class="input" type="text" value="aria-invalid" aria-invalid="true" aria-label="Aria invalid" />
+      </template>
+    </section>
+
+    <section class="pc-demo" id="ghost" data-title="Ghost" data-stage-style="display:grid; gap:0.25rem; max-width:26rem;">
+      <p class="pc-note">Fill and border dropped, every measurement kept — so a column of them still lines up with a filled one. Hover, focus and invalid all still draw.</p>
+      <template>
+        <input class="input ghost" type="text" value="Storgatan 14" aria-label="Ghost, filled" />
+        <input class="input ghost" type="text" placeholder="Placeholder still reads" aria-label="Ghost, empty" />
+        <input class="input ghost" type="text" value="Wrong" aria-invalid="true" aria-label="Ghost, invalid" />
+        <input class="input ghost" type="text" value="Disabled" disabled aria-label="Ghost, disabled" />
+        <input class="input" type="text" value="A filled one, for the alignment" aria-label="Filled" />
       </template>
     </section>
 

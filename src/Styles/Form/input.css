@@ -38,12 +38,27 @@ ACCESSIBILITY REQUIREMENTS:
   aria-invalid is set.
 - :disabled is exempt from contrast (1.4.3), so the greyed box is not a
   failure.
+- A read-only field is NOT disabled: it is focusable, selectable and
+  submitted. It is drawn as an ordinary field for that reason, and only the
+  cursor separates them. Do not use readonly to mean disabled.
 
 SIZE:  sm · md (default) · lg
   A leaf, so a size class rewrites only this control's own variables. To
   resize a whole form or group, put the class on .form, .fieldset or .field.
 
 SHAPE: sharp · smooth (default) · rounded
+
+VARIANT:
+  (none)   a filled box with a border. The default.
+  ghost    fill and border dropped, every measurement kept. For a dense
+           table or an inline edit, where a column of boxes would fight the
+           content. Same meaning as .ghost on .btn and .badge.
+
+           At rest a ghost field has no visible boundary, which is a
+           deliberate 1.4.11 trade — a consumer reaching for it has to give
+           the field another affordance, a heading or a column header. Hover,
+           focus and invalid all still draw, so the field is never invisible
+           once it is being used.
 
 STATE
   :hover · :disabled · :read-only
@@ -126,7 +141,16 @@ VARIABLES
     --input-radius: var(--radius-rounded);
   }
 
-  /* 5. STATES */
+  /* 4b. VARIANT */
+  &.ghost {
+    --input-surface: transparent;
+    --input-border-color: transparent;
+  }
+
+  /* 5. STATES — after the variant on purpose. Both sit at (0,2,0), so source
+     order decides, and the states have to win: a ghost field still has to
+     show that it is hovered, wrong or disabled. Only its resting state is
+     invisible. */
   &:hover:not(:disabled, :read-only) {
     --input-border-color: var(--color-neutral-700);
   }
@@ -135,8 +159,13 @@ VARIABLES
     --input-border-color: var(--color-error);
   }
 
+  /* A read-only field is still a normal field: it takes focus, its text can
+     be selected and copied, and it is submitted with the form. Greying it
+     made it look disabled, which is the one thing it is not. The cursor
+     carries the difference instead — no I-beam, because there is nothing to
+     type into. */
   &:read-only:not(:disabled) {
-    --input-surface: var(--color-neutral-200);
+    cursor: default;
   }
 
   &:disabled {

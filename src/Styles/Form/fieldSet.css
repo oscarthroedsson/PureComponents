@@ -42,6 +42,13 @@ both load-bearing:
                        grid, so `gap` puts no space under it — that space has
                        to come from the legend's own margin.
 
+The legend is deliberately left in that native position. `float: left` plus
+`width: 100%` would drop it out of the border and make it an ordinary block —
+Drupal's Claro does exactly that — but Safari ignores a legend's float once
+the fieldset is flex or grid, and ours is grid. Two engines would lay the
+group out differently. The spacing under the legend is solved with its own
+margin and line-height instead, which every engine agrees on.
+
 
 ACCESSIBILITY REQUIREMENTS:
 - A fieldset MUST have a <legend>, and it must be the first child. It is the
@@ -82,7 +89,19 @@ VARIABLES
 .fieldset {
   /* 1. VARIABLES */
   --fieldset-gap: var(--form-gap, var(--spacing-100));
-  --fieldset-legend-gap: var(--spacing-75);
+
+  /* Half the gap between two fields, deliberately. A legend that sits as far
+     from its first field as two fields sit from each other belongs to
+     nothing — it has to bind downward to the group it names. shadcn lands on
+     the same 2:1 (gap-6 between fields, mb-3 under the legend). */
+  --fieldset-legend-gap: var(--spacing-50);
+
+  /* Extra air above the group, on top of the form's gap. Pulling the legend
+     down onto its fields made the boundary upward the weak one: a group
+     started at exactly the same distance as the next field. A grid item's
+     margin does not collapse, so this adds cleanly to --form-gap and stays
+     predictable. */
+  --fieldset-space-before: var(--spacing-100);
   --fieldset-legend-color: var(--form-label-color, var(--color-neutral-900));
   --fieldset-legend-weight: 600;
 
@@ -90,6 +109,11 @@ VARIABLES
      group — it reads as one more label in the column. One step up in em, so
      it tracks whatever size the group is set to. */
   --fieldset-legend-font-size: 1.15em;
+
+  /* line-height: normal gave a 16px legend a 24px line box, which is a
+     paragraph's leading on a one-line heading. It is what made the top of a
+     fieldset look empty. */
+  --fieldset-legend-line-height: 1.2;
 
   --fieldset-padding-block: var(--spacing-100);
   --fieldset-padding-inline: var(--spacing-100);
@@ -113,11 +137,16 @@ VARIABLES
   gap: var(--fieldset-gap);
   font-size: var(--form-font-size, var(--font-size-md));
 
+  &:not(:first-child) {
+    margin-block-start: var(--fieldset-space-before);
+  }
+
   & > legend {
     padding-inline: 0;
     color: var(--fieldset-legend-color);
     font-weight: var(--fieldset-legend-weight);
     font-size: var(--fieldset-legend-font-size);
+    line-height: var(--fieldset-legend-line-height);
 
     /* The legend sits outside the grid, so `gap` never reaches it. */
     margin-block-end: var(--fieldset-legend-gap);
