@@ -7,7 +7,7 @@ Radio — one of several, and only one.
     <label class="label"><input class="radio" type="radio" name="d"> Express</label>
   </fieldset>
 
-The same box as .checkbox, from the same channel, built the same way and for
+The same box as .pu-checkbox, from the same channel, built the same way and for
 the same reason — see checkbox.css for why this family owns these two
 controls when it removes every other native mark. Everything written there
 about appearance: none, about ::checkmark not painting yet, and about the
@@ -28,7 +28,7 @@ a user has read anything or clicked anything — the label text does not say
 it, and neither does the tick. A square radio is a checkbox that silently
 throws away the last answer.
 
-.checkbox allows .rounded for the same reason in reverse: a consumer who
+.pu-checkbox allows .rounded for the same reason in reverse: a consumer who
 wants circular checkboxes is making one deliberate decision about a whole
 form, where a radio picking up a shape class from an ancestor group would be
 an accident.
@@ -63,12 +63,12 @@ ACCESSIBILITY REQUIREMENTS:
 - KNOWN, MEASURED FAILURE: --color-error is #f87171, which measures 2.77:1
   on white. As an invalid border it is under the 3:1 of 1.4.11. It is used
   anyway by decision, pending a darker error token in main.css — the same
-  call .input and .textarea already make. The invalid state is never carried
+  call .pu-input and .pu-textarea already make. The invalid state is never carried
   by that colour alone: the message appears and aria-invalid is set.
 - :focus-visible comes from main.css. This file draws no ring.
 
 SIZE:  sm · md (default) · lg
-  Measured in em, so a size class on .form or .fieldset reaches it.
+  Measured in em, so a size class on .pu-form or .pu-fieldset reaches it.
 
 SHAPE: none. See above.
 
@@ -85,7 +85,7 @@ VARIABLES
   --radio-dot-size           how much of the circle the dot fills
 */
 
-.radio {
+.pu-radio {
   /* 1. VARIABLES */
   --radio-size: 1.15em;
   --radio-border-width: var(--form-border-width, 1px);

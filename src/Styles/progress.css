@@ -8,7 +8,7 @@ ACCESSIBILITY REQUIREMENTS:
   "Upload progress: 45%" is a lie the moment the value moves. Put
   the number in visible text beside the bar instead.
 - Indeterminate progress is a <progress> with no value attribute.
-- A non-native bar (.progress-bar) is the one case that needs
+- A non-native bar (.pu-progress-bar) is the one case that needs
   role="progressbar" with aria-valuenow/valuemin/valuemax, kept in
   sync by whatever moves the bar.
 
@@ -19,7 +19,7 @@ STATE:
 - :indeterminate — no value attribute
 */
 
-:is(.progress, .progress-bar) {
+:is(.pu-progress, .pu-progress-bar) {
   --progress-base: var(--color-primary);
   --progress-fill: var(--progress-color, var(--progress-base));
   --progress-track: var(--progress-track-color, color-mix(in oklab, var(--progress-fill) 18%, transparent));
@@ -92,7 +92,7 @@ STATE:
 
 /* NATIVE */
 
-.progress:is(progress) {
+.pu-progress:is(progress) {
   inline-size: 100%;
   block-size: var(--progress-size);
 
@@ -214,7 +214,7 @@ segments, a value that has to animate on its own terms, content
 inside the bar. It carries the ARIA the native element gets for free.
 */
 
-.progress-bar {
+.pu-progress-bar {
   position: relative;
 
   inline-size: 100%;
@@ -252,7 +252,7 @@ inside the bar. It carries the ARIA the native element gets for free.
 
 /* LABELLED */
 
-.progress-wrapper {
+.pu-progress-wrapper {
   display: grid;
 
   grid-template-columns: minmax(0, 1fr) auto;
@@ -261,7 +261,7 @@ inside the bar. It carries the ARIA the native element gets for free.
 
   gap: var(--spacing-25);
 
-  & > :is(.progress, .progress-bar) {
+  & > :is(.pu-progress, .pu-progress-bar) {
     grid-column: 1 / -1;
   }
 

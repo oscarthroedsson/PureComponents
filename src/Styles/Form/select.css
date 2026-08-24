@@ -1,4 +1,4 @@
-.select {
+.pu-select {
   /* 1. VARIABLES */
   --select-font-size: var(--form-font-size, var(--font-size-md));
   --select-line-height: var(--line-height-base);
@@ -155,12 +155,12 @@
 }
 
 /* An icon in the group's start slot; the mark still owns the end. */
-.input-group:has(> .input-icon[data-placement="start"]) > .select {
+.pu-input-group:has(> .input-icon[data-placement="start"]) > .pu-select {
   padding-inline-start: var(--input-group-clearance);
 }
 
 /* A greyed-out field with a full-strength icon reads as the one part still working. */
-.input-group:has(> .select:disabled) > .input-icon {
+.pu-input-group:has(> .pu-select:disabled) > .input-icon {
   color: var(--color-neutral-400);
   cursor: not-allowed;
 }
@@ -174,7 +174,7 @@ is what renders and the platform keeps its own picker.
 
 @media (hover: hover) and (pointer: fine) {
   @supports (appearance: base-select) {
-    .select:not([multiple], [size]:not([size="1"])) {
+    .pu-select:not([multiple], [size]:not([size="1"])) {
       &,
       &::picker(select) {
         appearance: base-select;
@@ -235,7 +235,7 @@ is what renders and the platform keeps its own picker.
         }
       }
 
-      /* A group name labels the options under it, so it is .label's colour. */
+      /* A group name labels the options under it, so it is .pu-label's colour. */
       & optgroup {
         color: var(--form-label-color, var(--color-neutral-900));
         font-weight: 600;

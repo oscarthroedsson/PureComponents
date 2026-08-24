@@ -19,19 +19,19 @@
     <section class="pc-demo" id="basic" data-title="Legend And Fields" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">No border. The legend names the group and is read before every control in it.</p>
       <template>
-        <fieldset class="fieldset">
+        <fieldset class="pu-fieldset">
           <legend>Delivery address</legend>
-          <div class="field">
+          <div class="pu-field">
             <label for="b-street">Street</label>
-            <input class="input" type="text" id="b-street" value="Storgatan 14" />
+            <input class="pu-input" type="text" id="b-street" value="Storgatan 14" />
           </div>
-          <div class="field">
+          <div class="pu-field">
             <label for="b-zip">Postcode</label>
-            <input class="input" type="text" id="b-zip" value="114 55" />
+            <input class="pu-input" type="text" id="b-zip" value="114 55" />
           </div>
-          <div class="field">
+          <div class="pu-field">
             <label for="b-city">City</label>
-            <input class="input" type="text" id="b-city" value="Stockholm" />
+            <input class="pu-input" type="text" id="b-city" value="Stockholm" />
           </div>
         </fieldset>
       </template>
@@ -40,34 +40,34 @@
     <section class="pc-demo" id="two-groups" data-title="Two Groups In One Form" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">The rhythm has to hold across the seam between them.</p>
       <template>
-        <form class="form">
-          <div class="field">
+        <form class="pu-form">
+          <div class="pu-field">
             <label for="t-email">Email</label>
-            <input class="input" type="email" id="t-email" value="anna@example.se" />
+            <input class="pu-input" type="email" id="t-email" value="anna@example.se" />
           </div>
-          <fieldset class="fieldset">
+          <fieldset class="pu-fieldset">
             <legend>Delivery address</legend>
-            <div class="field">
+            <div class="pu-field">
               <label for="t-d-street">Street</label>
-              <input class="input" type="text" id="t-d-street" value="Storgatan 14" />
+              <input class="pu-input" type="text" id="t-d-street" value="Storgatan 14" />
             </div>
-            <div class="field">
+            <div class="pu-field">
               <label for="t-d-city">City</label>
-              <input class="input" type="text" id="t-d-city" value="Stockholm" />
+              <input class="pu-input" type="text" id="t-d-city" value="Stockholm" />
             </div>
           </fieldset>
-          <fieldset class="fieldset">
+          <fieldset class="pu-fieldset">
             <legend>Billing address</legend>
-            <div class="field">
+            <div class="pu-field">
               <label for="t-b-street">Street</label>
-              <input class="input" type="text" id="t-b-street" />
+              <input class="pu-input" type="text" id="t-b-street" />
             </div>
-            <div class="field">
+            <div class="pu-field">
               <label for="t-b-city">City</label>
-              <input class="input" type="text" id="t-b-city" />
+              <input class="pu-input" type="text" id="t-b-city" />
             </div>
           </fieldset>
-          <button class="btn" type="submit">Continue</button>
+          <button class="pu-btn" type="submit">Continue</button>
         </form>
       </template>
     </section>
@@ -75,18 +75,18 @@
     <section class="pc-demo" id="group-hint" data-title="Hint On The Group" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">A hint straight in the fieldset describes the whole group. It sits tight under the legend, and the fields keep the group's normal gap.</p>
       <template>
-        <form class="form">
-          <fieldset class="fieldset">
+        <form class="pu-form">
+          <fieldset class="pu-fieldset">
             <legend>Delivery address</legend>
-            <p class="field-hint" id="gh-hint">We deliver Monday to Friday. A PO box will not work.</p>
-            <div class="field">
+            <p class="pu-field-hint" id="gh-hint">We deliver Monday to Friday. A PO box will not work.</p>
+            <div class="pu-field">
               <label for="gh-street">Street</label>
-              <input class="input" type="text" id="gh-street" value="Storgatan 14" aria-describedby="gh-hint" />
+              <input class="pu-input" type="text" id="gh-street" value="Storgatan 14" aria-describedby="gh-hint" />
             </div>
-            <div class="field">
+            <div class="pu-field">
               <label for="gh-city">City</label>
-              <p class="field-hint" id="gh-city-hint">The city on the postcode, not the district.</p>
-              <input class="input" type="text" id="gh-city" value="Stockholm" aria-describedby="gh-city-hint" />
+              <p class="pu-field-hint" id="gh-city-hint">The city on the postcode, not the district.</p>
+              <input class="pu-input" type="text" id="gh-city" value="Stockholm" aria-describedby="gh-city-hint" />
             </div>
           </fieldset>
         </form>
@@ -96,29 +96,29 @@
     <section class="pc-demo" id="group-error" data-title="Error On The Group" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">The message is a direct child of the fieldset, so it belongs to the question rather than to any one control — which is what a choice group needs. The postcode below carries its own, and the two do not reach into each other.</p>
       <template>
-        <form class="form">
-          <fieldset class="fieldset" aria-invalid="true">
+        <form class="pu-form">
+          <fieldset class="pu-fieldset" aria-invalid="true">
             <legend>Delivery window</legend>
-            <p class="field-hint">Pick the one that suits you.</p>
-            <div class="field">
+            <p class="pu-field-hint">Pick the one that suits you.</p>
+            <div class="pu-field">
               <label for="ge-a">Morning, 08–12</label>
-              <input class="input" type="text" id="ge-a" placeholder="Stands in for a radio, until Radio is rebuilt" />
+              <input class="pu-input" type="text" id="ge-a" placeholder="Stands in for a radio, until Radio is rebuilt" />
             </div>
-            <p class="field-error">Choose a delivery window.</p>
+            <p class="pu-field-error">Choose a delivery window.</p>
           </fieldset>
-          <fieldset class="fieldset">
+          <fieldset class="pu-fieldset">
             <legend>Delivery address</legend>
-            <div class="field">
+            <div class="pu-field">
               <label for="ge-zip">Postcode</label>
-              <input class="input" type="text" id="ge-zip" value="114" aria-invalid="true" aria-describedby="ge-zip-err" />
-              <p class="field-error" id="ge-zip-err">A postcode is five digits.</p>
+              <input class="pu-input" type="text" id="ge-zip" value="114" aria-invalid="true" aria-describedby="ge-zip-err" />
+              <p class="pu-field-error" id="ge-zip-err">A postcode is five digits.</p>
             </div>
-            <div class="field">
+            <div class="pu-field">
               <label for="ge-city">City</label>
-              <input class="input" type="text" id="ge-city" value="Stockholm" aria-describedby="ge-city-err" />
-              <p class="field-error" id="ge-city-err">Unknown city.</p>
+              <input class="pu-input" type="text" id="ge-city" value="Stockholm" aria-describedby="ge-city-err" />
+              <p class="pu-field-error" id="ge-city-err">Unknown city.</p>
             </div>
-            <p class="field-error">And this one, which belongs to the group, stays hidden — the group itself is not marked invalid.</p>
+            <p class="pu-field-error">And this one, which belongs to the group, stays hidden — the group itself is not marked invalid.</p>
           </fieldset>
         </form>
       </template>
@@ -127,15 +127,15 @@
     <section class="pc-demo" id="panel" data-title="Panel" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">A whole surface, not a hairline — otherwise the fields inside just look narrower than their neighbours.</p>
       <template>
-        <fieldset class="fieldset panel">
+        <fieldset class="pu-fieldset panel">
           <legend>Billing address</legend>
-          <div class="field">
+          <div class="pu-field">
             <label for="p-street">Street</label>
-            <input class="input" type="text" id="p-street" value="Storgatan 14" />
+            <input class="pu-input" type="text" id="p-street" value="Storgatan 14" />
           </div>
-          <div class="field">
+          <div class="pu-field">
             <label for="p-city">City</label>
-            <input class="input" type="text" id="p-city" value="Stockholm" />
+            <input class="pu-input" type="text" id="p-city" value="Stockholm" />
           </div>
         </fieldset>
       </template>
@@ -144,23 +144,23 @@
     <section class="pc-demo" id="hairline" data-title="Why Not A Hairline" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">The group on top is a bare border. Its fields sit inside the padding while the border sits flush with the field above — that misalignment is the whole reason .panel draws a fill.</p>
       <template>
-        <form class="form">
-          <div class="field">
+        <form class="pu-form">
+          <div class="pu-field">
             <label for="h-email">Email</label>
-            <input class="input" type="email" id="h-email" value="anna@example.se" />
+            <input class="pu-input" type="email" id="h-email" value="anna@example.se" />
           </div>
-          <fieldset class="fieldset" style="border: 1px solid var(--color-neutral-400); padding: 1rem">
+          <fieldset class="pu-fieldset" style="border: 1px solid var(--color-neutral-400); padding: 1rem">
             <legend>A bare border</legend>
-            <div class="field">
+            <div class="pu-field">
               <label for="h-street">Street</label>
-              <input class="input" type="text" id="h-street" value="Storgatan 14" />
+              <input class="pu-input" type="text" id="h-street" value="Storgatan 14" />
             </div>
           </fieldset>
-          <fieldset class="fieldset panel">
+          <fieldset class="pu-fieldset panel">
             <legend>A panel</legend>
-            <div class="field">
+            <div class="pu-field">
               <label for="h2-street">Street</label>
-              <input class="input" type="text" id="h2-street" value="Storgatan 14" />
+              <input class="pu-input" type="text" id="h2-street" value="Storgatan 14" />
             </div>
           </fieldset>
         </form>
@@ -170,15 +170,15 @@
     <section class="pc-demo" id="disabled" data-title="Native Disabled" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">&lt;fieldset disabled&gt; disables the subtree for real. This file writes nothing for it.</p>
       <template>
-        <fieldset class="fieldset panel" disabled>
+        <fieldset class="pu-fieldset panel" disabled>
           <legend>Card details</legend>
-          <div class="field">
+          <div class="pu-field">
             <label for="d-card">Card number</label>
-            <input class="input" type="text" id="d-card" value="4111 1111 1111 1111" />
+            <input class="pu-input" type="text" id="d-card" value="4111 1111 1111 1111" />
           </div>
-          <div class="field">
+          <div class="pu-field">
             <label for="d-exp">Expiry</label>
-            <input class="input" type="text" id="d-exp" value="12/29" />
+            <input class="pu-input" type="text" id="d-exp" value="12/29" />
           </div>
         </fieldset>
       </template>
@@ -187,22 +187,22 @@
     <section class="pc-demo" id="invalid" data-title="A Group With An Error" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">The message belongs to one field, not to the group — the valid siblings stay untouched.</p>
       <template>
-        <fieldset class="fieldset">
+        <fieldset class="pu-fieldset">
           <legend>Delivery address</legend>
-          <div class="field">
+          <div class="pu-field">
             <label for="i-street">Street</label>
-            <input class="input" type="text" id="i-street" value="Storgatan 14" aria-describedby="i-street-err" />
-            <p class="field-error" id="i-street-err">We do not deliver to this street.</p>
+            <input class="pu-input" type="text" id="i-street" value="Storgatan 14" aria-describedby="i-street-err" />
+            <p class="pu-field-error" id="i-street-err">We do not deliver to this street.</p>
           </div>
-          <div class="field">
+          <div class="pu-field">
             <label for="i-zip">Postcode</label>
-            <input class="input" type="text" id="i-zip" value="114" aria-invalid="true" aria-describedby="i-zip-err" />
-            <p class="field-error" id="i-zip-err">A postcode is five digits.</p>
+            <input class="pu-input" type="text" id="i-zip" value="114" aria-invalid="true" aria-describedby="i-zip-err" />
+            <p class="pu-field-error" id="i-zip-err">A postcode is five digits.</p>
           </div>
-          <div class="field">
+          <div class="pu-field">
             <label for="i-city">City</label>
-            <input class="input" type="text" id="i-city" value="Stockholm" aria-describedby="i-city-err" />
-            <p class="field-error" id="i-city-err">Unknown city.</p>
+            <input class="pu-input" type="text" id="i-city" value="Stockholm" aria-describedby="i-city-err" />
+            <p class="pu-field-error" id="i-city-err">Unknown city.</p>
           </div>
         </fieldset>
       </template>
@@ -211,25 +211,25 @@
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; grid-template-columns: repeat(3, 1fr); gap:2rem; align-items:start;">
       <p class="pc-note">Size on the group; every field in it follows.</p>
       <template>
-        <fieldset class="fieldset sm">
+        <fieldset class="pu-fieldset sm">
           <legend>Small</legend>
-          <div class="field">
+          <div class="pu-field">
             <label for="zz-sm">Street</label>
-            <input class="input" type="text" id="zz-sm" value="Storgatan 14" />
+            <input class="pu-input" type="text" id="zz-sm" value="Storgatan 14" />
           </div>
         </fieldset>
-        <fieldset class="fieldset md">
+        <fieldset class="pu-fieldset md">
           <legend>Medium</legend>
-          <div class="field">
+          <div class="pu-field">
             <label for="zz-md">Street</label>
-            <input class="input" type="text" id="zz-md" value="Storgatan 14" />
+            <input class="pu-input" type="text" id="zz-md" value="Storgatan 14" />
           </div>
         </fieldset>
-        <fieldset class="fieldset lg">
+        <fieldset class="pu-fieldset lg">
           <legend>Large</legend>
-          <div class="field">
+          <div class="pu-field">
             <label for="zz-lg">Street</label>
-            <input class="input" type="text" id="zz-lg" value="Storgatan 14" />
+            <input class="pu-input" type="text" id="zz-lg" value="Storgatan 14" />
           </div>
         </fieldset>
       </template>
@@ -239,11 +239,11 @@
       <p class="pc-note">min-inline-size: 0 keeps it inside the 200px column instead of bursting out.</p>
       <template>
         <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border: 1px dashed #999; padding: 0.5rem">
-          <fieldset class="fieldset">
+          <fieldset class="pu-fieldset">
             <legend>Boxed in</legend>
-            <div class="field">
+            <div class="pu-field">
               <label for="n-street">A rather long label</label>
-              <input class="input" type="text" id="n-street" />
+              <input class="pu-input" type="text" id="n-street" />
             </div>
           </fieldset>
           <p style="margin: 0; font-size: 0.8rem">The second column.</p>

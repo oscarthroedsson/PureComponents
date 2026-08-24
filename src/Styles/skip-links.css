@@ -16,7 +16,7 @@ USAGE:
   </body>
 */
 
-.skip-link {
+.pu-skip-link {
   position: absolute;
   top: -100px;
   left: 0;
@@ -58,10 +58,10 @@ USAGE:
 }
 
 /* Skip links container */
-.skip-links {
+.pu-skip-links {
   position: relative;
 
-  .skip-link {
+  .pu-skip-link {
     display: block;
     margin-bottom: var(--spacing-25);
 

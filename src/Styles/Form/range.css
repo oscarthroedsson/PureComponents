@@ -34,7 +34,7 @@ ACCESSIBILITY REQUIREMENTS:
   trade as checkbox.css, radio.css and select.css.
 - The focus ring comes from main.css. This file draws none, and nothing here
   clips, so the ring can never be cut.
-- Colour is never the only signal for the invalid state: the .field-error
+- Colour is never the only signal for the invalid state: the .pu-field-error
   appears and aria-invalid is what assistive tech hears.
 - KNOWN, MEASURED FAILURE: --color-error is #f87171, 2.77:1 on white, under
   the 3:1 of 1.4.11 for the invalid thumb. Used anyway by decision, pending a
@@ -60,7 +60,7 @@ VARIABLES
   --range-thumb-border-color
 */
 
-.range {
+.pu-range {
   --range-fill: var(--color-neutral-300);
   --range-value: 50%;
 
@@ -172,7 +172,7 @@ VARIABLES
      so source order decides, and a disabled control must not read as wrong.
      :user-invalid rarely fires here (a range always has a value), so
      [aria-invalid] is the path that matters. Colour is never the only signal:
-     the .field-error appears and aria-invalid is what assistive tech hears. */
+     the .pu-field-error appears and aria-invalid is what assistive tech hears. */
   &:is(:user-invalid, [aria-invalid="true"]) {
     --range-thumb-color: var(--color-error);
     --range-thumb-border-color: var(--color-error);

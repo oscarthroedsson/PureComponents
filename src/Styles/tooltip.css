@@ -37,14 +37,14 @@ the preferred placement would overflow the viewport.
 
 /* TRIGGER */
 
-:where([aria-describedby]:has(> .tooltip)) {
+:where([aria-describedby]:has(> .pu-tooltip)) {
   anchor-scope: --tooltip-anchor;
   anchor-name: --tooltip-anchor;
 }
 
 /* TOOLTIP */
 
-.tooltip {
+.pu-tooltip {
   --tooltip-offset: 0.5em;
 
   position: fixed;
@@ -141,7 +141,7 @@ the preferred placement would overflow the viewport.
 /* INTEREST */
 
 @supports selector(:interest-source) {
-  :where([interestfor]:has(> .tooltip)) {
+  :where([interestfor]:has(> .pu-tooltip)) {
     interest-delay: 400ms 120ms;
   }
 }
@@ -149,7 +149,7 @@ the preferred placement would overflow the viewport.
 /* FALLBACK */
 
 @supports not selector(:interest-source) {
-  :where([aria-describedby]:has(> .tooltip)):is(:hover, :focus-visible) > .tooltip {
+  :where([aria-describedby]:has(> .pu-tooltip)):is(:hover, :focus-visible) > .pu-tooltip {
     display: block;
     opacity: 1;
     scale: 1;

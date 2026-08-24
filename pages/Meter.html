@@ -39,22 +39,22 @@
       </p>
 
       <template>
-        <div class="meter-wrapper">
+        <div class="pu-meter-wrapper">
           <label class="meter-label" for="m-mid-low">Value below low</label>
           <span class="meter-value">15</span>
-          <meter id="m-mid-low" class="meter md" value="15" min="0" max="100" low="30" high="80" optimum="50"></meter>
+          <meter id="m-mid-low" class="pu-meter md" value="15" min="0" max="100" low="30" high="80" optimum="50"></meter>
         </div>
 
-        <div class="meter-wrapper">
+        <div class="pu-meter-wrapper">
           <label class="meter-label" for="m-mid-ok">Value between low and high</label>
           <span class="meter-value">50</span>
-          <meter id="m-mid-ok" class="meter md" value="50" min="0" max="100" low="30" high="80" optimum="50"></meter>
+          <meter id="m-mid-ok" class="pu-meter md" value="50" min="0" max="100" low="30" high="80" optimum="50"></meter>
         </div>
 
-        <div class="meter-wrapper">
+        <div class="pu-meter-wrapper">
           <label class="meter-label" for="m-mid-high">Value above high</label>
           <span class="meter-value">85</span>
-          <meter id="m-mid-high" class="meter md" value="85" min="0" max="100" low="30" high="80" optimum="50"></meter>
+          <meter id="m-mid-high" class="pu-meter md" value="85" min="0" max="100" low="30" high="80" optimum="50"></meter>
         </div>
       </template>
     </section>
@@ -74,22 +74,22 @@
       </p>
 
       <template>
-        <div class="meter-wrapper">
+        <div class="pu-meter-wrapper">
           <label class="meter-label" for="m-bat-full">Battery — good</label>
           <span class="meter-value">80%</span>
-          <meter id="m-bat-full" class="meter md" value="80" min="0" max="100" low="20" high="50" optimum="100"></meter>
+          <meter id="m-bat-full" class="pu-meter md" value="80" min="0" max="100" low="20" high="50" optimum="100"></meter>
         </div>
 
-        <div class="meter-wrapper">
+        <div class="pu-meter-wrapper">
           <label class="meter-label" for="m-bat-mid">Battery — getting low</label>
           <span class="meter-value">35%</span>
-          <meter id="m-bat-mid" class="meter md" value="35" min="0" max="100" low="20" high="50" optimum="100"></meter>
+          <meter id="m-bat-mid" class="pu-meter md" value="35" min="0" max="100" low="20" high="50" optimum="100"></meter>
         </div>
 
-        <div class="meter-wrapper">
+        <div class="pu-meter-wrapper">
           <label class="meter-label" for="m-bat-low">Battery — critical</label>
           <span class="meter-value">10%</span>
-          <meter id="m-bat-low" class="meter md" value="10" min="0" max="100" low="20" high="50" optimum="100"></meter>
+          <meter id="m-bat-low" class="pu-meter md" value="10" min="0" max="100" low="20" high="50" optimum="100"></meter>
         </div>
       </template>
     </section>
@@ -116,12 +116,12 @@
       <template>
         <div>
           <label for="disk">Disk used</label>
-          <meter id="disk" class="meter md" value="62" min="0" max="100"></meter>
+          <meter id="disk" class="pu-meter md" value="62" min="0" max="100"></meter>
         </div>
 
         <div>
           <label for="score">Review score</label>
-          <meter id="score" class="meter md" value="3.6" min="0" max="5"></meter>
+          <meter id="score" class="pu-meter md" value="3.6" min="0" max="5"></meter>
         </div>
       </template>
     </section>
@@ -145,22 +145,22 @@
       <template>
         <div>
           <label for="c-primary">primary</label>
-          <meter id="c-primary" class="meter md" value="60" min="0" max="100"></meter>
+          <meter id="c-primary" class="pu-meter md" value="60" min="0" max="100"></meter>
         </div>
 
         <div>
           <label for="c-info">info</label>
-          <meter id="c-info" class="meter md" data-color="info" value="60" min="0" max="100"></meter>
+          <meter id="c-info" class="pu-meter md" data-color="info" value="60" min="0" max="100"></meter>
         </div>
 
         <div>
           <label for="c-success">success</label>
-          <meter id="c-success" class="meter md" data-color="success" value="60" min="0" max="100"></meter>
+          <meter id="c-success" class="pu-meter md" data-color="success" value="60" min="0" max="100"></meter>
         </div>
 
         <div>
           <label for="c-warning">warning</label>
-          <meter id="c-warning" class="meter md" data-color="warning" value="60" min="0" max="100"></meter>
+          <meter id="c-warning" class="pu-meter md" data-color="warning" value="60" min="0" max="100"></meter>
         </div>
       </template>
     </section>
@@ -188,7 +188,7 @@
           <label for="v-oklch">--meter-color: oklch()</label>
           <meter
             id="v-oklch"
-            class="meter md"
+            class="pu-meter md"
             style="--meter-color: oklch(0.7 0.2 20)"
             value="70"
             min="0"
@@ -200,7 +200,7 @@
           <label for="v-states">All three states recoloured</label>
           <meter
             id="v-states"
-            class="meter md"
+            class="pu-meter md"
             style="--meter-color: #22d3ee; --meter-suboptimum-color: #a78bfa; --meter-poor-color: #f43f5e"
             value="35"
             min="0"
@@ -215,7 +215,7 @@
           <label for="v-track">--meter-color + --meter-track-color</label>
           <meter
             id="v-track"
-            class="meter md"
+            class="pu-meter md"
             style="--meter-color: #0ea5e9; --meter-track-color: #1e293b"
             value="45"
             min="0"
@@ -238,17 +238,17 @@
       <template>
         <div>
           <label for="s-sm">Small</label>
-          <meter id="s-sm" class="meter sm" value="50" min="0" max="100"></meter>
+          <meter id="s-sm" class="pu-meter sm" value="50" min="0" max="100"></meter>
         </div>
 
         <div>
           <label for="s-md">Medium</label>
-          <meter id="s-md" class="meter md" value="50" min="0" max="100"></meter>
+          <meter id="s-md" class="pu-meter md" value="50" min="0" max="100"></meter>
         </div>
 
         <div>
           <label for="s-lg">Large</label>
-          <meter id="s-lg" class="meter lg" value="50" min="0" max="100"></meter>
+          <meter id="s-lg" class="pu-meter lg" value="50" min="0" max="100"></meter>
         </div>
       </template>
     </section>
@@ -269,17 +269,17 @@
       <template>
         <div>
           <label for="r-sharp">sharp</label>
-          <meter id="r-sharp" class="meter lg sharp" value="60" min="0" max="100"></meter>
+          <meter id="r-sharp" class="pu-meter lg sharp" value="60" min="0" max="100"></meter>
         </div>
 
         <div>
           <label for="r-smooth">smooth</label>
-          <meter id="r-smooth" class="meter lg smooth" value="60" min="0" max="100"></meter>
+          <meter id="r-smooth" class="pu-meter lg smooth" value="60" min="0" max="100"></meter>
         </div>
 
         <div>
           <label for="r-rounded">rounded</label>
-          <meter id="r-rounded" class="meter lg rounded" value="60" min="0" max="100"></meter>
+          <meter id="r-rounded" class="pu-meter lg rounded" value="60" min="0" max="100"></meter>
         </div>
       </template>
     </section>
@@ -298,10 +298,10 @@
       </p>
 
       <template>
-        <div class="meter-wrapper">
+        <div class="pu-meter-wrapper">
           <label class="meter-label" for="m-quota">Storage used</label>
           <span class="meter-value">184 / 200 GB</span>
-          <meter id="m-quota" class="meter md" value="184" min="0" max="200" low="100" high="160" optimum="0"></meter>
+          <meter id="m-quota" class="pu-meter md" value="184" min="0" max="200" low="100" high="160" optimum="0"></meter>
         </div>
       </template>
     </section>

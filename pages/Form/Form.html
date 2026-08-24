@@ -22,54 +22,54 @@
         everything under it. This is the whole library with no tuning at all.
       </p>
       <template>
-        <form class="form">
-          <div class="field">
+        <form class="pu-form">
+          <div class="pu-field">
             <label for="fm-name">Full name</label>
-            <input class="input" type="text" id="fm-name" />
+            <input class="pu-input" type="text" id="fm-name" />
           </div>
-          <div class="field">
+          <div class="pu-field">
             <label for="fm-email">Email</label>
-            <p class="field-hint" id="fm-email-hint">We only use it for receipts.</p>
-            <input class="input" type="email" id="fm-email" required aria-describedby="fm-email-hint fm-email-err" />
-            <p class="field-error" id="fm-email-err">Enter a valid email address.</p>
+            <p class="pu-field-hint" id="fm-email-hint">We only use it for receipts.</p>
+            <input class="pu-input" type="email" id="fm-email" required aria-describedby="fm-email-hint fm-email-err" />
+            <p class="pu-field-error" id="fm-email-err">Enter a valid email address.</p>
           </div>
-          <fieldset class="fieldset">
+          <fieldset class="pu-fieldset">
             <legend>Delivery address</legend>
-            <div class="field">
+            <div class="pu-field">
               <label for="fm-street">Street</label>
-              <input class="input" type="text" id="fm-street" />
+              <input class="pu-input" type="text" id="fm-street" />
             </div>
-            <div class="field">
+            <div class="pu-field">
               <label for="fm-city">City</label>
-              <input class="input" type="text" id="fm-city" />
+              <input class="pu-input" type="text" id="fm-city" />
             </div>
           </fieldset>
-          <button class="btn" type="submit">Continue</button>
+          <button class="pu-btn" type="submit">Continue</button>
         </form>
       </template>
     </section>
 
     <section class="pc-demo" id="cascade" data-title="The Cascade" data-stage-style="display:block; max-width:30rem;">
       <p class="pc-note">
-        <code>.form.lg</code> sets the scale once. The fieldset inside it says <code>sm</code> and
+        <code>.pu-form.lg</code> sets the scale once. The fieldset inside it says <code>sm</code> and
         wins for its own subtree; the last field says <code>sm</code> and wins over both. Nearest
         declaration wins, at any depth — no descendant selector anywhere in the family.
       </p>
       <template>
-        <form class="form lg">
-          <div class="field">
+        <form class="pu-form lg">
+          <div class="pu-field">
             <label for="c-1">Inherits lg from the form</label>
-            <input class="input" type="text" id="c-1" />
+            <input class="pu-input" type="text" id="c-1" />
           </div>
-          <fieldset class="fieldset sm">
+          <fieldset class="pu-fieldset sm">
             <legend>Group says sm</legend>
-            <div class="field">
+            <div class="pu-field">
               <label for="c-2">Inherits sm from the fieldset</label>
-              <input class="input" type="text" id="c-2" />
+              <input class="pu-input" type="text" id="c-2" />
             </div>
-            <div class="field lg">
+            <div class="pu-field lg">
               <label for="c-3">Field says lg, and wins</label>
-              <input class="input" type="text" id="c-3" />
+              <input class="pu-input" type="text" id="c-3" />
             </div>
           </fieldset>
         </form>
@@ -83,14 +83,14 @@
         is the difference between the two, made visible.
       </p>
       <template>
-        <form class="form">
-          <div class="field lg">
+        <form class="pu-form">
+          <div class="pu-field lg">
             <label for="l-1">lg on the field — label follows</label>
-            <input class="input" type="text" id="l-1" />
+            <input class="pu-input" type="text" id="l-1" />
           </div>
-          <div class="field">
+          <div class="pu-field">
             <label for="l-2">lg on the input — label does not</label>
-            <input class="input lg" type="text" id="l-2" />
+            <input class="pu-input lg" type="text" id="l-2" />
           </div>
         </form>
       </template>
@@ -99,20 +99,20 @@
     <section class="pc-demo" id="shape" data-title="Shape Cascades Too" data-stage-style="display:block; max-width:26rem;">
       <p class="pc-note">Same mechanism, same rules — one variable, set once on the form.</p>
       <template>
-        <form class="form rounded">
-          <div class="field">
+        <form class="pu-form rounded">
+          <div class="pu-field">
             <label for="s-1">Rounded from the form</label>
-            <input class="input" type="text" id="s-1" />
+            <input class="pu-input" type="text" id="s-1" />
           </div>
-          <div class="field">
+          <div class="pu-field">
             <label for="s-2">And this one</label>
-            <input class="input" type="text" id="s-2" />
+            <input class="pu-input" type="text" id="s-2" />
           </div>
-          <fieldset class="fieldset panel">
+          <fieldset class="pu-fieldset panel">
             <legend>The panel follows as well</legend>
-            <div class="field">
+            <div class="pu-field">
               <label for="s-3">Street</label>
-              <input class="input" type="text" id="s-3" />
+              <input class="pu-input" type="text" id="s-3" />
             </div>
           </fieldset>
         </form>
@@ -125,14 +125,14 @@
         No control is named, and no selector is written.
       </p>
       <template>
-        <form class="form" style="--form-gap: 2rem; --form-border-color: #334155; --form-surface: transparent">
-          <div class="field">
+        <form class="pu-form" style="--form-gap: 2rem; --form-border-color: #334155; --form-surface: transparent">
+          <div class="pu-field">
             <label for="t-1">Roomier, on a transparent fill</label>
-            <input class="input" type="text" id="t-1" />
+            <input class="pu-input" type="text" id="t-1" />
           </div>
-          <div class="field">
+          <div class="pu-field">
             <label for="t-2">Set once, on the form</label>
-            <input class="input" type="text" id="t-2" />
+            <input class="pu-input" type="text" id="t-2" />
           </div>
         </form>
       </template>

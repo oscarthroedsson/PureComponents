@@ -57,7 +57,7 @@ VARIANT:
 - (none)    a light neutral box. The default.
 - outline   the fill dropped, the border kept.
 - ghost     both dropped. For a dense list where the boxes would fight each
-            other and the words are enough. Same meaning as .ghost on .btn.
+            other and the words are enough. Same meaning as .ghost on .pu-btn.
 
 INTENT:
 - data-intent="info" · "success" · "warning" · "error"
@@ -85,7 +85,7 @@ chip you can press is Pill; a chip you can dismiss is Pill with a button.
 */
 /* ----------------------------------------------------- */
 
-.badge {
+.pu-badge {
   /* VARIABLES */
 
   --badge-font-size: var(--font-size-sm);

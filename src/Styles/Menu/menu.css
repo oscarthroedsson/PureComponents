@@ -1,6 +1,6 @@
 /*
 ACCESSIBILITY REQUIREMENTS:
-- Default .menu is a navigation/disclosure menu, NOT an ARIA application menu
+- Default .pu-menu is a navigation/disclosure menu, NOT an ARIA application menu
 - Use native <button>, <a>, <details> and <summary> elements
 - Do NOT add role="menu" / role="menuitem" unless a behavior layer also implements
   the required arrow-key and focus-management model
@@ -113,7 +113,7 @@ HOVER / FOCUS OPEN:
 - click/tap through popovertarget continues to work independently
 */
 
-.menu {
+.pu-menu {
 
   /* COLORS */
 
@@ -449,7 +449,7 @@ HOVER / FOCUS OPEN:
   /*
    * Automatic flyout indicator.
    */
-  & > li:has(> .menu[data-submenu="flyout"]) {
+  & > li:has(> .pu-menu[data-submenu="flyout"]) {
     & > button[popovertarget]::after {
       content: "›";
 
@@ -467,7 +467,7 @@ HOVER / FOCUS OPEN:
    */
   &:dir(rtl) {
     & > li > details > summary::after,
-    & > li:has(> .menu[data-submenu="flyout"]) > button[popovertarget]::after {
+    & > li:has(> .pu-menu[data-submenu="flyout"]) > button[popovertarget]::after {
       content: "‹";
     }
 
@@ -520,7 +520,7 @@ HOVER / FOCUS OPEN:
    * while its submenu is open.
    */
   & > li > details[open] > summary,
-  & > li:has(> .menu[data-submenu="flyout"]:popover-open) > button[popovertarget] {
+  & > li:has(> .pu-menu[data-submenu="flyout"]:popover-open) > button[popovertarget] {
     background-color: var(--menu-hover);
   }
 

@@ -21,9 +21,9 @@
     <section class="pc-demo" id="basic" data-title="Label And Control" data-stage-style="display:block; max-width:22rem;">
       <p class="pc-note">The minimum.</p>
       <template>
-        <div class="field">
-          <label class="label" for="a-name">Full name</label>
-          <input class="input" type="text" id="a-name" />
+        <div class="pu-field">
+          <label class="pu-label" for="a-name">Full name</label>
+          <input class="pu-input" type="text" id="a-name" />
         </div>
       </template>
     </section>
@@ -31,13 +31,13 @@
     <section class="pc-demo" id="no-label" data-title="Without A Label" data-stage-style="display:block; max-width:22rem;">
       <p class="pc-note">A second address line, or anything the label above already named. The group carries the name.</p>
       <template>
-        <fieldset class="fieldset">
+        <fieldset class="pu-fieldset">
           <legend>Street address</legend>
-          <div class="field">
-            <input class="input" type="text" value="Storgatan 14" aria-label="Address line 1" />
+          <div class="pu-field">
+            <input class="pu-input" type="text" value="Storgatan 14" aria-label="Address line 1" />
           </div>
-          <div class="field">
-            <input class="input" type="text" placeholder="Apartment, floor (optional)" aria-label="Address line 2" />
+          <div class="pu-field">
+            <input class="pu-input" type="text" placeholder="Apartment, floor (optional)" aria-label="Address line 2" />
           </div>
         </fieldset>
       </template>
@@ -46,21 +46,21 @@
     <section class="pc-demo" id="hint" data-title="Hint" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">Always visible, one step down in size, muted. It says what is expected before you type — which is why it sits above the control, not below it.</p>
       <template>
-        <form class="form">
-          <div class="field">
-            <label class="label" for="h-pw">Password</label>
-            <p class="field-hint" id="h-pw-hint">At least 8 characters, one number.</p>
-            <input class="input" type="password" id="h-pw" minlength="8" aria-describedby="h-pw-hint" />
+        <form class="pu-form">
+          <div class="pu-field">
+            <label class="pu-label" for="h-pw">Password</label>
+            <p class="pu-field-hint" id="h-pw-hint">At least 8 characters, one number.</p>
+            <input class="pu-input" type="password" id="h-pw" minlength="8" aria-describedby="h-pw-hint" />
           </div>
-          <div class="field">
-            <label class="label" for="h-vat">VAT number</label>
-            <p class="field-hint" id="h-vat-hint">Starts with SE and ends with 01. We check it against Bolagsverket.</p>
-            <input class="input" type="text" id="h-vat" value="SE556677889901"
+          <div class="pu-field">
+            <label class="pu-label" for="h-vat">VAT number</label>
+            <p class="pu-field-hint" id="h-vat-hint">Starts with SE and ends with 01. We check it against Bolagsverket.</p>
+            <input class="pu-input" type="text" id="h-vat" value="SE556677889901"
                    aria-describedby="h-vat-hint" />
           </div>
-          <div class="field">
-            <label class="label" for="h-none">No hint at all</label>
-            <input class="input" type="text" id="h-none" />
+          <div class="pu-field">
+            <label class="pu-label" for="h-none">No hint at all</label>
+            <input class="pu-input" type="text" id="h-none" />
           </div>
         </form>
       </template>
@@ -69,12 +69,12 @@
     <section class="pc-demo" id="parts" data-title="All Parts" data-stage-style="display:block; max-width:22rem;">
       <p class="pc-note">Label, hint, control, message.</p>
       <template>
-        <div class="field">
-          <label class="label" for="a-email">Email</label>
-          <p class="field-hint" id="a-email-hint">We only use it for receipts.</p>
-          <input class="input" type="email" id="a-email"
+        <div class="pu-field">
+          <label class="pu-label" for="a-email">Email</label>
+          <p class="pu-field-hint" id="a-email-hint">We only use it for receipts.</p>
+          <input class="pu-input" type="email" id="a-email"
                  aria-describedby="a-email-hint a-email-err" />
-          <p class="field-error" id="a-email-err">Enter a valid email address.</p>
+          <p class="pu-field-error" id="a-email-err">Enter a valid email address.</p>
         </div>
       </template>
     </section>
@@ -82,31 +82,31 @@
     <section class="pc-demo" id="states" data-title="States" data-stage-style="display:block; max-width:22rem;">
       <p class="pc-note">Read-only is drawn as an ordinary field — it is focusable and submitted; only the cursor differs. Disabled is not. Tab out of the last one to fire the native check.</p>
       <template>
-        <form class="form">
-          <div class="field">
-            <label class="label" for="s-normal">Default</label>
-            <input class="input" type="text" id="s-normal" value="Anna Lindqvist" />
+        <form class="pu-form">
+          <div class="pu-field">
+            <label class="pu-label" for="s-normal">Default</label>
+            <input class="pu-input" type="text" id="s-normal" value="Anna Lindqvist" />
           </div>
-          <div class="field">
-            <label class="label" for="s-ro">Read only</label>
-            <p class="field-hint">Set when the account was created.</p>
-            <input class="input" type="text" id="s-ro" value="anna.lindqvist" readonly />
+          <div class="pu-field">
+            <label class="pu-label" for="s-ro">Read only</label>
+            <p class="pu-field-hint">Set when the account was created.</p>
+            <input class="pu-input" type="text" id="s-ro" value="anna.lindqvist" readonly />
           </div>
-          <div class="field">
-            <label class="label" for="s-dis">Disabled</label>
-            <p class="field-hint">Ask support to change this.</p>
-            <input class="input" type="text" id="s-dis" value="8901-2345" disabled />
+          <div class="pu-field">
+            <label class="pu-label" for="s-dis">Disabled</label>
+            <p class="pu-field-hint">Ask support to change this.</p>
+            <input class="pu-input" type="text" id="s-dis" value="8901-2345" disabled />
           </div>
-          <div class="field">
-            <label class="label" for="s-aria">Invalid — set by a validator</label>
-            <input class="input" type="text" id="s-aria" value="ann@" aria-invalid="true"
+          <div class="pu-field">
+            <label class="pu-label" for="s-aria">Invalid — set by a validator</label>
+            <input class="pu-input" type="text" id="s-aria" value="ann@" aria-invalid="true"
                    aria-describedby="s-aria-err" />
-            <p class="field-error" id="s-aria-err">Enter a valid email address.</p>
+            <p class="pu-field-error" id="s-aria-err">Enter a valid email address.</p>
           </div>
-          <div class="field">
-            <label class="label" for="s-nat">Invalid — native, after you leave it</label>
-            <input class="input" type="email" id="s-nat" required aria-describedby="s-nat-err" />
-            <p class="field-error" id="s-nat-err">Enter a valid email address.</p>
+          <div class="pu-field">
+            <label class="pu-label" for="s-nat">Invalid — native, after you leave it</label>
+            <input class="pu-input" type="email" id="s-nat" required aria-describedby="s-nat-err" />
+            <p class="pu-field-error" id="s-nat-err">Enter a valid email address.</p>
           </div>
         </form>
       </template>
@@ -115,17 +115,17 @@
     <section class="pc-demo" id="reserved" data-title="The Message Row Is Reserved" data-stage-style="display:block; max-width:22rem;">
       <p class="pc-note">Same markup, one valid and one not. Measured: both fields 80.4px, controls at the same offset. Nothing moves.</p>
       <template>
-        <form class="form">
-          <div class="field">
-            <label class="label" for="r-ok">Username</label>
-            <input class="input" type="text" id="r-ok" value="oscar" aria-describedby="r-ok-err" />
-            <p class="field-error" id="r-ok-err">That username is taken.</p>
+        <form class="pu-form">
+          <div class="pu-field">
+            <label class="pu-label" for="r-ok">Username</label>
+            <input class="pu-input" type="text" id="r-ok" value="oscar" aria-describedby="r-ok-err" />
+            <p class="pu-field-error" id="r-ok-err">That username is taken.</p>
           </div>
-          <div class="field">
-            <label class="label" for="r-bad">Username</label>
-            <input class="input" type="text" id="r-bad" value="oscar" aria-invalid="true"
+          <div class="pu-field">
+            <label class="pu-label" for="r-bad">Username</label>
+            <input class="pu-input" type="text" id="r-bad" value="oscar" aria-invalid="true"
                    aria-describedby="r-bad-err" />
-            <p class="field-error" id="r-bad-err">That username is taken.</p>
+            <p class="pu-field-error" id="r-bad-err">That username is taken.</p>
           </div>
         </form>
       </template>
@@ -134,23 +134,23 @@
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; grid-template-columns: repeat(3, 1fr); gap:2rem; align-items:start;">
       <p class="pc-note">Size on the field. Label, hint, control and message all follow.</p>
       <template>
-        <div class="field sm">
-          <label class="label" for="z-sm">Small</label>
-          <p class="field-hint">Hint follows the field.</p>
-          <input class="input" type="text" id="z-sm" value="sm" aria-invalid="true" />
-          <p class="field-error">So does the message.</p>
+        <div class="pu-field sm">
+          <label class="pu-label" for="z-sm">Small</label>
+          <p class="pu-field-hint">Hint follows the field.</p>
+          <input class="pu-input" type="text" id="z-sm" value="sm" aria-invalid="true" />
+          <p class="pu-field-error">So does the message.</p>
         </div>
-        <div class="field md">
-          <label class="label" for="z-md">Medium</label>
-          <p class="field-hint">Hint follows the field.</p>
-          <input class="input" type="text" id="z-md" value="md" aria-invalid="true" />
-          <p class="field-error">So does the message.</p>
+        <div class="pu-field md">
+          <label class="pu-label" for="z-md">Medium</label>
+          <p class="pu-field-hint">Hint follows the field.</p>
+          <input class="pu-input" type="text" id="z-md" value="md" aria-invalid="true" />
+          <p class="pu-field-error">So does the message.</p>
         </div>
-        <div class="field lg">
-          <label class="label" for="z-lg">Large</label>
-          <p class="field-hint">Hint follows the field.</p>
-          <input class="input" type="text" id="z-lg" value="lg" aria-invalid="true" />
-          <p class="field-error">So does the message.</p>
+        <div class="pu-field lg">
+          <label class="pu-label" for="z-lg">Large</label>
+          <p class="pu-field-hint">Hint follows the field.</p>
+          <input class="pu-input" type="text" id="z-lg" value="lg" aria-invalid="true" />
+          <p class="pu-field-error">So does the message.</p>
         </div>
       </template>
     </section>
@@ -158,32 +158,32 @@
     <section class="pc-demo" id="fragment" data-title="A Real Fragment" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">Fields, a group, and a button. No tuning.</p>
       <template>
-        <form class="form">
-          <div class="field">
-            <label class="label" for="p-name">Full name</label>
-            <input class="input" type="text" id="p-name" value="Anna Lindqvist" />
+        <form class="pu-form">
+          <div class="pu-field">
+            <label class="pu-label" for="p-name">Full name</label>
+            <input class="pu-input" type="text" id="p-name" value="Anna Lindqvist" />
           </div>
-          <div class="field">
-            <label class="label" for="p-email">Email</label>
-            <p class="field-hint" id="p-email-hint">Your receipt goes here.</p>
-            <input class="input" type="email" id="p-email" value="anna@" aria-invalid="true" aria-describedby="p-email-hint p-email-err" />
-            <p class="field-error" id="p-email-err">Enter a valid email address.</p>
+          <div class="pu-field">
+            <label class="pu-label" for="p-email">Email</label>
+            <p class="pu-field-hint" id="p-email-hint">Your receipt goes here.</p>
+            <input class="pu-input" type="email" id="p-email" value="anna@" aria-invalid="true" aria-describedby="p-email-hint p-email-err" />
+            <p class="pu-field-error" id="p-email-err">Enter a valid email address.</p>
           </div>
-          <fieldset class="fieldset">
+          <fieldset class="pu-fieldset">
             <legend>Delivery address</legend>
-            <div class="field">
-              <input class="input" type="text" value="Storgatan 14" aria-label="Street" />
+            <div class="pu-field">
+              <input class="pu-input" type="text" value="Storgatan 14" aria-label="Street" />
             </div>
-            <div class="field">
-              <label class="label" for="p-zip">Postcode</label>
-              <input class="input" type="text" id="p-zip" value="114 55" />
+            <div class="pu-field">
+              <label class="pu-label" for="p-zip">Postcode</label>
+              <input class="pu-input" type="text" id="p-zip" value="114 55" />
             </div>
-            <div class="field">
-              <label class="label" for="p-city">City</label>
-              <input class="input" type="text" id="p-city" value="Stockholm" />
+            <div class="pu-field">
+              <label class="pu-label" for="p-city">City</label>
+              <input class="pu-input" type="text" id="p-city" value="Stockholm" />
             </div>
           </fieldset>
-          <button class="btn" type="submit">Save address</button>
+          <button class="pu-btn" type="submit">Save address</button>
         </form>
       </template>
     </section>

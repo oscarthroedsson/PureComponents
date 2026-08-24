@@ -35,12 +35,12 @@
       <template>
         <div>
           <label for="upload">Uploading</label>
-          <progress id="upload" class="progress md" value="45" max="100"></progress>
+          <progress id="upload" class="pu-progress md" value="45" max="100"></progress>
         </div>
 
         <div>
           <label for="download">Downloading</label>
-          <progress id="download" class="progress md" value="75" max="100"></progress>
+          <progress id="download" class="pu-progress md" value="75" max="100"></progress>
         </div>
       </template>
     </section>
@@ -67,27 +67,27 @@
       <template>
         <div>
           <label for="c-primary">primary</label>
-          <progress id="c-primary" class="progress md" value="60" max="100"></progress>
+          <progress id="c-primary" class="pu-progress md" value="60" max="100"></progress>
         </div>
 
         <div>
           <label for="c-success">success</label>
-          <progress id="c-success" class="progress md" data-color="success" value="100" max="100"></progress>
+          <progress id="c-success" class="pu-progress md" data-color="success" value="100" max="100"></progress>
         </div>
 
         <div>
           <label for="c-error">error</label>
-          <progress id="c-error" class="progress md" data-color="error" value="30" max="100"></progress>
+          <progress id="c-error" class="pu-progress md" data-color="error" value="30" max="100"></progress>
         </div>
 
         <div>
           <label for="c-warning">warning</label>
-          <progress id="c-warning" class="progress md" data-color="warning" value="60" max="100"></progress>
+          <progress id="c-warning" class="pu-progress md" data-color="warning" value="60" max="100"></progress>
         </div>
 
         <div>
           <label for="c-info">info</label>
-          <progress id="c-info" class="progress md" data-color="info" value="80" max="100"></progress>
+          <progress id="c-info" class="pu-progress md" data-color="info" value="80" max="100"></progress>
         </div>
       </template>
     </section>
@@ -117,7 +117,7 @@
           <label for="v-hsl">--progress-color: hsl()</label>
           <progress
             id="v-hsl"
-            class="progress md"
+            class="pu-progress md"
             style="--progress-color: hsl(280 80% 55%)"
             value="70"
             max="100"
@@ -126,14 +126,14 @@
 
         <div>
           <label for="v-hex">--progress-color: hex</label>
-          <progress id="v-hex" class="progress md" style="--progress-color: #ff0055" value="55" max="100"></progress>
+          <progress id="v-hex" class="pu-progress md" style="--progress-color: #ff0055" value="55" max="100"></progress>
         </div>
 
         <div>
           <label for="v-track">--progress-color + --progress-track-color</label>
           <progress
             id="v-track"
-            class="progress md"
+            class="pu-progress md"
             style="--progress-color: #0ea5e9; --progress-track-color: #1e293b"
             value="40"
             max="100"
@@ -144,7 +144,7 @@
           <label for="v-oklch">--progress-color: oklch()</label>
           <progress
             id="v-oklch"
-            class="progress md"
+            class="pu-progress md"
             style="--progress-color: oklch(0.7 0.2 20)"
             value="65"
             max="100"
@@ -166,17 +166,17 @@
       <template>
         <div>
           <label for="s-sm">Small</label>
-          <progress id="s-sm" class="progress sm" value="50" max="100"></progress>
+          <progress id="s-sm" class="pu-progress sm" value="50" max="100"></progress>
         </div>
 
         <div>
           <label for="s-md">Medium</label>
-          <progress id="s-md" class="progress md" value="50" max="100"></progress>
+          <progress id="s-md" class="pu-progress md" value="50" max="100"></progress>
         </div>
 
         <div>
           <label for="s-lg">Large</label>
-          <progress id="s-lg" class="progress lg" value="50" max="100"></progress>
+          <progress id="s-lg" class="pu-progress lg" value="50" max="100"></progress>
         </div>
       </template>
     </section>
@@ -197,17 +197,17 @@
       <template>
         <div>
           <label for="r-sharp">sharp</label>
-          <progress id="r-sharp" class="progress lg sharp" value="60" max="100"></progress>
+          <progress id="r-sharp" class="pu-progress lg sharp" value="60" max="100"></progress>
         </div>
 
         <div>
           <label for="r-smooth">smooth</label>
-          <progress id="r-smooth" class="progress lg smooth" value="60" max="100"></progress>
+          <progress id="r-smooth" class="pu-progress lg smooth" value="60" max="100"></progress>
         </div>
 
         <div>
           <label for="r-rounded">rounded</label>
-          <progress id="r-rounded" class="progress lg rounded" value="60" max="100"></progress>
+          <progress id="r-rounded" class="pu-progress lg rounded" value="60" max="100"></progress>
         </div>
       </template>
     </section>
@@ -230,12 +230,12 @@
       <template>
         <div>
           <label for="loading">Loading</label>
-          <progress id="loading" class="progress md"></progress>
+          <progress id="loading" class="pu-progress md"></progress>
         </div>
 
         <div>
           <label for="loading-color">Loading, coloured</label>
-          <progress id="loading-color" class="progress md" data-color="info"></progress>
+          <progress id="loading-color" class="pu-progress md" data-color="info"></progress>
         </div>
       </template>
     </section>
@@ -254,10 +254,10 @@
       </p>
 
       <template>
-        <div class="progress-wrapper">
+        <div class="pu-progress-wrapper">
           <label class="progress-label" for="p-restore">Restoring backup</label>
           <span class="progress-value">45%</span>
-          <progress id="p-restore" class="progress md" value="45" max="100"></progress>
+          <progress id="p-restore" class="pu-progress md" value="45" max="100"></progress>
         </div>
       </template>
     </section>
@@ -271,7 +271,7 @@
       data-stage-style="display: flex; flex-direction: column; gap: 1rem; align-items: stretch;"
     >
       <p class="pc-note">
-        <code>.progress-bar</code> is for what the native element cannot do — content inside the bar, segments, a fill
+        <code>.pu-progress-bar</code> is for what the native element cannot do — content inside the bar, segments, a fill
         driven on its own terms. It takes the same <code>data-color</code> and custom properties, and it is the one case
         that needs the ARIA the native element gets for free: <code>role="progressbar"</code> with
         <code>aria-valuenow</code>, <code>aria-valuemin</code> and <code>aria-valuemax</code>, kept in sync by whatever
@@ -280,7 +280,7 @@
 
       <template>
         <div
-          class="progress-bar md"
+          class="pu-progress-bar md"
           role="progressbar"
           aria-label="Storage used"
           aria-valuenow="72"
@@ -291,7 +291,7 @@
         </div>
 
         <div
-          class="progress-bar lg"
+          class="pu-progress-bar lg"
           data-color="warning"
           role="progressbar"
           aria-label="Quota"

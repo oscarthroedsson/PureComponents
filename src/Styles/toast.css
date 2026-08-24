@@ -85,7 +85,7 @@ CUSTOMIZATION:
 - --toast-stack-overlap
 */
 
-.toast-container {
+.pu-toast-container {
   --toast-enter-x: 1.5rem;
   --toast-enter-y: 0;
 
@@ -322,7 +322,7 @@ CUSTOMIZATION:
       padding-block-start: var(--toast-gap, 0.5rem);
     }
 
-    & > .alert {
+    & > .pu-alert {
       inline-size: 100%;
       max-inline-size: 100%;
 

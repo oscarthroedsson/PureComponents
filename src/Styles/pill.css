@@ -43,7 +43,7 @@ ACCESSIBILITY REQUIREMENTS:
 
 - Text contrast is 4.5:1 or better in every state. Measured worst case is
   neutral-900 on neutral-400 at :active, 5.2:1. Selected fills with
-  --color-primary and keeps the dark text, 7.0:1 — not the light text .btn
+  --color-primary and keeps the dark text, 7.0:1 — not the light text .pu-btn
   uses on the same token, which does not measure.
 
 - .outline carries the box on its border alone, and --color-neutral-400
@@ -72,7 +72,7 @@ USAGE:
 
 SIZE:  sm · md · lg   (md is the default; the key alone is already md)
 
-Same scale as .btn — 12 / 14 / 16px — because that is what a pill is: a
+Same scale as .pu-btn — 12 / 14 / 16px — because that is what a pill is: a
 small button. One variable, --pill-font-size, and the whole box follows it
 in em. Heights land at 24.8 / 28.6 / 32.4px.
 
@@ -82,7 +82,7 @@ VARIANT:
 - (none)    a light neutral box. The default.
 - outline   the fill dropped, the border kept.
 - ghost     both dropped. For a dense row where the boxes would fight each
-            other. Same meaning as .ghost on .btn and .badge.
+            other. Same meaning as .ghost on .pu-btn and .pu-badge.
 
 STATE:
 - :hover · :active          neutral steps, no derived colour
@@ -117,7 +117,7 @@ component.
 */
 /* ----------------------------------------------------- */
 
-.pill {
+.pu-pill {
   /* VARIABLES */
 
   --pill-font-size: var(--font-size-md);
@@ -137,7 +137,7 @@ component.
   /*
    * The hover and active fills are variables rather than values written in
    * the state blocks, and that is a specificity decision, not a taste one.
-   * `.pill.outline` is (0,2,0) and `.pill:hover` is (0,1,1), so a state
+   * `.pu-pill.outline` is (0,2,0) and `.pu-pill:hover` is (0,1,1), so a state
    * that wrote --pill-background directly would lose to every variant and
    * .outline would have had no hover at all. Each variant writes its own
    * pair below; the state block only ever swaps which one is in play.
@@ -149,7 +149,7 @@ component.
   --pill-selected-border-color: var(--color-primary);
 
   /*
-   * Dark text on the primary fill, measured 7.0:1. .btn puts
+   * Dark text on the primary fill, measured 7.0:1. .pu-btn puts
    * --color-neutral-100 on this same token, which lands near 2.2:1 — a
    * token problem reported in AGENTS.md §8, and not one to copy here.
    */
@@ -501,7 +501,7 @@ component.
  * everything without them.
  */
 @media (prefers-reduced-motion: reduce) {
-  .pill {
+  .pu-pill {
     transition: none;
 
     &:is(button, a, label):active {

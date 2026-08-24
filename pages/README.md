@@ -14,8 +14,8 @@ A component page contains nothing but its demos. The shell builds the rest.
   <section class="pc-demo" id="sizes" data-title="Sizes">
     <p class="pc-note">Three sizes: <code>sm</code>, <code>md</code>, <code>lg</code>.</p>
     <template>
-      <button class="btn sm">Small</button>
-      <button class="btn md">Medium</button>
+      <button class="pu-btn sm">Small</button>
+      <button class="pu-btn md">Medium</button>
     </template>
   </section>
 

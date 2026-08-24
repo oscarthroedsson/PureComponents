@@ -7,7 +7,7 @@ for everything inside it.
     <fieldset class="fieldset">…</fieldset>
   </form>
 
-.form draws nothing you can see. It does two things: it spaces its children,
+.pu-form draws nothing you can see. It does two things: it spaces its children,
 and it declares the --form-* channel that the whole family reads.
 
 
@@ -16,17 +16,17 @@ THE CHANNEL — read this before touching any file in Form/
 Every --form-* variable is inherited. That is the entire mechanism, and it
 is the reason this family needs no descendant selectors at all.
 
-  A GROUP  (.form, .fieldset, .field) rewrites the channel. It retunes its
+  A GROUP  (.pu-form, .pu-fieldset, .pu-field) rewrites the channel. It retunes its
            whole subtree.
-  A LEAF   (.input, .select, .textarea, …) rewrites its own --input-*,
+  A LEAF   (.pu-input, .pu-select, .pu-textarea, …) rewrites its own --input-*,
            --select-* … and leaves the channel alone. It changes only itself.
 
 Because a declared value always beats an inherited one — they are never
 compared on specificity, they are on different elements — the nearest
 declaration always wins:
 
-  .form.lg > .fieldset.sm > .field > .input          →  sm
-  .form.lg > .field.sm > .input.lg                   →  lg
+  .pu-form.lg > .pu-fieldset.sm > .pu-field > .pu-input          →  sm
+  .pu-form.lg > .pu-field.sm > .pu-input.lg                   →  lg
   <input class="input" style="--input-font-size:20px">  →  20px
 
 THE ONE RULE THAT MUST NOT BREAK: a leaf must never declare a --form-*
@@ -34,11 +34,11 @@ variable in its base block. Declared on the element, it would shadow the
 group's value and the cascade above stops working. A leaf reads the channel
 through var()'s second argument instead:
 
-  .input { --input-font-size: var(--form-font-size, var(--font-size-md)); }
+  .pu-input { --input-font-size: var(--form-font-size, var(--font-size-md)); }
 
 That is why the md defaults appear twice — once here, once as each leaf's
-fallback. It is deliberate. The duplication is what lets a bare .input work
-with no .form around it, so nothing in this family requires an ancestor.
+fallback. It is deliberate. The duplication is what lets a bare .pu-input work
+with no .pu-form around it, so nothing in this family requires an ancestor.
 
 
 ACCESSIBILITY REQUIREMENTS:
@@ -53,7 +53,7 @@ ACCESSIBILITY REQUIREMENTS:
 - Never a submit control that is the only way to learn a field was wrong.
   Error state reaches assistive tech through aria-invalid on the control,
   never through colour alone (1.4.1).
-- .form draws no focus ring. The ring comes from main.css, on whatever is
+- .pu-form draws no focus ring. The ring comes from main.css, on whatever is
   focused. No file in this family draws one, with a single documented
   exception for grouped controls.
 - --form-font-size below 16px makes iOS Safari zoom the page on focus. It is
@@ -71,8 +71,8 @@ SIZE:  sm · md (default) · lg
 
 SHAPE: sharp · smooth (default) · rounded
 
-VARIABLES — the family's public tuning surface. Set any of them on .form,
-on a .fieldset, on a .field, or inline on a single control.
+VARIABLES — the family's public tuning surface. Set any of them on .pu-form,
+on a .pu-fieldset, on a .pu-field, or inline on a single control.
 
   --form-font-size          the scale everything else is derived from
   --form-gap                between fields and fieldsets
@@ -89,11 +89,11 @@ on a .fieldset, on a .field, or inline on a single control.
   --form-error-color
 
 NOT HERE:
-  Width. The parent sizes the form, as with .card. Cap it from outside.
-  Submit controls. A button is .btn and looks after itself.
+  Width. The parent sizes the form, as with .pu-card. Cap it from outside.
+  Submit controls. A button is .pu-btn and looks after itself.
 */
 
-.form {
+.pu-form {
   /* 1. VARIABLES — the channel. Inherited by everything below. */
   --form-font-size: var(--font-size-md);
 

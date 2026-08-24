@@ -2,7 +2,7 @@
    EXPERIMENT — intrinsic button sizing
 
    Not part of the library yet. Lives here so it can be looked at
-   next to the current .btn without touching src/Styles/.
+   next to the current .pu-btn without touching src/Styles/.
 
    Idea: a button has no size variants and no fixed height. Its size
    comes from its text, and its spacing is expressed in the metrics of

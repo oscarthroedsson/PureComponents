@@ -10,7 +10,7 @@ ACCESSIBILITY REQUIREMENTS:
 - Decorative only: an avatar repeated beside a name that is already written
   out is decoration. Give it alt="" so it is not read twice.
 
-- .avatar-group belongs on a <ul> with role="list". A set of people is a
+- .pu-avatar-group belongs on a <ul> with role="list". A set of people is a
   list, and the role is written out because WebKit drops list semantics the
   moment list-style: none is set — the same trap already noted for
   breadcrumbs in SemanticNotes/semantics-breadcrumbs.md.
@@ -83,7 +83,7 @@ lands on; coming to the front is z-index, which has no direction at all.
 
 THE GROUP OWNS THE SIZE AND THE SHAPE.
 It writes --avatar-size and --avatar-radius on its children, the way
-accordion.css writes .collapsible's variables — a custom property declared ON
+accordion.css writes .pu-collapsible's variables — a custom property declared ON
 an element cannot be reached by inheriting from the parent, so setting it has
 to be a rule. The consequence is deliberate: mixed sizes inside one group are
 not supported. The overlap is measured from one square, and squares of
@@ -108,7 +108,7 @@ CUSTOMIZATION:
 */
 /* ----------------------------------------------------- */
 
-.avatar {
+.pu-avatar {
   /* VARIABLES */
 
   --avatar-size: 3rem;
@@ -136,7 +136,7 @@ CUSTOMIZATION:
   inline-size: var(--avatar-size);
   aspect-ratio: 1;
 
-  /* Never squeezed by the flex container in .avatar-group. */
+  /* Never squeezed by the flex container in .pu-avatar-group. */
   flex: 0 0 auto;
 
   border-radius: var(--avatar-radius);
@@ -223,7 +223,7 @@ CUSTOMIZATION:
 
 }
 
-.avatar-group {
+.pu-avatar-group {
   /* VARIABLES */
 
   --avatar-group-size: 3rem;
@@ -294,13 +294,13 @@ CUSTOMIZATION:
    * avatar, for the reason set out in the header: a custom property declared
    * on an element cannot be reached by inheriting from the parent.
    */
-  & .avatar {
+  & .pu-avatar {
     --avatar-size: var(--avatar-group-size);
     --avatar-radius: var(--avatar-group-radius);
   }
 
   /*
-   * Written against every direct child, not against .avatar, so an avatar
+   * Written against every direct child, not against .pu-avatar, so an avatar
    * wrapped in an <li>, in a link, or in the coming indicator is carried by
    * the same rules.
    */
@@ -394,7 +394,7 @@ CUSTOMIZATION:
   &[data-layout="stacked"] {
     --avatar-group-space: calc(-1 * var(--avatar-group-overlap));
 
-    & .avatar {
+    & .pu-avatar {
       box-shadow: 0 0 0 var(--avatar-group-ring-width) var(--avatar-group-ring-color);
     }
 
@@ -480,7 +480,7 @@ CUSTOMIZATION:
    * effect and the z-index on the base child is already enough.
    *
    * The ring colour is handed down as a custom property rather than being
-   * restyled here: it inherits to the .avatar whether the avatar is this
+   * restyled here: it inherits to the .pu-avatar whether the avatar is this
    * child itself or sits somewhere inside it.
    *
    * drop-shadow and not box-shadow, which the ring is already using — and it

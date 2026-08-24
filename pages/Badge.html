@@ -19,9 +19,9 @@
     <section class="pc-demo" id="basic-usage" data-title="Basic Usage" data-stage-style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
       <p class="pc-note">The key alone is already <code>md</code>. A label, a word, a count.</p>
       <template>
-        <span class="badge">Badge</span>
-        <span class="badge">New</span>
-        <span class="badge">5</span>
+        <span class="pu-badge">Badge</span>
+        <span class="pu-badge">New</span>
+        <span class="pu-badge">5</span>
       </template>
     </section>
 
@@ -33,8 +33,8 @@
       </p>
       <template>
         <p style="max-width: 40ch; line-height: 1.6">
-          The order is <span class="badge" data-intent="warning">Pending</span> until payment
-          clears, then it moves to <span class="badge" data-intent="success">Paid</span> and the
+          The order is <span class="pu-badge" data-intent="warning">Pending</span> until payment
+          clears, then it moves to <span class="pu-badge" data-intent="success">Paid</span> and the
           invoice is sent out automatically.
         </p>
       </template>
@@ -48,9 +48,9 @@
         <code>em</code>.
       </p>
       <template>
-        <span class="badge sm">Small</span>
-        <span class="badge md">Medium</span>
-        <span class="badge lg">Large</span>
+        <span class="pu-badge sm">Small</span>
+        <span class="pu-badge md">Medium</span>
+        <span class="pu-badge lg">Large</span>
       </template>
     </section>
 
@@ -61,11 +61,11 @@
         agrees with it.
       </p>
       <template>
-        <span class="badge">Neutral</span>
-        <span class="badge" data-intent="info">Info</span>
-        <span class="badge" data-intent="success">Success</span>
-        <span class="badge" data-intent="warning">Warning</span>
-        <span class="badge" data-intent="error">Error</span>
+        <span class="pu-badge">Neutral</span>
+        <span class="pu-badge" data-intent="info">Info</span>
+        <span class="pu-badge" data-intent="success">Success</span>
+        <span class="pu-badge" data-intent="warning">Warning</span>
+        <span class="pu-badge" data-intent="error">Error</span>
       </template>
     </section>
 
@@ -73,14 +73,14 @@
       <p class="pc-note">
         <code>outline</code> drops the tint and keeps the border. <code>ghost</code> drops both,
         for a dense list where the boxes would fight each other — the same meaning
-        <code>ghost</code> has on <code>.btn</code>.
+        <code>ghost</code> has on <code>.pu-btn</code>.
       </p>
       <template>
-        <span class="badge">Default</span>
-        <span class="badge outline">Outline</span>
-        <span class="badge ghost">Ghost</span>
-        <span class="badge outline" data-intent="error">Outline error</span>
-        <span class="badge ghost" data-intent="success">Ghost success</span>
+        <span class="pu-badge">Default</span>
+        <span class="pu-badge outline">Outline</span>
+        <span class="pu-badge ghost">Ghost</span>
+        <span class="pu-badge outline" data-intent="error">Outline error</span>
+        <span class="pu-badge ghost" data-intent="success">Ghost success</span>
       </template>
     </section>
 
@@ -90,11 +90,11 @@
         default, as everywhere else in the library. Size and shape are independent.
       </p>
       <template>
-        <span class="badge sharp">Sharp</span>
-        <span class="badge smooth">Smooth</span>
-        <span class="badge rounded">Rounded</span>
-        <span class="badge sm rounded">3</span>
-        <span class="badge lg sharp">Draft</span>
+        <span class="pu-badge sharp">Sharp</span>
+        <span class="pu-badge smooth">Smooth</span>
+        <span class="pu-badge rounded">Rounded</span>
+        <span class="pu-badge sm rounded">3</span>
+        <span class="pu-badge lg sharp">Draft</span>
       </template>
     </section>
 
@@ -105,11 +105,11 @@
         any wrapper element. Decorative icons get <code>aria-hidden="true"</code>.
       </p>
       <template>
-        <span class="badge" data-intent="success">
+        <span class="pu-badge" data-intent="success">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 12.5 2 8l1.4-1.4 3.1 3.1 6.1-6.1L14 5z"/></svg>
           Verified
         </span>
-        <span class="badge lg" data-intent="error">
+        <span class="pu-badge lg" data-intent="error">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1 15 14H1zm0 5v4h1V6zm0 5v1.5h1V11z"/></svg>
           Failed
         </span>
@@ -123,22 +123,22 @@
         <code>&lt;button&gt;</code>: an interactive chip is Pill.
       </p>
       <template>
-        <a class="badge" href="#as-a-link">css</a>
-        <a class="badge outline" href="#as-a-link">accessibility</a>
-        <a class="badge ghost" href="#as-a-link">tokens</a>
+        <a class="pu-badge" href="#as-a-link">css</a>
+        <a class="pu-badge outline" href="#as-a-link">accessibility</a>
+        <a class="pu-badge ghost" href="#as-a-link">tokens</a>
       </template>
     </section>
 
     <section class="pc-demo" id="common-patterns" data-title="Common Patterns" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
       <p class="pc-note">Counts on a control, and status beside a name.</p>
       <template>
-        <button class="btn md">
+        <button class="pu-btn md">
           Notifications
-          <span class="badge sm rounded">3</span>
+          <span class="pu-badge sm rounded">3</span>
         </button>
-        <button class="btn md ghost">
+        <button class="pu-btn md ghost">
           Inbox
-          <span class="badge sm rounded" data-intent="error">12</span>
+          <span class="pu-badge sm rounded" data-intent="error">12</span>
         </button>
       </template>
     </section>
@@ -150,9 +150,9 @@
         work — a bare <code>&lt;span&gt;</code> has no role for a name to attach to.
       </p>
       <template>
-        <button class="btn md" aria-label="Notifications, 3 unread">
+        <button class="pu-btn md" aria-label="Notifications, 3 unread">
           Notifications
-          <span class="badge sm rounded" aria-hidden="true">3</span>
+          <span class="pu-badge sm rounded" aria-hidden="true">3</span>
         </button>
       </template>
     </section>
@@ -164,7 +164,7 @@
       </p>
       <template>
         <p role="status">
-          Unread messages: <span class="badge rounded" data-intent="info">7</span>
+          Unread messages: <span class="pu-badge rounded" data-intent="info">7</span>
         </p>
       </template>
     </section>

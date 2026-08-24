@@ -40,7 +40,7 @@ VARIABLES
 
 @import url("./motion.css");
 
-.swap {
+.pu-swap {
   /* 1. VARIABLES */
   --swap-exit-scale: 0.4;
   --swap-exit-rotation: 0deg;
@@ -92,16 +92,16 @@ VARIABLES
 STATES — each rule pairs the icon that is wrong for the current state with the
 one that is right for it, so the swap is two rules and not four. Written flat
 rather than nested: `&` in the middle of a selector does not resolve the way
-it reads, and every selector here carries .swap anyway.
+it reads, and every selector here carries .pu-swap anyway.
 
 The "on" selectors are (0,3,0) against the default's (0,2,0), so they win on
 specificity and source order never enters into it.
 */
 
 /* The icon for the state we are not in. */
-.swap > .open,
-:is([open], [aria-expanded="true"]) .swap > .closed,
-.swap[data-swap="on"] > .closed {
+.pu-swap > .open,
+:is([open], [aria-expanded="true"]) .pu-swap > .closed,
+.pu-swap[data-swap="on"] > .closed {
   opacity: 0;
   scale: var(--swap-exit-scale);
   rotate: var(--swap-exit-rotation);
@@ -113,9 +113,9 @@ specificity and source order never enters into it.
 }
 
 /* The icon for the state we are in. It arrives a beat after the other leaves. */
-.swap > .closed,
-:is([open], [aria-expanded="true"]) .swap > .open,
-.swap[data-swap="on"] > .open {
+.pu-swap > .closed,
+:is([open], [aria-expanded="true"]) .pu-swap > .open,
+.pu-swap[data-swap="on"] > .open {
   opacity: 1;
   scale: 1;
   rotate: 0deg;
@@ -127,7 +127,7 @@ specificity and source order never enters into it.
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .swap > * {
+  .pu-swap > * {
     transition: none;
   }
 }

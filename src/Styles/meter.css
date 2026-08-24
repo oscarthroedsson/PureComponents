@@ -8,7 +8,7 @@ ACCESSIBILITY
   channel: a readout, or wording in the label.
 */
 
-.meter:is(meter) {
+.pu-meter:is(meter) {
   /* FRAME */
   --meter-block-size: 1rem;
   --meter-padding-block: calc(var(--meter-block-size) * 0.1);
@@ -175,13 +175,13 @@ ACCESSIBILITY
 
 /* LABELLED */
 
-.meter-wrapper {
+.pu-meter-wrapper {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
   gap: var(--spacing-25);
 
-  & > .meter {
+  & > .pu-meter {
     grid-column: 1 / -1;
   }
 

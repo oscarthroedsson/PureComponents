@@ -1,4 +1,4 @@
-.input {
+.pu-input {
   --input-font-size: var(--form-font-size, var(--font-size-md));
   --input-padding-block: var(--form-padding-block, 0.5em);
   --input-padding-inline: var(--form-padding-inline, 0.75em);
@@ -40,7 +40,7 @@
 
   /* Chromium gives the date family's inner field a padding-block of 1px of
      its own, which makes every date type 2px taller than a text box in the
-     same .field — measured 39px against 37px. Zeroed, the height goes back
+     same .pu-field — measured 39px against 37px. Zeroed, the height goes back
      to --input-min-block-size and the family lines up with everything else.
      Firefox and Safari build these types from different parts, do not know
      this pseudo-element, and drop the rule. */
@@ -194,10 +194,10 @@ Input group — a control with something laid over it.
 Required only when there is an icon. An <input> is a void element and cannot
 hold children, so anything that appears inside the box has to be a sibling
 laid over it — and something has to carry the positioning and know that the
-padding must grow. That is this element's whole job. A bare .input needs no
+padding must grow. That is this element's whole job. A bare .pu-input needs no
 group and should not have one.
 
-It says nothing about which control it wraps, so a .select or a .textarea
+It says nothing about which control it wraps, so a .pu-select or a .pu-textarea
 can sit in it the day those files exist.
 
 
@@ -253,7 +253,7 @@ VARIABLES
   --input-group-icon-inset   from the edge of the box to the icon
 */
 
-.input-group {
+.pu-input-group {
   /* 1. VARIABLES */
   --input-group-icon-size: 1em;
   --input-group-icon-gap: 0.5em;
@@ -325,18 +325,18 @@ VARIABLES
      control's padding grows only on the side that needs it. A leaf variable
      is set here, never a --form-* one: the channel stays the group's to
      inherit, not this element's to shadow. */
-  &:has(> .input-icon[data-placement="start"]) > .input {
+  &:has(> .input-icon[data-placement="start"]) > .pu-input {
     --input-padding-inline-start: var(--input-group-clearance);
   }
 
-  &:has(> .input-icon[data-placement="end"]) > .input {
+  &:has(> .input-icon[data-placement="end"]) > .pu-input {
     --input-padding-inline-end: var(--input-group-clearance);
   }
 
   /* 5. STATES — the control's, borrowed only where the icon has to follow.
      A greyed-out field with a full-strength icon reads as the one part
      still working. */
-  &:has(> .input:disabled) > .input-icon {
+  &:has(> .pu-input:disabled) > .input-icon {
     color: var(--color-neutral-400);
     cursor: not-allowed;
   }
@@ -344,7 +344,7 @@ VARIABLES
 
 /* The end clearance, given back to the types that already reserve it.
 
-   .input-group grows --input-padding-inline-end for an end-slot icon,
+   .pu-input-group grows --input-padding-inline-end for an end-slot icon,
    because on an ordinary field there is nothing at that end. On the date
    family there already is: the picker indicator, still laid out, only
    invisible. Grow the padding anyway and the indicator moves inward while
@@ -354,7 +354,7 @@ VARIABLES
    Long on purpose: it has to outrank the clearance rule above, (0,5,1)
    against (0,4,0), and the whole condition is written out so it is obvious
    this fires in one situation only. */
-.input-group:has(> .input-icon[data-placement="end"])
-  > input.input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {
+.pu-input-group:has(> .input-icon[data-placement="end"])
+  > input.pu-input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {
   --input-padding-inline-end: var(--input-padding-inline);
 }

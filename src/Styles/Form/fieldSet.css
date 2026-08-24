@@ -61,7 +61,7 @@ ACCESSIBILITY REQUIREMENTS:
   name away.
 - Do not nest a fieldset inside a fieldset to get indentation. Nest it only
   when the questions really are nested; every level is announced.
-- A message for the whole group is a .field-error placed as a direct child of
+- A message for the whole group is a .pu-field-error placed as a direct child of
   the fieldset, and the fieldset carries aria-invalid="true" while it applies.
   That is the correct ARIA for a group-level error, and it is also the only
   trigger there is: :user-invalid fires on a control, never on the group
@@ -92,11 +92,11 @@ VARIABLES
   --fieldset-border-color       .panel only
 */
 
-.fieldset {
+.pu-fieldset {
   /* 1. VARIABLES */
   /* Half of --form-gap on purpose, and not read from it.
 
-     A .form spaces fields that are each a stack of their own — label,
+     A .pu-form spaces fields that are each a stack of their own — label,
      control, message — so they need a full 1rem to read as separate. A
      fieldset holds the answers to one question, and they are usually one
      line each. At 1rem those lines drift apart and stop reading as a set.
@@ -161,7 +161,7 @@ VARIABLES
 
   /* A hint describing the whole group belongs to the legend, so the legend
      gives up almost all of its own gap and the hint takes the group's. */
-  &:has(> .field-hint) > legend {
+  &:has(> .pu-field-hint) > legend {
     margin-block-end: var(--fieldset-legend-hint-gap);
   }
 
@@ -173,7 +173,7 @@ VARIABLES
      There is no native equivalent. :user-invalid fires on a control, never
      on the fieldset around it, so a group error needs the consumer to set
      aria-invalid — which is the correct ARIA for it in any case. */
-  &[aria-invalid="true"] > .field-error {
+  &[aria-invalid="true"] > .pu-field-error {
     visibility: visible;
   }
 

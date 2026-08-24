@@ -55,10 +55,10 @@
       </p>
 
       <template>
-        <div class="toast-container" data-placement="top-right"></div>
+        <div class="pu-toast-container" data-placement="top-right"></div>
 
         <button
-          class="btn md"
+          class="pu-btn md"
           type="button"
           onclick="
             Toast.append({
@@ -94,10 +94,10 @@
       </p>
 
       <template>
-        <div class="toast-container" id="toasts-attributes" data-placement="top-right"></div>
+        <div class="pu-toast-container" id="toasts-attributes" data-placement="top-right"></div>
 
         <button
-          class="btn md"
+          class="pu-btn md"
           type="button"
           onclick="Toast.append({ message: 'Everything on defaults.' }, '#toasts-attributes')"
         >
@@ -105,7 +105,7 @@
         </button>
 
         <button
-          class="btn md secondary"
+          class="pu-btn md secondary"
           type="button"
           onclick="
             Toast.append(
@@ -137,10 +137,10 @@
       <p class="pc-note">Toast composes Alert, so Alert intents are reused directly.</p>
 
       <template>
-        <div class="toast-container" id="toasts-intent" data-placement="top-right"></div>
+        <div class="pu-toast-container" id="toasts-intent" data-placement="top-right"></div>
 
         <button
-          class="btn md"
+          class="pu-btn md"
           type="button"
           onclick="
             Toast.append(
@@ -153,7 +153,7 @@
         </button>
 
         <button
-          class="btn md secondary"
+          class="pu-btn md secondary"
           type="button"
           onclick="
             Toast.append(
@@ -166,7 +166,7 @@
         </button>
 
         <button
-          class="btn md ghost"
+          class="pu-btn md ghost"
           type="button"
           onclick="
             Toast.append(
@@ -179,7 +179,7 @@
         </button>
 
         <button
-          class="btn md ghost"
+          class="pu-btn md ghost"
           type="button"
           onclick="
             Toast.append({ title: 'Error', message: 'Something went wrong.', intent: 'error' }, '#toasts-intent')
@@ -201,10 +201,10 @@
       <p class="pc-note">Toast delegates its visual size to Alert.</p>
 
       <template>
-        <div class="toast-container" id="toasts-size" data-placement="top-center"></div>
+        <div class="pu-toast-container" id="toasts-size" data-placement="top-center"></div>
 
         <button
-          class="btn sm"
+          class="pu-btn sm"
           type="button"
           onclick="Toast.append({ title: 'Small', message: 'Compact toast notification.', size: 'sm' }, '#toasts-size')"
         >
@@ -212,7 +212,7 @@
         </button>
 
         <button
-          class="btn md"
+          class="pu-btn md"
           type="button"
           onclick="
             Toast.append({ title: 'Medium', message: 'Default toast notification.', size: 'md' }, '#toasts-size')
@@ -222,7 +222,7 @@
         </button>
 
         <button
-          class="btn lg"
+          class="pu-btn lg"
           type="button"
           onclick="Toast.append({ title: 'Large', message: 'Large toast notification.', size: 'lg' }, '#toasts-size')"
         >
@@ -242,38 +242,38 @@
       <p class="pc-note">
         A page with Toasts in more than one place writes one container per place, and the second argument picks which
         one — an element, or a selector for it. Without it, the first
-        <code>.toast-container</code> in the document is used.
+        <code>.pu-toast-container</code> in the document is used.
       </p>
 
       <template>
-        <div class="toast-container" id="toasts-tl" data-placement="top-left"></div>
-        <div class="toast-container" id="toasts-tc" data-placement="top-center"></div>
-        <div class="toast-container" id="toasts-tr" data-placement="top-right"></div>
-        <div class="toast-container" id="toasts-bl" data-placement="bottom-left"></div>
-        <div class="toast-container" id="toasts-bc" data-placement="bottom-center"></div>
-        <div class="toast-container" id="toasts-br" data-placement="bottom-right"></div>
+        <div class="pu-toast-container" id="toasts-tl" data-placement="top-left"></div>
+        <div class="pu-toast-container" id="toasts-tc" data-placement="top-center"></div>
+        <div class="pu-toast-container" id="toasts-tr" data-placement="top-right"></div>
+        <div class="pu-toast-container" id="toasts-bl" data-placement="bottom-left"></div>
+        <div class="pu-toast-container" id="toasts-bc" data-placement="bottom-center"></div>
+        <div class="pu-toast-container" id="toasts-br" data-placement="bottom-right"></div>
 
-        <button class="btn sm" type="button" onclick="Toast.append({ message: 'top-left' }, '#toasts-tl')">
+        <button class="pu-btn sm" type="button" onclick="Toast.append({ message: 'top-left' }, '#toasts-tl')">
           top-left
         </button>
 
-        <button class="btn sm" type="button" onclick="Toast.append({ message: 'top-center' }, '#toasts-tc')">
+        <button class="pu-btn sm" type="button" onclick="Toast.append({ message: 'top-center' }, '#toasts-tc')">
           top-center
         </button>
 
-        <button class="btn sm" type="button" onclick="Toast.append({ message: 'top-right' }, '#toasts-tr')">
+        <button class="pu-btn sm" type="button" onclick="Toast.append({ message: 'top-right' }, '#toasts-tr')">
           top-right
         </button>
 
-        <button class="btn sm" type="button" onclick="Toast.append({ message: 'bottom-left' }, '#toasts-bl')">
+        <button class="pu-btn sm" type="button" onclick="Toast.append({ message: 'bottom-left' }, '#toasts-bl')">
           bottom-left
         </button>
 
-        <button class="btn sm" type="button" onclick="Toast.append({ message: 'bottom-center' }, '#toasts-bc')">
+        <button class="pu-btn sm" type="button" onclick="Toast.append({ message: 'bottom-center' }, '#toasts-bc')">
           bottom-center
         </button>
 
-        <button class="btn sm" type="button" onclick="Toast.append({ message: 'bottom-right' }, '#toasts-br')">
+        <button class="pu-btn sm" type="button" onclick="Toast.append({ message: 'bottom-right' }, '#toasts-br')">
           bottom-right
         </button>
       </template>
@@ -294,12 +294,12 @@
       </p>
 
       <template>
-        <div class="toast-container" id="toasts-list" data-placement="top-left" data-layout="list"></div>
+        <div class="pu-toast-container" id="toasts-list" data-placement="top-left" data-layout="list"></div>
 
-        <div class="toast-container" id="toasts-stacked" data-placement="top-right" data-layout="stacked"></div>
+        <div class="pu-toast-container" id="toasts-stacked" data-placement="top-right" data-layout="stacked"></div>
 
         <button
-          class="btn md"
+          class="pu-btn md"
           type="button"
           onclick="
             Toast.append(
@@ -312,7 +312,7 @@
         </button>
 
         <button
-          class="btn md secondary"
+          class="pu-btn md secondary"
           type="button"
           onclick="Toast.append({ title: 'Listed', message: 'Shown in full.', duration: 20000 }, '#toasts-list')"
         >
@@ -320,7 +320,7 @@
         </button>
 
         <button
-          class="btn md ghost"
+          class="pu-btn md ghost"
           type="button"
           onclick="
             Toast.removeAll('#toasts-stacked');
@@ -349,12 +349,12 @@
       </p>
 
       <template>
-        <div class="toast-container" id="toasts-swipe-right" data-placement="top-right" data-layout="stacked"></div>
-        <div class="toast-container" id="toasts-swipe-left" data-placement="bottom-left"></div>
-        <div class="toast-container" id="toasts-swipe-center" data-placement="bottom-center"></div>
+        <div class="pu-toast-container" id="toasts-swipe-right" data-placement="top-right" data-layout="stacked"></div>
+        <div class="pu-toast-container" id="toasts-swipe-left" data-placement="bottom-left"></div>
+        <div class="pu-toast-container" id="toasts-swipe-center" data-placement="bottom-center"></div>
 
         <button
-          class="btn md"
+          class="pu-btn md"
           type="button"
           onclick="
             Toast.append(
@@ -367,7 +367,7 @@
         </button>
 
         <button
-          class="btn md secondary"
+          class="pu-btn md secondary"
           type="button"
           onclick="
             Toast.append(
@@ -380,7 +380,7 @@
         </button>
 
         <button
-          class="btn md ghost"
+          class="pu-btn md ghost"
           type="button"
           onclick="
             Toast.append(
@@ -398,7 +398,7 @@
         </button>
 
         <button
-          class="btn md ghost"
+          class="pu-btn md ghost"
           type="button"
           onclick="
             Toast.append(
@@ -432,10 +432,10 @@
       </p>
 
       <template>
-        <div class="toast-container" id="toasts-duration" data-placement="bottom-right"></div>
+        <div class="pu-toast-container" id="toasts-duration" data-placement="bottom-right"></div>
 
         <button
-          class="btn md"
+          class="pu-btn md"
           type="button"
           onclick="
             Toast.append(
@@ -448,7 +448,7 @@
         </button>
 
         <button
-          class="btn md secondary"
+          class="pu-btn md secondary"
           type="button"
           onclick="
             Toast.append(
@@ -460,7 +460,7 @@
           Two seconds, no close button
         </button>
 
-        <button class="btn md ghost" type="button" onclick="Toast.removeAll('#toasts-duration')">Remove all</button>
+        <button class="pu-btn md ghost" type="button" onclick="Toast.removeAll('#toasts-duration')">Remove all</button>
       </template>
     </section>
 
@@ -478,10 +478,10 @@
       </p>
 
       <template>
-        <div class="toast-container" id="toasts-long" data-placement="bottom-center"></div>
+        <div class="pu-toast-container" id="toasts-long" data-placement="bottom-center"></div>
 
         <button
-          class="btn md"
+          class="pu-btn md"
           type="button"
           onclick="
             Toast.append(
@@ -516,9 +516,9 @@
       </p>
 
       <template>
-        <div class="toast-container" data-placement="top-right" data-layout="list" data-preview-inflow>
+        <div class="pu-toast-container" data-placement="top-right" data-layout="list" data-preview-inflow>
           <div class="toast">
-            <div class="alert md" data-intent="success" role="status" aria-atomic="true">
+            <div class="pu-alert md" data-intent="success" role="status" aria-atomic="true">
               <div class="alert-icon" aria-hidden="true">
                 <svg
                   viewBox="0 0 24 24"
@@ -541,7 +541,7 @@
 
               <div class="alert-actions">
                 <button
-                  class="btn ghost sm"
+                  class="pu-btn ghost sm"
                   type="button"
                   data-icon-only="true"
                   data-toast-dismiss
@@ -565,7 +565,7 @@
           </div>
 
           <div class="toast">
-            <div class="alert md" data-intent="info" role="status" aria-atomic="true">
+            <div class="pu-alert md" data-intent="info" role="status" aria-atomic="true">
               <div class="alert-content">
                 <h3 class="alert-title">Heads up</h3>
 

@@ -1,7 +1,7 @@
 /*
 Pagination — the row of page controls.
 
-The class goes on the <ul>. Every clickable cell is a .btn, so this
+The class goes on the <ul>. Every clickable cell is a .pu-btn, so this
 file is button.css plus a row: there is no second set of hover,
 focus, active and disabled rules to keep in sync with the first.
 
@@ -17,13 +17,13 @@ focus, active and disabled rules to keep in sync with the first.
   </nav>
 
 The <nav> and its label belong to the page. Nothing here selects an
-element on its own — the list is reached through .pagination and
+element on its own — the list is reached through .pu-pagination and
 everything else through the list.
 
 
 CURRENT PAGE
 
-The current cell is a plain .btn while the rest are .btn ghost, so
+The current cell is a plain .pu-btn while the rest are .pu-btn ghost, so
 the difference is made of the button's own variants rather than of
 colours invented here. aria-current="page" is what carries the
 meaning; the fill only follows it.
@@ -33,8 +33,8 @@ SIZE
   sm | md (default) | lg
 
 The size sits on the <ul> and reaches the buttons from there. Leave
-the size class off the buttons themselves — .btn.md inside
-.pagination.lg is two sources for one decision.
+the size class off the buttons themselves — .pu-btn.md inside
+.pu-pagination.lg is two sources for one decision.
 
 
 SHAPE
@@ -70,7 +70,7 @@ VARIABLES
   --pagination-muted-color   the ellipsis
 */
 
-.pagination {
+.pu-pagination {
   --pagination-gap: var(--spacing-25);
   --pagination-font-size: var(--font-size-md);
   --pagination-cell-size: 2.25em;
@@ -88,7 +88,7 @@ VARIABLES
 
   gap: var(--pagination-gap);
 
-  /* The buttons inherit this: .btn declares no font-size of its own. */
+  /* The buttons inherit this: .pu-btn declares no font-size of its own. */
   font-size: var(--pagination-font-size);
 
   /* 1 and 10 get the same digit width, so the row holds still between pages. */
@@ -99,7 +99,7 @@ VARIABLES
   }
 
   /*
-   * Reaching through the <li> puts this one step above .btn.sm and
+   * Reaching through the <li> puts this one step above .pu-btn.sm and
    * its siblings, so the size on the list wins if a button also
    * carries one. Only the two things the row decides are set here —
    * how narrow a cell may get, and its corners. The button keeps
@@ -108,7 +108,7 @@ VARIABLES
    * The cell size is in em, so it follows the inherited font-size
    * instead of needing a value per size class.
    */
-  & > li > .btn {
+  & > li > .pu-btn {
     min-inline-size: var(--pagination-cell-size);
 
     border-radius: var(--pagination-radius);
@@ -116,13 +116,13 @@ VARIABLES
 
   /*
    * A floor, not the mechanism: the fill normally comes from the
-   * current cell being a plain .btn. This keeps the mark visible in a
+   * current cell being a plain .pu-btn. This keeps the mark visible in a
    * row built entirely from ghosts, and matches :hover as well
-   * because .btn.ghost:hover outweighs a plain attribute selector and
+   * because .pu-btn.ghost:hover outweighs a plain attribute selector and
    * would otherwise wash it off under the pointer. The current page
    * is where you already are — it does not answer to hover.
    */
-  & > li > .btn[aria-current="page"] {
+  & > li > .pu-btn[aria-current="page"] {
     background-color: var(--color-primary);
     color: var(--color-neutral-100);
 

@@ -45,7 +45,7 @@ ATTRIBUTES:
 - data-marker="start" → the marker leads the row instead of closing it
 - data-marker="none"  → we draw no marker at all
   (The two-icon swap and its motion now come from Animations/swap.css, which
-   this file imports. Put data-motion on the .swap slot, not here.)
+   this file imports. Put data-motion on the .pu-swap slot, not here.)
 
 SIZE:  sm · md · lg   (md is the default; the key alone is already md)
 SHAPE: sharp · smooth · rounded
@@ -53,7 +53,7 @@ SHAPE: sharp · smooth · rounded
 PARTS:
 - .collapsible-marker → your own icon, inside the <summary>. Ours stands down
   on sight, and yours inherits the size, placement, rotation and timing.
-- Add .swap for two icons, one per state. That slot and its motion are
+- Add .pu-swap for two icons, one per state. That slot and its motion are
   Animations/swap.css — see that file. [open] on the <details> is what flips
   it, with no wiring needed here.
 
@@ -74,7 +74,7 @@ This file is one panel and knows nothing about its neighbours.
 */
 /* ----------------------------------------------------- */
 
-.collapsible {
+.pu-collapsible {
   /* VARIABLES */
 
   --collapsible-font-size: var(--font-size-md);
@@ -299,10 +299,10 @@ This file is one panel and knows nothing about its neighbours.
   }
 
   &[open] {
-    /* The single-icon slot turns. A .swap slot does not — the icons inside it
+    /* The single-icon slot turns. A .pu-swap slot does not — the icons inside it
        do the moving, or the pair would cross while the frame spun. */
     & > summary::after,
-    & > summary .collapsible-marker:not(.swap) {
+    & > summary .collapsible-marker:not(.pu-swap) {
       rotate: var(--collapsible-marker-rotation-open);
     }
 

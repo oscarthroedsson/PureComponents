@@ -7,7 +7,7 @@
 
      <section class="pc-demo" data-title="Sizes">
        <template>
-         <button class="btn sm">Small</button>
+         <button class="pu-btn sm">Small</button>
        </template>
      </section>
 

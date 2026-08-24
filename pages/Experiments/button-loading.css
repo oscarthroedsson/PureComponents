@@ -3,10 +3,10 @@
 LOADING & SKELETON — experiment
 
 States are driven by attributes, never classes. Everything is nested
-inside .btn, so the effect cannot reach a non-button.
+inside .pu-btn, so the effect cannot reach a non-button.
 
-  <button class="btn md" aria-busy="true" disabled>Saving…</button>
-  <button class="btn md" aria-busy="true" data-skeleton disabled>Saving…</button>
+  <button class="pu-btn md" aria-busy="true" disabled>Saving…</button>
+  <button class="pu-btn md" aria-busy="true" data-skeleton disabled>Saving…</button>
 
 aria-busy is the platform's own word for "this is working". It is an
 enumerated string, not an HTML boolean, so it needs the literal ="true";
@@ -18,7 +18,7 @@ CSS cannot disable anything. `disabled` stays the consumer's job.
 /* ----------------------------------------------------- */
 
 /* ========= Keyframes =========
-   Must sit outside .btn. @keyframes defines a globally scoped name, and
+   Must sit outside .pu-btn. @keyframes defines a globally scoped name, and
    nesting it inside a style rule makes the parser drop it silently — the
    animation name is then never registered and nothing moves. */
 
@@ -33,7 +33,7 @@ CSS cannot disable anything. `disabled` stays the consumer's job.
 
 /* ========= Base Styling ========= */
 
-.btn {
+.pu-btn {
   /* ---- shared by both states ---- */
   &[aria-busy="true"] {
     --sweep-color: rgb(255 255 255 / 0.5);

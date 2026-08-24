@@ -23,13 +23,13 @@
         to two lines, so a bare textarea is visibly not an input.
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="ta-basic">Message</label>
-          <textarea id="ta-basic" class="textarea" rows="4" placeholder="Placeholder text"></textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-basic">Message</label>
+          <textarea id="ta-basic" class="pu-textarea" rows="4" placeholder="Placeholder text"></textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-norows">No rows attribute</label>
-          <textarea id="ta-norows" class="textarea"></textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-norows">No rows attribute</label>
+          <textarea id="ta-norows" class="pu-textarea"></textarea>
         </div>
       </template>
     </section>
@@ -40,17 +40,17 @@
         set; the padding and the height floor are in <code>em</code> and follow it.
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="ta-sm">Small</label>
-          <textarea id="ta-sm" class="textarea sm" rows="3">Small</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-sm">Small</label>
+          <textarea id="ta-sm" class="pu-textarea sm" rows="3">Small</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-md">Medium</label>
-          <textarea id="ta-md" class="textarea md" rows="3">Medium</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-md">Medium</label>
+          <textarea id="ta-md" class="pu-textarea md" rows="3">Medium</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-lg">Large</label>
-          <textarea id="ta-lg" class="textarea lg" rows="3">Large</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-lg">Large</label>
+          <textarea id="ta-lg" class="pu-textarea lg" rows="3">Large</textarea>
         </div>
       </template>
     </section>
@@ -58,17 +58,17 @@
     <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">Same three shapes as every other control, from the same channel.</p>
       <template>
-        <div class="field">
-          <label class="label" for="ta-sharp">Sharp</label>
-          <textarea id="ta-sharp" class="textarea sharp" rows="2">sharp</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-sharp">Sharp</label>
+          <textarea id="ta-sharp" class="pu-textarea sharp" rows="2">sharp</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-smooth">Smooth</label>
-          <textarea id="ta-smooth" class="textarea smooth" rows="2">smooth</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-smooth">Smooth</label>
+          <textarea id="ta-smooth" class="pu-textarea smooth" rows="2">smooth</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-rounded">Rounded</label>
-          <textarea id="ta-rounded" class="textarea rounded" rows="2">rounded</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-rounded">Rounded</label>
+          <textarea id="ta-rounded" class="pu-textarea rounded" rows="2">rounded</textarea>
         </div>
       </template>
     </section>
@@ -83,13 +83,13 @@
         <code>rows</code> height, which is why the attribute stays on the element.
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="ta-grow">Grows without limit</label>
-          <textarea id="ta-grow" class="textarea" data-sizing="content" rows="2">Type another line.</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-grow">Grows without limit</label>
+          <textarea id="ta-grow" class="pu-textarea" data-sizing="content" rows="2">Type another line.</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-grow-max">Stops at 8rem</label>
-          <textarea id="ta-grow-max" class="textarea" data-sizing="content" rows="2"
+        <div class="pu-field">
+          <label class="pu-label" for="ta-grow-max">Stops at 8rem</label>
+          <textarea id="ta-grow-max" class="pu-textarea" data-sizing="content" rows="2"
                     style="--textarea-max-block-size: 8rem">Type until it stops.</textarea>
         </div>
       </template>
@@ -103,47 +103,47 @@
         needs to be able to make the box bigger (1.4.4).
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="ta-resize-v">Vertical — the default</label>
-          <textarea id="ta-resize-v" class="textarea" rows="2">Drag the corner.</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-resize-v">Vertical — the default</label>
+          <textarea id="ta-resize-v" class="pu-textarea" rows="2">Drag the corner.</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-resize-n">None</label>
-          <textarea id="ta-resize-n" class="textarea" data-resize="none" rows="2">Nothing to drag.</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-resize-n">None</label>
+          <textarea id="ta-resize-n" class="pu-textarea" data-resize="none" rows="2">Nothing to drag.</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-resize-b">Both</label>
-          <textarea id="ta-resize-b" class="textarea" data-resize="both" rows="2">Drag either way.</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-resize-b">Both</label>
+          <textarea id="ta-resize-b" class="pu-textarea" data-resize="both" rows="2">Drag either way.</textarea>
         </div>
       </template>
     </section>
 
     <section class="pc-demo" id="states" data-title="States" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
-        The same states as <code>.input</code>, drawn the same way. A read-only field is not
+        The same states as <code>.pu-input</code>, drawn the same way. A read-only field is not
         disabled: it takes focus, its text can be copied, and it is submitted. Only the cursor
         separates them.
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="ta-normal">Normal</label>
-          <textarea id="ta-normal" class="textarea" rows="2">Normal</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-normal">Normal</label>
+          <textarea id="ta-normal" class="pu-textarea" rows="2">Normal</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-readonly">Read only</label>
-          <textarea id="ta-readonly" class="textarea" rows="2" readonly>Read only</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-readonly">Read only</label>
+          <textarea id="ta-readonly" class="pu-textarea" rows="2" readonly>Read only</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-disabled">Disabled</label>
-          <textarea id="ta-disabled" class="textarea" rows="2" disabled>Disabled</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-disabled">Disabled</label>
+          <textarea id="ta-disabled" class="pu-textarea" rows="2" disabled>Disabled</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-invalid">Invalid</label>
-          <textarea id="ta-invalid" class="textarea" rows="2" aria-invalid="true">Wrong</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-invalid">Invalid</label>
+          <textarea id="ta-invalid" class="pu-textarea" rows="2" aria-invalid="true">Wrong</textarea>
         </div>
-        <div class="field">
-          <label class="label" for="ta-ghost">Ghost</label>
-          <textarea id="ta-ghost" class="textarea ghost" rows="2">No fill, no border, same measurements.</textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-ghost">Ghost</label>
+          <textarea id="ta-ghost" class="pu-textarea ghost" rows="2">No fill, no border, same measurements.</textarea>
         </div>
       </template>
     </section>
@@ -159,52 +159,52 @@
         Zod, Yup and React Hook Form, which set no native constraints at all.
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="ta-hint">With a hint</label>
-          <p class="field-hint" id="ta-hint-text">Markdown is not rendered.</p>
-          <textarea id="ta-hint" class="textarea" rows="3" aria-describedby="ta-hint-text"></textarea>
+        <div class="pu-field">
+          <label class="pu-label" for="ta-hint">With a hint</label>
+          <p class="pu-field-hint" id="ta-hint-text">Markdown is not rendered.</p>
+          <textarea id="ta-hint" class="pu-textarea" rows="3" aria-describedby="ta-hint-text"></textarea>
         </div>
 
-        <div class="field">
-          <label class="label" for="ta-reserved">Valid — the row is reserved, not shown</label>
-          <p class="field-hint" id="ta-reserved-hint">Nothing has gone wrong yet.</p>
-          <textarea id="ta-reserved" class="textarea" rows="3"
+        <div class="pu-field">
+          <label class="pu-label" for="ta-reserved">Valid — the row is reserved, not shown</label>
+          <p class="pu-field-hint" id="ta-reserved-hint">Nothing has gone wrong yet.</p>
+          <textarea id="ta-reserved" class="pu-textarea" rows="3"
                     aria-describedby="ta-reserved-hint ta-reserved-error">Fine.</textarea>
-          <p class="field-error" id="ta-reserved-error">This message is not showing.</p>
+          <p class="pu-field-error" id="ta-reserved-error">This message is not showing.</p>
         </div>
 
-        <div class="field">
-          <label class="label" for="ta-error">Invalid — the same field, one attribute later</label>
-          <p class="field-hint" id="ta-error-hint">Nothing has gone wrong yet.</p>
-          <textarea id="ta-error" class="textarea" rows="3" aria-invalid="true"
+        <div class="pu-field">
+          <label class="pu-label" for="ta-error">Invalid — the same field, one attribute later</label>
+          <p class="pu-field-hint" id="ta-error-hint">Nothing has gone wrong yet.</p>
+          <textarea id="ta-error" class="pu-textarea" rows="3" aria-invalid="true"
                     aria-describedby="ta-error-hint ta-error-msg">Too short.</textarea>
-          <p class="field-error" id="ta-error-msg">Tell us at least a sentence.</p>
+          <p class="pu-field-error" id="ta-error-msg">Tell us at least a sentence.</p>
         </div>
 
-        <div class="field">
-          <label class="label" for="ta-native">Native validation — type one character, then tab out</label>
-          <p class="field-hint" id="ta-native-hint">Required, and at least 20 characters.</p>
-          <textarea id="ta-native" class="textarea" rows="3" required minlength="20"
+        <div class="pu-field">
+          <label class="pu-label" for="ta-native">Native validation — type one character, then tab out</label>
+          <p class="pu-field-hint" id="ta-native-hint">Required, and at least 20 characters.</p>
+          <textarea id="ta-native" class="pu-textarea" rows="3" required minlength="20"
                     aria-describedby="ta-native-hint ta-native-msg"></textarea>
-          <p class="field-error" id="ta-native-msg">That is not long enough yet.</p>
+          <p class="pu-field-error" id="ta-native-msg">That is not long enough yet.</p>
         </div>
       </template>
     </section>
 
     <section class="pc-demo" id="together" data-title="Beside an input" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
-        The whole point of the shared channel: one class on the <code>.form</code> retunes both
+        The whole point of the shared channel: one class on the <code>.pu-form</code> retunes both
         controls, and they stay the same field with a different number of lines.
       </p>
       <template>
-        <form class="form lg rounded">
-          <div class="field">
-            <label class="label" for="ta-subject">Subject</label>
-            <input id="ta-subject" class="input" type="text" value="Same box" />
+        <form class="pu-form lg rounded">
+          <div class="pu-field">
+            <label class="pu-label" for="ta-subject">Subject</label>
+            <input id="ta-subject" class="pu-input" type="text" value="Same box" />
           </div>
-          <div class="field">
-            <label class="label" for="ta-body">Message</label>
-            <textarea id="ta-body" class="textarea" rows="3">Same box, more lines.</textarea>
+          <div class="pu-field">
+            <label class="pu-label" for="ta-body">Message</label>
+            <textarea id="ta-body" class="pu-textarea" rows="3">Same box, more lines.</textarea>
           </div>
         </form>
       </template>

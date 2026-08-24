@@ -1,10 +1,10 @@
-a.anchor-base {
+a.pu-anchor-base {
   position: relative; /* Sätter position till relativ för att kunna använda ::before */
   color: var(--primary-link); /* Färg på länken */
   text-decoration: none; /* Tar bort standard understrykning */
 }
 
-a.anchor-base::before {
+a.pu-anchor-base::before {
   content: "";
   position: absolute;
 
@@ -18,6 +18,6 @@ a.anchor-base::before {
   transition: width 0.3s ease-in-out;
 }
 
-a.anchor-base:hover::before {
+a.pu-anchor-base:hover::before {
   width: 100% !important;
 }

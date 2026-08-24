@@ -28,7 +28,7 @@ USAGE:
   </nav>
 */
 
-.nav {
+.pu-nav {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -130,7 +130,7 @@ USAGE:
 }
 
 /* Submenu navigation */
-.nav-submenu {
+.pu-nav-submenu {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -141,8 +141,8 @@ USAGE:
   padding-left: var(--spacing-75);
 
   /* Show submenu when parent has aria-expanded="true" */
-  .nav > li[aria-expanded="true"] > &,
-  .nav > li:has(> a[aria-expanded="true"]) > & {
+  .pu-nav > li[aria-expanded="true"] > &,
+  .pu-nav > li:has(> a[aria-expanded="true"]) > & {
     display: flex;
   }
 
@@ -159,7 +159,7 @@ USAGE:
 }
 
 /* Mobile menu toggle button */
-.nav-toggle {
+.pu-nav-toggle {
   display: none;
   background: none;
   border: none;
@@ -192,11 +192,11 @@ USAGE:
 
 /* Responsive: Mobile menu */
 @media (max-width: 768px) {
-  .nav-toggle {
+  .pu-nav-toggle {
     display: block;
   }
 
-  .nav {
+  .pu-nav {
     display: none;
     position: absolute;
     top: 100%;

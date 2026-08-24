@@ -5,7 +5,7 @@ Textarea — the box when the text runs to more than one line.
   <textarea class="textarea lg rounded" rows="6"></textarea>
   <textarea class="textarea" data-sizing="content"></textarea>
 
-The same box as .input, from the same --form-* channel, so a textarea and an
+The same box as .pu-input, from the same --form-* channel, so a textarea and an
 input in one form are the same field with a different number of lines. What
 is written here is only what having more than one line changes: how tall it
 starts, whether it can be dragged, and whether it grows on its own.
@@ -37,9 +37,9 @@ That is why it is opt-in and why rows stays on the element.
 
 NOT HERE
 
-Icons. .input-group centres what it holds against a box one line tall, and
+Icons. .pu-input-group centres what it holds against a box one line tall, and
 against six lines it would float in the middle of the text. A mark on a
-textarea belongs above it or below it, which is .field's business.
+textarea belongs above it or below it, which is .pu-field's business.
 
 A character counter. It is content, not styling — and it has to be announced
 politely, which is aria-live and markup, not CSS.
@@ -71,7 +71,7 @@ ACCESSIBILITY REQUIREMENTS:
 
 SIZE:  sm · md (default) · lg
   A leaf, so a size class rewrites only this control's own variables. To
-  resize a whole form or group, put the class on .form, .fieldset or .field.
+  resize a whole form or group, put the class on .pu-form, .pu-fieldset or .pu-field.
 
 SHAPE: sharp · smooth (default) · rounded
   rounded is capped — see --textarea-radius-max. A textarea is tall, and an
@@ -82,7 +82,7 @@ SHAPE: sharp · smooth (default) · rounded
 VARIANT:
   (none)   a filled box with a border. The default.
   ghost    fill and border dropped, every measurement kept. Same meaning as
-           .ghost on .input, .btn and .badge.
+           .ghost on .pu-input, .pu-btn and .pu-badge.
 
 RESIZE: data-resize="vertical | none | both"
   vertical is the default and is not declared — the browser already resizes
@@ -105,9 +105,9 @@ VARIABLES
   --textarea-radius-max         the ceiling the radius is clamped to
 */
 
-.textarea {
+.pu-textarea {
   /* 1. VARIABLES — each one reads the channel, with its own default as the
-     fallback so a bare .textarea works with no .form around it. Never
+     fallback so a bare .pu-textarea works with no .pu-form around it. Never
      declare a --form-* variable here; that would shadow the group's value. */
   --textarea-font-size: var(--form-font-size, var(--font-size-md));
   --textarea-padding-block: var(--form-padding-block, 0.5em);
@@ -117,13 +117,13 @@ VARIABLES
   /* THE CAP.
 
      border-radius is resolved against the box, so --radius-rounded's 999px
-     means "half of whatever this is". On a one-line .input that is a pill,
+     means "half of whatever this is". On a one-line .pu-input that is a pill,
      which is the point. On a six-row textarea it is a 60px arc at each
      corner and the field stops looking like a field.
 
      So the radius is capped at the one value that is not arbitrary: half
      the height of a single-line control at this scale — the same figure the
-     .input beside it resolves its own pill to. A rounded textarea and a
+     .pu-input beside it resolves its own pill to. A rounded textarea and a
      rounded input then carry the same corner, and the form reads as one
      set of controls instead of two.
 
@@ -145,7 +145,7 @@ VARIABLES
   --textarea-color: var(--form-color, var(--color-neutral-900));
   --textarea-placeholder-color: var(--color-neutral-500);
 
-  /* The same as .input's. A paragraph could argue for looser, but the only
+  /* The same as .pu-input's. A paragraph could argue for looser, but the only
      line-height token in main.css is --line-height-base, and inventing a
      second one here would put a value in a component that belongs in the
      token file. The variable is exposed, so a consumer who wants prose
@@ -154,7 +154,7 @@ VARIABLES
 
   /* A floor, not a height. rows decides, and this only catches the case
      where rows is absent — two lines, so a bare textarea is visibly not an
-     input. Derived the same way .input derives its own, so the two sit on
+     input. Derived the same way .pu-input derives its own, so the two sit on
      the same grid. */
   --textarea-min-block-size: calc(
     2lh + (var(--textarea-padding-block) * 2) +
@@ -183,7 +183,7 @@ VARIABLES
   background-color: var(--textarea-surface);
   border: var(--textarea-border-width) solid var(--textarea-border-color);
   /* Capped here rather than in the shape blocks, so every route in is
-     covered: the class, an inherited --form-radius from a .form.rounded, and
+     covered: the class, an inherited --form-radius from a .pu-form.rounded, and
      a --textarea-radius set inline by a consumer. */
   border-radius: min(var(--textarea-radius), var(--textarea-radius-max));
   padding-block: var(--textarea-padding-block);

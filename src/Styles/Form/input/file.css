@@ -7,7 +7,7 @@ USAGE:
   <input class="file lg rounded" type="file" accept="image/*" multiple>
   <input class="file ghost" type="file">
 
-The box comes from the --form-* channel, same as .input and .select, so a
+The box comes from the --form-* channel, same as .pu-input and .pu-select, so a
 file field standing in a form is the same field with different contents.
 See form.css for how the channel works.
 
@@ -43,16 +43,16 @@ It is therefore drawn smaller and quieter than the button — 0.9 of the field's
 size, and --color-neutral-600 — because in both readings it is the secondary
 half of the control: the button is what you operate, the name is what it
 reports back. And it is quieted only to 600, not to the --color-neutral-500
-that .input gives its placeholder, because a placeholder is decoration a
+that .pu-input gives its placeholder, because a placeholder is decoration a
 consumer is told not to rely on while a file name is content. 500 measures
 4.34:1 on --color-neutral-100 and fails 1.4.3; 600 measures 6.92:1.
 
 The size is written as a fraction of --file-font-size rather than an em: an em
-would resolve against the PARENT's font size, so a field inside a .field with
+would resolve against the PARENT's font size, so a field inside a .pu-field with
 a size of its own would get a name scaled from the wrong number.
 
 Which leaves one thing to protect. The line box has to keep the height it
-would have had at full size, or the field shrinks below .input and the family
+would have had at full size, or the field shrinks below .pu-input and the family
 stops lining up. So --file-line-height is resolved against --file-font-size
 explicitly instead of being left as a ratio: 1lh stays 21px at md however
 small the name is drawn, --file-min-block-size is unaffected, and the button —
@@ -71,10 +71,10 @@ THE BUTTON CARRIES THE HEIGHT, AND THAT IS WHY IT REACHES THE EDGES
 
 The field declares no block padding at all. The button declares it instead, so
 the button fills the box's inner height exactly and the field comes out at the
-button's height plus its own border — the same number .input resolves to. A
-file field and a text field in one .field are the same height, and neither was
+button's height plus its own border — the same number .pu-input resolves to. A
+file field and a text field in one .pu-field are the same height, and neither was
 told what that height is. Measured: 32 / 37 / 42px at sm / md / lg, against
-.input's 32 / 37 / 42.
+.pu-input's 32 / 37 / 42.
 
 Not a percentage height on the button. The pseudo-element resolves percentages
 against a box it does not own, and every engine has its own idea of what that
@@ -116,7 +116,7 @@ ACCESSIBILITY REQUIREMENTS:
 - The file name is content, not a placeholder, so it owes 1.4.3 the full
   4.5:1 — and at 0.9 of the field's size it is nowhere near the 18.66px that
   would let it off at 3:1. --color-neutral-600 measures 6.92:1 on
-  --color-neutral-100. --color-neutral-500, which .input uses for its
+  --color-neutral-100. --color-neutral-500, which .pu-input uses for its
   placeholder, measures 4.34:1 there and is not available to this text.
 - The divider between button and text is the border's colour, not the surface
   difference. --color-neutral-200 on --color-neutral-100 measures well under
@@ -128,7 +128,7 @@ ACCESSIBILITY REQUIREMENTS:
 - readonly does not apply. A file input matches :read-only whether or not the
   attribute is present, because it is never editable in the sense the
   pseudo-class means — so :read-only is useless as a condition here and, worse,
-  a copy of .input's `:hover:not(:disabled, :read-only)` would silently
+  a copy of .pu-input's `:hover:not(:disabled, :read-only)` would silently
   cancel hover altogether. Locking a chosen file is `disabled`.
 - capture="environment" opens the camera instead of the file browser on a
   phone. It changes what the control is, not how it looks, and belongs to the
@@ -140,13 +140,13 @@ STATES: :hover · :active · :disabled
 
 SIZE:  sm · md (default) · lg
   A leaf, so a size class rewrites only this control. To resize a whole form
-  or group, put the class on .form, .fieldset or .field.
+  or group, put the class on .pu-form, .pu-fieldset or .pu-field.
 
 SHAPE: sharp · smooth (default) · rounded
   The button's leading corners follow the box's inner radius, so a rounded
   field ends in a half-circle that meets the border exactly.
 
-VARIANT: ghost — transparent surface and border, as on .input. The button
+VARIANT: ghost — transparent surface and border, as on .pu-input. The button
   keeps its own, because ghost removes the FIELD's box, not the control
   inside it; it rounds all four of the button's corners, since there is no
   longer an edge for the flat ones to sit against.
@@ -156,11 +156,11 @@ VARIABLES
   --file-name-font-size     the file name, drawn smaller than the button
   --file-name-color         and quieter. A plain token, not the --form-color
                             channel: a leaf's fallback is only reached when no
-                            .form is above it, so reading the channel here
+                            .pu-form is above it, so reading the channel here
                             would give one colour inside a form and another
                             outside it
   --file-padding-block · --file-padding-inline
-  --file-padding-inline-end the end edge on its own, so .input-group can grow
+  --file-padding-inline-end the end edge on its own, so .pu-input-group can grow
                             it for an icon. No start counterpart — the button
                             occupies that edge
   --file-radius · --file-border-width · --file-border-color
@@ -172,7 +172,7 @@ VARIABLES
                             ghost raises it to --file-button-radius
   --file-button-gap         between the button and the file name
 
-ICONS: .input-group, end slot only — the rules are at the foot of this file,
+ICONS: .pu-input-group, end slot only — the rules are at the foot of this file,
   with the reason the start slot cannot work here.
 
 NOT HERE:
@@ -192,19 +192,19 @@ stays at full strength while the field is disabled, and the end slot below has
 no such problem — the icon there is a real element drawing in currentColor.
 */
 
-.file {
+.pu-file {
   /* 1. VARIABLES */
   --file-font-size: var(--form-font-size, var(--font-size-md));
   --file-line-height: var(--line-height-base);
   --file-surface: var(--form-surface, var(--color-neutral-100));
 
   /* The file name. A fraction of --file-font-size, not an em: an em resolves
-     against the parent's size, so a field in a .field carrying a size of its
+     against the parent's size, so a field in a .pu-field carrying a size of its
      own would scale the name off the wrong number. */
   --file-name-font-size: calc(var(--file-font-size) * 0.9);
 
   /* A plain token on purpose, NOT var(--form-color, …). form.css declares
-     --form-color, so a leaf's fallback is only ever reached when no .form is
+     --form-color, so a leaf's fallback is only ever reached when no .pu-form is
      above it — reading the channel here would give a quiet name outside a
      form and a full-strength one inside it. See the header. */
   --file-name-color: var(--color-neutral-600);
@@ -212,8 +212,8 @@ no such problem — the icon there is a real element drawing in currentColor.
   --file-padding-block: var(--form-padding-block, 0.5em);
   --file-padding-inline: var(--form-padding-inline, 0.75em);
 
-  /* Its own variable so .input-group can grow it for an end-slot icon, the
-     same way .input carries --input-padding-inline-end. There is no start
+  /* Its own variable so .pu-input-group can grow it for an end-slot icon, the
+     same way .pu-input carries --input-padding-inline-end. There is no start
      counterpart: the button occupies that edge. */
   --file-padding-inline-end: var(--file-padding-inline);
 
@@ -261,7 +261,7 @@ no such problem — the icon there is a real element drawing in currentColor.
   /* Resolved against --file-font-size rather than left as a ratio, so the line
      box keeps the height it would have had at full size. Without this, drawing
      the name smaller would shrink 1lh, and with it --file-min-block-size, and
-     the field would stand lower than the .input beside it. */
+     the field would stand lower than the .pu-input beside it. */
   line-height: calc(var(--file-font-size) * var(--file-line-height));
 
   background-color: var(--file-surface);
@@ -363,7 +363,7 @@ no such problem — the icon there is a real element drawing in currentColor.
      invisible. */
 
   /* No :not(:read-only) here, deliberately, and it is not an oversight: a
-     file input matches :read-only at all times, so copying .input's guard
+     file input matches :read-only at all times, so copying .pu-input's guard
      would mean this rule never fired. See the header. */
   &:hover:not(:disabled) {
     --file-border-color: var(--color-neutral-700);
@@ -422,7 +422,7 @@ aria-hidden while an interactive one is a real <button>.
 
 WHY ONLY THE END
 
-.input gives both edges; .select gives the start, because its chevron owns the
+.pu-input gives both edges; .pu-select gives the start, because its chevron owns the
 end. This is the mirror of the select case: the button is drawn hard against
 the start edge, so a mark placed there lands on top of it and sits over the
 browser's own label. There is no padding that can move the button out of the
@@ -436,9 +436,9 @@ warn.
 THE CLEARANCE HAS TO BE UNDONE FROM THE FILE NAME'S EM
 
 --input-group-clearance is written in em, and a custom property is substituted
-where it is USED, not where it is declared. On .input it therefore resolves
-against the control's font size. On .file that font size is the file name's,
-reduced — so taking the clearance as given yields 28.35px at md where .input
+where it is USED, not where it is declared. On .pu-input it therefore resolves
+against the control's font size. On .pu-file that font size is the file name's,
+reduced — so taking the clearance as given yields 28.35px at md where .pu-input
 gets 31.5px, and the name ends 1.35px short of the mark instead of 4.5px.
 Measured; it does not collide, it just runs tight, and it runs tightest in the
 commonest case of all, a group at the page's own size.
@@ -452,7 +452,7 @@ It is approximate in one case — an --input-group-icon-* set in absolute units,
 where the ratio is applied to a length that never shrank. The error is a few
 px of surplus padding, always in the safe direction, never a collision.
 */
-.input-group:has(> .input-icon[data-placement="end"]) > .file {
+.pu-input-group:has(> .input-icon[data-placement="end"]) > .pu-file {
   --file-padding-inline-end: calc(
     var(--input-group-clearance) *
       (var(--file-font-size) / var(--file-name-font-size))
@@ -460,8 +460,8 @@ px of surplus padding, always in the safe direction, never a collision.
 }
 
 /* A greyed-out field with a full-strength icon reads as the one part still
-   working. The same rule .input and .select each carry for themselves. */
-.input-group:has(> .file:disabled) > .input-icon {
+   working. The same rule .pu-input and .pu-select each carry for themselves. */
+.pu-input-group:has(> .pu-file:disabled) > .input-icon {
   color: var(--color-neutral-400);
   cursor: not-allowed;
 }

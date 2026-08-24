@@ -40,7 +40,7 @@
     <section class="pc-doc" id="reference" data-title="Reference">
       <p>
         The class goes on the <code>&lt;ul&gt;</code>. Every clickable cell is a
-        <code>.btn</code>, so the row has no hover, focus or disabled rules of its own — it
+        <code>.pu-btn</code>, so the row has no hover, focus or disabled rules of its own — it
         borrows the button's. Only the ellipsis is this file's.
       </p>
 
@@ -220,23 +220,23 @@
 
     <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
       <p class="pc-note">
-        The current page is a plain <code>.btn</code>, the rest are <code>.btn ghost</code> — the
+        The current page is a plain <code>.pu-btn</code>, the rest are <code>.pu-btn ghost</code> — the
         difference is made of the button's own variants, not of colours this file invents.
       </p>
       <template>
         <nav aria-label="Pagination">
-          <ul class="pagination md">
+          <ul class="pu-pagination md">
             <li>
-              <a href="#prev" class="btn ghost" aria-label="Previous page">
+              <a href="#prev" class="pu-btn ghost" aria-label="Previous page">
                 <span aria-hidden="true">‹</span>
               </a>
             </li>
-            <li><a href="#1" class="btn ghost">1</a></li>
-            <li><a href="#2" class="btn" aria-current="page">2</a></li>
-            <li><a href="#3" class="btn ghost">3</a></li>
-            <li><a href="#4" class="btn ghost">4</a></li>
+            <li><a href="#1" class="pu-btn ghost">1</a></li>
+            <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
+            <li><a href="#3" class="pu-btn ghost">3</a></li>
+            <li><a href="#4" class="pu-btn ghost">4</a></li>
             <li>
-              <a href="#next" class="btn ghost" aria-label="Next page">
+              <a href="#next" class="pu-btn ghost" aria-label="Next page">
                 <span aria-hidden="true">›</span>
               </a>
             </li>
@@ -252,21 +252,21 @@
       </p>
       <template>
         <nav aria-label="Pagination">
-          <ul class="pagination md">
+          <ul class="pu-pagination md">
             <li>
-              <a href="#prev" class="btn ghost" aria-label="Previous page">
+              <a href="#prev" class="pu-btn ghost" aria-label="Previous page">
                 <span aria-hidden="true">‹</span>
               </a>
             </li>
-            <li><a href="#1" class="btn ghost">1</a></li>
+            <li><a href="#1" class="pu-btn ghost">1</a></li>
             <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-            <li><a href="#4" class="btn ghost">4</a></li>
-            <li><a href="#5" class="btn" aria-current="page">5</a></li>
-            <li><a href="#6" class="btn ghost">6</a></li>
+            <li><a href="#4" class="pu-btn ghost">4</a></li>
+            <li><a href="#5" class="pu-btn" aria-current="page">5</a></li>
+            <li><a href="#6" class="pu-btn ghost">6</a></li>
             <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-            <li><a href="#10" class="btn ghost">10</a></li>
+            <li><a href="#10" class="pu-btn ghost">10</a></li>
             <li>
-              <a href="#next" class="btn ghost" aria-label="Next page">
+              <a href="#next" class="pu-btn ghost" aria-label="Next page">
                 <span aria-hidden="true">›</span>
               </a>
             </li>
@@ -291,10 +291,10 @@
         <div class="demo-row">
           <span class="demo-label">a</span>
           <nav aria-label="Pagination, links">
-            <ul class="pagination md">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
-              <li><a href="#3" class="btn ghost">3</a></li>
+            <ul class="pu-pagination md">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
+              <li><a href="#3" class="pu-btn ghost">3</a></li>
             </ul>
           </nav>
         </div>
@@ -302,10 +302,10 @@
         <div class="demo-row">
           <span class="demo-label">button</span>
           <nav aria-label="Pagination, buttons">
-            <ul class="pagination md">
-              <li><button type="button" class="btn ghost">1</button></li>
-              <li><button type="button" class="btn" aria-current="page">2</button></li>
-              <li><button type="button" class="btn ghost">3</button></li>
+            <ul class="pu-pagination md">
+              <li><button type="button" class="pu-btn ghost">1</button></li>
+              <li><button type="button" class="pu-btn" aria-current="page">2</button></li>
+              <li><button type="button" class="pu-btn ghost">3</button></li>
             </ul>
           </nav>
         </div>
@@ -326,11 +326,11 @@
         <div class="demo-row">
           <span class="demo-label">sm</span>
           <nav aria-label="Pagination, small">
-            <ul class="pagination sm">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
+            <ul class="pu-pagination sm">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
               <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-              <li><a href="#10" class="btn ghost">10</a></li>
+              <li><a href="#10" class="pu-btn ghost">10</a></li>
             </ul>
           </nav>
         </div>
@@ -338,11 +338,11 @@
         <div class="demo-row">
           <span class="demo-label">md</span>
           <nav aria-label="Pagination, medium">
-            <ul class="pagination md">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
+            <ul class="pu-pagination md">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
               <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-              <li><a href="#10" class="btn ghost">10</a></li>
+              <li><a href="#10" class="pu-btn ghost">10</a></li>
             </ul>
           </nav>
         </div>
@@ -350,11 +350,11 @@
         <div class="demo-row">
           <span class="demo-label">lg</span>
           <nav aria-label="Pagination, large">
-            <ul class="pagination lg">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
+            <ul class="pu-pagination lg">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
               <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-              <li><a href="#10" class="btn ghost">10</a></li>
+              <li><a href="#10" class="pu-btn ghost">10</a></li>
             </ul>
           </nav>
         </div>
@@ -375,10 +375,10 @@
         <div class="demo-row">
           <span class="demo-label">sharp</span>
           <nav aria-label="Pagination, sharp">
-            <ul class="pagination md sharp">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
-              <li><a href="#3" class="btn ghost">3</a></li>
+            <ul class="pu-pagination md sharp">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
+              <li><a href="#3" class="pu-btn ghost">3</a></li>
             </ul>
           </nav>
         </div>
@@ -386,10 +386,10 @@
         <div class="demo-row">
           <span class="demo-label">smooth</span>
           <nav aria-label="Pagination, smooth">
-            <ul class="pagination md smooth">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
-              <li><a href="#3" class="btn ghost">3</a></li>
+            <ul class="pu-pagination md smooth">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
+              <li><a href="#3" class="pu-btn ghost">3</a></li>
             </ul>
           </nav>
         </div>
@@ -397,10 +397,10 @@
         <div class="demo-row">
           <span class="demo-label">rounded</span>
           <nav aria-label="Pagination, rounded">
-            <ul class="pagination md rounded">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
-              <li><a href="#3" class="btn ghost">3</a></li>
+            <ul class="pu-pagination md rounded">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
+              <li><a href="#3" class="pu-btn ghost">3</a></li>
             </ul>
           </nav>
         </div>
@@ -422,10 +422,10 @@
         <div class="demo-row">
           <span class="demo-label">current</span>
           <nav aria-label="Pagination, current page">
-            <ul class="pagination md">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
-              <li><a href="#3" class="btn ghost">3</a></li>
+            <ul class="pu-pagination md">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
+              <li><a href="#3" class="pu-btn ghost">3</a></li>
             </ul>
           </nav>
         </div>
@@ -433,16 +433,16 @@
         <div class="demo-row">
           <span class="demo-label">disabled end</span>
           <nav aria-label="Pagination, first page">
-            <ul class="pagination md">
+            <ul class="pu-pagination md">
               <li>
-                <a class="btn ghost" aria-disabled="true" aria-label="Previous page">
+                <a class="pu-btn ghost" aria-disabled="true" aria-label="Previous page">
                   <span aria-hidden="true">‹</span>
                 </a>
               </li>
-              <li><a href="#1" class="btn" aria-current="page">1</a></li>
-              <li><a href="#2" class="btn ghost">2</a></li>
+              <li><a href="#1" class="pu-btn" aria-current="page">1</a></li>
+              <li><a href="#2" class="pu-btn ghost">2</a></li>
               <li>
-                <a href="#next" class="btn ghost" aria-label="Next page">
+                <a href="#next" class="pu-btn ghost" aria-label="Next page">
                   <span aria-hidden="true">›</span>
                 </a>
               </li>
@@ -453,14 +453,14 @@
         <div class="demo-row">
           <span class="demo-label">disabled button</span>
           <nav aria-label="Pagination, first page, buttons">
-            <ul class="pagination md">
+            <ul class="pu-pagination md">
               <li>
-                <button type="button" class="btn ghost" disabled aria-label="Previous page">
+                <button type="button" class="pu-btn ghost" disabled aria-label="Previous page">
                   <span aria-hidden="true">‹</span>
                 </button>
               </li>
-              <li><button type="button" class="btn" aria-current="page">1</button></li>
-              <li><button type="button" class="btn ghost">2</button></li>
+              <li><button type="button" class="pu-btn" aria-current="page">1</button></li>
+              <li><button type="button" class="pu-btn ghost">2</button></li>
             </ul>
           </nav>
         </div>
@@ -468,10 +468,10 @@
         <div class="demo-row">
           <span class="demo-label">loading</span>
           <nav aria-label="Pagination, loading">
-            <ul class="pagination md loading" aria-busy="true">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
-              <li><a href="#3" class="btn ghost">3</a></li>
+            <ul class="pu-pagination md pu-loading" aria-busy="true">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
+              <li><a href="#3" class="pu-btn ghost">3</a></li>
             </ul>
           </nav>
         </div>
@@ -492,11 +492,11 @@
         <div class="demo-row">
           <span class="demo-label">default</span>
           <nav aria-label="Pagination, default">
-            <ul class="pagination md">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
+            <ul class="pu-pagination md">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
               <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-              <li><a href="#9" class="btn ghost">9</a></li>
+              <li><a href="#9" class="pu-btn ghost">9</a></li>
             </ul>
           </nav>
         </div>
@@ -504,11 +504,11 @@
         <div class="demo-row">
           <span class="demo-label">wider gap</span>
           <nav aria-label="Pagination, wider gap">
-            <ul class="pagination md" style="--pagination-gap: var(--spacing-100)">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
+            <ul class="pu-pagination md" style="--pagination-gap: var(--spacing-100)">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
               <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-              <li><a href="#9" class="btn ghost">9</a></li>
+              <li><a href="#9" class="pu-btn ghost">9</a></li>
             </ul>
           </nav>
         </div>
@@ -516,11 +516,11 @@
         <div class="demo-row">
           <span class="demo-label">square cells</span>
           <nav aria-label="Pagination, square cells">
-            <ul class="pagination md" style="--pagination-cell-size: 3em; --pagination-radius: 0">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
+            <ul class="pu-pagination md" style="--pagination-cell-size: 3em; --pagination-radius: 0">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
               <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-              <li><a href="#9" class="btn ghost">9</a></li>
+              <li><a href="#9" class="pu-btn ghost">9</a></li>
             </ul>
           </nav>
         </div>
@@ -528,11 +528,11 @@
         <div class="demo-row">
           <span class="demo-label">louder ellipsis</span>
           <nav aria-label="Pagination, louder ellipsis">
-            <ul class="pagination md" style="--pagination-muted-color: var(--color-primary)">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
+            <ul class="pu-pagination md" style="--pagination-muted-color: var(--color-primary)">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
               <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-              <li><a href="#9" class="btn ghost">9</a></li>
+              <li><a href="#9" class="pu-btn ghost">9</a></li>
             </ul>
           </nav>
         </div>

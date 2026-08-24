@@ -23,13 +23,13 @@
         the box alone is smaller than the 24×24 that WCAG 2.2 asks for, and the two together clear it.
       </p>
       <template>
-        <label class="label">
-          <input class="checkbox" type="checkbox" checked />
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" checked />
           Wrapped in the label
         </label>
         <div style="display:flex; gap:0.6rem; align-items:center">
-          <input class="checkbox" type="checkbox" id="cb-for" />
-          <label class="label" for="cb-for" style="font-weight:400">Bound with for</label>
+          <input class="pu-checkbox" type="checkbox" id="cb-for" />
+          <label class="pu-label" for="cb-for" style="font-weight:400">Bound with for</label>
         </div>
       </template>
     </section>
@@ -42,20 +42,20 @@
         third value a user can click to.
       </p>
       <template>
-        <label class="label">
-          <input class="checkbox" type="checkbox" /> Unchecked
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" /> Unchecked
         </label>
-        <label class="label">
-          <input class="checkbox" type="checkbox" checked /> Checked
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" checked /> Checked
         </label>
-        <label class="label">
-          <input class="checkbox" type="checkbox" data-indeterminate /> Indeterminate
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" data-indeterminate /> Indeterminate
         </label>
-        <label class="label">
-          <input class="checkbox" type="checkbox" disabled /> Disabled
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" disabled /> Disabled
         </label>
-        <label class="label">
-          <input class="checkbox" type="checkbox" checked disabled /> Disabled and checked
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" checked disabled /> Disabled and checked
         </label>
       </template>
     </section>
@@ -63,18 +63,18 @@
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
       <p class="pc-note">
         The box is measured in <code>em</code>, so it follows the text it sits beside — and a size
-        class on the <code>.form</code> or the <code>.fieldset</code> reaches it without this file
+        class on the <code>.pu-form</code> or the <code>.pu-fieldset</code> reaches it without this file
         knowing they exist.
       </p>
       <template>
-        <label class="label" style="font-size:var(--font-size-sm)">
-          <input class="checkbox sm" type="checkbox" checked /> Small
+        <label class="pu-label" style="font-size:var(--font-size-sm)">
+          <input class="pu-checkbox sm" type="checkbox" checked /> Small
         </label>
-        <label class="label">
-          <input class="checkbox md" type="checkbox" checked /> Medium
+        <label class="pu-label">
+          <input class="pu-checkbox md" type="checkbox" checked /> Medium
         </label>
-        <label class="label" style="font-size:var(--font-size-base)">
-          <input class="checkbox lg" type="checkbox" checked /> Large
+        <label class="pu-label" style="font-size:var(--font-size-base)">
+          <input class="pu-checkbox lg" type="checkbox" checked /> Large
         </label>
       </template>
     </section>
@@ -89,18 +89,18 @@
         same thing from the other side.
       </p>
       <template>
-        <label class="label">
-          <input class="checkbox sharp" type="checkbox" checked /> Sharp
+        <label class="pu-label">
+          <input class="pu-checkbox sharp" type="checkbox" checked /> Sharp
         </label>
-        <label class="label">
-          <input class="checkbox smooth" type="checkbox" checked /> Smooth — the default
+        <label class="pu-label">
+          <input class="pu-checkbox smooth" type="checkbox" checked /> Smooth — the default
         </label>
       </template>
     </section>
 
     <section class="pc-demo" id="hint-error" data-title="Hint and message" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
-        A single checkbox that must be ticked is a <code>.field</code> like any other: hint above,
+        A single checkbox that must be ticked is a <code>.pu-field</code> like any other: hint above,
         message below, and the message row reserved whether or not it shows so the page does not
         jump. The box turns too — the border alone is not allowed to carry it, which is why the
         message appears with it. For a group, the message belongs to the <code>&lt;fieldset&gt;</code>
@@ -108,39 +108,39 @@
         on a control, never on the group around it.
       </p>
       <template>
-        <div class="field">
-          <p class="field-hint" id="cb-terms-hint">You can withdraw consent at any time.</p>
-          <label class="label">
-            <input class="checkbox" type="checkbox" id="cb-terms" aria-describedby="cb-terms-hint" />
+        <div class="pu-field">
+          <p class="pu-field-hint" id="cb-terms-hint">You can withdraw consent at any time.</p>
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" id="cb-terms" aria-describedby="cb-terms-hint" />
             I accept the terms
           </label>
         </div>
 
-        <div class="field">
-          <p class="field-hint" id="cb-bad-hint">You can withdraw consent at any time.</p>
-          <label class="label">
-            <input class="checkbox" type="checkbox" id="cb-bad" aria-invalid="true"
+        <div class="pu-field">
+          <p class="pu-field-hint" id="cb-bad-hint">You can withdraw consent at any time.</p>
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" id="cb-bad" aria-invalid="true"
                    aria-describedby="cb-bad-hint cb-bad-msg" />
             I accept the terms
           </label>
-          <p class="field-error" id="cb-bad-msg">You have to accept the terms to continue.</p>
+          <p class="pu-field-error" id="cb-bad-msg">You have to accept the terms to continue.</p>
         </div>
 
-        <div class="field">
-          <label class="label">
-            <input class="checkbox" type="checkbox" id="cb-req" required
+        <div class="pu-field">
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" id="cb-req" required
                    aria-describedby="cb-req-msg" />
             Required — tick it, untick it, then tab out
           </label>
-          <p class="field-error" id="cb-req-msg">Native validation, no attribute set by hand.</p>
+          <p class="pu-field-error" id="cb-req-msg">Native validation, no attribute set by hand.</p>
         </div>
 
-        <fieldset class="fieldset" aria-invalid="true">
+        <fieldset class="pu-fieldset" aria-invalid="true">
           <legend>Send me</legend>
-          <p class="field-hint">At least one, please.</p>
-          <label class="label"><input class="checkbox" type="checkbox" /> Receipts</label>
-          <label class="label"><input class="checkbox" type="checkbox" /> Product news</label>
-          <p class="field-error">Pick at least one of these.</p>
+          <p class="pu-field-hint">At least one, please.</p>
+          <label class="pu-label"><input class="pu-checkbox" type="checkbox" /> Receipts</label>
+          <label class="pu-label"><input class="pu-checkbox" type="checkbox" /> Product news</label>
+          <p class="pu-field-error">Pick at least one of these.</p>
         </fieldset>
       </template>
     </section>
@@ -152,16 +152,16 @@
         five unrelated options.
       </p>
       <template>
-        <fieldset class="fieldset">
+        <fieldset class="pu-fieldset">
           <legend>Send me</legend>
-          <label class="label">
-            <input class="checkbox" type="checkbox" checked /> Receipts
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" checked /> Receipts
           </label>
-          <label class="label">
-            <input class="checkbox" type="checkbox" /> Product news
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" /> Product news
           </label>
-          <label class="label">
-            <input class="checkbox" type="checkbox" /> Someone else's news
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" /> Someone else's news
           </label>
         </fieldset>
       </template>

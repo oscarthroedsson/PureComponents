@@ -20,13 +20,13 @@
     <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
         Its own file and its own key, because a label is its own thing. It appears inside a
-        <code>.field</code>, inside a <code>.fieldset</code>, beside a checkbox, in a table cell —
+        <code>.pu-field</code>, inside a <code>.pu-fieldset</code>, beside a checkbox, in a table cell —
         and it looks the same in all of them. Nothing owns it.
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="lb-basic">Email</label>
-          <input id="lb-basic" class="input" type="email" autocomplete="email" />
+        <div class="pu-field">
+          <label class="pu-label" for="lb-basic">Email</label>
+          <input id="lb-basic" class="pu-input" type="email" autocomplete="email" />
         </div>
       </template>
     </section>
@@ -39,14 +39,14 @@
         bound to nothing looks correct in review and announces nothing.
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="lb-for">for= pointing at an id</label>
-          <input id="lb-for" class="input" type="text" />
+        <div class="pu-field">
+          <label class="pu-label" for="lb-for">for= pointing at an id</label>
+          <input id="lb-for" class="pu-input" type="text" />
         </div>
-        <div class="field">
-          <label class="label">
+        <div class="pu-field">
+          <label class="pu-label">
             The control nested inside
-            <input class="input" type="text" />
+            <input class="pu-input" type="text" />
           </label>
         </div>
       </template>
@@ -54,19 +54,19 @@
 
     <section class="pc-demo" id="no-key" data-title="Without the key" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
-        A bare <code>&lt;label&gt;</code> inside a <code>.field</code> gets nothing from us, and
+        A bare <code>&lt;label&gt;</code> inside a <code>.pu-field</code> gets nothing from us, and
         that is correct — it is the consumer's element until they say otherwise. This styling used
-        to be written as <code>.field &gt; label</code>, which reached an element carrying no key
+        to be written as <code>.pu-field &gt; label</code>, which reached an element carrying no key
         of ours. That is the one thing §4.1 exists to prevent.
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="lb-keyed">With the key</label>
-          <input id="lb-keyed" class="input" type="text" />
+        <div class="pu-field">
+          <label class="pu-label" for="lb-keyed">With the key</label>
+          <input id="lb-keyed" class="pu-input" type="text" />
         </div>
-        <div class="field">
+        <div class="pu-field">
           <label for="lb-bare">Without it — the consumer's own element</label>
-          <input id="lb-bare" class="input" type="text" />
+          <input id="lb-bare" class="pu-input" type="text" />
         </div>
       </template>
     </section>
@@ -74,26 +74,26 @@
     <section class="pc-demo" id="sizes" data-title="Sized by the group" data-stage-style="display:grid; gap:1.25rem; max-width:26rem;">
       <p class="pc-note">
         No size class of its own. The label reads <code>--form-font-size</code> like everything else
-        in the family, so <code>.form.sm</code>, <code>.fieldset.lg</code> and <code>.field.sm</code>
+        in the family, so <code>.pu-form.sm</code>, <code>.pu-fieldset.lg</code> and <code>.pu-field.sm</code>
         all reach it without this file knowing that any of them exist.
       </p>
       <template>
-        <form class="form sm" aria-label="Small">
-          <div class="field">
-            <label class="label" for="lb-sm">Small group</label>
-            <input id="lb-sm" class="input" type="text" />
+        <form class="pu-form sm" aria-label="Small">
+          <div class="pu-field">
+            <label class="pu-label" for="lb-sm">Small group</label>
+            <input id="lb-sm" class="pu-input" type="text" />
           </div>
         </form>
-        <form class="form" aria-label="Medium">
-          <div class="field">
-            <label class="label" for="lb-md">Medium group</label>
-            <input id="lb-md" class="input" type="text" />
+        <form class="pu-form" aria-label="Medium">
+          <div class="pu-field">
+            <label class="pu-label" for="lb-md">Medium group</label>
+            <input id="lb-md" class="pu-input" type="text" />
           </div>
         </form>
-        <form class="form lg" aria-label="Large">
-          <div class="field">
-            <label class="label" for="lb-lg">Large group</label>
-            <input id="lb-lg" class="input" type="text" />
+        <form class="pu-form lg" aria-label="Large">
+          <div class="pu-field">
+            <label class="pu-label" for="lb-lg">Large group</label>
+            <input id="lb-lg" class="pu-input" type="text" />
           </div>
         </form>
       </template>
@@ -103,18 +103,18 @@
       <p class="pc-note">
         A label cannot see the control it names — they are siblings, and CSS has no
         sibling-upwards selector. So the disabled case is written by whoever owns both, which is
-        <code>.field</code>. The target still carries its key, so nothing without
-        <code>.label</code> on it is touched. The disabled colour is exempt from contrast under
+        <code>.pu-field</code>. The target still carries its key, so nothing without
+        <code>.pu-label</code> on it is touched. The disabled colour is exempt from contrast under
         1.4.3, which is what makes it legitimate at 3.6:1.
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="lb-normal">Normal</label>
-          <input id="lb-normal" class="input" type="text" value="Editable" />
+        <div class="pu-field">
+          <label class="pu-label" for="lb-normal">Normal</label>
+          <input id="lb-normal" class="pu-input" type="text" value="Editable" />
         </div>
-        <div class="field">
-          <label class="label" for="lb-disabled">Disabled</label>
-          <input id="lb-disabled" class="input" type="text" value="Disabled" disabled />
+        <div class="pu-field">
+          <label class="pu-label" for="lb-disabled">Disabled</label>
+          <input id="lb-disabled" class="pu-input" type="text" value="Disabled" disabled />
         </div>
       </template>
     </section>
@@ -125,17 +125,17 @@
         container decides where it sits — which is why one file can serve all of them.
       </p>
       <template>
-        <fieldset class="fieldset">
+        <fieldset class="pu-fieldset">
           <legend>Notifications</legend>
-          <div class="field">
-            <label class="label" for="lb-cb1">
-              <input id="lb-cb1" class="checkbox" type="checkbox" checked />
+          <div class="pu-field">
+            <label class="pu-label" for="lb-cb1">
+              <input id="lb-cb1" class="pu-checkbox" type="checkbox" checked />
               Email me about replies
             </label>
           </div>
-          <div class="field">
-            <label class="label" for="lb-cb2">
-              <input id="lb-cb2" class="checkbox" type="checkbox" />
+          <div class="pu-field">
+            <label class="pu-label" for="lb-cb2">
+              <input id="lb-cb2" class="pu-checkbox" type="checkbox" />
               Email me about mentions
             </label>
           </div>
@@ -150,10 +150,10 @@
         inside the label makes the announced name a paragraph.
       </p>
       <template>
-        <div class="field">
-          <label class="label" for="lb-right">Weight</label>
-          <p class="field-hint" id="lb-right-hint">In kilograms, to one decimal.</p>
-          <input id="lb-right" class="input" type="number" aria-describedby="lb-right-hint" />
+        <div class="pu-field">
+          <label class="pu-label" for="lb-right">Weight</label>
+          <p class="pu-field-hint" id="lb-right-hint">In kilograms, to one decimal.</p>
+          <input id="lb-right" class="pu-input" type="number" aria-describedby="lb-right-hint" />
         </div>
       </template>
     </section>

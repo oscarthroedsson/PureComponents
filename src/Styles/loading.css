@@ -41,7 +41,7 @@ VARIABLES
   than it looks written down.
 */
 
-.loading {
+.pu-loading {
   /* The class alone paints nothing — aria-busy is what turns it on. */
   &[aria-busy="true"] {
     --loading-opacity: 0.55;

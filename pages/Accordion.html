@@ -166,16 +166,16 @@
         the browser, not us.
       </p>
       <template>
-        <div class="accordion md">
-          <details class="collapsible" name="faq" open>
+        <div class="pu-accordion md">
+          <details class="pu-collapsible" name="faq" open>
             <summary>How do I create an account?</summary>
             <p>Click the "Sign up" button in the top right corner and follow the steps.</p>
           </details>
-          <details class="collapsible" name="faq">
+          <details class="pu-collapsible" name="faq">
             <summary>I forgot my password. What should I do?</summary>
             <p>Use "Forgot password" on the sign-in page and follow the emailed instructions.</p>
           </details>
-          <details class="collapsible" name="faq">
+          <details class="pu-collapsible" name="faq">
             <summary>How do I update my profile?</summary>
             <p>Go to My account, then Edit profile.</p>
           </details>
@@ -189,16 +189,16 @@
         the difference — the exclusivity lives entirely in the markup.
       </p>
       <template>
-        <div class="accordion md">
-          <details class="collapsible" open>
+        <div class="pu-accordion md">
+          <details class="pu-collapsible" open>
             <summary>This one can stay open</summary>
             <p>And so can the others.</p>
           </details>
-          <details class="collapsible" open>
+          <details class="pu-collapsible" open>
             <summary>So can this one</summary>
             <p>Useful for a settings panel, where you want to compare two sections.</p>
           </details>
-          <details class="collapsible">
+          <details class="pu-collapsible">
             <summary>And this one</summary>
             <p>Independent of both.</p>
           </details>
@@ -212,16 +212,16 @@
         own card. The right look when the questions have nothing to do with each other.
       </p>
       <template>
-        <div class="accordion md separate">
-          <details class="collapsible" name="separate-demo">
+        <div class="pu-accordion md separate">
+          <details class="pu-collapsible" name="separate-demo">
             <summary>Shipping</summary>
             <p>Three to five working days.</p>
           </details>
-          <details class="collapsible" name="separate-demo">
+          <details class="pu-collapsible" name="separate-demo">
             <summary>Returns</summary>
             <p>Free within 30 days.</p>
           </details>
-          <details class="collapsible" name="separate-demo">
+          <details class="pu-collapsible" name="separate-demo">
             <summary>Warranty</summary>
             <p>Two years on everything we make.</p>
           </details>
@@ -235,32 +235,32 @@
         once per row. <code>md</code> is the default.
       </p>
       <template>
-        <div class="accordion sm">
-          <details class="collapsible" name="size-sm" open>
+        <div class="pu-accordion sm">
+          <details class="pu-collapsible" name="size-sm" open>
             <summary>Small</summary>
             <p>Tighter rows.</p>
           </details>
-          <details class="collapsible" name="size-sm">
+          <details class="pu-collapsible" name="size-sm">
             <summary>Second question</summary>
             <p>Same size, no class of its own.</p>
           </details>
         </div>
-        <div class="accordion md">
-          <details class="collapsible" name="size-md" open>
+        <div class="pu-accordion md">
+          <details class="pu-collapsible" name="size-md" open>
             <summary>Medium</summary>
             <p>The default.</p>
           </details>
-          <details class="collapsible" name="size-md">
+          <details class="pu-collapsible" name="size-md">
             <summary>Second question</summary>
             <p>Same size, no class of its own.</p>
           </details>
         </div>
-        <div class="accordion lg">
-          <details class="collapsible" name="size-lg" open>
+        <div class="pu-accordion lg">
+          <details class="pu-collapsible" name="size-lg" open>
             <summary>Large</summary>
             <p>More room to breathe.</p>
           </details>
-          <details class="collapsible" name="size-lg">
+          <details class="pu-collapsible" name="size-lg">
             <summary>Second question</summary>
             <p>Same size, no class of its own.</p>
           </details>
@@ -274,22 +274,22 @@
         block; the panels inside are square and let the group clip them.
       </p>
       <template>
-        <div class="accordion md sharp">
-          <details class="collapsible" name="shape-sharp" open>
+        <div class="pu-accordion md sharp">
+          <details class="pu-collapsible" name="shape-sharp" open>
             <summary>sharp</summary>
             <p>Square corners.</p>
           </details>
-          <details class="collapsible" name="shape-sharp">
+          <details class="pu-collapsible" name="shape-sharp">
             <summary>Second question</summary>
             <p>&nbsp;</p>
           </details>
         </div>
-        <div class="accordion md rounded">
-          <details class="collapsible" name="shape-rounded" open>
+        <div class="pu-accordion md rounded">
+          <details class="pu-collapsible" name="shape-rounded" open>
             <summary>rounded</summary>
             <p>The widest corner.</p>
           </details>
-          <details class="collapsible" name="shape-rounded">
+          <details class="pu-collapsible" name="shape-rounded">
             <summary>Second question</summary>
             <p>&nbsp;</p>
           </details>
@@ -307,20 +307,20 @@
         wrapper.</strong> A component declares its variables on itself, and a declaration on the
         element beats an inherited one — so an inline style on the group would be ignored. From your
         own stylesheet you can reach them in one rule, because a selector beats a declaration:
-        <code>.accordion &gt; .collapsible { … }</code>. That is exactly how
+        <code>.pu-accordion &gt; .pu-collapsible { … }</code>. That is exactly how
         <code>accordion.css</code> hands down the size.
       </p>
       <template>
-        <div class="accordion md">
-          <details class="collapsible" name="tree" data-marker="start" style="--collapsible-marker-rotation-open: 90deg; --collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E&quot;)">
+        <div class="pu-accordion md">
+          <details class="pu-collapsible" name="tree" data-marker="start" style="--collapsible-marker-rotation-open: 90deg; --collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E&quot;)">
             <summary>src</summary>
             <p>Styles, Documentation, Utils.</p>
           </details>
-          <details class="collapsible" name="tree" data-marker="start" style="--collapsible-marker-rotation-open: 90deg; --collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E&quot;)">
+          <details class="pu-collapsible" name="tree" data-marker="start" style="--collapsible-marker-rotation-open: 90deg; --collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E&quot;)">
             <summary>pages</summary>
             <p>The dev shell. Never shipped.</p>
           </details>
-          <details class="collapsible" name="tree" data-marker="start" style="--collapsible-marker-rotation-open: 90deg; --collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E&quot;)">
+          <details class="pu-collapsible" name="tree" data-marker="start" style="--collapsible-marker-rotation-open: 90deg; --collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E&quot;)">
             <summary>node_modules</summary>
             <p>Best left closed.</p>
           </details>
@@ -336,16 +336,16 @@
         APG's accordion pattern.
       </p>
       <template>
-        <div class="accordion md">
-          <details class="collapsible" name="headings" open>
+        <div class="pu-accordion md">
+          <details class="pu-collapsible" name="headings" open>
             <summary><h3>Do you ship outside Sweden?</h3></summary>
             <p>Yes, to the EU and the UK.</p>
           </details>
-          <details class="collapsible" name="headings">
+          <details class="pu-collapsible" name="headings">
             <summary><h3>How long does delivery take?</h3></summary>
             <p>Three to five working days.</p>
           </details>
-          <details class="collapsible" name="headings">
+          <details class="pu-collapsible" name="headings">
             <summary><h3>Can I change my order?</h3></summary>
             <p>Until it ships, from My account.</p>
           </details>
@@ -364,16 +364,16 @@
         which is the whole keyboard contract the APG asks for.
       </p>
       <template>
-        <div class="accordion md">
-          <details class="collapsible" name="a11y">
+        <div class="pu-accordion md">
+          <details class="pu-collapsible" name="a11y">
             <summary>Tab moves between rows</summary>
             <p>As it does between any two focusable things on the page.</p>
           </details>
-          <details class="collapsible" name="a11y">
+          <details class="pu-collapsible" name="a11y">
             <summary>Enter and Space open one</summary>
             <p>Native to <code>&lt;summary&gt;</code>. Nothing was added to get it.</p>
           </details>
-          <details class="collapsible" name="a11y">
+          <details class="pu-collapsible" name="a11y">
             <summary>The state is announced without help</summary>
             <p>From the <code>open</code> attribute, which the browser maintains.</p>
           </details>

@@ -44,7 +44,7 @@ panels stand next to each other.
 */
 /* ----------------------------------------------------- */
 
-.accordion {
+.pu-accordion {
   /* VARIABLES */
 
   --accordion-radius: var(--radius-md);
@@ -69,12 +69,12 @@ panels stand next to each other.
    * restyling the panel. Composition through the tuning surface — which is why
    * this file never repeats a line of collapsible.css.
    */
-  & > .collapsible {
+  & > .pu-collapsible {
     --collapsible-border-width: 0;
     --collapsible-radius: 0;
   }
 
-  & > .collapsible:not(:last-child) {
+  & > .pu-collapsible:not(:last-child) {
     border-block-end: var(--accordion-border-width) solid var(--accordion-border-color);
   }
 
@@ -90,7 +90,7 @@ panels stand next to each other.
     --accordion-radius: var(--radius-sm);
     --accordion-gap: var(--spacing-25);
 
-    & > .collapsible {
+    & > .pu-collapsible {
       --collapsible-font-size: var(--font-size-sm);
       --collapsible-padding-inline: var(--spacing-75);
       --collapsible-padding-block: var(--spacing-50);
@@ -102,7 +102,7 @@ panels stand next to each other.
     --accordion-radius: var(--radius-md);
     --accordion-gap: var(--spacing-50);
 
-    & > .collapsible {
+    & > .pu-collapsible {
       --collapsible-font-size: var(--font-size-md);
       --collapsible-padding-inline: var(--spacing-100);
       --collapsible-padding-block: var(--spacing-75);
@@ -114,7 +114,7 @@ panels stand next to each other.
     --accordion-radius: var(--radius-lg);
     --accordion-gap: var(--spacing-75);
 
-    & > .collapsible {
+    & > .pu-collapsible {
       --collapsible-font-size: var(--font-size-base);
       --collapsible-padding-inline: var(--spacing-125);
       --collapsible-padding-block: var(--spacing-100);
@@ -150,13 +150,13 @@ panels stand next to each other.
 
     gap: var(--accordion-gap);
 
-    & > .collapsible {
+    & > .pu-collapsible {
       --collapsible-border-width: 1px;
       --collapsible-radius: var(--accordion-radius);
     }
 
     /* Undo the divider: in this variant each panel carries its own border. */
-    & > .collapsible:not(:last-child) {
+    & > .pu-collapsible:not(:last-child) {
       border-block-end: var(--collapsible-border-width) solid var(--collapsible-border-color);
     }
   }

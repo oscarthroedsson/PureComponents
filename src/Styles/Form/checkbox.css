@@ -26,7 +26,7 @@ And nothing reaches it. Measured on a native checkbox in Chromium:
 
 So accent-color and a size is the whole surface. No border, no fill, no
 shape, and nothing that follows the --form-* channel. For a control that has
-to sit in a form beside .input and look like it belongs, that is not enough.
+to sit in a form beside .pu-input and look like it belongs, that is not enough.
 
 appearance: none hands the box over, and then everything is ours.
 
@@ -76,7 +76,7 @@ ACCESSIBILITY REQUIREMENTS:
 - KNOWN, MEASURED FAILURE: --color-error is #f87171, which measures 2.77:1
   on white. As an invalid border it is under the 3:1 of 1.4.11. It is used
   anyway by decision, pending a darker error token in main.css — the same
-  call .input and .textarea already make. The invalid state is never carried
+  call .pu-input and .pu-textarea already make. The invalid state is never carried
   by that colour alone: the message appears and aria-invalid is set.
 - Shape is a signal too, and it is the one that separates this control from
   a radio. It is not available to be spent — see SHAPE above.
@@ -89,7 +89,7 @@ ACCESSIBILITY REQUIREMENTS:
   never the only thing that marks the state.
 
 SIZE:  sm · md (default) · lg
-  Measured in em, so a size class on .form, .fieldset or .field reaches it
+  Measured in em, so a size class on .pu-form, .pu-fieldset or .pu-field reaches it
   without this file knowing they exist.
 
 SHAPE: sharp · smooth (default)
@@ -114,7 +114,7 @@ VARIABLES
   --checkbox-mark-size       how much of the box the tick spans
 */
 
-.checkbox {
+.pu-checkbox {
   /* 1. VARIABLES */
   --checkbox-size: 1.15em;
   --checkbox-radius: var(--form-radius, var(--radius-smooth));
@@ -129,7 +129,7 @@ VARIABLES
 
   /* THE CAP.
 
-     The channel's radius is measured for a control the height of an .input —
+     The channel's radius is measured for a control the height of an .pu-input —
      8px on a 37px box. This box is 15px, and 8px on 15px is a circle. So the
      radius is capped at a quarter of the box, which is the same *proportion*
      the channel gives a full-height control, not the same number.
@@ -145,9 +145,9 @@ VARIABLES
 
   /* Every measurement here is in em, and without this they would be em of
      the browser's own 13.33px rather than of the text the box sits beside.
-     A form control does not inherit the page's font — .input and .textarea
+     A form control does not inherit the page's font — .pu-input and .pu-textarea
      say the same thing for the same reason. It is what makes a size class on
-     the .form or the .fieldset reach this file at all. */
+     the .pu-form or the .pu-fieldset reach this file at all. */
   font: inherit;
 
   /* A grid with one centred child. The child is the mark, and centring it
@@ -216,7 +216,7 @@ VARIABLES
   }
   /* There is no .rounded. See the note at the top of the file: a circular
      checkbox is a radio, and the shape is the only thing telling the two
-     apart. The cap above is what makes refusing it real — a .form.rounded
+     apart. The cap above is what makes refusing it real — a .pu-form.rounded
      puts 999px on the channel, and this box still comes out square. */
 
   /* 6. STATES */

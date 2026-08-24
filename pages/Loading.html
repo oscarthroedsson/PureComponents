@@ -149,21 +149,21 @@
       <template>
         <div class="demo-row">
           <span class="demo-label">button</span>
-          <button class="btn md loading" aria-busy="true" disabled>Saving…</button>
+          <button class="pu-btn md pu-loading" aria-busy="true" disabled>Saving…</button>
         </div>
 
         <div class="demo-row">
           <span class="demo-label">ghost button</span>
-          <button class="btn md ghost loading" aria-busy="true" disabled>Saving…</button>
+          <button class="pu-btn md ghost pu-loading" aria-busy="true" disabled>Saving…</button>
         </div>
 
         <div class="demo-row">
           <span class="demo-label">pagination</span>
           <nav aria-label="Pagination, loading">
-            <ul class="pagination md loading" aria-busy="true">
-              <li><a href="#1" class="btn ghost">1</a></li>
-              <li><a href="#2" class="btn" aria-current="page">2</a></li>
-              <li><a href="#3" class="btn ghost">3</a></li>
+            <ul class="pu-pagination md pu-loading" aria-busy="true">
+              <li><a href="#1" class="pu-btn ghost">1</a></li>
+              <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
+              <li><a href="#3" class="pu-btn ghost">3</a></li>
             </ul>
           </nav>
         </div>
@@ -183,12 +183,12 @@
         thing from a component that is working.
       </p>
       <template>
-        <div class="demo-surface loading" aria-busy="true">
+        <div class="demo-surface pu-loading" aria-busy="true">
           <p style="margin: 0 0 0.5rem; font-weight: 600">Quarterly report</p>
           <p style="margin: 0; color: var(--color-neutral-500)">Fetching the latest figures…</p>
         </div>
 
-        <div class="demo-surface loading" aria-busy="true" style="background-color: #fff">
+        <div class="demo-surface pu-loading" aria-busy="true" style="background-color: #fff">
           <p style="margin: 0 0 0.5rem; font-weight: 600">Quarterly report</p>
           <p style="margin: 0; color: var(--color-neutral-500)">Nothing above white to reach.</p>
         </div>
@@ -209,33 +209,33 @@
       <template>
         <div class="demo-row">
           <span class="demo-label">default</span>
-          <button class="btn md loading" aria-busy="true">Saving…</button>
+          <button class="pu-btn md pu-loading" aria-busy="true">Saving…</button>
         </div>
 
         <div class="demo-row">
           <span class="demo-label">barely dimmed</span>
-          <button class="btn md loading" aria-busy="true" style="--loading-opacity: 0.85">
+          <button class="pu-btn md pu-loading" aria-busy="true" style="--loading-opacity: 0.85">
             Saving…
           </button>
         </div>
 
         <div class="demo-row">
           <span class="demo-label">deeply dimmed</span>
-          <button class="btn md loading" aria-busy="true" style="--loading-opacity: 0.3">
+          <button class="pu-btn md pu-loading" aria-busy="true" style="--loading-opacity: 0.3">
             Saving…
           </button>
         </div>
 
         <div class="demo-row">
           <span class="demo-label">slow</span>
-          <button class="btn md loading" aria-busy="true" style="--loading-duration: 3s">
+          <button class="pu-btn md pu-loading" aria-busy="true" style="--loading-duration: 3s">
             Saving…
           </button>
         </div>
 
         <div class="demo-row">
           <span class="demo-label">steeper glow</span>
-          <button class="btn md loading" aria-busy="true" style="--loading-angle: 150deg">
+          <button class="pu-btn md pu-loading" aria-busy="true" style="--loading-angle: 150deg">
             Saving…
           </button>
         </div>

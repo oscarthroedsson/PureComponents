@@ -21,7 +21,7 @@
         so the parent decides how wide it gets.
       </p>
       <template>
-        <article class="card md">
+        <article class="pu-card md">
           <figure class="card-media">
             <img src="https://picsum.photos/seed/pureui-basic/600/400" alt="" />
           </figure>
@@ -33,7 +33,7 @@
             <p>The body holds whatever the card is actually about. Paragraphs stack with an even rhythm.</p>
           </div>
           <footer class="card-footer">
-            <button class="btn sm" type="button">Read more</button>
+            <button class="pu-btn sm" type="button">Read more</button>
           </footer>
         </article>
       </template>
@@ -42,7 +42,7 @@
     <section class="pc-demo" id="body-only" data-title="Body Only" data-stage-style="display: grid; grid-template-columns: minmax(0, 20rem); justify-content: start;">
       <p class="pc-note">A card with nothing but a body has to look finished. Nothing else is required.</p>
       <template>
-        <div class="card md">
+        <div class="pu-card md">
           <div class="card-body">
             <p>No media, no header, no footer. Padding is even on all four sides.</p>
           </div>
@@ -56,7 +56,7 @@
         extra class, no variant. The media always runs edge to edge, and the part next to it keeps its full padding.
       </p>
       <template>
-        <article class="card md">
+        <article class="pu-card md">
           <figure class="card-media">
             <img src="https://picsum.photos/seed/pureui-below/600/400" alt="" />
           </figure>
@@ -69,7 +69,7 @@
           </div>
         </article>
 
-        <article class="card md">
+        <article class="pu-card md">
           <header class="card-header">
             <h3 class="card-title">Header above</h3>
             <p class="card-subtitle">Title leads, image supports</p>
@@ -90,7 +90,7 @@
         width. Width belongs to the parent. Cap it with <code>--card-max-width</code> if you need to.
       </p>
       <template>
-        <article class="card sm">
+        <article class="pu-card sm">
           <header class="card-header">
             <h3 class="card-title">Small</h3>
             <p class="card-subtitle">12px padding</p>
@@ -100,7 +100,7 @@
           </div>
         </article>
 
-        <article class="card md">
+        <article class="pu-card md">
           <header class="card-header">
             <h3 class="card-title">Medium</h3>
             <p class="card-subtitle">16px padding</p>
@@ -110,7 +110,7 @@
           </div>
         </article>
 
-        <article class="card lg">
+        <article class="pu-card lg">
           <header class="card-header">
             <h3 class="card-title">Large</h3>
             <p class="card-subtitle">24px padding</p>
@@ -129,7 +129,7 @@
         the way down without a single border.
       </p>
       <template>
-        <article class="card md" style="--card-padding-block: 1.25rem">
+        <article class="pu-card md" style="--card-padding-block: 1.25rem">
           <header class="card-header">
             <h3 class="card-title">Even rhythm</h3>
             <p class="card-subtitle">Header, body and footer</p>
@@ -151,7 +151,7 @@
         width with <code>--card-media-inline-size</code>.
       </p>
       <template>
-        <article class="card md horizontal">
+        <article class="pu-card md horizontal">
           <figure class="card-media">
             <img src="https://picsum.photos/seed/pureui-side-a/600/600" alt="" />
           </figure>
@@ -167,7 +167,7 @@
           </footer>
         </article>
 
-        <article class="card md horizontal">
+        <article class="pu-card md horizontal">
           <header class="card-header">
             <h3 class="card-title">Media last</h3>
             <p class="card-subtitle">Image on the trailing side</p>
@@ -191,7 +191,7 @@
         the footer is pushed to the bottom. Nothing about the markup differs between these three.
       </p>
       <template>
-        <article class="card md">
+        <article class="pu-card md">
           <header class="card-header">
             <h3 class="card-title">Short</h3>
           </header>
@@ -199,11 +199,11 @@
             <p>One line.</p>
           </div>
           <footer class="card-footer">
-            <button class="btn sm ghost" type="button">Open</button>
+            <button class="pu-btn sm ghost" type="button">Open</button>
           </footer>
         </article>
 
-        <article class="card md">
+        <article class="pu-card md">
           <header class="card-header">
             <h3 class="card-title">Longer</h3>
           </header>
@@ -211,11 +211,11 @@
             <p>Enough text here to run over several lines and push this card taller than the one beside it.</p>
           </div>
           <footer class="card-footer">
-            <button class="btn sm ghost" type="button">Open</button>
+            <button class="pu-btn sm ghost" type="button">Open</button>
           </footer>
         </article>
 
-        <article class="card md">
+        <article class="pu-card md">
           <header class="card-header">
             <h3 class="card-title">Longest</h3>
           </header>
@@ -226,7 +226,7 @@
             </p>
           </div>
           <footer class="card-footer">
-            <button class="btn sm ghost" type="button">Open</button>
+            <button class="pu-btn sm ghost" type="button">Open</button>
           </footer>
         </article>
       </template>
@@ -238,16 +238,16 @@
         <code>elevated</code> adds a shadow.
       </p>
       <template>
-        <div class="card md">
+        <div class="pu-card md">
           <div class="card-body"><p>Default</p></div>
         </div>
-        <div class="card md outline">
+        <div class="pu-card md outline">
           <div class="card-body"><p>Outline</p></div>
         </div>
-        <div class="card md ghost">
+        <div class="pu-card md ghost">
           <div class="card-body"><p>Ghost</p></div>
         </div>
-        <div class="card md elevated">
+        <div class="pu-card md elevated">
           <div class="card-body"><p>Elevated</p></div>
         </div>
       </template>
@@ -259,21 +259,21 @@
         radius, so an image never breaks the corner.
       </p>
       <template>
-        <article class="card md sharp">
+        <article class="pu-card md sharp">
           <figure class="card-media">
             <img src="https://picsum.photos/seed/pureui-sharp/600/300" alt="" />
           </figure>
           <div class="card-body"><p>Sharp</p></div>
         </article>
 
-        <article class="card md smooth">
+        <article class="pu-card md smooth">
           <figure class="card-media">
             <img src="https://picsum.photos/seed/pureui-smooth/600/300" alt="" />
           </figure>
           <div class="card-body"><p>Smooth</p></div>
         </article>
 
-        <article class="card md rounded">
+        <article class="pu-card md rounded">
           <figure class="card-media">
             <img src="https://picsum.photos/seed/pureui-rounded/600/300" alt="" />
           </figure>
@@ -288,21 +288,21 @@
         to the same box, so a row of cards keeps its top edges honest.
       </p>
       <template>
-        <article class="card md" style="--card-media-aspect-ratio: 16/9">
+        <article class="pu-card md" style="--card-media-aspect-ratio: 16/9">
           <figure class="card-media">
             <img src="https://picsum.photos/seed/pureui-tall/400/700" alt="" />
           </figure>
           <div class="card-body"><p>Portrait source</p></div>
         </article>
 
-        <article class="card md" style="--card-media-aspect-ratio: 16/9">
+        <article class="pu-card md" style="--card-media-aspect-ratio: 16/9">
           <figure class="card-media">
             <img src="https://picsum.photos/seed/pureui-wide/900/300" alt="" />
           </figure>
           <div class="card-body"><p>Panoramic source</p></div>
         </article>
 
-        <article class="card md" style="--card-media-aspect-ratio: 16/9">
+        <article class="pu-card md" style="--card-media-aspect-ratio: 16/9">
           <figure class="card-media">
             <img src="https://picsum.photos/seed/pureui-square/600/600" alt="" />
           </figure>
@@ -319,7 +319,7 @@
         button — stays clickable in its own right.
       </p>
       <template>
-        <article class="card md" data-interactive>
+        <article class="pu-card md" data-interactive>
           <figure class="card-media">
             <img src="https://picsum.photos/seed/pureui-link/600/360" alt="" />
           </figure>
@@ -332,7 +332,7 @@
           </div>
         </article>
 
-        <article class="card md" data-interactive>
+        <article class="pu-card md" data-interactive>
           <header class="card-header">
             <h3 class="card-title"><a class="card-link" href="#interactive">With a second control</a></h3>
           </header>
@@ -340,7 +340,7 @@
             <p>The button sits above the overlay, so it does its own job.</p>
           </div>
           <footer class="card-footer">
-            <button class="btn sm" type="button">Save</button>
+            <button class="pu-btn sm" type="button">Save</button>
           </footer>
         </article>
       </template>
@@ -352,7 +352,7 @@
         being touched.
       </p>
       <template>
-        <article class="card md" style="--card-surface: var(--color-neutral-900); --card-color: var(--color-neutral-200); --card-title-color: var(--color-neutral-100); --card-subtitle-color: var(--color-neutral-400); --card-border-color: var(--color-neutral-700)">
+        <article class="pu-card md" style="--card-surface: var(--color-neutral-900); --card-color: var(--color-neutral-200); --card-title-color: var(--color-neutral-100); --card-subtitle-color: var(--color-neutral-400); --card-border-color: var(--color-neutral-700)">
           <header class="card-header">
             <h3 class="card-title">Recoloured</h3>
             <p class="card-subtitle">Five variables, no new CSS</p>
@@ -362,7 +362,7 @@
           </div>
         </article>
 
-        <article class="card md" style="--card-max-width: 14rem; --card-padding-inline: var(--spacing-200)">
+        <article class="pu-card md" style="--card-max-width: 14rem; --card-padding-inline: var(--spacing-200)">
           <header class="card-header">
             <h3 class="card-title">Capped and inset</h3>
           </header>

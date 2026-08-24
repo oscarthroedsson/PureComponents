@@ -15,7 +15,7 @@ ATTRIBUTES:
 - data-intent="destructive" → Destructive action
 
 ELEMENTS:
-.btn is a look, not an element. It goes on a <button> for an action
+.pu-btn is a look, not an element. It goes on a <button> for an action
 and on an <a> for a destination — pagination needs both. The two
 arrive with different browser defaults, so the base neutralises them
 in one place and everything below describes only the look.
@@ -26,7 +26,7 @@ rebuilt per component.
 */
 /* ----------------------------------------------------- */
 
-.btn {
+.pu-btn {
   position: relative;
   display: inline-flex;
   align-items: center;

@@ -24,7 +24,7 @@ ANIMATION:
 - bottom → slides from/to bottom
 */
 
-dialog.dialog {
+dialog.pu-dialog {
   --dialog-max-width: 600px;
   --dialog-radius: var(--radius-md);
 
@@ -349,7 +349,7 @@ dialog.dialog {
 /* BACKDROP ENTRY STATE */
 
 @starting-style {
-  dialog.dialog:open::backdrop {
+  dialog.pu-dialog:open::backdrop {
     background-color: rgb(0 0 0 / 0%);
     backdrop-filter: blur(0);
   }
@@ -357,7 +357,7 @@ dialog.dialog {
 
 /* CUSTOM DIALOG */
 
-.dialog[role="dialog"]:not(dialog) {
+.pu-dialog[role="dialog"]:not(dialog) {
   position: fixed;
   inset: 0;
 

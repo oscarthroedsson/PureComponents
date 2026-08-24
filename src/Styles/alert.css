@@ -7,7 +7,7 @@ ACCESSIBILITY REQUIREMENTS:
 - Do not add aria-live unless intentionally overriding the role's default behavior
 - Icons that only communicate the alert intent should use aria-hidden="true"
 - Dismiss buttons MUST have an accessible name
-- Use the existing .btn component for alert actions and dismiss buttons
+- Use the existing .pu-btn component for alert actions and dismiss buttons
 - Alert itself should not receive focus unless there is a specific interaction reason
 
 USAGE:
@@ -81,7 +81,7 @@ THEME:
 - The application should provide the active color-scheme
 */
 
-.alert {
+.pu-alert {
   --alert-accent: var(--color-info);
   --alert-surface: light-dark(var(--color-neutral-100), var(--color-neutral-900));
   --alert-text: light-dark(var(--color-neutral-900), var(--color-neutral-100));
@@ -291,7 +291,7 @@ THEME:
     pointer-events: none;
   }
 
-  &:has(.btn:focus-visible) {
+  &:has(.pu-btn:focus-visible) {
     border-color: color-mix(in oklab, var(--alert-accent) 75%, var(--alert-surface));
   }
 

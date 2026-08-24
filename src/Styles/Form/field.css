@@ -1,4 +1,4 @@
-.field {
+.pu-field {
   /* 1. VARIABLES */
   --field-font-size: var(--form-font-size, var(--font-size-md));
   --field-gap: var(--form-field-gap, var(--spacing-25));
@@ -24,7 +24,7 @@
      never both apply. */
   padding-block-end: var(--field-error-reserve);
 
-  &:has(.field-error) {
+  &:has(.pu-field-error) {
     padding-block-end: 0;
   }
 
@@ -51,17 +51,17 @@
   }
 
   /* 5. STATES */
-  &:has(:is(:user-invalid, [aria-invalid="true"])) > .field-error {
+  &:has(:is(:user-invalid, [aria-invalid="true"])) > .pu-field-error {
     visibility: visible;
   }
 
-  &:has(:disabled) > .label {
+  &:has(:disabled) > .pu-label {
     color: var(--label-disabled-color, var(--color-neutral-500));
   }
 }
 
-.field-hint,
-.field-error {
+.pu-field-hint,
+.pu-field-error {
   --field-message-scale: var(--field-message-font-size, max(0.85em, var(--font-size-sm)));
   --field-message-leading: var(--field-message-line-height, 1.2);
 
@@ -71,12 +71,12 @@
   line-height: var(--field-message-leading);
 }
 
-.field-hint {
+.pu-field-hint {
   --field-hint-text: var(--form-hint-color, var(--color-neutral-500));
   color: var(--field-hint-text);
 }
 
-.field-error {
+.pu-field-error {
   --field-error-text: var(--form-error-color, var(--color-error));
 
   color: var(--field-error-text);
@@ -87,13 +87,13 @@
   /* The control immediately before shows its own message. `+` reaches exactly
      one step, so an error in one field can never light up another's. Two
      orders are supported: control -> error, and control -> hint -> error.
-     A control wrapped in an .input-group breaks the sibling chain; .field
+     A control wrapped in an .pu-input-group breaks the sibling chain; .pu-field
      covers that case above. */
   :is(input, select, textarea):is(:user-invalid, [aria-invalid="true"]) + & {
     visibility: visible;
   }
 
-  :is(input, select, textarea):is(:user-invalid, [aria-invalid="true"]) + .field-hint + & {
+  :is(input, select, textarea):is(:user-invalid, [aria-invalid="true"]) + .pu-field-hint + & {
     visibility: visible;
   }
 }
