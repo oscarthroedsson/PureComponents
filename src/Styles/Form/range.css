@@ -1,0 +1,187 @@
+/*
+Range — a slider for a value where the exact number does not matter.
+
+USAGE:
+  <input class="range" type="range" min="0" max="100" value="40">
+  <input class="range primary lg" type="range" min="0" max="100" value="40">
+
+THE FILL IS NOT AUTOMATIC
+
+The track is painted with a gradient that stops at --range-value, because
+neither engine offers a pseudo-element for the filled part of a range once
+appearance: none is set. That variable does not update itself. The library
+ships no JavaScript, so a consumer who wants the fill to follow the thumb
+sets it on input:
+
+  el.style.setProperty("--range-value", (el.value / el.max * 100) + "%")
+
+Left alone the fill sits at 50% and the thumb still moves, works and submits.
+That is the trade: the control is correct without script, and only the
+decoration needs one.
+
+ACCESSIBILITY REQUIREMENTS:
+- MUST be named by a <label for>. A slider with no name is announced as a
+  bare number.
+- ALWAYS set min and max. Without them the range is 0-100 whatever the
+  numbers on screen say, and the announced value is wrong.
+- A range is announced as a slider with a number. If the number means
+  something — kronor, minutes, a percentage — say so with aria-valuetext.
+  CSS cannot.
+- NEVER the only way to enter a value that has to be exact. Pair it with a
+  number field when precision matters; dragging to one specific value is a
+  motor-control barrier (2.5.1).
+- appearance: none removes the control from Windows High Contrast Mode. Same
+  trade as checkbox.css, radio.css and select.css.
+- The focus ring comes from main.css. This file draws none, and nothing here
+  clips, so the ring can never be cut.
+- Colour is never the only signal for the invalid state: the .field-error
+  appears and aria-invalid is what assistive tech hears.
+- KNOWN, MEASURED FAILURE: --color-error is #f87171, 2.77:1 on white, under
+  the 3:1 of 1.4.11 for the invalid thumb. Used anyway by decision, pending a
+  darker error token — the same call textarea.css records.
+
+SIZE:    sm . md (default) . lg   — one variable, --range-track-size; the
+         thumb, the padding and the fill are all derived from it.
+SHAPE:   sharp . smooth . rounded (default)
+VARIANT: primary — brand colour on the fill and the thumb. Neutral by
+         default, so a slider does not shout in a quiet form.
+
+VARIABLES
+  --range-value              where the fill stops. See above; not automatic.
+  --range-track-size         the whole control derives from this
+  --range-track-color        the unfilled part
+  --range-track-radius
+  --range-fill               the filled part
+  --range-fill-radius        tighter than the track at smooth, because the
+                             fill is half the height and would read as a pill
+  --range-thumb-size         0.75 of the track
+  --range-thumb-color
+  --range-thumb-border-width
+  --range-thumb-border-color
+*/
+
+.range {
+  --range-fill: var(--color-neutral-300);
+  --range-value: 50%;
+
+  --range-track-size: 1rem;
+  --range-track-color: var(--color-neutral-200);
+  --range-track-radius: var(--radius-full);
+  --range-fill-radius: var(--range-track-radius);
+  --range-track-padding-block: calc(var(--range-track-size) * 0.25);
+  --range-track-padding-inline: calc(var(--range-track-size) * 0.5);
+
+  --range-fill-size: calc(
+    var(--range-track-size) - 2 * var(--range-track-padding-block)
+  );
+
+  --range-thumb-size: calc(var(--range-track-size) * 0.75);
+  --range-thumb-color: var(--color-neutral-400);
+  --range-thumb-border-width: 1px;
+  --range-thumb-border-color: var(--color-neutral-500);
+
+  appearance: none;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: var(--range-track-size);
+  margin: 0;
+  border: none;
+  padding-block: var(--range-track-padding-block);
+  padding-inline: var(--range-track-padding-inline);
+  border-radius: var(--range-track-radius);
+  background-color: var(--range-track-color);
+  cursor: pointer;
+
+  &::-webkit-slider-runnable-track {
+    block-size: var(--range-fill-size);
+    border-radius: var(--range-fill-radius);
+    background: linear-gradient(
+      to right,
+      var(--range-fill) var(--range-value),
+      transparent var(--range-value)
+    );
+  }
+
+  &::-moz-range-track {
+    block-size: var(--range-fill-size);
+    border-radius: var(--range-fill-radius);
+    background: linear-gradient(
+      to right,
+      var(--range-fill) var(--range-value),
+      transparent var(--range-value)
+    );
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    box-sizing: border-box;
+    inline-size: var(--range-thumb-size);
+    block-size: var(--range-thumb-size);
+    margin-block-start: calc(
+      (var(--range-fill-size) - var(--range-thumb-size)) / 2
+    );
+    border: var(--range-thumb-border-width) solid
+      var(--range-thumb-border-color);
+    border-radius: var(--radius-full);
+    background-color: var(--range-thumb-color);
+  }
+
+  &::-moz-range-thumb {
+    box-sizing: border-box;
+    inline-size: var(--range-thumb-size);
+    block-size: var(--range-thumb-size);
+    border: var(--range-thumb-border-width) solid
+      var(--range-thumb-border-color);
+    border-radius: var(--radius-full);
+    background-color: var(--range-thumb-color);
+  }
+
+  &.sm {
+    --range-track-size: 0.75rem;
+  }
+  &.md {
+    --range-track-size: 1rem;
+  }
+  &.lg {
+    --range-track-size: 1.25rem;
+  }
+
+  &.primary {
+    --range-fill: var(--color-primary);
+    --range-thumb-color: var(--color-primary);
+    --range-thumb-border-color: color-mix(
+      in srgb,
+      var(--color-primary),
+      var(--color-neutral-900) 25%
+    );
+  }
+
+  &.sharp {
+    --range-track-radius: var(--radius-sharp);
+  }
+  &.smooth {
+    --range-track-radius: var(--radius-sm);
+    --range-fill-radius: var(--radius-xs);
+  }
+  &.rounded {
+    --range-track-radius: var(--radius-full);
+  }
+
+  /* A range has no border to turn red, so the thumb carries it — the part
+     that answers for the value. Before :disabled on purpose: same specificity,
+     so source order decides, and a disabled control must not read as wrong.
+     :user-invalid rarely fires here (a range always has a value), so
+     [aria-invalid] is the path that matters. Colour is never the only signal:
+     the .field-error appears and aria-invalid is what assistive tech hears. */
+  &:is(:user-invalid, [aria-invalid="true"]) {
+    --range-thumb-color: var(--color-error);
+    --range-thumb-border-color: var(--color-error);
+  }
+
+  &:disabled {
+    --range-fill: var(--color-neutral-300);
+    --range-thumb-color: var(--color-neutral-300);
+    --range-thumb-border-color: var(--color-neutral-400);
+    cursor: not-allowed;
+  }
+}

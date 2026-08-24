@@ -468,7 +468,6 @@ body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
   min-height: 40px;
 }
 
-
 /* Outline every element in the stage — makes box model and spacing
    visible without opening devtools. */
 :root[data-pc-outline="on"] .pc-stage-inner * {
@@ -751,4 +750,141 @@ body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
 
 .pc-doc-table .pc-doc-dim {
   color: var(--pc-text-dim);
+}
+
+/* ============================================================
+   CATEGORY BADGES
+   The nine API categories, each with one hue. Hues are placed for
+   maximum perceptual distance rather than even degree steps, and the
+   yellow band is skipped entirely — nothing here can turn to mustard.
+
+   Three roles per category:
+     -ink      icon and label
+     -border   the badge outline
+     -bg       the badge fill
+
+   ink-on-bg holds 6.2:1 in light and 7.2:1 in dark across all nine,
+   so the label clears AA at 11.5px. The border is decorative — the
+   label carries the meaning, never the colour alone.
+
+   Dev shell only. None of this belongs in src/Styles/.
+   ============================================================ */
+
+:root {
+  --pc-cat-part-ink: #663399;
+  --pc-cat-part-border: #A476DD;
+  --pc-cat-part-bg: #E7D7FE;
+
+  --pc-cat-size-ink: #1B42B7;
+  --pc-cat-size-border: #5E87EA;
+  --pc-cat-size-bg: #CFDFFF;
+
+  --pc-cat-shape-ink: #105A00;
+  --pc-cat-shape-border: #4A9C3D;
+  --pc-cat-shape-bg: #C9E5C4;
+
+  --pc-cat-emphasis-ink: #9D1100;
+  --pc-cat-emphasis-border: #DF6753;
+  --pc-cat-emphasis-bg: #FFD4CC;
+
+  --pc-cat-intent-ink: #8B1182;
+  --pc-cat-intent-border: #C669BB;
+  --pc-cat-intent-bg: #F7D3F1;
+
+  --pc-cat-layout-ink: #005281;
+  --pc-cat-layout-border: #0692E0;
+  --pc-cat-layout-bg: #C0E2FF;
+
+  --pc-cat-state-ink: #783F00;
+  --pc-cat-state-border: #D17300;
+  --pc-cat-state-bg: #FBD7BB;
+
+  --pc-cat-variables-ink: #00584F;
+  --pc-cat-variables-border: #009C8F;
+  --pc-cat-variables-bg: #B4E8DF;
+
+  --pc-cat-animations-ink: #9B004E;
+  --pc-cat-animations-border: #DB638C;
+  --pc-cat-animations-bg: #FFD3DE;
+}
+
+.pc-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+
+  padding-block: 3px;
+  padding-inline: 9px;
+
+  border: 1px solid var(--pc-cat-border);
+  border-radius: 6px;
+  background: var(--pc-cat-bg);
+  color: var(--pc-cat-ink);
+
+  font-family: var(--pc-ui);
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.pc-cat svg {
+  inline-size: 13px;
+  block-size: 13px;
+  flex: none;
+  color: currentColor;
+}
+
+.pc-cat-part {
+  --pc-cat-ink: var(--pc-cat-part-ink);
+  --pc-cat-border: var(--pc-cat-part-border);
+  --pc-cat-bg: var(--pc-cat-part-bg);
+}
+
+.pc-cat-size {
+  --pc-cat-ink: var(--pc-cat-size-ink);
+  --pc-cat-border: var(--pc-cat-size-border);
+  --pc-cat-bg: var(--pc-cat-size-bg);
+}
+
+.pc-cat-shape {
+  --pc-cat-ink: var(--pc-cat-shape-ink);
+  --pc-cat-border: var(--pc-cat-shape-border);
+  --pc-cat-bg: var(--pc-cat-shape-bg);
+}
+
+.pc-cat-emphasis {
+  --pc-cat-ink: var(--pc-cat-emphasis-ink);
+  --pc-cat-border: var(--pc-cat-emphasis-border);
+  --pc-cat-bg: var(--pc-cat-emphasis-bg);
+}
+
+.pc-cat-intent {
+  --pc-cat-ink: var(--pc-cat-intent-ink);
+  --pc-cat-border: var(--pc-cat-intent-border);
+  --pc-cat-bg: var(--pc-cat-intent-bg);
+}
+
+.pc-cat-layout {
+  --pc-cat-ink: var(--pc-cat-layout-ink);
+  --pc-cat-border: var(--pc-cat-layout-border);
+  --pc-cat-bg: var(--pc-cat-layout-bg);
+}
+
+.pc-cat-state {
+  --pc-cat-ink: var(--pc-cat-state-ink);
+  --pc-cat-border: var(--pc-cat-state-border);
+  --pc-cat-bg: var(--pc-cat-state-bg);
+}
+
+.pc-cat-variables {
+  --pc-cat-ink: var(--pc-cat-variables-ink);
+  --pc-cat-border: var(--pc-cat-variables-border);
+  --pc-cat-bg: var(--pc-cat-variables-bg);
+}
+
+.pc-cat-animations {
+  --pc-cat-ink: var(--pc-cat-animations-ink);
+  --pc-cat-border: var(--pc-cat-animations-border);
+  --pc-cat-bg: var(--pc-cat-animations-bg);
 }

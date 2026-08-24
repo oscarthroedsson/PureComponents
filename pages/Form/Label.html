@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Label — PureComponents</title>
+    <meta name="pc-description" content="The name of a control. Its own file, because nothing owns it." />
+
+    <link rel="stylesheet" href="../../src/Styles/main.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/fieldset.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/label.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/input/input.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/checkbox.css" />
+
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Label">
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Its own file and its own key, because a label is its own thing. It appears inside a
+        <code>.field</code>, inside a <code>.fieldset</code>, beside a checkbox, in a table cell —
+        and it looks the same in all of them. Nothing owns it.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="lb-basic">Email</label>
+          <input id="lb-basic" class="input" type="email" autocomplete="email" />
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="binding" data-title="Two ways to bind" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Both are correct: <code>for=</code> pointing at the control's id, or the control nested
+        inside the label. The first is preferred — it survives the control moving, and it is what
+        assistive tech handles best. <code>for=</code> must point at an id that exists; a label
+        bound to nothing looks correct in review and announces nothing.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="lb-for">for= pointing at an id</label>
+          <input id="lb-for" class="input" type="text" />
+        </div>
+        <div class="field">
+          <label class="label">
+            The control nested inside
+            <input class="input" type="text" />
+          </label>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="no-key" data-title="Without the key" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        A bare <code>&lt;label&gt;</code> inside a <code>.field</code> gets nothing from us, and
+        that is correct — it is the consumer's element until they say otherwise. This styling used
+        to be written as <code>.field &gt; label</code>, which reached an element carrying no key
+        of ours. That is the one thing §4.1 exists to prevent.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="lb-keyed">With the key</label>
+          <input id="lb-keyed" class="input" type="text" />
+        </div>
+        <div class="field">
+          <label for="lb-bare">Without it — the consumer's own element</label>
+          <input id="lb-bare" class="input" type="text" />
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sized by the group" data-stage-style="display:grid; gap:1.25rem; max-width:26rem;">
+      <p class="pc-note">
+        No size class of its own. The label reads <code>--form-font-size</code> like everything else
+        in the family, so <code>.form.sm</code>, <code>.fieldset.lg</code> and <code>.field.sm</code>
+        all reach it without this file knowing that any of them exist.
+      </p>
+      <template>
+        <form class="form sm" aria-label="Small">
+          <div class="field">
+            <label class="label" for="lb-sm">Small group</label>
+            <input id="lb-sm" class="input" type="text" />
+          </div>
+        </form>
+        <form class="form" aria-label="Medium">
+          <div class="field">
+            <label class="label" for="lb-md">Medium group</label>
+            <input id="lb-md" class="input" type="text" />
+          </div>
+        </form>
+        <form class="form lg" aria-label="Large">
+          <div class="field">
+            <label class="label" for="lb-lg">Large group</label>
+            <input id="lb-lg" class="input" type="text" />
+          </div>
+        </form>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="disabled" data-title="When the control is disabled" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        A label cannot see the control it names — they are siblings, and CSS has no
+        sibling-upwards selector. So the disabled case is written by whoever owns both, which is
+        <code>.field</code>. The target still carries its key, so nothing without
+        <code>.label</code> on it is touched. The disabled colour is exempt from contrast under
+        1.4.3, which is what makes it legitimate at 3.6:1.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="lb-normal">Normal</label>
+          <input id="lb-normal" class="input" type="text" value="Editable" />
+        </div>
+        <div class="field">
+          <label class="label" for="lb-disabled">Disabled</label>
+          <input id="lb-disabled" class="input" type="text" value="Disabled" disabled />
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="in-context" data-title="Everywhere else" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        The same label beside a checkbox and inside a fieldset. It brings no layout of its own — the
+        container decides where it sits — which is why one file can serve all of them.
+      </p>
+      <template>
+        <fieldset class="fieldset">
+          <legend>Notifications</legend>
+          <div class="field">
+            <label class="label" for="lb-cb1">
+              <input id="lb-cb1" class="checkbox" type="checkbox" checked />
+              Email me about replies
+            </label>
+          </div>
+          <div class="field">
+            <label class="label" for="lb-cb2">
+              <input id="lb-cb2" class="checkbox" type="checkbox" />
+              Email me about mentions
+            </label>
+          </div>
+        </fieldset>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="not-in-here" data-title="What does not go in it" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        The text is the accessible name. The unit, the hint and the message are not part of it —
+        those are <code>aria-describedby</code>, and <code>field.css</code> draws them. Putting them
+        inside the label makes the announced name a paragraph.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="lb-right">Weight</label>
+          <p class="field-hint" id="lb-right-hint">In kilograms, to one decimal.</p>
+          <input id="lb-right" class="input" type="number" aria-describedby="lb-right-hint" />
+        </div>
+      </template>
+    </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

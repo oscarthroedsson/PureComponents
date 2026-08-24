@@ -1,0 +1,279 @@
+/*
+Textarea — the box when the text runs to more than one line.
+
+  <textarea class="textarea" rows="4"></textarea>
+  <textarea class="textarea lg rounded" rows="6"></textarea>
+  <textarea class="textarea" data-sizing="content"></textarea>
+
+The same box as .input, from the same --form-* channel, so a textarea and an
+input in one form are the same field with a different number of lines. What
+is written here is only what having more than one line changes: how tall it
+starts, whether it can be dragged, and whether it grows on its own.
+
+The box itself is not described twice. Every measurement comes from the
+channel — see form.css for how it works, and input/input.css for the
+single-line sibling this file deliberately mirrors.
+
+
+HEIGHT — three ways, and they do not fight
+
+  rows="4"                the platform's answer, and the default. The
+                          browser sizes the box to that many lines. Nothing
+                          here overrides it.
+  --textarea-min-block-size
+                          a floor in case rows is missing. Two lines, so a
+                          textarea with no attributes is still visibly not
+                          an input.
+  data-sizing="content"   the box follows what is typed into it, growing and
+                          shrinking as lines are added and removed. No
+                          JavaScript, no scroll-height measuring, no hidden
+                          mirror element.
+
+field-sizing: content is Baseline as of Safari 26.2 and Firefox 152, which
+is recent. Where it is not supported the declaration is ignored and the box
+stays the size rows gave it — the field still works, it just does not grow.
+That is why it is opt-in and why rows stays on the element.
+
+
+NOT HERE
+
+Icons. .input-group centres what it holds against a box one line tall, and
+against six lines it would float in the middle of the text. A mark on a
+textarea belongs above it or below it, which is .field's business.
+
+A character counter. It is content, not styling — and it has to be announced
+politely, which is aria-live and markup, not CSS.
+
+
+ACCESSIBILITY REQUIREMENTS:
+- MUST be named by a <label for>. A placeholder is not a label, and in a box
+  this large a disappearing one is worse: there is nothing left to say what
+  the paragraph being typed is for.
+- resize is an accessibility feature, not decoration. Someone at 200% zoom
+  needs to be able to make the box bigger, and 1.4.4 does not let us take
+  that away. This file never sets resize: none. It restricts the axis, which
+  is a layout decision, not a removal — the useful direction stays.
+- data-sizing="content" removes the need to resize at all, which is better
+  than allowing it. It is also why the max is a variable rather than a
+  fixed value: a box that stops growing and starts scrolling at a height
+  the consumer did not choose is worse than one that keeps going.
+- The focus ring comes from main.css. This file draws none, and the border
+  is a border, never an outline — an outline written here would outrank the
+  global :focus-visible and the field would show no ring while focused.
+- The border carries 1.4.11 on its own at 3:1. --color-neutral-500 measures
+  4.76:1 on white and is the lightest neutral in main.css that clears it.
+- KNOWN, MEASURED FAILURE: --color-error is #f87171, 2.77:1 on white, under
+  the 3:1 of 1.4.11 as an invalid border. Used anyway by decision, pending a
+  darker error token. The invalid state is never carried by that colour
+  alone — the message appears and aria-invalid is set.
+- A read-only textarea is not disabled: it is focusable, selectable and
+  submitted. Only the cursor separates them.
+
+SIZE:  sm · md (default) · lg
+  A leaf, so a size class rewrites only this control's own variables. To
+  resize a whole form or group, put the class on .form, .fieldset or .field.
+
+SHAPE: sharp · smooth (default) · rounded
+  rounded is capped — see --textarea-radius-max. A textarea is tall, and an
+  uncapped 999px turns it into a stadium. The cap is the radius a one-line
+  control at the same scale resolves to, so a rounded textarea and a rounded
+  input carry the same corner.
+
+VARIANT:
+  (none)   a filled box with a border. The default.
+  ghost    fill and border dropped, every measurement kept. Same meaning as
+           .ghost on .input, .btn and .badge.
+
+RESIZE: data-resize="vertical | none | both"
+  vertical is the default and is not declared — the browser already resizes
+  both ways, and horizontal dragging breaks the column the field sits in.
+  "none" is offered because a data-sizing="content" box has nothing to drag
+  for, and refused everywhere else: see the note on 1.4.4 above.
+
+STATE
+  :hover · :disabled · :read-only
+  :user-invalid / [aria-invalid="true"]   both, always. Native validation
+  fires the first; Zod, Yup and React Hook Form fire only the second.
+
+VARIABLES
+  --textarea-font-size          --textarea-surface
+  --textarea-padding-block      --textarea-color
+  --textarea-padding-inline     --textarea-placeholder-color
+  --textarea-radius             --textarea-line-height
+  --textarea-border-width       --textarea-min-block-size
+  --textarea-border-color       --textarea-max-block-size
+  --textarea-radius-max         the ceiling the radius is clamped to
+*/
+
+.textarea {
+  /* 1. VARIABLES — each one reads the channel, with its own default as the
+     fallback so a bare .textarea works with no .form around it. Never
+     declare a --form-* variable here; that would shadow the group's value. */
+  --textarea-font-size: var(--form-font-size, var(--font-size-md));
+  --textarea-padding-block: var(--form-padding-block, 0.5em);
+  --textarea-padding-inline: var(--form-padding-inline, 0.75em);
+  --textarea-radius: var(--form-radius, var(--radius-smooth));
+
+  /* THE CAP.
+
+     border-radius is resolved against the box, so --radius-rounded's 999px
+     means "half of whatever this is". On a one-line .input that is a pill,
+     which is the point. On a six-row textarea it is a 60px arc at each
+     corner and the field stops looking like a field.
+
+     So the radius is capped at the one value that is not arbitrary: half
+     the height of a single-line control at this scale — the same figure the
+     .input beside it resolves its own pill to. A rounded textarea and a
+     rounded input then carry the same corner, and the form reads as one
+     set of controls instead of two.
+
+     At md that is (21px line + 14px padding + 2px border) / 2 = 18.5px.
+     Still clearly rounder than smooth's 8px, and it stops there.
+
+     Raise it if a shape wants more. It is a maximum, not a value: anything
+     smaller passes through untouched, which is why sharp and smooth never
+     meet it. */
+  --textarea-radius-max: calc(
+    (
+        1lh + (var(--textarea-padding-block) * 2) +
+          (var(--textarea-border-width) * 2)
+      ) / 2
+  );
+  --textarea-border-width: var(--form-border-width, 1px);
+  --textarea-border-color: var(--form-border-color, var(--color-neutral-500));
+  --textarea-surface: var(--form-surface, var(--color-neutral-100));
+  --textarea-color: var(--form-color, var(--color-neutral-900));
+  --textarea-placeholder-color: var(--color-neutral-500);
+
+  /* The same as .input's. A paragraph could argue for looser, but the only
+     line-height token in main.css is --line-height-base, and inventing a
+     second one here would put a value in a component that belongs in the
+     token file. The variable is exposed, so a consumer who wants prose
+     spacing sets it without waiting for us. */
+  --textarea-line-height: var(--line-height-base);
+
+  /* A floor, not a height. rows decides, and this only catches the case
+     where rows is absent — two lines, so a bare textarea is visibly not an
+     input. Derived the same way .input derives its own, so the two sit on
+     the same grid. */
+  --textarea-min-block-size: calc(
+    2lh + (var(--textarea-padding-block) * 2) +
+      (var(--textarea-border-width) * 2)
+  );
+
+  /* Only reached by data-sizing="content". none, so a box that grows keeps
+     growing unless the consumer says where to stop. */
+  --textarea-max-block-size: none;
+
+  /* 2. BASE */
+  inline-size: 100%;
+  min-block-size: var(--textarea-min-block-size);
+
+  /* Vertical only. The browser allows both, and dragging a textarea wider
+     than the form pushes the layout apart. The useful direction is kept,
+     which is what 1.4.4 asks for. */
+  resize: block;
+
+  /* A form control arrives with the system font, not the page's. */
+  font-family: inherit;
+  font-size: var(--textarea-font-size);
+  line-height: var(--textarea-line-height);
+  color: var(--textarea-color);
+
+  background-color: var(--textarea-surface);
+  border: var(--textarea-border-width) solid var(--textarea-border-color);
+  /* Capped here rather than in the shape blocks, so every route in is
+     covered: the class, an inherited --form-radius from a .form.rounded, and
+     a --textarea-radius set inline by a consumer. */
+  border-radius: min(var(--textarea-radius), var(--textarea-radius-max));
+  padding-block: var(--textarea-padding-block);
+  padding-inline: var(--textarea-padding-inline);
+
+  transition: border-color var(--transition-fast);
+
+  &::placeholder {
+    color: var(--textarea-placeholder-color);
+    opacity: 1; /* Firefox dims it a second time */
+  }
+
+  /* 3. SIZE */
+  &.sm {
+    --textarea-font-size: var(--font-size-sm);
+  }
+  &.md {
+    /* base is already md */
+  }
+  &.lg {
+    --textarea-font-size: var(--font-size-base);
+  }
+
+  /* 4. SHAPE */
+  &.sharp {
+    --textarea-radius: var(--radius-sharp);
+  }
+  &.smooth {
+    --textarea-radius: var(--radius-smooth);
+  }
+  &.rounded {
+    --textarea-radius: var(--radius-rounded);
+  }
+
+  /* 4b. VARIANT */
+  &.ghost {
+    --textarea-surface: transparent;
+    --textarea-border-color: transparent;
+  }
+
+  /* 4c. HEIGHT */
+
+  /* The box follows what is typed. rows is ignored while this is on, the
+     floor above becomes the empty height, and the max is where it stops.
+     Unsupported browsers drop the declaration and keep the rows height. */
+  &[data-sizing="content"] {
+    field-sizing: content;
+    max-block-size: var(--textarea-max-block-size);
+  }
+
+  &[data-resize="none"] {
+    resize: none;
+  }
+  &[data-resize="both"] {
+    resize: both;
+  }
+
+  /* 5. STATES — after the variant on purpose. Both sit at (0,2,0), so source
+     order decides, and the states have to win: a ghost field still has to
+     show that it is hovered, wrong or disabled. */
+  &:hover:not(:disabled, :read-only) {
+    --textarea-border-color: var(--color-neutral-700);
+  }
+
+  &:is(:user-invalid, [aria-invalid="true"]) {
+    --textarea-border-color: var(--color-error);
+  }
+
+  /* A read-only field is still a normal field: it takes focus, its text can
+     be selected and copied, and it is submitted with the form. Greying it
+     made it look disabled, which is the one thing it is not. */
+  &:read-only:not(:disabled) {
+    cursor: default;
+  }
+
+  &:disabled {
+    --textarea-surface: var(--color-neutral-200);
+    --textarea-border-color: var(--color-neutral-400);
+    --textarea-color: var(--color-neutral-500);
+    cursor: not-allowed;
+    resize: none;
+  }
+
+  /* The ring is main.css's job. This only clears the browser's own outline
+     for a mouse click, where :focus-visible never matches. */
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

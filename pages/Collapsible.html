@@ -52,11 +52,20 @@
               </td>
             </tr>
             <tr>
+              <td><code>swap</code></td>
+              <td class="pc-doc-dim">Part</td>
+              <td>
+                Add it beside <code>collapsible-marker</code> when the slot holds two icons. It
+                is what stacks them and crosses them over. Lives in
+                <code>Animations/swap.css</code> and works on any component, not just this one.
+              </td>
+            </tr>
+            <tr>
               <td><code>closed</code></td>
               <td class="pc-doc-dim">Part</td>
               <td>
-                The icon shown while the panel is closed. Only inside
-                <code>.collapsible-marker</code>, where it cannot reach anything else.
+                The icon shown while the panel is closed. Only meaningful inside a
+                <code>.swap</code> slot.
               </td>
             </tr>
             <tr>
@@ -133,12 +142,12 @@
               <td>No marker of ours at all.</td>
             </tr>
             <tr>
-              <td><code>data-marker-motion</code></td>
-              <td class="pc-doc-dim">the <code>&lt;details&gt;</code></td>
+              <td><code>data-motion</code></td>
+              <td class="pc-doc-dim">the <code>.swap</code> slot</td>
               <td>
-                How the marker changes: <code>scale</code> (default) · <code>rotate</code> ·
-                <code>fade</code> · <code>none</code>. Applies to a slot holding two icons; a
-                single icon has nothing to cross over with and keeps turning.
+                How the pair crosses over: <code>scale</code> (default) · <code>rotate</code> ·
+                <code>fade</code> · <code>none</code>. Only a slot holding two icons; a single
+                icon has nothing to cross over with and keeps turning.
               </td>
             </tr>
             <tr>
@@ -260,11 +269,6 @@
               <td>The panel's text. 8.9:1 on the default background.</td>
             </tr>
             <tr>
-              <td><code>--collapsible-focus-color</code></td>
-              <td><code>var(--color-primary)</code></td>
-              <td>The focus ring. 3px, drawn inside the corner.</td>
-            </tr>
-            <tr>
               <td><code>--collapsible-duration</code></td>
               <td><code>var(--transition-medium)</code></td>
               <td>Open, close, and the marker's turn.</td>
@@ -298,34 +302,38 @@
               <td>A single icon's turn. Split from the panel's own timing so they can differ.</td>
             </tr>
             <tr>
-              <td><code>--collapsible-marker-exit-scale</code></td>
+              <td><code>--swap-exit-scale</code></td>
               <td><code>0.4</code></td>
               <td>How small the leaving icon gets. <code>1</code> means it does not scale.</td>
             </tr>
             <tr>
-              <td><code>--collapsible-marker-exit-rotation</code></td>
+              <td><code>--swap-exit-rotation</code></td>
               <td><code>0deg</code></td>
               <td>How far the leaving icon turns, and where the arriving one comes from.</td>
             </tr>
             <tr>
-              <td><code>--collapsible-marker-exit-duration</code></td>
-              <td><code>120ms</code></td>
+              <td><code>--swap-exit-duration</code></td>
+              <td><code>var(--motion-duration-fast)</code></td>
               <td>Short on purpose. The old icon should be gone before the new one lands.</td>
             </tr>
             <tr>
-              <td><code>--collapsible-marker-enter-duration</code></td>
-              <td><code>220ms</code></td>
+              <td><code>--swap-enter-duration</code></td>
+              <td><code>var(--motion-duration-medium)</code></td>
               <td>The arriving icon takes longer than the leaving one.</td>
             </tr>
             <tr>
-              <td><code>--collapsible-marker-enter-delay</code></td>
-              <td><code>90ms</code></td>
+              <td><code>--swap-enter-delay</code></td>
+              <td><code>var(--motion-duration-instant)</code></td>
               <td>The beat between the two. Set it to <code>0s</code> for a true cross-fade.</td>
             </tr>
             <tr>
-              <td><code>--collapsible-marker-enter-easing</code></td>
+              <td><code>--swap-enter-easing</code></td>
               <td class="pc-doc-dim">a gentle overshoot</td>
-              <td>The curve the arriving icon rides in on.</td>
+              <td>
+                The curve the arriving icon rides in on. These six belong to
+                <code>.swap</code>, so set them on the slot — not on the
+                <code>&lt;details&gt;</code>.
+              </td>
             </tr>
           </tbody>
         </table>
@@ -467,8 +475,10 @@
       <p class="pc-note">
         A plus has fourfold symmetry: turn it and nothing appears to happen. So rather than animate
         something <em>inside</em> an icon, give the slot <strong>two</strong> icons and let them
-        cross over. Mark them <code>.closed</code> and <code>.open</code> — the names live only
-        inside <code>.collapsible-marker</code> and cannot reach anything else on your page.
+        cross over. Add <code>.swap</code> to the slot and mark the icons <code>.closed</code> and
+        <code>.open</code>. The stack and the crossing come from
+        <code>Animations/swap.css</code>; <code>collapsible.css</code> imports it, so there is
+        nothing extra to link.
       </p>
       <p class="pc-note">
         This works for any pair of shapes, because nothing inside either icon has to be animatable.
@@ -478,7 +488,7 @@
         <details class="collapsible md">
           <summary>
             A plus that becomes a minus
-            <span class="collapsible-marker" aria-hidden="true">
+            <span class="collapsible-marker swap" aria-hidden="true">
               <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
               <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
             </span>
@@ -493,7 +503,7 @@
 
     <section class="pc-demo" id="marker-motion" data-title="Marker Motion" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
       <p class="pc-note">
-        <code>data-marker-motion</code> picks how the pair crosses over. Everything is expressed as
+        <code>data-motion</code> on the slot picks how the pair crosses over. Everything is expressed as
         an exit state — where the outgoing icon goes and where the incoming one comes from — so the
         four values only reassign two variables between them.
       </p>
@@ -501,37 +511,37 @@
         <details class="collapsible md">
           <summary>
             scale — the default
-            <span class="collapsible-marker" aria-hidden="true">
+            <span class="collapsible-marker swap" aria-hidden="true">
               <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
               <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
             </span>
           </summary>
           <p>Out fast and small, in slower with a little overshoot.</p>
         </details>
-        <details class="collapsible md" data-marker-motion="rotate">
+        <details class="collapsible md">
           <summary>
             rotate
-            <span class="collapsible-marker" aria-hidden="true">
+            <span class="collapsible-marker swap" data-motion="rotate" aria-hidden="true">
               <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
               <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
             </span>
           </summary>
           <p>The pair turns through the swap. Best when the shapes have a direction.</p>
         </details>
-        <details class="collapsible md" data-marker-motion="fade">
+        <details class="collapsible md">
           <summary>
             fade
-            <span class="collapsible-marker" aria-hidden="true">
+            <span class="collapsible-marker swap" data-motion="fade" aria-hidden="true">
               <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
               <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
             </span>
           </summary>
           <p>Opacity only. The quietest of the four.</p>
         </details>
-        <details class="collapsible md" data-marker-motion="none">
+        <details class="collapsible md">
           <summary>
             none
-            <span class="collapsible-marker" aria-hidden="true">
+            <span class="collapsible-marker swap" data-motion="none" aria-hidden="true">
               <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
               <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
             </span>

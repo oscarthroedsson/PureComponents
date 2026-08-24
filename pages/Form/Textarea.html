@@ -4,128 +4,211 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Textarea — PureComponents</title>
-    <meta name="pc-description" content="Textareas must have an associated label element with proper for and id attributes." />
+    <meta name="pc-description" content="The box when the text runs to more than one line." />
 
-    <!-- Library CSS under test -->
     <link rel="stylesheet" href="../../src/Styles/main.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/inputs/textarea.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/inputs/formField.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/label.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/textarea.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/input/input.css" />
 
-    <!-- Dev shell (not part of the library) -->
     <link rel="stylesheet" href="../docs.css" />
   </head>
   <body data-component="Form/Textarea">
-  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
-    <template>
-      <div class="formField">
-        <label for="message-basic">Message</label>
-        <textarea
-          id="message-basic"
-          class="textarea md"
-          rows="4"
-          aria-describedby="message-help"
-        ></textarea>
-        <p id="message-help" class="helpText">Enter your message here</p>
-      </div>
-    </template>
-  </section>
-
-  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
-    <p class="pc-note">Textareas support three sizes: small (sm), medium (md), and large (lg).</p>
-    <template>
-      <div class="formField">
-        <label for="small-ta">Small</label>
-        <textarea id="small-ta" class="textarea sm" rows="3"></textarea>
-      </div>
-      <div class="formField">
-        <label for="medium-ta">Medium</label>
-        <textarea id="medium-ta" class="textarea md" rows="4"></textarea>
-      </div>
-      <div class="formField">
-        <label for="large-ta">Large</label>
-        <textarea id="large-ta" class="textarea lg" rows="5"></textarea>
-      </div>
-    </template>
-  </section>
-
-  <section class="pc-demo" id="resize-variants" data-title="Resize Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
-    <p class="pc-note">Textareas support different resize behaviors: vertical (default), horizontal, both, and none.</p>
-    <template>
-      <div class="formField">
-        <label for="resize-vertical">Vertical Resize (default)</label>
-        <textarea id="resize-vertical" class="textarea md" rows="3" style="resize: vertical;"></textarea>
-      </div>
-      <div class="formField">
-        <label for="resize-none">No Resize</label>
-        <textarea id="resize-none" class="textarea md" rows="3" style="resize: none;"></textarea>
-      </div>
-    </template>
-  </section>
-
-  <section class="pc-demo" id="character-count" data-title="Character Count">
-    <p class="pc-note">Textareas can display character count using <code>aria-describedby</code> and <code>aria-live="polite"</code>.</p>
-    <template>
-      <div class="formField">
-        <label for="count-ta">Message</label>
-        <textarea
-          id="count-ta"
-          class="textarea md"
-          rows="4"
-          maxlength="500"
-          aria-describedby="count-help count-display"
-        ></textarea>
-        <div class="textarea-footer">
-          <p id="count-help" class="helpText">Enter your message</p>
-          <span id="count-display" class="char-count" aria-live="polite">0 / 500</span>
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        The key alone is already <code>md</code>. Width comes from the parent; height comes from
+        <code>rows</code>, and nothing here overrides it. Without <code>rows</code> the box falls back
+        to two lines, so a bare textarea is visibly not an input.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="ta-basic">Message</label>
+          <textarea id="ta-basic" class="textarea" rows="4" placeholder="Placeholder text"></textarea>
         </div>
-      </div>
-    </template>
-  </section>
+        <div class="field">
+          <label class="label" for="ta-norows">No rows attribute</label>
+          <textarea id="ta-norows" class="textarea"></textarea>
+        </div>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="error-state" data-title="Error State">
-    <p class="pc-note">Error states require <code>aria-invalid="true"</code> and <code>aria-describedby</code> pointing to the error message.</p>
-    <template>
-      <div class="formField">
-        <label for="error-ta">Message</label>
-        <textarea
-          id="error-ta"
-          class="textarea md"
-          rows="4"
-          aria-invalid="true"
-          aria-describedby="ta-error"
-        ></textarea>
-        <p id="ta-error" class="status" role="alert">Message is required</p>
-      </div>
-    </template>
-  </section>
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        <code>sm</code> · <code>md</code> · <code>lg</code> — 12 / 14 / 16px. Only the font size is
+        set; the padding and the height floor are in <code>em</code> and follow it.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="ta-sm">Small</label>
+          <textarea id="ta-sm" class="textarea sm" rows="3">Small</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-md">Medium</label>
+          <textarea id="ta-md" class="textarea md" rows="3">Medium</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-lg">Large</label>
+          <textarea id="ta-lg" class="textarea lg" rows="3">Large</textarea>
+        </div>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
-    <p class="pc-note">Textareas can be disabled using the native <code>disabled</code> attribute.</p>
-    <template>
-      <div class="formField">
-        <label for="disabled-ta">Disabled Textarea</label>
-        <textarea id="disabled-ta" class="textarea md" rows="4" disabled>This field is disabled</textarea>
-      </div>
-    </template>
-  </section>
+    <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">Same three shapes as every other control, from the same channel.</p>
+      <template>
+        <div class="field">
+          <label class="label" for="ta-sharp">Sharp</label>
+          <textarea id="ta-sharp" class="textarea sharp" rows="2">sharp</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-smooth">Smooth</label>
+          <textarea id="ta-smooth" class="textarea smooth" rows="2">smooth</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-rounded">Rounded</label>
+          <textarea id="ta-rounded" class="textarea rounded" rows="2">rounded</textarea>
+        </div>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
-    <p class="pc-note">Textareas must have proper labels and ARIA attributes for screen reader support.</p>
-    <template>
-      <div class="formField">
-        <label for="accessible-ta">Accessible Textarea</label>
-        <textarea
-          id="accessible-ta"
-          class="textarea md"
-          rows="4"
-          aria-describedby="help-text error-text"
-          aria-required="true"
-        ></textarea>
-        <p id="help-text" class="helpText">Enter your message</p>
-        <p id="error-text" class="status" role="alert" style="display: none;">Error message</p>
-      </div>
-    </template>
-  </section>
+    <section class="pc-demo" id="autogrow" data-title="Growing with the content" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        <code>data-sizing="content"</code> makes the box follow what is typed into it — type into the
+        first one and watch it grow, delete and watch it shrink. No JavaScript, no scroll-height
+        measuring, no hidden mirror element. The second one stops at
+        <code>--textarea-max-block-size</code> and scrolls after that. Where
+        <code>field-sizing</code> is not supported the declaration is ignored and the box keeps its
+        <code>rows</code> height, which is why the attribute stays on the element.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="ta-grow">Grows without limit</label>
+          <textarea id="ta-grow" class="textarea" data-sizing="content" rows="2">Type another line.</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-grow-max">Stops at 8rem</label>
+          <textarea id="ta-grow-max" class="textarea" data-sizing="content" rows="2"
+                    style="--textarea-max-block-size: 8rem">Type until it stops.</textarea>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="resize" data-title="Resize" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Vertical by default: the browser allows both axes, and dragging a textarea wider than the
+        form pushes the layout apart. <code>data-resize="none"</code> exists for a box that grows on
+        its own and has nothing to drag for — it is not a default, because someone at 200% zoom
+        needs to be able to make the box bigger (1.4.4).
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="ta-resize-v">Vertical — the default</label>
+          <textarea id="ta-resize-v" class="textarea" rows="2">Drag the corner.</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-resize-n">None</label>
+          <textarea id="ta-resize-n" class="textarea" data-resize="none" rows="2">Nothing to drag.</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-resize-b">Both</label>
+          <textarea id="ta-resize-b" class="textarea" data-resize="both" rows="2">Drag either way.</textarea>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="states" data-title="States" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        The same states as <code>.input</code>, drawn the same way. A read-only field is not
+        disabled: it takes focus, its text can be copied, and it is submitted. Only the cursor
+        separates them.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="ta-normal">Normal</label>
+          <textarea id="ta-normal" class="textarea" rows="2">Normal</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-readonly">Read only</label>
+          <textarea id="ta-readonly" class="textarea" rows="2" readonly>Read only</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-disabled">Disabled</label>
+          <textarea id="ta-disabled" class="textarea" rows="2" disabled>Disabled</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-invalid">Invalid</label>
+          <textarea id="ta-invalid" class="textarea" rows="2" aria-invalid="true">Wrong</textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="ta-ghost">Ghost</label>
+          <textarea id="ta-ghost" class="textarea ghost" rows="2">No fill, no border, same measurements.</textarea>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="hint-error" data-title="Hint and message" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Both come from <code>field.css</code> and work the same beside a textarea as beside an input.
+        The message row is always there, whether or not it shows — that is what stops the page
+        jumping when an error appears. It is hidden with <code>visibility</code>, never
+        <code>display</code>, so the row is reserved and the text stays out of the accessibility
+        tree until it is real. The reveal is the control's own state, matched two ways:
+        <code>:user-invalid</code> for native validation and <code>[aria-invalid="true"]</code> for
+        Zod, Yup and React Hook Form, which set no native constraints at all.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="ta-hint">With a hint</label>
+          <p class="field-hint" id="ta-hint-text">Markdown is not rendered.</p>
+          <textarea id="ta-hint" class="textarea" rows="3" aria-describedby="ta-hint-text"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="label" for="ta-reserved">Valid — the row is reserved, not shown</label>
+          <p class="field-hint" id="ta-reserved-hint">Nothing has gone wrong yet.</p>
+          <textarea id="ta-reserved" class="textarea" rows="3"
+                    aria-describedby="ta-reserved-hint ta-reserved-error">Fine.</textarea>
+          <p class="field-error" id="ta-reserved-error">This message is not showing.</p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="ta-error">Invalid — the same field, one attribute later</label>
+          <p class="field-hint" id="ta-error-hint">Nothing has gone wrong yet.</p>
+          <textarea id="ta-error" class="textarea" rows="3" aria-invalid="true"
+                    aria-describedby="ta-error-hint ta-error-msg">Too short.</textarea>
+          <p class="field-error" id="ta-error-msg">Tell us at least a sentence.</p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="ta-native">Native validation — type one character, then tab out</label>
+          <p class="field-hint" id="ta-native-hint">Required, and at least 20 characters.</p>
+          <textarea id="ta-native" class="textarea" rows="3" required minlength="20"
+                    aria-describedby="ta-native-hint ta-native-msg"></textarea>
+          <p class="field-error" id="ta-native-msg">That is not long enough yet.</p>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="together" data-title="Beside an input" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        The whole point of the shared channel: one class on the <code>.form</code> retunes both
+        controls, and they stay the same field with a different number of lines.
+      </p>
+      <template>
+        <form class="form lg rounded">
+          <div class="field">
+            <label class="label" for="ta-subject">Subject</label>
+            <input id="ta-subject" class="input" type="text" value="Same box" />
+          </div>
+          <div class="field">
+            <label class="label" for="ta-body">Message</label>
+            <textarea id="ta-body" class="textarea" rows="3">Same box, more lines.</textarea>
+          </div>
+        </form>
+      </template>
+    </section>
 
     <script src="../components.js"></script>
     <script src="../docs.js"></script>

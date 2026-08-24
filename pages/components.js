@@ -20,10 +20,17 @@ window.PC_COMPONENTS = [
   { id: "SkipLinks",  title: "Skip Links",  group: "Core interactive", file: "SkipLinks.html",  css: ["skip-links.css"] },
 
   // ---------- Form ----------
-  { id: "Form/Form",     title: "Form",     group: "Form", file: "Form/Form.html",     css: ["Form/form.css", "Form/fieldset.css", "Form/field.css", "Form/input.css", "button.css"] },
-  { id: "Form/Field",    title: "Field",    group: "Form", file: "Form/Field.html",    css: ["Form/form.css", "Form/field.css", "Form/input.css"] },
-  { id: "Form/Fieldset", title: "Fieldset", group: "Form", file: "Form/Fieldset.html", css: ["Form/form.css", "Form/fieldset.css", "Form/field.css", "Form/input.css"] },
-  { id: "Form/Input",    title: "Input",    group: "Form", file: "Form/Input.html",    css: ["Form/form.css", "Form/input.css"] },
+  { id: "Form/Form",     title: "Form",     group: "Form", file: "Form/Form.html",     css: ["Form/form.css", "Form/fieldset.css", "Form/field.css", "Form/input/input.css", "button.css"] },
+  { id: "Form/Field",    title: "Field",    group: "Form", file: "Form/Field.html",    css: ["Form/form.css", "Form/field.css", "Form/label.css", "Form/input/input.css"] },
+  { id: "Form/Fieldset", title: "Fieldset", group: "Form", file: "Form/Fieldset.html", css: ["Form/form.css", "Form/fieldset.css", "Form/field.css", "Form/input/input.css"] },
+  { id: "Form/Input",    title: "Input",    group: "Form", file: "Form/Input.html",    css: ["Form/form.css", "Form/field.css", "Form/input/input.css"] },
+  { id: "Form/Label",    title: "Label",    group: "Form", file: "Form/Label.html",    css: ["Form/form.css", "Form/fieldset.css", "Form/field.css", "Form/label.css", "Form/input/input.css", "Form/checkbox.css"] },
+  { id: "Form/Textarea", title: "Textarea", group: "Form", file: "Form/Textarea.html", css: ["Form/form.css", "Form/field.css", "Form/label.css", "Form/textarea.css", "Form/input/input.css"] },
+  { id: "Form/Checkbox", title: "Checkbox", group: "Form", file: "Form/Checkbox.html", css: ["Form/form.css", "Form/fieldset.css", "Form/field.css", "Form/label.css", "Form/checkbox.css"] },
+  { id: "Form/Radio", title: "Radio", group: "Form", file: "Form/Radio.html", css: ["Form/form.css", "Form/fieldset.css", "Form/field.css", "Form/label.css", "Form/radio.css", "Form/checkbox.css"] },
+  { id: "Form/Range", title: "Range", group: "Form", file: "Form/Range.html", css: ["Form/form.css", "Form/field.css", "Form/label.css", "Form/range.css", "Form/input/input.css"] },
+  { id: "Form/Select", title: "Select", group: "Form", file: "Form/Select.html", css: ["Form/form.css", "Form/field.css", "Form/label.css", "Form/select.css", "Form/input/input.css"] },
+  { id: "Form/File", title: "File", group: "Form", file: "Form/File.html", css: ["Form/form.css", "Form/field.css", "Form/label.css", "Form/input/file.css", "Form/input/input.css", "button.css"] },
 
   // ---------- Feedback ----------
   { id: "Alert",    title: "Alert",    group: "Feedback", file: "Alert.html",    css: ["alert.css"] },
@@ -40,7 +47,6 @@ window.PC_COMPONENTS = [
   { id: "Breadcrumbs", title: "Breadcrumbs", group: "Data display", file: "Breadcrumbs.html", css: ["breadcrumbs.css"] },
 
   // ---------- Content ----------
-  { id: "Article",   title: "Article",   group: "Content", file: "Article.html",   css: ["article.css"] },
   { id: "Collapsible", title: "Collapsible", group: "Content", file: "Collapsible.html", css: ["collapsible.css"] },
   // Accordion is a composition: it groups collapsibles and adds nothing they already do.
   { id: "Accordion",   title: "Accordion",   group: "Content", file: "Accordion.html",   css: ["collapsible.css", "accordion.css"] },
@@ -50,7 +56,6 @@ window.PC_COMPONENTS = [
   { id: "Pill",      title: "Pill",      group: "Content", file: "Pill.html",      css: ["pill.css"] },
   { id: "Audio",     title: "Audio",     group: "Content", file: "Audio.html",     css: ["audio.css"] },
   { id: "ATag",      title: "Link (a)",  group: "Content", file: "ATag.html",      css: ["a-tag.css"] },
-  { id: "Del",       title: "Del",       group: "Content", file: "Del.html",       css: ["del.css"] },
 ];
 
 /* Pages that are not components but belong in the navigation.
@@ -78,6 +83,14 @@ window.PC_PAGES = [
     title: "Button: loading & skeleton",
     group: "Experiments",
     file: "Experiments/ButtonLoading.html",
+    css: [],
+    docs: null,
+  },
+  {
+    id: "Experiments/MediaControlsProbe",
+    title: "Media controls probe",
+    group: "Experiments",
+    file: "Experiments/MediaControlsProbe.html",
     css: [],
     docs: null,
   },

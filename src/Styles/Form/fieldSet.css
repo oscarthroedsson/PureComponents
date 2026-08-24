@@ -81,7 +81,8 @@ VARIANT:
   panel    a whole surface: fill, border, radius and padding.
 
 VARIABLES
-  --fieldset-gap                between the fields in the group
+  --fieldset-gap                between the options in the group. 8px, half of
+                                --form-gap — see the note in the block below.
   --fieldset-legend-gap         under the legend; a margin, not the grid gap
   --fieldset-legend-color
   --fieldset-legend-weight
@@ -93,7 +94,17 @@ VARIABLES
 
 .fieldset {
   /* 1. VARIABLES */
-  --fieldset-gap: var(--form-gap, var(--spacing-100));
+  /* Half of --form-gap on purpose, and not read from it.
+
+     A .form spaces fields that are each a stack of their own — label,
+     control, message — so they need a full 1rem to read as separate. A
+     fieldset holds the answers to one question, and they are usually one
+     line each. At 1rem those lines drift apart and stop reading as a set.
+
+     8px is close enough to still be one group and far enough to hit
+     separately. Raise --fieldset-gap where a fieldset holds full fields
+     rather than options. */
+  --fieldset-gap: var(--spacing-50);
 
   /* Quarter of the gap between two fields. The legend belongs to what
      follows it, so it has to sit closer to its first field than the fields

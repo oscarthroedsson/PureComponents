@@ -4,151 +4,150 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Range — PureComponents</title>
-    <meta name="pc-description" content="Range inputs must have proper ARIA attributes (aria-valuemin, aria-valuemax, aria-valuenow) and an associated label." />
+    <meta name="pc-description" content="A slider, left native on purpose." />
 
-    <!-- Library CSS under test -->
     <link rel="stylesheet" href="../../src/Styles/main.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/inputs/range.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/inputs/formField.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/label.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/range.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/input/input.css" />
 
-    <!-- Dev shell (not part of the library) -->
     <link rel="stylesheet" href="../docs.css" />
   </head>
   <body data-component="Form/Range">
-  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
-    <template>
-      <div class="formField">
-        <label for="range-basic">Volume</label>
-        <input
-          type="range"
-          id="range-basic"
-          class="range md"
-          min="0"
-          max="100"
-          value="50"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="50"
-          aria-describedby="range-help"
-        />
-        <p id="range-help" class="helpText">Adjust the volume (0-100)</p>
-      </div>
-    </template>
-  </section>
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Taken over with <code>appearance: none</code>, which is what buys the track, the shapes
+        and the sizes. The cost is the fill: once the control is ours, Chromium offers no
+        pseudo-element for the filled part, so the track is painted with a gradient that stops at
+        <code>--range-value</code>. That variable does not update itself — the library ships no
+        JavaScript. Left alone the fill sits at 50% while the thumb still moves, works and submits;
+        see the next section for the one line that makes it follow. Always set <code>min</code> and
+        <code>max</code> — without them the range is 0–100 whatever the numbers on screen say, and
+        the announced value is wrong.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="rg-basic">Volume</label>
+          <input id="rg-basic" class="range" type="range" min="0" max="100" value="40" />
+        </div>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1.5rem;">
-    <p class="pc-note">Range inputs support three sizes: small (sm), medium (md), and large (lg).</p>
-    <template>
-      <div class="formField">
-        <label for="small-range">Small</label>
-        <input
-          type="range"
-          id="small-range"
-          class="range sm"
-          min="0"
-          max="100"
-          value="50"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="50"
-        />
-      </div>
-      <div class="formField">
-        <label for="medium-range">Medium</label>
-        <input
-          type="range"
-          id="medium-range"
-          class="range md"
-          min="0"
-          max="100"
-          value="50"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="50"
-        />
-      </div>
-      <div class="formField">
-        <label for="large-range">Large</label>
-        <input
-          type="range"
-          id="large-range"
-          class="range lg"
-          min="0"
-          max="100"
-          value="50"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="50"
-        />
-      </div>
-    </template>
-  </section>
+    <section class="pc-demo" id="fill" data-title="Making the fill follow" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        One line of consumer JavaScript. The library cannot ship it — see
+        <code>AGENTS.md</code> §1 — but without it the fill is decoration that stands still. The
+        control is correct either way; only the paint needs the script.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="rg-fill">Volume — drag it</label>
+          <input id="rg-fill" class="range primary" type="range" min="0" max="100" value="40"
+                 style="--range-value: 40%"
+                 oninput="this.style.setProperty('--range-value', (this.value / this.max * 100) + '%')" />
+        </div>
+        <div class="field">
+          <label class="label" for="rg-nofill">The same slider without it</label>
+          <input id="rg-nofill" class="range primary" type="range" min="0" max="100" value="40" />
+        </div>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="with-value-display" data-title="With Value Display">
-    <p class="pc-note">Range inputs can display the current value using <code>aria-valuetext</code> or a separate element.</p>
-    <template>
-      <div class="formField">
-        <label for="value-range">Volume: <span id="value-display">50</span>%</label>
-        <input
-          type="range"
-          id="value-range"
-          class="range md"
-          min="0"
-          max="100"
-          value="50"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="50"
-          aria-valuetext="50 percent"
-          oninput="document.getElementById('value-display').textContent = this.value"
-        />
-      </div>
-    </template>
-  </section>
+    <section class="pc-demo" id="variants" data-title="Variants" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Neutral by default, so a slider does not shout in a form full of quiet controls.
+        <code>primary</code> puts the brand green on the line and on the thumb.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="rg-default">Default — neutral</label>
+          <input id="rg-default" class="range" type="range" min="0" max="100" value="40" />
+        </div>
+        <div class="field">
+          <label class="label" for="rg-primary">Primary</label>
+          <input id="rg-primary" class="range primary" type="range" min="0" max="100" value="40" />
+        </div>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
-    <p class="pc-note">Range inputs can be disabled using the native <code>disabled</code> attribute.</p>
-    <template>
-      <div class="formField">
-        <label for="disabled-range">Disabled Range</label>
-        <input
-          type="range"
-          id="disabled-range"
-          class="range md"
-          min="0"
-          max="100"
-          value="50"
-          disabled
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="50"
-        />
-      </div>
-    </template>
-  </section>
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        <code>zoom</code>, because nothing else reaches a native control — <code>font-size</code>
+        does nothing to a range, and <code>block-size</code> only makes the box taller while the
+        track stays where it was. <code>zoom</code> scales the whole thing, track and thumb included,
+        and it changes the layout box so the form reflows around it. <code>transform: scale</code>
+        would resize the picture and let the slider spill out of its column.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="rg-sm">Small</label>
+          <input id="rg-sm" class="range sm" type="range" min="0" max="100" value="40" />
+        </div>
+        <div class="field">
+          <label class="label" for="rg-md">Medium</label>
+          <input id="rg-md" class="range md" type="range" min="0" max="100" value="40" />
+        </div>
+        <div class="field">
+          <label class="label" for="rg-lg">Large</label>
+          <input id="rg-lg" class="range lg" type="range" min="0" max="100" value="40" />
+        </div>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
-    <p class="pc-note">Range inputs must have proper ARIA attributes for screen reader support.</p>
-    <template>
-      <div class="formField">
-        <label for="accessible-range">Accessible Range</label>
-        <input
-          type="range"
-          id="accessible-range"
-          class="range md"
-          min="0"
-          max="100"
-          value="50"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="50"
-          aria-valuetext="50 percent"
-          aria-describedby="range-help"
-        />
-        <p id="range-help" class="helpText">Use arrow keys to adjust</p>
-      </div>
-    </template>
-  </section>
+    <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        One class shapes both surfaces: the capsule and the fill inside it.
+        <code>smooth</code> gives the fill a tighter radius than the capsule, because the fill is
+        half the height and the same radius would read as a pill there.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="rg-sharp">Sharp</label>
+          <input id="rg-sharp" class="range sharp" type="range" min="0" max="100" value="40" />
+        </div>
+        <div class="field">
+          <label class="label" for="rg-smooth">Smooth</label>
+          <input id="rg-smooth" class="range smooth" type="range" min="0" max="100" value="40" />
+        </div>
+        <div class="field">
+          <label class="label" for="rg-rounded">Rounded</label>
+          <input id="rg-rounded" class="range rounded" type="range" min="0" max="100" value="40" />
+        </div>
+        <div class="field">
+          <label class="label" for="rg-thick">A thicker track — --range-track-size</label>
+          <input id="rg-thick" class="range primary rounded" type="range" min="0" max="100" value="40"
+                 style="--range-track-size: 0.6rem" />
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="states" data-title="States" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        A range is announced as a slider with a number. If the number means something — kronor,
+        minutes, a percentage — say so with <code>aria-valuetext</code>; CSS cannot. And never make a
+        slider the only way to enter a value that has to be exact: pair it with a number field when
+        precision matters.
+      </p>
+      <template>
+        <div class="field">
+          <label class="label" for="rg-normal">Normal</label>
+          <input id="rg-normal" class="range" type="range" min="0" max="100" value="40" />
+        </div>
+        <div class="field">
+          <label class="label" for="rg-disabled">Disabled</label>
+          <input id="rg-disabled" class="range" type="range" min="0" max="100" value="40" disabled />
+        </div>
+        <div class="field">
+          <label class="label" for="rg-paired">Paired with a number field</label>
+          <div style="display:flex; gap:0.75rem; align-items:center">
+            <input id="rg-paired" class="range" type="range" min="0" max="100" value="40" />
+            <input class="input" type="number" min="0" max="100" value="40" style="inline-size:5rem" aria-label="Volume, exact" />
+          </div>
+        </div>
+      </template>
+    </section>
 
     <script src="../components.js"></script>
     <script src="../docs.js"></script>

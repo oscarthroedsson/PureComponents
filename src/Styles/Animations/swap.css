@@ -1,0 +1,133 @@
+/*
+Swap — two icons in one slot, crossing over when a state flips.
+
+USAGE:
+  <summary>
+    Question
+    <span class="swap" aria-hidden="true">
+      <svg class="closed">…plus…</svg>
+      <svg class="open">…minus…</svg>
+    </span>
+  </summary>
+
+Nothing animates inside an icon, so any pair of shapes works — a plus and a
+minus, a chevron and a cross, whatever you draw.
+
+WHAT FLIPS IT
+  a parent with [open]                 <details>, <dialog>
+  a parent with aria-expanded="true"   a scripted disclosure
+  [data-swap="on"] on the slot itself  anything else
+
+The slot shows .closed by default and .open when one of those matches.
+
+MOTION: data-motion="scale | rotate | fade | none"  (scale is the default)
+  Only the exit state moves; the rules below already say what to do with it,
+  so a variant reassigns two variables and never rewrites a rule.
+
+ACCESSIBILITY REQUIREMENTS:
+- The pair is decoration. It repeats a state the control already reports, so
+  the slot MUST carry aria-hidden="true".
+- Never the only signal for a state — something else has to say it too.
+- Both icons are in the layout at all times; visibility is opacity, so nothing
+  reflows as they cross.
+- Silenced under prefers-reduced-motion.
+
+VARIABLES
+  --swap-exit-scale · --swap-exit-rotation
+  --swap-exit-duration · --swap-enter-duration
+  --swap-enter-delay · --swap-enter-easing
+*/
+
+@import url("./motion.css");
+
+.swap {
+  /* 1. VARIABLES */
+  --swap-exit-scale: 0.4;
+  --swap-exit-rotation: 0deg;
+  --swap-exit-duration: var(--motion-duration-fast);
+  --swap-enter-duration: var(--motion-duration-medium);
+  --swap-enter-delay: var(--motion-duration-instant);
+  --swap-enter-easing: var(--motion-ease-spring);
+
+  /* 2. BASE — a stack. Grid, so the box still sizes itself from the icons. */
+  display: grid;
+
+  > * {
+    grid-area: 1 / 1;
+
+    /* Declared as defence: `.closed { display: none }` is one of the commonest
+       utility rules in other people's stylesheets. */
+    display: block;
+
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  /* 4. MOTION VARIANTS — scale is the default and needs no block. */
+  &[data-motion="rotate"] {
+    --swap-exit-scale: 1;
+    --swap-exit-rotation: 180deg;
+  }
+
+  &[data-motion="fade"] {
+    --swap-exit-scale: 1;
+    --swap-exit-rotation: 0deg;
+    --swap-enter-easing: var(--motion-ease-out);
+  }
+
+  &[data-motion="none"] {
+    --swap-exit-duration: 0s;
+    --swap-enter-duration: 0s;
+    --swap-enter-delay: 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    > * {
+      transition: none;
+    }
+  }
+}
+
+/*
+STATES — each rule pairs the icon that is wrong for the current state with the
+one that is right for it, so the swap is two rules and not four. Written flat
+rather than nested: `&` in the middle of a selector does not resolve the way
+it reads, and every selector here carries .swap anyway.
+
+The "on" selectors are (0,3,0) against the default's (0,2,0), so they win on
+specificity and source order never enters into it.
+*/
+
+/* The icon for the state we are not in. */
+.swap > .open,
+:is([open], [aria-expanded="true"]) .swap > .closed,
+.swap[data-swap="on"] > .closed {
+  opacity: 0;
+  scale: var(--swap-exit-scale);
+  rotate: var(--swap-exit-rotation);
+
+  transition:
+    opacity var(--swap-exit-duration) var(--motion-ease-in),
+    scale var(--swap-exit-duration) var(--motion-ease-in),
+    rotate var(--swap-exit-duration) var(--motion-ease-in);
+}
+
+/* The icon for the state we are in. It arrives a beat after the other leaves. */
+.swap > .closed,
+:is([open], [aria-expanded="true"]) .swap > .open,
+.swap[data-swap="on"] > .open {
+  opacity: 1;
+  scale: 1;
+  rotate: 0deg;
+
+  transition:
+    opacity var(--swap-enter-duration) var(--swap-enter-delay),
+    scale var(--swap-enter-duration) var(--swap-enter-delay) var(--swap-enter-easing),
+    rotate var(--swap-enter-duration) var(--swap-enter-delay) var(--swap-enter-easing);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swap > * {
+    transition: none;
+  }
+}

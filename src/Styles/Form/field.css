@@ -1,103 +1,7 @@
-/*
-Field — one control and everything that explains it.
-
-  <div class="field">
-    <label for="email">Email</label>
-    <p class="field-hint">We only use it for receipts.</p>
-    <input class="input" type="email" id="email"
-           aria-describedby="email-hint email-error" aria-invalid="true">
-    <p class="field-error" id="email-error">Enter a valid email address.</p>
-  </div>
-
-Every part is optional. A .field with nothing but a label and a control has
-to look finished, and it does.
-
-.field-hint and .field-error are keys of their own, not parts nested in
-.field. They have to work in two places — inside a field, and as a direct
-child of a .fieldset describing the whole group. Whoever contains them owns
-the reveal, and neither owner can reach into the other's.
-
-
-ORDER
-  DOM order decides. label → hint → control → message is what the demos
-  show, but hint-before-control and message-above-control are both defensible
-  (GOV.UK puts both above, because a message below the field can sit off
-  screen at high magnification). This file sets no `order`, so the consumer
-  chooses.
-
-
-THE RESERVED MESSAGE ROW
-
-.field-error always occupies one line, whether or not it is showing. That is
-what stops the page jumping when a message appears. It is hidden with
-visibility, never with display or opacity:
-
-  display: none    would take the element out of the accessibility tree AND
-                   out of the layout. No reserved row.
-  opacity: 0       reserves the row but leaves the text in the accessibility
-                   tree — the error is announced as the field's description
-                   while the field is still valid.
-  visibility       reserves the row and removes it from the tree. It is the
-                   only one that tells the eye and the screen reader the
-                   same thing.
-
-The row is revealed by the control's own state, matched two ways:
-
-  :user-invalid          native constraint validation — required, pattern,
-                         type="email", minlength. Fires only after the user
-                         has interacted, which is why it is used and :invalid
-                         is not: :invalid paints every empty required field
-                         red on page load.
-  [aria-invalid="true"]  JS validation. Zod, Yup and React Hook Form set no
-                         native constraints at all, so :user-invalid never
-                         matches there. This is not a fallback, it is the
-                         main path for most consumers.
-
-
-ACCESSIBILITY REQUIREMENTS:
-- The control MUST be named by a real <label for>, not by a placeholder and
-  not by aria-label on a bare input inside a visible label.
-- Hint and message MUST be pointed at from the control with aria-describedby,
-  listing both ids where both exist. CSS cannot do this — there is no
-  selector that follows an id reference — so it is markup the consumer owns.
-- aria-errormessage is the semantically exact attribute for the message, and
-  is only honoured alongside aria-invalid="true". Screen reader support has
-  lagged behind aria-describedby, so pair them or use describedby alone.
-- While .field-error is hidden it is not in the accessibility tree, and CSS
-  revealing it fires no announcement. The error reaches assistive tech
-  through aria-invalid on the control, which is announced on focus. The
-  message is the visual channel. A consumer who needs the message spoken
-  renders it into an already-visible aria-live region instead.
-- Colour is never the only signal: the message appearing is the signal, and
-  aria-invalid is the programmatic one.
-- The focus ring comes from main.css. This file draws none, and nothing here
-  clips overflow, so the ring can never be cut.
-
-SIZE:  sm · md (default) · lg   — rewrites the channel, so the control,
-       label, hint and message all follow.
-SHAPE: sharp · smooth (default) · rounded
-
-VARIABLES
-  --field-gap                   between label, control and message
-  --field-message-font-size     hint and message; floored at --font-size-sm
-  --field-message-line-height   tight, because these are one-line labels and
-                                not paragraphs
-  --field-label-weight
-  --field-error-row             the height one message row occupies
-  --field-error-reserve         0 by default. Set it to var(--field-error-row)
-                                to give fields WITHOUT a .field-error the same
-                                height as fields with one. Off by default
-                                because it adds a dead row to every field in
-                                the form, checkboxes included.
-*/
-
 .field {
   /* 1. VARIABLES */
   --field-font-size: var(--form-font-size, var(--font-size-md));
   --field-gap: var(--form-field-gap, var(--spacing-25));
-
-  --field-label-color: var(--form-label-color, var(--color-neutral-900));
-  --field-label-weight: 600;
 
   --field-hint-color: var(--form-hint-color, var(--color-neutral-500));
   --field-error-color: var(--form-error-color, var(--color-error));
@@ -107,9 +11,7 @@ VARIABLES
   --field-message-font-size: max(0.85em, var(--font-size-sm));
   --field-message-line-height: 1.2;
 
-  --field-error-row: calc(
-    (var(--field-message-font-size) * var(--field-message-line-height)) + var(--field-gap)
-  );
+  --field-error-row: calc((var(--field-message-font-size) * var(--field-message-line-height)) + var(--field-gap));
   --field-error-reserve: 0px;
 
   /* 2. BASE */
@@ -124,14 +26,6 @@ VARIABLES
 
   &:has(.field-error) {
     padding-block-end: 0;
-  }
-
-  /* The label is native and stays native — no class, no component. Direct
-     child only, so a <label> wrapping a checkbox deeper in the field is left
-     to its own component. */
-  & > label {
-    color: var(--field-label-color);
-    font-weight: var(--field-label-weight);
   }
 
   /* 3. SIZE — a group rewrites the channel, so the control follows too. */
@@ -161,23 +55,10 @@ VARIABLES
     visibility: visible;
   }
 
-  &:has(:disabled) > label {
-    color: var(--color-neutral-500);
+  &:has(:disabled) > .label {
+    color: var(--label-disabled-color, var(--color-neutral-500));
   }
 }
-
-/*
-The two message parts are keys of their own, not parts nested inside .field.
-They have to work in two places: inside a .field, describing one control, and
-as a direct child of a .fieldset, describing the whole group — which is what
-a radio group needs, where the message belongs to the question and not to any
-one option.
-
-Both read --field-message-* when a .field declares it above them, and fall
-back to their own scale when they sit straight in a group. Whoever owns them
-owns the reveal: .field lights its own > .field-error, .fieldset lights its
-own, and neither can reach into the other.
-*/
 
 .field-hint,
 .field-error {
@@ -192,7 +73,6 @@ own, and neither can reach into the other.
 
 .field-hint {
   --field-hint-text: var(--form-hint-color, var(--color-neutral-500));
-
   color: var(--field-hint-text);
 }
 
@@ -201,12 +81,6 @@ own, and neither can reach into the other.
 
   color: var(--field-error-text);
 
-  /* One line of this element's own line-height — not a guessed pixel value,
-     so the reserved row tracks every size class for free. */
   min-block-size: 1lh;
-
-  /* Hidden until whatever owns it says otherwise. visibility keeps the row
-     and takes the text out of the accessibility tree; display would drop the
-     row, opacity would leave the text being announced. */
   visibility: hidden;
 }

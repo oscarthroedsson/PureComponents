@@ -4,116 +4,179 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkbox — PureComponents</title>
-    <meta name="pc-description" content="Checkboxes must have an associated label element. The label can wrap the checkbox or use for/id association." />
+    <meta name="pc-description" content="A box that is on, off, or neither." />
 
-    <!-- Library CSS under test -->
     <link rel="stylesheet" href="../../src/Styles/main.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/inputs/checkbox.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/inputs/formField.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/fieldset.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/label.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/checkbox.css" />
 
-    <!-- Dev shell (not part of the library) -->
     <link rel="stylesheet" href="../docs.css" />
   </head>
   <body data-component="Form/Checkbox">
-  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
-    <template>
-      <div class="formField">
-        <label for="agree" class="checkbox-label md">
-          <input type="checkbox" id="agree" class="checkbox md" />
-          I agree to the terms and conditions
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        Both bindings are correct. Wrapping the input in the label needs no ids and cannot come
+        apart; <code>for</code> survives the box moving. Either way the label is part of the target —
+        the box alone is smaller than the 24×24 that WCAG 2.2 asks for, and the two together clear it.
+      </p>
+      <template>
+        <label class="label">
+          <input class="checkbox" type="checkbox" checked />
+          Wrapped in the label
         </label>
-      </div>
-    </template>
-  </section>
+        <div style="display:flex; gap:0.6rem; align-items:center">
+          <input class="checkbox" type="checkbox" id="cb-for" />
+          <label class="label" for="cb-for" style="font-weight:400">Bound with for</label>
+        </div>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1rem;">
-    <p class="pc-note">Checkboxes support three sizes: small (sm), medium (md), and large (lg).</p>
-    <template>
-      <div class="formField">
-        <label for="small-cb" class="checkbox-label sm">
-          <input type="checkbox" id="small-cb" class="checkbox sm" />
-          Small checkbox
+    <section class="pc-demo" id="states" data-title="States" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        Checked changes the fill <em>and</em> puts a mark in the box — colour is never the only
+        signal. Indeterminate is a different shape, not a different shade, and it is set from script
+        only: there is no attribute for it, and it means "some of the children are checked", never a
+        third value a user can click to.
+      </p>
+      <template>
+        <label class="label">
+          <input class="checkbox" type="checkbox" /> Unchecked
         </label>
-      </div>
-      <div class="formField">
-        <label for="medium-cb" class="checkbox-label md">
-          <input type="checkbox" id="medium-cb" class="checkbox md" />
-          Medium checkbox
+        <label class="label">
+          <input class="checkbox" type="checkbox" checked /> Checked
         </label>
-      </div>
-      <div class="formField">
-        <label for="large-cb" class="checkbox-label lg">
-          <input type="checkbox" id="large-cb" class="checkbox lg" />
-          Large checkbox
+        <label class="label">
+          <input class="checkbox" type="checkbox" data-indeterminate /> Indeterminate
         </label>
-      </div>
-    </template>
-  </section>
+        <label class="label">
+          <input class="checkbox" type="checkbox" disabled /> Disabled
+        </label>
+        <label class="label">
+          <input class="checkbox" type="checkbox" checked disabled /> Disabled and checked
+        </label>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="checkbox-group" data-title="Checkbox Group">
-    <p class="pc-note">Multiple checkboxes can be grouped together using the <code>checkbox-group</code> class.</p>
-    <template>
-      <div class="checkbox-group md">
-        <label for="option1" class="checkbox-label md">
-          <input type="checkbox" id="option1" class="checkbox md" />
-          Option 1
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        The box is measured in <code>em</code>, so it follows the text it sits beside — and a size
+        class on the <code>.form</code> or the <code>.fieldset</code> reaches it without this file
+        knowing they exist.
+      </p>
+      <template>
+        <label class="label" style="font-size:var(--font-size-sm)">
+          <input class="checkbox sm" type="checkbox" checked /> Small
         </label>
-        <label for="option2" class="checkbox-label md">
-          <input type="checkbox" id="option2" class="checkbox md" />
-          Option 2
+        <label class="label">
+          <input class="checkbox md" type="checkbox" checked /> Medium
         </label>
-        <label for="option3" class="checkbox-label md">
-          <input type="checkbox" id="option3" class="checkbox md" />
-          Option 3
+        <label class="label" style="font-size:var(--font-size-base)">
+          <input class="checkbox lg" type="checkbox" checked /> Large
         </label>
-      </div>
-    </template>
-  </section>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="indeterminate-state" data-title="Indeterminate State">
-    <p class="pc-note">Indeterminate checkboxes require <code>aria-checked="mixed"</code> for accessibility.</p>
-    <template>
-      <div class="formField">
-        <label for="indeterminate" class="checkbox-label md">
-          <input type="checkbox" id="indeterminate" class="checkbox md" aria-checked="mixed" />
-          Some items selected (indeterminate)
+    <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        <code>sharp</code> and <code>smooth</code>, and that is the whole list. There is no
+        <code>rounded</code>: round means "pick one" and square means "pick as many as you like", and
+        that is the only thing telling a checkbox from a radio before anyone has read the label. Leaving
+        the class out is not what enforces it — the radius is capped at a quarter of the box, so a
+        checkbox stays square whatever arrives on the channel. <code>radio.css</code> refuses the
+        same thing from the other side.
+      </p>
+      <template>
+        <label class="label">
+          <input class="checkbox sharp" type="checkbox" checked /> Sharp
         </label>
-      </div>
-    </template>
-  </section>
+        <label class="label">
+          <input class="checkbox smooth" type="checkbox" checked /> Smooth — the default
+        </label>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="error-state" data-title="Error State">
-    <p class="pc-note">Error states require <code>aria-invalid="true"</code> and <code>aria-describedby</code> pointing to the error message.</p>
-    <template>
-      <div class="formField">
-        <label for="error-cb" class="checkbox-label md">
-          <input
-            type="checkbox"
-            id="error-cb"
-            class="checkbox md"
-            aria-invalid="true"
-            aria-describedby="error-msg"
-          />
-          Required checkbox
-        </label>
-        <p id="error-msg" class="status" role="alert">This field is required</p>
-      </div>
-    </template>
-  </section>
+    <section class="pc-demo" id="hint-error" data-title="Hint and message" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        A single checkbox that must be ticked is a <code>.field</code> like any other: hint above,
+        message below, and the message row reserved whether or not it shows so the page does not
+        jump. The box turns too — the border alone is not allowed to carry it, which is why the
+        message appears with it. For a group, the message belongs to the <code>&lt;fieldset&gt;</code>
+        and is revealed by <code>aria-invalid</code> on the group: <code>:user-invalid</code> fires
+        on a control, never on the group around it.
+      </p>
+      <template>
+        <div class="field">
+          <p class="field-hint" id="cb-terms-hint">You can withdraw consent at any time.</p>
+          <label class="label">
+            <input class="checkbox" type="checkbox" id="cb-terms" aria-describedby="cb-terms-hint" />
+            I accept the terms
+          </label>
+        </div>
 
-  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
-    <p class="pc-note">Disabled checkboxes use the native <code>disabled</code> attribute.</p>
-    <template>
-      <div class="formField">
-        <label for="disabled-cb" class="checkbox-label md">
-          <input type="checkbox" id="disabled-cb" class="checkbox md" disabled />
-          Disabled checkbox
-        </label>
-      </div>
-    </template>
-  </section>
+        <div class="field">
+          <p class="field-hint" id="cb-bad-hint">You can withdraw consent at any time.</p>
+          <label class="label">
+            <input class="checkbox" type="checkbox" id="cb-bad" aria-invalid="true"
+                   aria-describedby="cb-bad-hint cb-bad-msg" />
+            I accept the terms
+          </label>
+          <p class="field-error" id="cb-bad-msg">You have to accept the terms to continue.</p>
+        </div>
+
+        <div class="field">
+          <label class="label">
+            <input class="checkbox" type="checkbox" id="cb-req" required
+                   aria-describedby="cb-req-msg" />
+            Required — tick it, untick it, then tab out
+          </label>
+          <p class="field-error" id="cb-req-msg">Native validation, no attribute set by hand.</p>
+        </div>
+
+        <fieldset class="fieldset" aria-invalid="true">
+          <legend>Send me</legend>
+          <p class="field-hint">At least one, please.</p>
+          <label class="label"><input class="checkbox" type="checkbox" /> Receipts</label>
+          <label class="label"><input class="checkbox" type="checkbox" /> Product news</label>
+          <p class="field-error">Pick at least one of these.</p>
+        </fieldset>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="group" data-title="A group of them" data-stage-style="max-width:26rem;">
+      <p class="pc-note">
+        More than one checkbox answering one question is a <code>&lt;fieldset&gt;</code> with a
+        <code>&lt;legend&gt;</code>. The legend is the question; without it a screen reader reads
+        five unrelated options.
+      </p>
+      <template>
+        <fieldset class="fieldset">
+          <legend>Send me</legend>
+          <label class="label">
+            <input class="checkbox" type="checkbox" checked /> Receipts
+          </label>
+          <label class="label">
+            <input class="checkbox" type="checkbox" /> Product news
+          </label>
+          <label class="label">
+            <input class="checkbox" type="checkbox" /> Someone else's news
+          </label>
+        </fieldset>
+      </template>
+    </section>
 
     <script src="../components.js"></script>
     <script src="../docs.js"></script>
+    <script>
+      // Indeterminate has no attribute — it is a property. The dev shell sets it
+      // so the state can be seen; it is not part of the library.
+      new MutationObserver(() => {
+        document.querySelectorAll('[data-indeterminate]').forEach((el) => {
+          el.indeterminate = true;
+        });
+      }).observe(document.body, { childList: true, subtree: true });
+    </script>
   </body>
 </html>

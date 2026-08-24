@@ -1,0 +1,25 @@
+.label {
+  /* 1. VARIABLES */
+  --label-color: var(--form-label-color, var(--color-neutral-900));
+  --label-weight: 600;
+  --label-disabled-color: var(--color-neutral-500);
+
+  /* 2. BASE */
+  color: var(--label-color);
+  font-weight: var(--label-weight);
+
+  &:has(> input:is([type="checkbox"], [type="radio"])) {
+    --label-option-gap: 0.6em;
+    --label-option-weight: 400;
+
+    display: flex;
+    align-items: start;
+    gap: var(--label-option-gap);
+    font-weight: var(--label-option-weight);
+    cursor: pointer;
+
+    &:has(> input:disabled) {
+      cursor: not-allowed;
+    }
+  }
+}

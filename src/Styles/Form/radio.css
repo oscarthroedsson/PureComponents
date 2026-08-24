@@ -1,0 +1,208 @@
+/*
+Radio — one of several, and only one.
+
+  <fieldset class="fieldset">
+    <legend>Delivery</legend>
+    <label class="label"><input class="radio" type="radio" name="d"> Standard</label>
+    <label class="label"><input class="radio" type="radio" name="d"> Express</label>
+  </fieldset>
+
+The same box as .checkbox, from the same channel, built the same way and for
+the same reason — see checkbox.css for why this family owns these two
+controls when it removes every other native mark. Everything written there
+about appearance: none, about ::checkmark not painting yet, and about the
+mark being a shape rather than a picture applies here unchanged.
+
+Two things differ, and only two: the mark is a dot, and the shape is not
+negotiable.
+
+
+THE SHAPE IS NOT A CHOICE
+
+There are no sharp / smooth / rounded classes in this file, and that is
+deliberate rather than unfinished.
+
+Round means "pick one" and square means "pick as many as you like". That is
+not decoration, it is the only thing distinguishing the two controls before
+a user has read anything or clicked anything — the label text does not say
+it, and neither does the tick. A square radio is a checkbox that silently
+throws away the last answer.
+
+.checkbox allows .rounded for the same reason in reverse: a consumer who
+wants circular checkboxes is making one deliberate decision about a whole
+form, where a radio picking up a shape class from an ancestor group would be
+an accident.
+
+So this file reads no --form-radius and offers no shape. If a consumer wants
+a square one they have to write it themselves, which is the point at which
+they will have thought about it.
+
+
+ACCESSIBILITY REQUIREMENTS:
+- A radio without a name is not a radio. name is what groups them, what
+  makes only one checkable, and what makes the arrow keys move between them.
+  Without it every button is its own group of one and nothing can be
+  unpicked.
+- A group MUST be wrapped in a <fieldset> with a <legend>. The legend is the
+  question the options answer; without it a screen reader reads a list of
+  answers to nothing.
+- The arrow keys move within a group and Tab leaves it — one tab stop for
+  the whole set, not one per option. That is native behaviour and nothing
+  here interferes with it.
+- Never pre-check an option the user did not choose unless it is a real
+  default they would have picked. A checked radio cannot be unchecked
+  without picking another one; there is no way back to nothing.
+- The target should reach 24×24 CSS pixels (2.5.8). The dot is smaller than
+  that on purpose — the label is part of the target and the two together
+  clear it.
+- appearance: none removes the control from Windows High Contrast, where
+  background-color is not painted. The forced-colors block at the end draws
+  it in system colours instead.
+- Colour is never the only signal: checked fills the circle AND puts a dot
+  in it.
+- KNOWN, MEASURED FAILURE: --color-error is #f87171, which measures 2.77:1
+  on white. As an invalid border it is under the 3:1 of 1.4.11. It is used
+  anyway by decision, pending a darker error token in main.css — the same
+  call .input and .textarea already make. The invalid state is never carried
+  by that colour alone: the message appears and aria-invalid is set.
+- :focus-visible comes from main.css. This file draws no ring.
+
+SIZE:  sm · md (default) · lg
+  Measured in em, so a size class on .form or .fieldset reaches it.
+
+SHAPE: none. See above.
+
+STATE
+  :checked · :disabled · :hover
+  :user-invalid / [aria-invalid="true"]   both, always
+  :focus-visible from main.css
+
+VARIABLES
+  --radio-size               the circle
+  --radio-border-width       --radio-surface
+  --radio-border-color       --radio-checked-surface
+  --radio-dot-color          --radio-checked-border-color
+  --radio-dot-size           how much of the circle the dot fills
+*/
+
+.radio {
+  /* 1. VARIABLES */
+  --radio-size: 1.15em;
+  --radio-border-width: var(--form-border-width, 1px);
+  --radio-border-color: var(--form-border-color, var(--color-neutral-500));
+  --radio-surface: var(--form-surface, var(--color-neutral-100));
+
+  --radio-checked-surface: var(--color-primary);
+  --radio-checked-border-color: var(--color-primary);
+  --radio-dot-color: var(--color-neutral-100);
+  --radio-dot-size: 0.42em;
+
+  /* 2. BASE */
+  appearance: none;
+  margin: 0;
+
+  /* Every measurement here is in em, and a form control does not inherit the
+     page's font. Without this they would be em of the browser's 13.33px
+     instead of the text the button sits beside. */
+  font: inherit;
+
+  display: inline-grid;
+  place-content: center;
+
+  inline-size: var(--radio-size);
+  block-size: var(--radio-size);
+  flex: none;
+  vertical-align: text-bottom;
+
+  background-color: var(--radio-surface);
+  border: var(--radio-border-width) solid var(--radio-border-color);
+
+  /* Not a variable, and not from the channel. See the note above. */
+  border-radius: var(--radius-full);
+
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+
+  /* 3. THE DOT — a circle, so no clip-path is needed at all. Drawn at rest
+     and scaled to nothing, so checking reveals something already there. */
+  &::before {
+    content: "";
+    inline-size: var(--radio-dot-size);
+    block-size: var(--radio-dot-size);
+    border-radius: var(--radius-full);
+    background-color: var(--radio-dot-color);
+    scale: 0;
+    transition: scale var(--transition-fast);
+  }
+
+  /* 4. SIZE */
+  &.sm {
+    --radio-size: 1em;
+    --radio-dot-size: 0.36em;
+  }
+  &.md {
+    /* base is already md */
+  }
+  &.lg {
+    --radio-size: 1.35em;
+    --radio-dot-size: 0.5em;
+  }
+
+  /* 5. STATES */
+  &:hover:not(:disabled) {
+    --radio-border-color: var(--color-neutral-700);
+  }
+
+  &:checked {
+    --radio-surface: var(--radio-checked-surface);
+    --radio-border-color: var(--radio-checked-border-color);
+
+    &::before {
+      scale: 1;
+    }
+  }
+
+  /* A required group with nothing picked makes EVERY button in it match
+     :user-invalid — the constraint belongs to the group, and the group is
+     the name, not an element. So the whole set turns, which is right: the
+     question is unanswered, not one option. */
+  &:is(:user-invalid, [aria-invalid="true"]) {
+    --radio-border-color: var(--color-error);
+    --radio-checked-border-color: var(--color-error);
+  }
+
+  &:disabled {
+    --radio-surface: var(--color-neutral-200);
+    --radio-border-color: var(--color-neutral-400);
+    --radio-checked-surface: var(--color-neutral-400);
+    --radio-checked-border-color: var(--color-neutral-400);
+    cursor: not-allowed;
+  }
+
+  /* 6. FORCED COLOURS — background-color is not painted in high contrast, so
+     an owned radio would be an empty ring whether checked or not. */
+  @media (forced-colors: active) {
+    --radio-border-color: CanvasText;
+    --radio-surface: Canvas;
+    --radio-checked-surface: Highlight;
+    --radio-checked-border-color: Highlight;
+    --radio-dot-color: Canvas;
+
+    &:disabled {
+      --radio-border-color: GrayText;
+      --radio-checked-surface: GrayText;
+      --radio-checked-border-color: GrayText;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &::before {
+      transition: none;
+    }
+  }
+}

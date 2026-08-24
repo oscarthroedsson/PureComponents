@@ -1,0 +1,33 @@
+/*
+Motion — the shared timing every animation in the library reads.
+
+Not an animation itself. It declares the durations and easings on :root so a
+consumer retunes the whole library's motion in one place instead of hunting
+through twelve component files.
+
+A component still owns its own --<name>-duration; it just defaults to one of
+these instead of inventing a number.
+
+USAGE:
+  @import url("./motion.css");        - from another Animations file
+  <link rel="stylesheet" href="…/Animations/index.css">
+
+ACCESSIBILITY REQUIREMENTS:
+- These are durations, not a policy. Every file that animates still has to
+  answer prefers-reduced-motion itself — a token cannot do it, because what
+  "reduced" means differs per component (drop the travel, keep the fade).
+*/
+
+:root {
+  --motion-duration-instant: 90ms;
+  --motion-duration-fast: 120ms;
+  --motion-duration-medium: 220ms;
+  --motion-duration-slow: 320ms;
+
+  --motion-ease-out: ease-out;
+  --motion-ease-in: ease-in;
+  --motion-ease-in-out: ease-in-out;
+
+  /* Overshoots slightly at the end. What makes an icon land rather than stop. */
+  --motion-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}

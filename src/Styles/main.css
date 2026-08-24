@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* Intent colours. Imported here so every page that links main.css gets them,
+   and always before any component stylesheet — see intent.css on link order. */
+@import url("./intent.css");
 * {
   box-sizing: border-box;
 }
@@ -33,6 +37,7 @@ fieldset {
   --color-accent-light: hsl(46, 98%, 68%);
 
   /* ===== ⚪ Neutrals ===== */
+  --color-neutral-50: #f8fafc;
   --color-neutral-100: #f1f5f9;
   --color-neutral-200: #e1e7ef;
   --color-neutral-300: #cbd5e1;
@@ -43,12 +48,16 @@ fieldset {
   --color-neutral-800: #1e293b;
   --color-neutral-900: #0f1729;
 
+  --color-destructive: #f00c0c;
+
   /* ===== Semantic Colors (för framtida alerts m.m.) ===== */
   --color-success: #4ade80;
   --color-error: #f87171;
   --color-warning: #facc15;
   --color-info: #38bdf8;
   --font-family-heading: "Playfair Display", serif;
+
+  --color-focus-ring: #1447e6;
 
   --font-size-base: 1rem;
   --line-height-base: 1.5;
@@ -103,7 +112,12 @@ fieldset {
 
   /* Wondering if I should use this borders instead */
   --radius-sharp: 0px;
-  --radius-smooth: 2px;
+  /* 8px, not 2px. Every component in the library draws its smooth shape at
+     --radius-md, and this token — which named the same idea — was declared
+     at 2px and then used by nobody. Set to what the library actually looks
+     like, so the shape trio can be read off one line instead of three
+     components' worth of guessing. */
+  --radius-smooth: 8px;
   --radius-rounded: 999px;
 
   /* ☁️ Skuggor */
@@ -115,7 +129,7 @@ fieldset {
   /* 🎯 Focus ring */
   --focus-ring-width: 1px;
   --focus-ring-offset: 2px;
-  --focus-ring-color: #1447e6;
+  --focus-ring-color: var(--color-focus-ring);
 
   /* 🎬 Transitions */
   --transition-fast: 0.15s ease-in-out;

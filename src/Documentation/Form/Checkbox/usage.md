@@ -1,46 +1,73 @@
-# Checkbox Component
+# Checkbox
 
-## Component Overview
-
-The Checkbox component provides accessible, styled checkboxes for boolean input. It supports single checkboxes and checkbox groups with proper label association and error handling.
-
-### When to Use
-
-- Single boolean choices (agree to terms, opt-in to newsletter)
-- Multiple selections from a list
-- Toggle settings (enable/disable features)
-- Indeterminate states (parent checkboxes with mixed children)
-
-### When NOT to Use
-
-- Single choice from multiple options (use Radio buttons)
-- Yes/No questions with only two options (consider Radio for better semantics)
-
-## Quick Start
+A box that is either ticked or not.
 
 ```html
-<div class="formField">
-  <label for="agree" class="checkbox-label">
-    <input type="checkbox" id="agree" class="checkbox md" />
-    I agree to the terms
-  </label>
-</div>
+<label class="label">
+  <input class="checkbox" type="checkbox">
+  Email me about replies
+</label>
 ```
 
-## Accessibility Requirements
+A group of them belongs in a `<fieldset>` with a `<legend>` naming the
+question:
 
-- MUST have associated `<label>` element
-- Indeterminate state requires `aria-checked="mixed"`
-- Error states require `aria-invalid="true"` and `aria-describedby`
+```html
+<fieldset class="fieldset">
+  <legend>Notifications</legend>
+  <div class="field">
+    <label class="label">
+      <input class="checkbox" type="checkbox" name="notify" value="replies">
+      Replies
+    </label>
+  </div>
+</fieldset>
+```
 
-## API Reference
+## When to use it
 
-- `.checkbox` - Checkbox input class
-- `.checkbox-label` - Label wrapper class
-- `.checkbox-group` - Group container
-- Size variants: `.sm`, `.md`, `.lg`
-- Border radius: `.sharp`, `.smooth`, `.rounded`
+- Any number of independent options, including one
+- A boolean toggle — "I agree", "Remember me"
 
-## Examples
+Not for a single choice from several — that is [Radio](../Radio/usage.md). Not
+for one of a long known list — that is [Select](../Select/usage.md).
 
-See component CSS file for detailed examples.
+## Indeterminate
+
+`el.indeterminate = true` in JavaScript, never an attribute — there is no HTML
+for it. The library styles the state; setting it is yours. Use it for a
+"select all" box whose children are partly ticked. It is a **display** state:
+the box still submits as checked or unchecked.
+
+## Accessibility
+
+- Every checkbox **must** have a label. Nesting the input inside the label, as
+  above, binds them without an id — useful when the markup is generated.
+- A group of related boxes **must** sit in a `<fieldset>` with a `<legend>`.
+  Without it a screen reader user hears each option with no idea what question
+  it answers.
+- `appearance: none` removes the control from Windows High Contrast Mode.
+- The tick is drawn with `clip-path` on a pseudo-element and never reaches the
+  accessibility tree. The state is carried by the native `:checked`, which is
+  what assistive tech reads.
+- Colour is never the only signal: the tick appears, and it is a shape, not a
+  hue.
+- The focus ring comes from `main.css`.
+
+## Size and shape
+
+`sm` · `md` (default) · `lg` — a **leaf**. The box is sized in `em`, so it
+also follows the text it sits beside.
+
+`sharp` · `smooth` (default) · `rounded`. The radius is **capped** at a quarter
+of the box, so `rounded` does not turn a checkbox into a radio.
+
+## Variables
+
+| Variable | Controls |
+|---|---|
+| `--checkbox-size` | the box, in `em` |
+| `--checkbox-radius` · `--checkbox-radius-max` | the corner, and its cap |
+| `--checkbox-border-width` · `-border-color` · `-surface` | resting |
+| `--checkbox-checked-surface` · `-checked-border-color` | ticked |
+| `--checkbox-mark-color` · `--checkbox-mark-size` | the tick |

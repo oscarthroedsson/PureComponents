@@ -4,148 +4,135 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Radio — PureComponents</title>
-    <meta name="pc-description" content="Radio buttons must be grouped in a &amp;lt;fieldset&amp;gt; with a &amp;lt;legend&amp;gt;. All radios in a group must share the same name attribute." />
+    <meta name="pc-description" content="One of several, and only one." />
 
-    <!-- Library CSS under test -->
     <link rel="stylesheet" href="../../src/Styles/main.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/inputs/radio.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/fieldSet.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/fieldset.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/label.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/radio.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/checkbox.css" />
 
-    <!-- Dev shell (not part of the library) -->
     <link rel="stylesheet" href="../docs.css" />
   </head>
   <body data-component="Form/Radio">
-  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
-    <template>
-      <fieldset class="radio-group md">
-        <legend>Choose an option</legend>
-        <div class="radio-item">
-          <input type="radio" id="option1" name="choice" class="radio md" value="1" />
-          <label for="option1" class="radio-label md">Option 1</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" id="option2" name="choice" class="radio md" value="2" />
-          <label for="option2" class="radio-label md">Option 2</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" id="option3" name="choice" class="radio md" value="3" />
-          <label for="option3" class="radio-label md">Option 3</label>
-        </div>
-      </fieldset>
-    </template>
-  </section>
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="max-width:26rem;">
+      <p class="pc-note">
+        A radio without a <code>name</code> is not a radio: the name is what groups them, what makes
+        only one checkable, and what makes the arrow keys move between them. The group belongs in a
+        <code>&lt;fieldset&gt;</code> — the legend is the question, and without it a screen reader
+        reads a list of answers to nothing. Tab into the group and use <kbd>↑</kbd> <kbd>↓</kbd>:
+        one tab stop for the whole set, not one per option.
+      </p>
+      <template>
+        <fieldset class="fieldset">
+          <legend>Delivery</legend>
+          <label class="label">
+            <input class="radio" type="radio" name="delivery" checked /> Standard, 3–5 days
+          </label>
+          <label class="label">
+            <input class="radio" type="radio" name="delivery" /> Express, next day
+          </label>
+          <label class="label">
+            <input class="radio" type="radio" name="delivery" /> Pick up in store
+          </label>
+        </fieldset>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; flex-direction: column; gap: 1.5rem;">
-    <p class="pc-note">Radio buttons support three sizes: small (sm), medium (md), and large (lg).</p>
-    <template>
-      <fieldset class="radio-group sm">
-        <legend>Small</legend>
-        <div class="radio-item">
-          <input type="radio" id="small1" name="small" class="radio sm" />
-          <label for="small1" class="radio-label sm">Option 1</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" id="small2" name="small" class="radio sm" />
-          <label for="small2" class="radio-label sm">Option 2</label>
-        </div>
-      </fieldset>
-      <fieldset class="radio-group md">
-        <legend>Medium</legend>
-        <div class="radio-item">
-          <input type="radio" id="medium1" name="medium" class="radio md" />
-          <label for="medium1" class="radio-label md">Option 1</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" id="medium2" name="medium" class="radio md" />
-          <label for="medium2" class="radio-label md">Option 2</label>
-        </div>
-      </fieldset>
-      <fieldset class="radio-group lg">
-        <legend>Large</legend>
-        <div class="radio-item">
-          <input type="radio" id="large1" name="large" class="radio lg" />
-          <label for="large1" class="radio-label lg">Option 1</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" id="large2" name="large" class="radio lg" />
-          <label for="large2" class="radio-label lg">Option 2</label>
-        </div>
-      </fieldset>
-    </template>
-  </section>
+    <section class="pc-demo" id="states" data-title="States" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        Checked fills the circle <em>and</em> puts a dot in it — colour is never the only signal.
+        There is no indeterminate: a radio has two states, and a checked one cannot be unchecked
+        without picking another. That is why a default should only be pre-checked when it is a real
+        default the user would have picked anyway.
+      </p>
+      <template>
+        <label class="label">
+          <input class="radio" type="radio" name="s1" /> Unchecked
+        </label>
+        <label class="label">
+          <input class="radio" type="radio" name="s2" checked /> Checked
+        </label>
+        <label class="label">
+          <input class="radio" type="radio" name="s3" disabled /> Disabled
+        </label>
+        <label class="label">
+          <input class="radio" type="radio" name="s4" checked disabled /> Disabled and checked
+        </label>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="horizontal-layout" data-title="Horizontal Layout">
-    <p class="pc-note">Radio groups can be displayed horizontally using the <code>horizontal</code> class.</p>
-    <template>
-      <fieldset class="radio-group md horizontal">
-        <legend>Choose an option</legend>
-        <div class="radio-item">
-          <input type="radio" id="h1" name="horizontal" class="radio md" />
-          <label for="h1" class="radio-label md">Option 1</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" id="h2" name="horizontal" class="radio md" />
-          <label for="h2" class="radio-label md">Option 2</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" id="h3" name="horizontal" class="radio md" />
-          <label for="h3" class="radio-label md">Option 3</label>
-        </div>
-      </fieldset>
-    </template>
-  </section>
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        Measured in <code>em</code>, so the circle follows the text beside it and a size class on the
+        <code>.form</code> or the <code>.fieldset</code> reaches it.
+      </p>
+      <template>
+        <label class="label" style="font-size:var(--font-size-sm)">
+          <input class="radio sm" type="radio" name="z1" checked /> Small
+        </label>
+        <label class="label">
+          <input class="radio md" type="radio" name="z2" checked /> Medium
+        </label>
+        <label class="label" style="font-size:var(--font-size-base)">
+          <input class="radio lg" type="radio" name="z3" checked /> Large
+        </label>
+      </template>
+    </section>
 
-  <section class="pc-demo" id="error-state" data-title="Error State">
-    <p class="pc-note">Error states require <code>aria-invalid="true"</code> on the fieldset and <code>aria-describedby</code> pointing to the error message.</p>
-    <template>
-      <fieldset class="radio-group md" aria-invalid="true" aria-describedby="radio-error">
-        <legend>Choose an option</legend>
-        <p id="radio-error" class="status" role="alert">Please select an option</p>
-        <div class="radio-item">
-          <input type="radio" id="error1" name="error" class="radio md" />
-          <label for="error1" class="radio-label md">Option 1</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" id="error2" name="error" class="radio md" />
-          <label for="error2" class="radio-label md">Option 2</label>
-        </div>
-      </fieldset>
-    </template>
-  </section>
+    <section class="pc-demo" id="hint-error" data-title="Hint and message" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        The constraint belongs to the group, not to any one button — so a required group with nothing
+        picked makes <em>every</em> button in it match <code>:user-invalid</code>, and the whole set
+        turns. That is right: the question is unanswered, not one option. The message is a
+        <code>.field-error</code> placed directly in the <code>&lt;fieldset&gt;</code> and revealed by
+        <code>aria-invalid</code> on it, because <code>:user-invalid</code> never fires on a group.
+      </p>
+      <template>
+        <fieldset class="fieldset">
+          <legend>Delivery</legend>
+          <p class="field-hint">Express costs 49 kr extra.</p>
+          <label class="label"><input class="radio" type="radio" name="h1" /> Standard</label>
+          <label class="label"><input class="radio" type="radio" name="h1" /> Express</label>
+        </fieldset>
 
-  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
-    <p class="pc-note">Individual radio buttons can be disabled using the native <code>disabled</code> attribute.</p>
-    <template>
-      <fieldset class="radio-group md">
-        <legend>Choose an option</legend>
-        <div class="radio-item">
-          <input type="radio" id="enabled" name="disabled" class="radio md" />
-          <label for="enabled" class="radio-label md">Enabled</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" id="disabled-radio" name="disabled" class="radio md" disabled />
-          <label for="disabled-radio" class="radio-label md">Disabled</label>
-        </div>
-      </fieldset>
-    </template>
-  </section>
+        <fieldset class="fieldset" aria-invalid="true">
+          <legend>Delivery</legend>
+          <p class="field-hint">Express costs 49 kr extra.</p>
+          <label class="label"><input class="radio" type="radio" name="h2" aria-invalid="true" /> Standard</label>
+          <label class="label"><input class="radio" type="radio" name="h2" aria-invalid="true" /> Express</label>
+          <p class="field-error">Pick how you want it delivered.</p>
+        </fieldset>
 
-  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
-    <p class="pc-note">Radio buttons must be properly grouped and labeled for screen reader support.</p>
-    <template>
-      <fieldset class="radio-group md">
-        <legend>Accessible Radio Group</legend>
-        <div class="radio-item">
-          <input type="radio" id="acc1" name="accessible" class="radio md" />
-          <label for="acc1" class="radio-label md">Option 1</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" id="acc2" name="accessible" class="radio md" />
-          <label for="acc2" class="radio-label md">Option 2</label>
-        </div>
-      </fieldset>
-    </template>
-  </section>
+        <fieldset class="fieldset">
+          <legend>Required — tab through without picking</legend>
+          <label class="label"><input class="radio" type="radio" name="h3" required /> Standard</label>
+          <label class="label"><input class="radio" type="radio" name="h3" required /> Express</label>
+        </fieldset>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="shape" data-title="Why there is no shape class" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        Round means pick one; square means pick as many as you like. That is the only thing telling
+        the two controls apart before a user has read or clicked anything — the label does not say it
+        and neither does the mark. So <code>.radio</code> takes no shape class and reads no
+        <code>--form-radius</code>: a radio in a <code>.form.sharp</code> stays round. A square radio
+        is a checkbox that silently throws away the last answer.
+      </p>
+      <template>
+        <form class="form sharp">
+          <label class="label">
+            <input class="radio" type="radio" name="shape" checked /> Radio in a .form.sharp — still round
+          </label>
+          <label class="label">
+            <input class="checkbox" type="checkbox" checked /> Checkbox in the same form — square
+          </label>
+        </form>
+      </template>
+    </section>
 
     <script src="../components.js"></script>
     <script src="../docs.js"></script>

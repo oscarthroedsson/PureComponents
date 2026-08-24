@@ -1,0 +1,271 @@
+.select {
+  /* 1. VARIABLES */
+  --select-font-size: var(--form-font-size, var(--font-size-md));
+  --select-line-height: var(--line-height-base);
+  --select-color: var(--form-color, var(--color-neutral-900));
+  --select-surface: var(--form-surface, var(--color-neutral-100));
+
+  --select-padding-block: var(--form-padding-block, 0.5em);
+  --select-padding-inline: var(--form-padding-inline, 0.75em);
+
+  --select-border-width: var(--form-border-width, 1px);
+  --select-border-color: var(--form-border-color, var(--color-neutral-500));
+  --select-radius: var(--form-radius, var(--radius-smooth));
+
+  --select-icon-size: 1em;
+  --select-icon-color: var(--color-neutral-500);
+  --select-icon-inset: var(--select-padding-inline);
+  --select-icon-gap: 0.5em;
+
+  /* Lucide chevron-down. viewBox cropped to the path's own bounds — Lucide's
+     24x24 is mostly air, and an uncropped box sizes the padding, not the mark.
+
+     The shapes differ in the path, not in stroke-linejoin. A chevron has one
+     join, and at this angle miter and round are indistinguishable — sharp and
+     smooth came out identical. So the tip is curved explicitly instead: a
+     quadratic Bezier whose control point is the original corner, starting
+     0.8 units back for smooth and 1.1 for rounded, which also takes round
+     caps. Kept small on purpose — past about 1.5 the tip stops reading as a
+     chevron and starts reading as a U.
+
+     The stroke colour is only read in the fallback, where a background image
+     cannot see a token; as a mask only the alpha matters and
+     --select-icon-color paints it. */
+  --select-icon-image-sharp: url('data:image/svg+xml;utf8,<svg viewBox="5 8 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="%2364748b"/></svg>');
+  --select-icon-image-smooth: url('data:image/svg+xml;utf8,<svg viewBox="5 8 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9 L11.2 14.2 Q12 15 12.8 14.2 L18 9" stroke-width="2" stroke-linecap="butt" stroke-linejoin="round" stroke="%2364748b"/></svg>');
+  --select-icon-image-rounded: url('data:image/svg+xml;utf8,<svg viewBox="5 8 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9 L10.9 13.9 Q12 15 13.1 13.9 L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="%2364748b"/></svg>');
+  --select-icon-image: var(--select-icon-image-smooth);
+
+  --select-padding-inline-end: calc(var(--select-icon-inset) + var(--select-icon-size) + var(--select-icon-gap));
+
+  --select-min-block-size: calc(1lh + (var(--select-padding-block) * 2) + (var(--select-border-width) * 2));
+
+  /* Menu. Declared here because ::picker(select) inherits from this element. */
+  --select-menu-surface: var(--select-surface);
+  --select-menu-border-color: var(--color-neutral-300);
+  --select-menu-radius: min(var(--select-radius), var(--select-menu-radius-max));
+  --select-menu-radius-max: var(--radius-lg);
+  --select-menu-padding: var(--spacing-25);
+  --select-menu-shadow: var(--shadow-md);
+  --select-menu-offset: var(--spacing-25);
+  --select-menu-duration: var(--transition-fast);
+  --select-menu-travel: -0.25rem;
+
+  --select-option-padding-block: var(--select-padding-block);
+  --select-option-padding-inline: var(--select-padding-inline);
+  --select-option-radius: var(--radius-sm);
+  --select-option-highlight: var(--color-neutral-200);
+
+  /* 2. BASE */
+  appearance: none;
+
+  inline-size: 100%;
+  min-block-size: var(--select-min-block-size);
+
+  font-family: inherit;
+  font-size: var(--select-font-size);
+  line-height: var(--select-line-height);
+  color: var(--select-color);
+
+  background-color: var(--select-surface);
+  border: var(--select-border-width) solid var(--select-border-color);
+  border-radius: var(--select-radius);
+  padding-block: var(--select-padding-block);
+  padding-inline: var(--select-padding-inline) var(--select-padding-inline-end);
+
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+
+  background-image: var(--select-icon-image);
+  background-size: var(--select-icon-size);
+  background-repeat: no-repeat;
+  background-position: right var(--select-icon-inset) center;
+
+  /* A background has no logical side; the one physical value in this file. */
+  &:dir(rtl) {
+    background-position: left var(--select-icon-inset) center;
+  }
+
+  /* 3. SIZE */
+  &.sm {
+    --select-font-size: var(--font-size-sm);
+  }
+  &.md {
+    /* base is already md */
+  }
+  &.lg {
+    --select-font-size: var(--font-size-base);
+  }
+
+  /* 4. SHAPE — the mark's corners follow the box's. */
+  &.sharp {
+    --select-radius: var(--radius-sharp);
+    --select-icon-image: var(--select-icon-image-sharp);
+  }
+  &.smooth {
+    --select-radius: var(--radius-smooth);
+    --select-icon-image: var(--select-icon-image-smooth);
+  }
+  &.rounded {
+    --select-radius: var(--radius-rounded);
+    --select-icon-image: var(--select-icon-image-rounded);
+    --select-icon-inset: calc(var(--select-padding-inline) * 1.5);
+  }
+
+  /* 5. STATES */
+
+  /* No :read-only branch: readonly does nothing to a <select>. Locking a
+     choice is `disabled` plus a hidden input, or a single option. */
+  &:hover:not(:disabled) {
+    --select-border-color: var(--color-neutral-700);
+  }
+
+  /* :user-invalid is native constraint validation and only fires once the
+     user has been in the field; [aria-invalid] is the JS path, and the main
+     one for consumers whose validation sets no native constraints. */
+  &:is(:user-invalid, [aria-invalid="true"]) {
+    --select-border-color: var(--color-error);
+  }
+
+  &:disabled {
+    --select-surface: var(--color-neutral-200);
+    --select-border-color: var(--color-neutral-400);
+    --select-color: var(--color-neutral-500);
+    --select-icon-color: var(--color-neutral-400);
+    cursor: not-allowed;
+  }
+
+  /* Clears the browser's own outline for a mouse click, where :focus-visible
+     never matches. The ring itself is main.css's. */
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* A list box does not open, so no mark and no one-line floor. */
+  &:is([multiple], [size]:not([size="1"])) {
+    background-image: none;
+    min-block-size: 0;
+    padding-inline-end: var(--select-padding-inline);
+    cursor: default;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/* An icon in the group's start slot; the mark still owns the end. */
+.input-group:has(> .input-icon[data-placement="start"]) > .select {
+  padding-inline-start: var(--input-group-clearance);
+}
+
+/* A greyed-out field with a full-strength icon reads as the one part still working. */
+.input-group:has(> .select:disabled) > .input-icon {
+  color: var(--color-neutral-400);
+  cursor: not-allowed;
+}
+
+/*
+6. THE MENU, on a device with a pointer.
+
+Additive. Without base-select support, or on a touch screen, the control above
+is what renders and the platform keeps its own picker.
+*/
+
+@media (hover: hover) and (pointer: fine) {
+  @supports (appearance: base-select) {
+    .select:not([multiple], [size]:not([size="1"])) {
+      &,
+      &::picker(select) {
+        appearance: base-select;
+      }
+
+      /* ::picker-icon is laid out, so the painted mark comes off and the end
+         padding becomes the gap between the element and the edge. */
+      background-image: none;
+      padding-inline-end: var(--select-icon-inset);
+
+      &::picker-icon {
+        /* Without this it baseline-aligns and rides above the centre line. */
+        align-self: center;
+
+        color: transparent;
+        inline-size: var(--select-icon-size);
+        block-size: var(--select-icon-size);
+
+        background-color: var(--select-icon-color);
+        mask-image: var(--select-icon-image);
+        mask-size: contain;
+        mask-position: center;
+        mask-repeat: no-repeat;
+
+        transition: rotate var(--transition-fast);
+      }
+
+      &:open::picker-icon {
+        rotate: 180deg;
+      }
+
+      /* The picker is anchored to the button implicitly. */
+      &::picker(select) {
+        margin-block-start: var(--select-menu-offset);
+        min-inline-size: anchor-size(inline);
+
+        background-color: var(--select-menu-surface);
+        border: var(--select-border-width) solid var(--select-menu-border-color);
+        border-radius: var(--select-menu-radius);
+        box-shadow: var(--select-menu-shadow);
+        padding: var(--select-menu-padding);
+      }
+
+      & option {
+        padding-block: var(--select-option-padding-block);
+        padding-inline: var(--select-option-padding-inline);
+        border-radius: var(--select-option-radius);
+        cursor: pointer;
+
+        &:hover:not(:disabled),
+        &:checked {
+          background-color: var(--select-option-highlight);
+        }
+
+        &:disabled {
+          color: var(--color-neutral-500);
+          cursor: not-allowed;
+        }
+      }
+
+      /* A group name labels the options under it, so it is .label's colour. */
+      & optgroup {
+        color: var(--form-label-color, var(--color-neutral-900));
+        font-weight: 600;
+        padding-block: var(--select-option-padding-block);
+        padding-inline: var(--select-option-padding-inline);
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        &::picker(select) {
+          opacity: 0;
+          translate: 0 var(--select-menu-travel);
+          transition:
+            opacity var(--select-menu-duration),
+            translate var(--select-menu-duration),
+            display var(--select-menu-duration) allow-discrete,
+            overlay var(--select-menu-duration) allow-discrete;
+        }
+
+        &:open::picker(select) {
+          opacity: 1;
+          translate: 0 0;
+        }
+
+        @starting-style {
+          &:open::picker(select) {
+            opacity: 0;
+            translate: 0 var(--select-menu-travel);
+          }
+        }
+      }
+    }
+  }
+}

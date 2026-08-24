@@ -1,3 +1,5 @@
+@import url("./Animations/swap.css");
+
 /* -----------------Content Board----------------------- */
 /*
 ACCESSIBILITY REQUIREMENTS:
@@ -42,8 +44,8 @@ ATTRIBUTES:
                         where opening one closes the rest. No JavaScript.
 - data-marker="start" → the marker leads the row instead of closing it
 - data-marker="none"  → we draw no marker at all
-- data-marker-motion  → how the marker changes: scale (default) · rotate ·
-                        fade · none
+  (The two-icon swap and its motion now come from Animations/swap.css, which
+   this file imports. Put data-motion on the .swap slot, not here.)
 
 SIZE:  sm · md · lg   (md is the default; the key alone is already md)
 SHAPE: sharp · smooth · rounded
@@ -51,16 +53,14 @@ SHAPE: sharp · smooth · rounded
 PARTS:
 - .collapsible-marker → your own icon, inside the <summary>. Ours stands down
   on sight, and yours inherits the size, placement, rotation and timing.
-- .open / .closed     → two icons inside .collapsible-marker, one per state.
-  They cross over when the panel opens. Nothing animates inside an icon, so
-  this works for any pair of shapes — a plus and a minus, a chevron and a
-  cross, whatever you draw. The names live only inside .collapsible-marker
-  and cannot reach anything else.
+- Add .swap for two icons, one per state. That slot and its motion are
+  Animations/swap.css — see that file. [open] on the <details> is what flips
+  it, with no wiring needed here.
 
 <details class="collapsible md">
   <summary>
     A plus that becomes a minus
-    <span class="collapsible-marker" aria-hidden="true">
+    <span class="collapsible-marker swap" aria-hidden="true">
       <svg class="closed">…plus…</svg>
       <svg class="open">…minus…</svg>
     </span>
@@ -108,19 +108,6 @@ This file is one panel and knows nothing about its neighbours.
   --collapsible-marker-color: var(--color-neutral-500);
   --collapsible-marker-rotation-open: 180deg;
   --collapsible-marker-duration: var(--collapsible-duration);
-
-  /*
-   * The swap, for a slot holding two icons. Everything about the motion is
-   * expressed as an exit state — where the outgoing icon goes and where the
-   * incoming one comes from — so data-marker-motion below only has to
-   * reassign these two, never rewrite a rule.
-   */
-  --collapsible-marker-exit-scale: 0.4;
-  --collapsible-marker-exit-rotation: 0deg;
-  --collapsible-marker-exit-duration: 120ms;
-  --collapsible-marker-enter-duration: 220ms;
-  --collapsible-marker-enter-delay: 90ms;
-  --collapsible-marker-enter-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* BASE */
 
@@ -221,78 +208,11 @@ This file is one panel and knows nothing about its neighbours.
     block-size: var(--collapsible-marker-size);
 
     transition: rotate var(--collapsible-marker-duration);
-
-    /*
-     * Two icons instead of one turns the slot into a stack. Grid rather than
-     * absolute positioning: the box keeps taking its size from the icons, so
-     * nothing has to be measured or hard-coded.
-     */
-    &:has(:is(.open, .closed)) {
-      display: grid;
-
-      & > * {
-        grid-area: 1 / 1;
-
-        /*
-         * `display` is declared for defence, not for looks. `.closed { display:
-         * none }` is one of the commonest utility rules in other people's
-         * stylesheets; with no declaration of ours theirs would apply unopposed
-         * and the icon would disappear with nothing on screen to explain why.
-         */
-        display: block;
-
-        inline-size: 100%;
-        block-size: 100%;
-      }
-    }
   }
 
   /* Yours stands ours down on sight. There is nothing to switch off. */
   & > summary:has(.collapsible-marker)::after {
     content: none;
-  }
-
-  /* MARKER SWAP — one icon per state, crossing over on [open] */
-
-  /*
-   * Read these two as a pair. Each rule lists the icon that is wrong for the
-   * current state beside the icon that is right for it, so the whole swap is
-   * two blocks rather than four.
-   *
-   * The :not([open]) is not strictly required. Every selector in a nested list
-   * keeps its own specificity, so a bare `&` would already lose to its [open]
-   * partner. It is written out because leaning on that is a trap: add one
-   * class to either side later and the swap inverts with nothing to show why.
-   * Spelled out, the two branches are mutually exclusive and specificity stops
-   * being part of the answer at all.
-   */
-
-  /* The icon for the state we are not in. */
-  &:not([open]) > summary .collapsible-marker .open,
-  &[open] > summary .collapsible-marker .closed {
-    opacity: 0;
-    scale: var(--collapsible-marker-exit-scale);
-    rotate: var(--collapsible-marker-exit-rotation);
-
-    transition:
-      opacity var(--collapsible-marker-exit-duration) ease-in,
-      scale var(--collapsible-marker-exit-duration) ease-in,
-      rotate var(--collapsible-marker-exit-duration) ease-in;
-  }
-
-  /* The icon for the state we are in. It arrives a beat after the other leaves. */
-  &:not([open]) > summary .collapsible-marker .closed,
-  &[open] > summary .collapsible-marker .open {
-    opacity: 1;
-    scale: 1;
-    rotate: 0deg;
-
-    transition:
-      opacity var(--collapsible-marker-enter-duration) var(--collapsible-marker-enter-delay),
-      scale var(--collapsible-marker-enter-duration) var(--collapsible-marker-enter-delay)
-        var(--collapsible-marker-enter-easing),
-      rotate var(--collapsible-marker-enter-duration) var(--collapsible-marker-enter-delay)
-        var(--collapsible-marker-enter-easing);
   }
 
   /* CONTENT */
@@ -378,41 +298,11 @@ This file is one panel and knows nothing about its neighbours.
     content: none;
   }
 
-  /*
-   * MOTION. Only the exit state moves; the rules above already say what to do
-   * with it. "scale" is the default and therefore has no block of its own —
-   * writing data-marker-motion="scale" is legal and simply changes nothing.
-   *
-   * A slot holding a single icon is unaffected by these: it has nothing to
-   * cross over with, and keeps turning.
-   */
-
-  &[data-marker-motion="rotate"] {
-    --collapsible-marker-exit-scale: 1;
-    --collapsible-marker-exit-rotation: var(--collapsible-marker-rotation-open);
-  }
-
-  &[data-marker-motion="fade"] {
-    --collapsible-marker-exit-scale: 1;
-    --collapsible-marker-exit-rotation: 0deg;
-    --collapsible-marker-enter-easing: ease-out;
-  }
-
-  &[data-marker-motion="none"] {
-    --collapsible-marker-duration: 0s;
-    --collapsible-marker-exit-duration: 0s;
-    --collapsible-marker-enter-duration: 0s;
-    --collapsible-marker-enter-delay: 0s;
-  }
-
   &[open] {
-    /*
-     * The single-icon slot turns. A slot holding two does not — the box stays
-     * put and the icons inside it do the moving, or the pair would swap while
-     * the frame spun around them.
-     */
+    /* The single-icon slot turns. A .swap slot does not — the icons inside it
+       do the moving, or the pair would cross while the frame spun. */
     & > summary::after,
-    & > summary .collapsible-marker:not(:has(:is(.open, .closed))) {
+    & > summary .collapsible-marker:not(.swap) {
       rotate: var(--collapsible-marker-rotation-open);
     }
 
@@ -425,8 +315,7 @@ This file is one panel and knows nothing about its neighbours.
   @media (prefers-reduced-motion: reduce) {
     &::details-content,
     & > summary::after,
-    & > summary .collapsible-marker,
-    & > summary .collapsible-marker :is(.open, .closed) {
+    & > summary .collapsible-marker {
       transition: none;
     }
   }

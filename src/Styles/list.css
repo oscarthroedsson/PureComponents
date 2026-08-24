@@ -78,7 +78,6 @@ VARIABLES
   /* ITEMS */
   & > li {
     padding: var(--list-padding-block) var(--list-padding-inline);
-
     border-block-end: var(--list-border-width) solid var(--list-border-color);
   }
 

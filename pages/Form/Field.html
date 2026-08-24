@@ -10,34 +10,19 @@
     <link rel="stylesheet" href="../../src/Styles/Form/form.css" />
     <link rel="stylesheet" href="../../src/Styles/Form/fieldset.css" />
     <link rel="stylesheet" href="../../src/Styles/Form/field.css" />
-    <link rel="stylesheet" href="../../src/Styles/Form/input.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/label.css" />
+    <link rel="stylesheet" href="../../src/Styles/Form/input/input.css" />
     <link rel="stylesheet" href="../../src/Styles/button.css" />
 
     <link rel="stylesheet" href="../docs.css" />
 
-    <!--
-      TEMPORARY — not part of the library, and not loaded by any other page.
-      Flattens .input to a plain box so this page shows the FIELD's spacing,
-      rhythm and type rather than the input's own design. Delete it when the
-      input is what is being judged.
-    -->
-    <style>
-      /* :where() keeps this at (0,1,0) so it replaces only the BASE. At
-         (0,2,0) it tied with .input:disabled and the invalid rule and won on
-         source order, which silently flattened both states. */
-      .pc-stage :where(.input) {
-        --input-surface: transparent;
-        --input-border-color: var(--color-neutral-400);
-        --input-radius: 2px;
-      }
-    </style>
   </head>
   <body data-component="Form/Field">
     <section class="pc-demo" id="basic" data-title="Label And Control" data-stage-style="display:block; max-width:22rem;">
       <p class="pc-note">The minimum.</p>
       <template>
         <div class="field">
-          <label for="a-name">Full name</label>
+          <label class="label" for="a-name">Full name</label>
           <input class="input" type="text" id="a-name" />
         </div>
       </template>
@@ -63,18 +48,18 @@
       <template>
         <form class="form">
           <div class="field">
-            <label for="h-pw">Password</label>
+            <label class="label" for="h-pw">Password</label>
             <p class="field-hint" id="h-pw-hint">At least 8 characters, one number.</p>
             <input class="input" type="password" id="h-pw" minlength="8" aria-describedby="h-pw-hint" />
           </div>
           <div class="field">
-            <label for="h-vat">VAT number</label>
+            <label class="label" for="h-vat">VAT number</label>
             <p class="field-hint" id="h-vat-hint">Starts with SE and ends with 01. We check it against Bolagsverket.</p>
             <input class="input" type="text" id="h-vat" value="SE556677889901"
                    aria-describedby="h-vat-hint" />
           </div>
           <div class="field">
-            <label for="h-none">No hint at all</label>
+            <label class="label" for="h-none">No hint at all</label>
             <input class="input" type="text" id="h-none" />
           </div>
         </form>
@@ -85,7 +70,7 @@
       <p class="pc-note">Label, hint, control, message.</p>
       <template>
         <div class="field">
-          <label for="a-email">Email</label>
+          <label class="label" for="a-email">Email</label>
           <p class="field-hint" id="a-email-hint">We only use it for receipts.</p>
           <input class="input" type="email" id="a-email"
                  aria-describedby="a-email-hint a-email-err" />
@@ -99,27 +84,27 @@
       <template>
         <form class="form">
           <div class="field">
-            <label for="s-normal">Default</label>
+            <label class="label" for="s-normal">Default</label>
             <input class="input" type="text" id="s-normal" value="Anna Lindqvist" />
           </div>
           <div class="field">
-            <label for="s-ro">Read only</label>
+            <label class="label" for="s-ro">Read only</label>
             <p class="field-hint">Set when the account was created.</p>
             <input class="input" type="text" id="s-ro" value="anna.lindqvist" readonly />
           </div>
           <div class="field">
-            <label for="s-dis">Disabled</label>
+            <label class="label" for="s-dis">Disabled</label>
             <p class="field-hint">Ask support to change this.</p>
             <input class="input" type="text" id="s-dis" value="8901-2345" disabled />
           </div>
           <div class="field">
-            <label for="s-aria">Invalid — set by a validator</label>
+            <label class="label" for="s-aria">Invalid — set by a validator</label>
             <input class="input" type="text" id="s-aria" value="ann@" aria-invalid="true"
                    aria-describedby="s-aria-err" />
             <p class="field-error" id="s-aria-err">Enter a valid email address.</p>
           </div>
           <div class="field">
-            <label for="s-nat">Invalid — native, after you leave it</label>
+            <label class="label" for="s-nat">Invalid — native, after you leave it</label>
             <input class="input" type="email" id="s-nat" required aria-describedby="s-nat-err" />
             <p class="field-error" id="s-nat-err">Enter a valid email address.</p>
           </div>
@@ -132,12 +117,12 @@
       <template>
         <form class="form">
           <div class="field">
-            <label for="r-ok">Username</label>
+            <label class="label" for="r-ok">Username</label>
             <input class="input" type="text" id="r-ok" value="oscar" aria-describedby="r-ok-err" />
             <p class="field-error" id="r-ok-err">That username is taken.</p>
           </div>
           <div class="field">
-            <label for="r-bad">Username</label>
+            <label class="label" for="r-bad">Username</label>
             <input class="input" type="text" id="r-bad" value="oscar" aria-invalid="true"
                    aria-describedby="r-bad-err" />
             <p class="field-error" id="r-bad-err">That username is taken.</p>
@@ -150,19 +135,19 @@
       <p class="pc-note">Size on the field. Label, hint, control and message all follow.</p>
       <template>
         <div class="field sm">
-          <label for="z-sm">Small</label>
+          <label class="label" for="z-sm">Small</label>
           <p class="field-hint">Hint follows the field.</p>
           <input class="input" type="text" id="z-sm" value="sm" aria-invalid="true" />
           <p class="field-error">So does the message.</p>
         </div>
         <div class="field md">
-          <label for="z-md">Medium</label>
+          <label class="label" for="z-md">Medium</label>
           <p class="field-hint">Hint follows the field.</p>
           <input class="input" type="text" id="z-md" value="md" aria-invalid="true" />
           <p class="field-error">So does the message.</p>
         </div>
         <div class="field lg">
-          <label for="z-lg">Large</label>
+          <label class="label" for="z-lg">Large</label>
           <p class="field-hint">Hint follows the field.</p>
           <input class="input" type="text" id="z-lg" value="lg" aria-invalid="true" />
           <p class="field-error">So does the message.</p>
@@ -175,11 +160,11 @@
       <template>
         <form class="form">
           <div class="field">
-            <label for="p-name">Full name</label>
+            <label class="label" for="p-name">Full name</label>
             <input class="input" type="text" id="p-name" value="Anna Lindqvist" />
           </div>
           <div class="field">
-            <label for="p-email">Email</label>
+            <label class="label" for="p-email">Email</label>
             <p class="field-hint" id="p-email-hint">Your receipt goes here.</p>
             <input class="input" type="email" id="p-email" value="anna@" aria-invalid="true" aria-describedby="p-email-hint p-email-err" />
             <p class="field-error" id="p-email-err">Enter a valid email address.</p>
@@ -190,11 +175,11 @@
               <input class="input" type="text" value="Storgatan 14" aria-label="Street" />
             </div>
             <div class="field">
-              <label for="p-zip">Postcode</label>
+              <label class="label" for="p-zip">Postcode</label>
               <input class="input" type="text" id="p-zip" value="114 55" />
             </div>
             <div class="field">
-              <label for="p-city">City</label>
+              <label class="label" for="p-city">City</label>
               <input class="input" type="text" id="p-city" value="Stockholm" />
             </div>
           </fieldset>
