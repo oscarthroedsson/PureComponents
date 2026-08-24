@@ -83,4 +83,17 @@
 
   min-block-size: 1lh;
   visibility: hidden;
+
+  /* The control immediately before shows its own message. `+` reaches exactly
+     one step, so an error in one field can never light up another's. Two
+     orders are supported: control -> error, and control -> hint -> error.
+     A control wrapped in an .input-group breaks the sibling chain; .field
+     covers that case above. */
+  :is(input, select, textarea):is(:user-invalid, [aria-invalid="true"]) + & {
+    visibility: visible;
+  }
+
+  :is(input, select, textarea):is(:user-invalid, [aria-invalid="true"]) + .field-hint + & {
+    visibility: visible;
+  }
 }
