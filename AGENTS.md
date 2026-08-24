@@ -120,7 +120,7 @@ ACCESSIBILITY REQUIREMENTS:
 - …
 
 USAGE:
-<button class="btn md">…</button>
+<button class="pu-btn md">…</button>
 
 ATTRIBUTES / VARIANTS / SIZE / SHAPE:
 - …
@@ -172,7 +172,7 @@ who is not strong at CSS should be able to read `--dialog-max-width` and know
 what it does, and set it inline on the element:
 
 ```html
-<dialog class="dialog" style="--dialog-max-width: 400px">
+<dialog class="pu-dialog" style="--dialog-max-width: 400px">
 ```
 
 That surface is also how the future component layer will expose props, and how
@@ -280,8 +280,8 @@ live preview.
   <section class="pc-demo" id="sizes" data-title="Sizes">
     <p class="pc-note">Three sizes: <code>sm</code>, <code>md</code>, <code>lg</code>.</p>
     <template>
-      <button class="btn sm">Small</button>
-      <button class="btn md">Medium</button>
+      <button class="pu-btn sm">Small</button>
+      <button class="pu-btn md">Medium</button>
     </template>
   </section>
   <script src="./components.js"></script>

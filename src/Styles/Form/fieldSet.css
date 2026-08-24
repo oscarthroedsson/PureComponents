@@ -1,10 +1,10 @@
 /*
 Fieldset — several fields that answer one question, held together.
 
-  <fieldset class="fieldset">
+  <fieldset class="pu-fieldset">
     <legend>Delivery address</legend>
-    <div class="field">…</div>
-    <div class="field">…</div>
+    <div class="pu-field">…</div>
+    <div class="pu-field">…</div>
   </fieldset>
 
 Native <fieldset>, not a div with role="group". The deciding argument is not

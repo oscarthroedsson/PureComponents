@@ -4,7 +4,7 @@ List — spacing and a hairline for native list markup.
 The class goes on the <ul> or <ol>. Every item is reached from
 there, so the whole list stays one unit.
 
-  <ul class="list md">
+  <ul class="pu-list md">
     <li>Item</li>
     <li>Item</li>
   </ul>

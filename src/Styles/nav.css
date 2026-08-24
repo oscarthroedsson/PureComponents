@@ -8,7 +8,7 @@ ACCESSIBILITY REQUIREMENTS:
 
 USAGE:
   <nav aria-label="Main navigation">
-    <ul class="nav">
+    <ul class="pu-nav">
       <li><a href="/" aria-current="page">Home</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/contact">Contact</a></li>
@@ -17,10 +17,10 @@ USAGE:
 
   OR with nested navigation:
   <nav aria-label="Main navigation">
-    <ul class="nav">
+    <ul class="pu-nav">
       <li>
         <a href="/products" aria-expanded="false">Products</a>
-        <ul class="nav-submenu">
+        <ul class="pu-nav-submenu">
           <li><a href="/products/item1">Item 1</a></li>
         </ul>
       </li>

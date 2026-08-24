@@ -1,9 +1,9 @@
 /*
 Textarea — the box when the text runs to more than one line.
 
-  <textarea class="textarea" rows="4"></textarea>
-  <textarea class="textarea lg rounded" rows="6"></textarea>
-  <textarea class="textarea" data-sizing="content"></textarea>
+  <textarea class="pu-textarea" rows="4"></textarea>
+  <textarea class="pu-textarea lg rounded" rows="6"></textarea>
+  <textarea class="pu-textarea" data-sizing="content"></textarea>
 
 The same box as .pu-input, from the same --form-* channel, so a textarea and an
 input in one form are the same field with a different number of lines. What

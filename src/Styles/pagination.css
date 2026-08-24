@@ -6,13 +6,13 @@ file is button.css plus a row: there is no second set of hover,
 focus, active and disabled rules to keep in sync with the first.
 
   <nav aria-label="Pagination">
-    <ul class="pagination md">
-      <li><a class="btn ghost" href="?page=1" aria-label="Previous page">‹</a></li>
-      <li><a class="btn ghost" href="?page=1">1</a></li>
-      <li><a class="btn" href="?page=2" aria-current="page">2</a></li>
+    <ul class="pu-pagination md">
+      <li><a class="pu-btn ghost" href="?page=1" aria-label="Previous page">‹</a></li>
+      <li><a class="pu-btn ghost" href="?page=1">1</a></li>
+      <li><a class="pu-btn" href="?page=2" aria-current="page">2</a></li>
       <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-      <li><a class="btn ghost" href="?page=9">9</a></li>
-      <li><a class="btn ghost" href="?page=9" aria-label="Next page">›</a></li>
+      <li><a class="pu-btn ghost" href="?page=9">9</a></li>
+      <li><a class="pu-btn ghost" href="?page=9" aria-label="Next page">›</a></li>
     </ul>
   </nav>
 

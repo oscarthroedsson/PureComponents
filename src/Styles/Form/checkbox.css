@@ -1,12 +1,12 @@
 /*
 Checkbox — a box that is on, off, or neither.
 
-  <label class="label">
-    <input class="checkbox" type="checkbox"> Send me receipts
+  <label class="pu-label">
+    <input class="pu-checkbox" type="checkbox"> Send me receipts
   </label>
 
-  <input class="checkbox" type="checkbox" id="terms">
-  <label class="label" for="terms">I accept the terms</label>
+  <input class="pu-checkbox" type="checkbox" id="terms">
+  <label class="pu-label" for="terms">I accept the terms</label>
 
 
 WHY IT IS OWNED, WHEN NOTHING ELSE IN THIS FAMILY IS

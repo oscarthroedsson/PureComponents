@@ -56,7 +56,7 @@
      Height only. Nothing here moves it: where the browser puts the indicator
      is where a consumer's mark has to go, and input/date.css depends on that
      staying true. And it is here rather than there because a bare
-     <input class="input" type="time"> has to line up whether or not that
+     <input class="pu-input" type="time"> has to line up whether or not that
      file was linked. */
   &::-webkit-calendar-picker-indicator {
     block-size: 1em;
@@ -66,7 +66,7 @@
 
      What a type needs in order to look like the rest of the family, and
      nothing a consumer chooses. It is here rather than in a file per type
-     for one reason: a bare <input class="input" type="number"> has to look
+     for one reason: a bare <input class="pu-input" type="number"> has to look
      right on a page that linked this file and nothing else. Put a spinner's
      removal behind an extra import and every page has to remember it, and
      the one that forgets shows a control the library removed everywhere
@@ -186,9 +186,9 @@
 /*
 Input group — a control with something laid over it.
 
-  <div class="input-group">
+  <div class="pu-input-group">
     <svg class="input-icon" data-placement="start" aria-hidden="true">…</svg>
-    <input class="input" type="search">
+    <input class="pu-input" type="search">
   </div>
 
 Required only when there is an icon. An <input> is a void element and cannot

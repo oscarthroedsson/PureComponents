@@ -35,13 +35,13 @@ ACCESSIBILITY REQUIREMENTS:
 
 USAGE:
 
-<span class="badge">New</span>
-<span class="badge lg outline" data-intent="warning">Pending review</span>
-<a class="badge ghost" href="/tags/css">css</a>
+<span class="pu-badge">New</span>
+<span class="pu-badge lg outline" data-intent="warning">Pending review</span>
+<a class="pu-badge ghost" href="/tags/css">css</a>
 
-<button class="btn" aria-label="Notifications, 3 unread">
+<button class="pu-btn" aria-label="Notifications, 3 unread">
   Notifications
-  <span class="badge sm rounded" aria-hidden="true">3</span>
+  <span class="pu-badge sm rounded" aria-hidden="true">3</span>
 </button>
 
 

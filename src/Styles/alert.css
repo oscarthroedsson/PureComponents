@@ -13,7 +13,7 @@ ACCESSIBILITY REQUIREMENTS:
 USAGE:
 
 <div
-  class="alert md"
+  class="pu-alert md"
   data-intent="error"
   role="alert"
 >
@@ -30,7 +30,7 @@ USAGE:
 
   <div class="alert-actions">
     <button
-      class="btn ghost sm"
+      class="pu-btn ghost sm"
       type="button"
       aria-label="Dismiss alert"
     >
@@ -43,7 +43,7 @@ USAGE:
 STATUS USAGE:
 
 <div
-  class="alert md"
+  class="pu-alert md"
   data-intent="success"
   role="status"
 >

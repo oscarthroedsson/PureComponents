@@ -32,16 +32,16 @@ ACCESSIBILITY REQUIREMENTS:
 
 USAGE:
 
-<span class="avatar">JD</span>
+<span class="pu-avatar">JD</span>
 
-<span class="avatar">
+<span class="pu-avatar">
   <img src="jane.jpg" alt="Jane Doe" />
 </span>
 
-<ul class="avatar-group" role="list" data-layout="stacked" data-hover="lift">
-  <li><span class="avatar"><img src="jane.jpg" alt="Jane Doe" /></span></li>
-  <li><span class="avatar"><img src="raj.jpg"  alt="Raj Patel" /></span></li>
-  <li><span class="avatar">+3</span></li>
+<ul class="pu-avatar-group" role="list" data-layout="stacked" data-hover="lift">
+  <li><span class="pu-avatar"><img src="jane.jpg" alt="Jane Doe" /></span></li>
+  <li><span class="pu-avatar"><img src="raj.jpg"  alt="Raj Patel" /></span></li>
+  <li><span class="pu-avatar">+3</span></li>
 </ul>
 
 

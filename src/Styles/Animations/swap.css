@@ -4,7 +4,7 @@ Swap — two icons in one slot, crossing over when a state flips.
 USAGE:
   <summary>
     Question
-    <span class="swap" aria-hidden="true">
+    <span class="pu-swap" aria-hidden="true">
       <svg class="closed">…plus…</svg>
       <svg class="open">…minus…</svg>
     </span>

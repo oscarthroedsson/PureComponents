@@ -2,9 +2,9 @@
 Form — the frame around a set of fields, and the node that sets the scale
 for everything inside it.
 
-  <form class="form">
-    <div class="field">…</div>
-    <fieldset class="fieldset">…</fieldset>
+  <form class="pu-form">
+    <div class="pu-field">…</div>
+    <fieldset class="pu-fieldset">…</fieldset>
   </form>
 
 .pu-form draws nothing you can see. It does two things: it spaces its children,
@@ -27,7 +27,7 @@ declaration always wins:
 
   .pu-form.lg > .pu-fieldset.sm > .pu-field > .pu-input          →  sm
   .pu-form.lg > .pu-field.sm > .pu-input.lg                   →  lg
-  <input class="input" style="--input-font-size:20px">  →  20px
+  <input class="pu-input" style="--input-font-size:20px">  →  20px
 
 THE ONE RULE THAT MUST NOT BREAK: a leaf must never declare a --form-*
 variable in its base block. Declared on the element, it would shadow the
@@ -61,9 +61,9 @@ ACCESSIBILITY REQUIREMENTS:
   --form-font-size: var(--font-size-base) on the form.
 
 USAGE:
-  <form class="form">…</form>
-  <form class="form lg rounded">…</form>
-  <form class="form" style="--form-gap: 2rem">…</form>
+  <form class="pu-form">…</form>
+  <form class="pu-form lg rounded">…</form>
+  <form class="pu-form" style="--form-gap: 2rem">…</form>
 
 SIZE:  sm · md (default) · lg
   The key alone is already md. A size class rewrites one variable and the

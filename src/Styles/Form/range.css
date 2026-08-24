@@ -2,8 +2,8 @@
 Range — a slider for a value where the exact number does not matter.
 
 USAGE:
-  <input class="range" type="range" min="0" max="100" value="40">
-  <input class="range primary lg" type="range" min="0" max="100" value="40">
+  <input class="pu-range" type="range" min="0" max="100" value="40">
+  <input class="pu-range primary lg" type="range" min="0" max="100" value="40">
 
 THE FILL IS NOT AUTOMATIC
 

@@ -8,8 +8,8 @@ ACCESSIBILITY REQUIREMENTS:
 
 USAGE:
   <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-    <a href="#navigation" class="skip-link">Skip to navigation</a>
+    <a href="#main-content" class="pu-skip-link">Skip to main content</a>
+    <a href="#navigation" class="pu-skip-link">Skip to navigation</a>
     
     <nav id="navigation">...</nav>
     <main id="main-content">...</main>

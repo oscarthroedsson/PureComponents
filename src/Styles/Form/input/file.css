@@ -3,9 +3,9 @@ File — the one control in the family where the browser writes half of what
 you see.
 
 USAGE:
-  <input class="file" type="file">
-  <input class="file lg rounded" type="file" accept="image/*" multiple>
-  <input class="file ghost" type="file">
+  <input class="pu-file" type="file">
+  <input class="pu-file lg rounded" type="file" accept="image/*" multiple>
+  <input class="pu-file ghost" type="file">
 
 The box comes from the --form-* channel, same as .pu-input and .pu-select, so a
 file field standing in a form is the same field with different contents.
@@ -411,8 +411,8 @@ no such problem — the icon there is a real element drawing in currentColor.
 /*
 An icon in the group's end slot. The button owns the start.
 
-  <div class="input-group">
-    <input class="file" type="file">
+  <div class="pu-input-group">
+    <input class="pu-file" type="file">
     <svg class="input-icon" data-placement="end" aria-hidden="true">…</svg>
   </div>
 

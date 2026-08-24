@@ -1,10 +1,10 @@
 /*
 Radio — one of several, and only one.
 
-  <fieldset class="fieldset">
+  <fieldset class="pu-fieldset">
     <legend>Delivery</legend>
-    <label class="label"><input class="radio" type="radio" name="d"> Standard</label>
-    <label class="label"><input class="radio" type="radio" name="d"> Express</label>
+    <label class="pu-label"><input class="pu-radio" type="radio" name="d"> Standard</label>
+    <label class="pu-label"><input class="pu-radio" type="radio" name="d"> Express</label>
   </fieldset>
 
 The same box as .pu-checkbox, from the same channel, built the same way and for

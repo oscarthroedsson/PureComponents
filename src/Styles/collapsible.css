@@ -33,7 +33,7 @@ ACCESSIBILITY REQUIREMENTS:
 - The open and close motion is silenced under prefers-reduced-motion.
 
 USAGE:
-<details class="collapsible md">
+<details class="pu-collapsible md">
   <summary>How do I create an account?</summary>
   <p>Click the "Sign up" button in the top right corner.</p>
 </details>
@@ -57,10 +57,10 @@ PARTS:
   Animations/swap.css — see that file. [open] on the <details> is what flips
   it, with no wiring needed here.
 
-<details class="collapsible md">
+<details class="pu-collapsible md">
   <summary>
     A plus that becomes a minus
-    <span class="collapsible-marker swap" aria-hidden="true">
+    <span class="collapsible-marker pu-swap" aria-hidden="true">
       <svg class="closed">…plus…</svg>
       <svg class="open">…minus…</svg>
     </span>

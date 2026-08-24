@@ -9,11 +9,11 @@ ACCESSIBILITY REQUIREMENTS:
 - The key is a look, not an element, and which element it sits on decides
   what the pill *is*:
 
-    <button class="pill">      an action
-    <a class="pill" href>      a destination — a tag page, a filtered view
-    <label class="pill">       a selection, with the input inside it
-    <span class="pill">        a removable tag; the container is not the control
-    <li class="pill">          the same, inside a <ul> of tags
+    <button class="pu-pill">      an action
+    <a class="pu-pill" href>      a destination — a tag page, a filtered view
+    <label class="pu-pill">       a selection, with the input inside it
+    <span class="pu-pill">        a removable tag; the container is not the control
+    <li class="pu-pill">          the same, inside a <ul> of tags
 
   The <label> form is the one that carries state without JavaScript. The
   input keeps its own role, the label gives it a name, and Tab and Space
@@ -54,20 +54,20 @@ ACCESSIBILITY REQUIREMENTS:
 
 USAGE:
 
-<button class="pill">Filter</button>
-<a class="pill" href="/tags/css">css</a>
+<button class="pu-pill">Filter</button>
+<a class="pu-pill" href="/tags/css">css</a>
 
-<label class="pill">
+<label class="pu-pill">
   <input type="checkbox" name="topic" value="design" />
   Design
 </label>
 
-<span class="pill outline">
+<span class="pu-pill outline">
   JavaScript
   <button class="pill-remove" aria-label="Remove JavaScript">&times;</button>
 </span>
 
-<button class="pill" aria-pressed="true">Unread only</button>
+<button class="pu-pill" aria-pressed="true">Unread only</button>
 
 
 SIZE:  sm · md · lg   (md is the default; the key alone is already md)

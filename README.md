@@ -60,7 +60,7 @@ cd PureComponents
 2. Use semantic HTML with PureComponents classes:
 
 ```html
-<button class="btn md">Click me</button>
+<button class="pu-btn md">Click me</button>
 ```
 
 ### Project Structure
@@ -120,10 +120,10 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 #### Button
 
 ```html
-<button class="btn md">Button</button>
-<button class="btn md secondary">Secondary</button>
-<button class="btn md" disabled>Disabled</button>
-<button class="btn md" aria-label="Close dialog">×</button>
+<button class="pu-btn md">Button</button>
+<button class="pu-btn md secondary">Secondary</button>
+<button class="pu-btn md" disabled>Disabled</button>
+<button class="pu-btn md" aria-label="Close dialog">×</button>
 ```
 
 **Accessibility Requirements:**
@@ -141,7 +141,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
   <input 
     type="email" 
     id="email" 
-    class="input md"
+    class="pu-input md"
     aria-describedby="email-help email-error"
   />
   <p id="email-help" class="helpText">Enter your email</p>
@@ -159,7 +159,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 ```html
 <div class="formField">
   <label for="agree" class="checkbox-label">
-    <input type="checkbox" id="agree" class="checkbox md" />
+    <input type="checkbox" id="agree" class="pu-checkbox md" />
     I agree to the terms
   </label>
 </div>
@@ -175,7 +175,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 <fieldset class="radio-group">
   <legend>Choose an option</legend>
   <div class="radio-item">
-    <input type="radio" id="option1" name="choice" class="radio" value="1" />
+    <input type="radio" id="option1" name="choice" class="pu-radio" value="1" />
     <label for="option1" class="radio-label">Option 1</label>
   </div>
 </fieldset>
@@ -190,7 +190,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 ```html
 <div class="formField">
   <label for="country">Country</label>
-  <select id="country" class="select md" aria-describedby="country-help">
+  <select id="country" class="pu-select md" aria-describedby="country-help">
     <option value="">Choose a country</option>
     <option value="us">United States</option>
   </select>
@@ -205,7 +205,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
   <label for="message">Message</label>
   <textarea 
     id="message" 
-    class="textarea md" 
+    class="pu-textarea md" 
     rows="4"
     aria-describedby="message-help"
   ></textarea>
@@ -219,7 +219,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 
 ```html
 <nav aria-label="Main navigation">
-  <ul class="nav md">
+  <ul class="pu-nav md">
     <li><a href="/" aria-current="page">Home</a></li>
     <li><a href="/about">About</a></li>
   </ul>
@@ -234,8 +234,8 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 #### Skip Links
 
 ```html
-<a href="#main-content" class="skip-link">Skip to main content</a>
-<a href="#navigation" class="skip-link">Skip to navigation</a>
+<a href="#main-content" class="pu-skip-link">Skip to main content</a>
+<a href="#navigation" class="pu-skip-link">Skip to navigation</a>
 ```
 
 **Accessibility Requirements:**
@@ -247,14 +247,14 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 #### Dialog/Modal
 
 ```html
-<dialog id="dialog" class="dialog md" aria-labelledby="dialog-title">
+<dialog id="dialog" class="pu-dialog md" aria-labelledby="dialog-title">
   <div class="dialog-header">
     <h2 id="dialog-title">Dialog Title</h2>
     <button class="dialog-close" aria-label="Close dialog">×</button>
   </div>
   <div class="dialog-body">Content</div>
   <div class="dialog-footer">
-    <button class="btn" onclick="dialog.close()">Close</button>
+    <button class="pu-btn" onclick="dialog.close()">Close</button>
   </div>
 </dialog>
 ```
@@ -268,7 +268,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 #### Tooltip
 
 ```html
-<button class="tooltip" aria-describedby="tooltip-1">
+<button class="pu-tooltip" aria-describedby="tooltip-1">
   Hover or focus me
   <span id="tooltip-1" role="tooltip" class="tooltip-content">Tooltip text</span>
 </button>
@@ -284,7 +284,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 #### Alert
 
 ```html
-<div class="alert error" role="alert" aria-live="assertive">
+<div class="pu-alert error" role="alert" aria-live="assertive">
   <div class="alert-content">
     <h3 class="alert-title">Error</h3>
     <p class="alert-message">Something went wrong</p>
@@ -314,7 +314,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 #### Table
 
 ```html
-<table class="table md" aria-label="User data">
+<table class="pu-table md" aria-label="User data">
   <caption>User Information</caption>
   <thead>
     <tr>
@@ -342,7 +342,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 <label for="progress1">Upload Progress</label>
 <progress 
   id="progress1" 
-  class="progress md" 
+  class="pu-progress md" 
   value="45" 
   max="100"
   aria-valuemin="0"
@@ -360,7 +360,7 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 
 ```html
 <nav aria-label="Pagination">
-  <ul class="pagination md">
+  <ul class="pu-pagination md">
     <li>
       <a href="/page/prev" class="pagination-link" aria-label="Previous page">Previous</a>
     </li>

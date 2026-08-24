@@ -5,8 +5,8 @@ The class is the opt-in and aria-busy is the state, so the same two
 lines work on anything: a button, a row of page controls, a card.
 No component paints its own loading.
 
-  <button class="btn md loading" aria-busy="true" disabled>Saving…</button>
-  <ul class="pagination md loading" aria-busy="true"> … </ul>
+  <button class="pu-btn md pu-loading" aria-busy="true" disabled>Saving…</button>
+  <ul class="pu-pagination md pu-loading" aria-busy="true"> … </ul>
 
 Nothing is painted over. The element keeps its own colours and only
 steps back — the label stays readable, so the reader can still see

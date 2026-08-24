@@ -18,7 +18,7 @@ It covers the viewport, ignores the pointer and takes up no space
 while it is empty, so it can sit anywhere in the markup.
 
 <div
-  class="toast-container"
+  class="pu-toast-container"
   data-placement="top-right"
   data-layout="list"
 ></div>
@@ -27,7 +27,7 @@ Toasts are appended to it:
 
 <div class="toast">
   <div
-    class="alert md"
+    class="pu-alert md"
     data-intent="success"
     role="status"
   >

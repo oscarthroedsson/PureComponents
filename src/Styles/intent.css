@@ -18,9 +18,9 @@ refines or replaces that paint. Link it after a component instead and it
 would flatten that component's variants.
 
 USAGE:
-  <span class="badge" data-intent="error">Failed</span>
-  <div class="alert" data-intent="warning" role="alert">…</div>
-  <button class="btn" data-intent="destructive">Delete</button>
+  <span class="pu-badge" data-intent="error">Failed</span>
+  <div class="pu-alert" data-intent="warning" role="alert">…</div>
+  <button class="pu-btn" data-intent="destructive">Delete</button>
   <div data-intent="success">…</div>          plain markup works too
 
 ACCESSIBILITY REQUIREMENTS:

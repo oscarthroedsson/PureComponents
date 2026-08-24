@@ -19,12 +19,12 @@ ACCESSIBILITY REQUIREMENTS:
   and Space on the trigger, normal Tab order — is what <summary> already gives.
 
 USAGE:
-<div class="accordion md">
-  <details class="collapsible" name="faq">
+<div class="pu-accordion md">
+  <details class="pu-collapsible" name="faq">
     <summary>How do I create an account?</summary>
     <p>Click the "Sign up" button in the top right corner.</p>
   </details>
-  <details class="collapsible" name="faq">
+  <details class="pu-collapsible" name="faq">
     <summary>I forgot my password.</summary>
     <p>Use "Forgot password" on the sign-in page.</p>
   </details>

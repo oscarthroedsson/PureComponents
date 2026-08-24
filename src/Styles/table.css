@@ -4,7 +4,7 @@ Table — spacing and alignment for native table markup.
 The class goes on the <table>. Everything inside is reached from
 there, so the whole table stays one unit.
 
-  <table class="table md">
+  <table class="pu-table md">
     <thead>…</thead>
     <tbody>…</tbody>
   </table>
@@ -22,7 +22,7 @@ ALIGNMENT
   level is needed, and an inherited value always yields to one set
   directly on the element.
 
-  <table class="table md">                    everything starts at start
+  <table class="pu-table md">                    everything starts at start
     <tbody>
       <tr>
         <td>Ada</td>
