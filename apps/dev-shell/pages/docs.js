@@ -597,7 +597,7 @@
       el("footer", { class: "pc-footer" }, [
         el("p", {}, [
           "Built for development, not for publishing. ",
-          el("a", { href: "ACCESSIBILITY.md", text: "Accessibility guidelines" }),
+          el("a", { href: "../../../AI/accessibility.md", text: "Accessibility guidelines" }),
           " · ",
           el("a", { href: "README.md", text: "README" }),
         ]),

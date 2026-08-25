@@ -34,7 +34,7 @@ PureComponents is committed to accessibility. All components are designed to mee
 - ✅ Color contrast compliance (4.5:1 for text, 3:1 for UI)
 - ✅ Semantic HTML structure
 
-For detailed accessibility guidelines, see [ACCESSIBILITY.md](./ACCESSIBILITY.md).
+For detailed accessibility guidelines, see [AI/accessibility.md](./AI/accessibility.md).
 
 ## Getting Started
 
@@ -90,7 +90,7 @@ PureComponents/
 │   └── Button.html, ...
 ├── index.html                  # component index
 ├── README.md
-└── ACCESSIBILITY.md
+└── AI/accessibility.md
 ```
 
 ### Development preview
@@ -449,7 +449,7 @@ Contributions are welcome! Please ensure:
 4. Focus indicators meet contrast requirements
 5. Code follows existing patterns
 
-See [ACCESSIBILITY.md](./ACCESSIBILITY.md) for detailed guidelines.
+See [AI/accessibility.md](./AI/accessibility.md) for detailed guidelines.
 
 ## License
 
