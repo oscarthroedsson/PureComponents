@@ -15,10 +15,16 @@ ATTRIBUTES:
 - data-intent="destructive" → Destructive action
 
 ELEMENTS:
-.pu-btn is a look, not an element. It goes on a <button> for an action
-and on an <a> for a destination — pagination needs both. The two
-arrive with different browser defaults, so the base neutralises them
-in one place and everything below describes only the look.
+.pu-btn is a look, not a single element, but it is not elementless
+either. It goes on a <button> for an action, an <a> for a destination —
+pagination needs both — a <label> for the file-input pattern, and a
+<summary> for a disclosure trigger. On anything else, including a
+<div>, the key does nothing at all: none of those can be focused or
+activated from a keyboard, so a button built from one is broken in a
+way styling would only hide.
+
+The four arrive with different browser defaults, so the base neutralises
+them in one place and everything below describes only the look.
 
 NOT HERE:
 Loading and skeleton are put on top, from loading.css, and are not
@@ -26,7 +32,7 @@ rebuilt per component.
 */
 /* ----------------------------------------------------- */
 
-.pu-btn {
+.pu-btn:where(button, a, label, summary) {
   position: relative;
   display: inline-flex;
   align-items: center;

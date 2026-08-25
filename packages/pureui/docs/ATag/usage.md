@@ -20,7 +20,7 @@ The A-tag component provides styled anchor/link elements with hover effects and 
 ## Quick Start
 
 ```html
-<a href="/page" class="anchor-base">Link Text</a>
+<a href="/page" class="pu-link">Link Text</a>
 ```
 
 ## Accessibility Requirements
@@ -31,7 +31,7 @@ The A-tag component provides styled anchor/link elements with hover effects and 
 
 ## API Reference
 
-- `.anchor-base` - Base anchor class
+- `.pu-link` - Base anchor class
 - Hover effect: Animated underline via `::before` pseudo-element
 
 ## Examples
