@@ -5,11 +5,11 @@ Write the container once, anywhere in the page. It owns the
 placement, covers the viewport, ignores the pointer and takes up no
 space while it is empty:
 
-  <div class="toast-container" data-placement="top-right"></div>
+  <div class="pu-toast-container" data-placement="top-right"></div>
 
 Load this file once:
 
-  <script type="module" src="/src/Utils/toast/index.ts"></script>
+  <script type="module" src="/pureui/js/toast/index.ts"></script>
 
 Then it is three functions, on window.Toast so plain HTML can reach
 them:
@@ -28,7 +28,7 @@ duration, dismissible, icon, swipeable.
 
 Modules can import the same three functions instead:
 
-  import { append } from "/src/Utils/toast";
+  import { append } from "pureui/js/toast";
 
 Every Toast can be swiped away in the direction its container sits:
 right for a right-hand container, left for a left-hand one, and for

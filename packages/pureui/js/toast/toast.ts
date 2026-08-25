@@ -4,7 +4,7 @@ import { isTopPlacement } from "./placement";
 import { attachSwipe } from "./swipe";
 import type { ResolvedToastAttributes, ToastAttributes, ToastInstance, ToastTarget } from "./types";
 
-export const CONTAINER_SELECTOR = ".toast-container";
+export const CONTAINER_SELECTOR = ".pu-toast-container";
 
 /*
 Defaults for everything append() is not told.
@@ -71,14 +71,14 @@ export function resolveContainer(target?: ToastTarget): HTMLElement | null {
   if (!container) {
     consoleErr(
       "Toast",
-      `No element matches ${selector}. Add <div class="toast-container" data-placement="top-right"></div> to the page.`,
+      `No element matches ${selector}. Add <div class="pu-toast-container" data-placement="top-right"></div> to the page.`,
     );
 
     return null;
   }
 
-  if (!container.classList.contains("toast-container")) {
-    consoleErr("Toast", `${selector} is not a .toast-container.`, container);
+  if (!container.classList.contains("pu-toast-container")) {
+    consoleErr("Toast", `${selector} is not a .pu-toast-container.`, container);
     return null;
   }
 

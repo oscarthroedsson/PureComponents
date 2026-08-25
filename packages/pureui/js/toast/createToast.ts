@@ -86,7 +86,7 @@ function buildActions(): HTMLElement {
 
   const button = document.createElement("button");
 
-  button.className = "btn ghost sm";
+  button.className = "pu-btn ghost sm";
   button.type = "button";
 
   button.dataset.iconOnly = "true";
@@ -109,7 +109,7 @@ export function createToast(id: string, attributes: ResolvedToastAttributes): HT
 
   const alert = document.createElement("div");
 
-  alert.className = `alert ${attributes.size}`;
+  alert.className = `pu-alert ${attributes.size}`;
 
   alert.dataset.intent = attributes.intent;
 
