@@ -9,6 +9,7 @@
     <!-- Library CSS under test -->
     <link rel="stylesheet" href="/pureui/styles/main.css" />
     <link rel="stylesheet" href="/pureui/styles/pill.css" />
+    <link rel="stylesheet" href="/pureui/styles/badge.css" />
 
     <!-- Dev shell (not part of the library) -->
     <link rel="stylesheet" href="./docs.css" />
@@ -145,13 +146,13 @@
     </section>
 
     <section class="pc-demo" id="tag-list" data-title="A List of Tags" data-stage-style="display: flex;">
-      <p class="pc-note">When the pills are a list, say so. <code>ul</code> with the key on each <code>li</code> gives the count and the position to a screen reader — "list, 4 items" — which a row of loose spans does not.</p>
+      <p class="pc-note">These are <strong>badges, not pills</strong>. Nothing here responds to the pointer and nothing contains a control, and a pill is by definition the interactive counterpart to a badge — so the key is <code>.pu-badge</code>. The list part still matters: <code>ul</code> with the key on each <code>li</code> gives a screen reader the count and the position — "list, 4 items" — which a row of loose spans does not.</p>
       <template>
         <ul style="display: flex; gap: 0.5rem; flex-wrap: wrap; list-style: none; margin: 0; padding: 0;">
-          <li class="pu-pill ghost">design-systems</li>
-          <li class="pu-pill ghost">css</li>
-          <li class="pu-pill ghost">accessibility</li>
-          <li class="pu-pill ghost">tokens</li>
+          <li class="pu-badge ghost">design-systems</li>
+          <li class="pu-badge ghost">css</li>
+          <li class="pu-badge ghost">accessibility</li>
+          <li class="pu-badge ghost">tokens</li>
         </ul>
       </template>
     </section>

@@ -53,7 +53,7 @@ window.PC_COMPONENTS = [
   { id: "Avatar",    title: "Avatar",    group: "Content", file: "Avatar.html",    css: ["avatar.css"] },
   // Badge demos put a badge inside a .btn, so the page links button.css too.
   { id: "Badge",     title: "Badge",     group: "Content", file: "Badge.html",     css: ["badge.css", "button.css"] },
-  { id: "Pill",      title: "Pill",      group: "Content", file: "Pill.html",      css: ["pill.css"] },
+  { id: "Pill",      title: "Pill",      group: "Content", file: "Pill.html",      css: ["pill.css", "badge.css"] },
   { id: "Audio",     title: "Audio",     group: "Content", file: "Audio.html",     css: ["audio.css"] },
   { id: "ATag",      title: "Link (a)",  group: "Content", file: "ATag.html",      css: ["a-tag.css"] },
 ];

@@ -1,23 +1,91 @@
+/* -----------------Content Board----------------------- */
+/*
+ACCESSIBILITY REQUIREMENTS:
+- The key only applies on <a>. On anything else it does nothing, and that is
+  deliberate: a link that is not an anchor is not reachable by keyboard, is
+  not announced as a link, and has no href for the browser to act on.
+
+- Colour is the only thing separating this link from surrounding text until
+  the pointer arrives, and the underline is decoration rather than the
+  affordance. WCAG 1.4.1 asks that colour never be the sole carrier of
+  meaning, so .pu-link belongs to navigation, lists and standalone links —
+  not to a link buried in a paragraph of body text. A link inside running
+  prose needs an underline that is there from the start; set
+  --link-underline-rest-size to 1px for that case.
+
+- The focus ring comes from main.css. This file must never draw one of its
+  own, and must never remove one.
+
+- The underline animates, so prefers-reduced-motion is honoured below.
+
+USAGE:
+
+<a class="pu-link" href="/about">About</a>
+
+<a class="pu-link" href="/docs" style="--link-underline-rest-size: 1px">
+  a link that is underlined before you touch it
+</a>
+
+COLOR:
+The link takes body text colour at rest and the primary colour on hover, so
+it reads as text until it is aimed at. Both are variables; a consumer who
+wants the link coloured from the start sets --link-color.
+*/
+
 .pu-link:where(a) {
-  position: relative; /* Sätter position till relativ för att kunna använda ::before */
-  color: var(--primary-link); /* Färg på länken */
-  text-decoration: none; /* Tar bort standard understrykning */
-}
+  /* 1. VARIABLES */
+  --link-color: var(--color-neutral-900);
+  --link-hover-color: var(--color-primary);
 
-.pu-link:where(a)::before {
-  content: "";
-  position: absolute;
+  --link-underline-color: var(--link-hover-color);
+  --link-underline-size: 1px;
+  --link-underline-rest-size: 0px;
+  --link-underline-offset: 2px;
 
-  width: 0%;
-  height: 1px;
+  --link-transition-duration: 300ms;
 
-  background-color: var(--primary-link);
-  left: 0;
-  bottom: -2px;
+  /* 2. BASE */
+  position: relative;
 
-  transition: width 0.3s ease-in-out;
-}
+  color: var(--link-color);
+  text-decoration: none;
 
-.pu-link:where(a):hover::before {
-  width: 100% !important;
+  transition: color var(--link-transition-duration) ease-in-out;
+
+  /*
+  The underline is a pseudo-element rather than text-decoration so it can
+  grow from the start edge instead of fading in. A consumer cannot select
+  ::before, which is why every part of it is a variable above.
+  */
+  &::before {
+    content: "";
+    position: absolute;
+
+    inset-inline-start: 0;
+    inset-block-end: calc(var(--link-underline-offset) * -1);
+
+    inline-size: var(--link-underline-rest-size);
+    block-size: var(--link-underline-size);
+
+    background-color: var(--link-underline-color);
+
+    transition: inline-size var(--link-transition-duration) ease-in-out;
+  }
+
+  /* 3. STATES */
+  &:hover {
+    color: var(--link-hover-color);
+
+    &::before {
+      inline-size: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &::before {
+      transition: none;
+    }
+  }
 }
