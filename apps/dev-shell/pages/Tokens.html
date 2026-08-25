@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design tokens — PureComponents</title>
+
+    <!-- Library CSS under test: this page reads the tokens straight off :root -->
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-page="tokens">
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+    <script>
+      /* Renders every custom property the library actually resolves at runtime,
+         then cross-checks every var() in the stylesheets against them. A token
+         that is used but never defined shows up here instead of as a silently
+         missing style somewhere on a component page. */
+      (function () {
+        var el = window.PCDocs.el;
+        var css = getComputedStyle(document.documentElement);
+
+        function value(name) {
+          return css.getPropertyValue(name).trim();
+        }
+
+        function swatchGrid(names) {
+          var grid = el("div", { class: "pc-token-grid" });
+          names.forEach(function (name) {
+            var v = value(name);
+            var card = el("div", { class: "pc-token" + (v ? "" : " pc-token-missing") });
+            card.appendChild(
+              el("div", {
+                class: "pc-token-swatch",
+                style: v ? "background:" + v : "background:repeating-linear-gradient(45deg,#eee,#eee 6px,#fff 6px,#fff 12px)",
+              })
+            );
+            var body = el("div", { class: "pc-token-body" });
+            body.appendChild(el("div", { class: "pc-token-name", text: name }));
+            body.appendChild(el("div", { class: "pc-token-value", text: v || "not defined" }));
+            card.appendChild(body);
+            grid.appendChild(card);
+          });
+          return grid;
+        }
+
+        function barList(names) {
+          var wrap = el("div");
+          names.forEach(function (name) {
+            var v = value(name);
+            var row = el("div", { class: "pc-bar-row" });
+            row.appendChild(el("code", { class: "pc-token-name", text: name }));
+            row.appendChild(el("div", { class: "pc-bar", style: "width:" + (v || "0") }));
+            row.appendChild(el("span", { class: "pc-token-value", text: v || "not defined" }));
+            wrap.appendChild(row);
+          });
+          return wrap;
+        }
+
+        function boxList(names, prop) {
+          var grid = el("div", { class: "pc-token-grid" });
+          names.forEach(function (name) {
+            var v = value(name);
+            var card = el("div", { class: "pc-token" + (v ? "" : " pc-token-missing") });
+            card.appendChild(
+              el("div", {
+                class: "pc-token-swatch",
+                style: "background:var(--pc-accent-soft);margin:10px;height:40px;border:1px solid var(--pc-border-strong);" + prop + ":" + (v || "0"),
+              })
+            );
+            var body = el("div", { class: "pc-token-body" });
+            body.appendChild(el("div", { class: "pc-token-name", text: name }));
+            body.appendChild(el("div", { class: "pc-token-value", text: v || "not defined" }));
+            card.appendChild(body);
+            grid.appendChild(card);
+          });
+          return grid;
+        }
+
+        function typeList(names) {
+          var wrap = el("div");
+          names.forEach(function (name) {
+            var v = value(name);
+            var row = el("div", { class: "pc-bar-row" });
+            row.appendChild(el("code", { class: "pc-token-name", text: name }));
+            row.appendChild(el("span", { style: "font-size:" + (v || "1rem"), text: "Ag" }));
+            row.appendChild(el("span", { class: "pc-token-value", text: v || "not defined" }));
+            wrap.appendChild(row);
+          });
+          return wrap;
+        }
+
+        /* --- token names, in the order main.css declares them --- */
+        var COLORS = [
+          "--color-primary", "--color-secondary", "--color-accent-light",
+          "--color-success", "--color-error", "--color-warning", "--color-info",
+        ];
+        var NEUTRALS = [
+          "--color-neutral-100", "--color-neutral-200", "--color-neutral-300",
+          "--color-neutral-400", "--color-neutral-500", "--color-neutral-600",
+          "--color-neutral-700", "--color-neutral-800", "--color-neutral-900",
+        ];
+        var SPACING = [
+          "--spacing-1", "--spacing-15", "--spacing-25", "--spacing-50", "--spacing-75",
+          "--spacing-100", "--spacing-125", "--spacing-150", "--spacing-200",
+          "--spacing-300", "--spacing-400",
+        ];
+        var RADIUS = ["--radius-none", "--radius-xs", "--radius-sm", "--radius-md", "--radius-lg", "--radius-full"];
+        var SHADOWS = ["--shadow-sm", "--shadow-md", "--shadow-lg", "--shadow-left"];
+        var TYPE = [
+          "--font-family-base", "--font-family-heading",
+          "--font-size-xs", "--font-size-sm", "--font-size-md", "--font-size-base",
+          "--font-size-lg", "--font-size-xl", "--font-size-2xl", "--font-size-3xl",
+          "--font-size-h1", "--font-size-h2", "--font-size-h3",
+          "--font-size-h4", "--font-size-h5", "--font-size-h6",
+        ];
+
+        var lint = el("div", { class: "pc-lint" }, [el("p", { class: "pc-note", text: "Checking stylesheets…" })]);
+
+        window.PCDocs.buildPage({
+          title: "Design tokens",
+          lede:
+            "Read live off :root, so this page shows what the browser actually resolves — " +
+            "not what main.css was meant to declare. A token rendered in red is used somewhere but never defined.",
+          homeHref: "../index.html",
+          sections: [
+            { id: "brand", title: "Brand colors", node: swatchGrid(COLORS) },
+            { id: "neutrals", title: "Neutrals", node: swatchGrid(NEUTRALS) },
+            { id: "spacing", title: "Spacing", node: barList(SPACING) },
+            { id: "radius", title: "Border radius", node: boxList(RADIUS, "border-radius") },
+            { id: "shadows", title: "Shadows", node: boxList(SHADOWS, "box-shadow") },
+            { id: "typography", title: "Typography", node: typeList(TYPE) },
+            {
+              id: "undefined-tokens",
+              title: "Undefined tokens",
+              note: "Every <code>var(--x)</code> in the stylesheets, checked against every <code>--x:</code> declaration. Anything listed here resolves to nothing at runtime.",
+              node: lint,
+            },
+          ],
+        });
+
+        /* --- cross-check var() usage against declarations --- */
+        var files = ["main.css"];
+        (window.PC_COMPONENTS || []).forEach(function (c) {
+          (c.css || []).forEach(function (f) {
+            if (files.indexOf(f) === -1) files.push(f);
+          });
+        });
+
+        Promise.all(
+          files.map(function (f) {
+            return fetch("/pureui/styles/" + f)
+              .then(function (r) {
+                return r.ok ? r.text() : "";
+              })
+              .then(function (text) {
+                return { file: f, text: text };
+              })
+              .catch(function () {
+                return { file: f, text: "" };
+              });
+          })
+        ).then(function (results) {
+          var defined = {};
+          var used = {};
+          var reached = 0;
+
+          results.forEach(function (r) {
+            if (!r.text) return;
+            reached++;
+            var d;
+            var declRe = /(--[\w-]+)\s*:/g;
+            while ((d = declRe.exec(r.text))) defined[d[1]] = true;
+            var u;
+            var useRe = /var\(\s*(--[\w-]+)/g;
+            while ((u = useRe.exec(r.text))) {
+              (used[u[1]] = used[u[1]] || {})[r.file] = true;
+            }
+          });
+
+          lint.textContent = "";
+
+          if (!reached) {
+            lint.appendChild(
+              el("p", {
+                class: "pc-note",
+                text: "Could not read the stylesheets. This check needs the dev server (npm run dev) — it does not work over file://.",
+              })
+            );
+            return;
+          }
+
+          var missing = Object.keys(used)
+            .filter(function (name) {
+              return !defined[name];
+            })
+            .sort();
+
+          if (!missing.length) {
+            lint.appendChild(el("p", { class: "pc-note", text: "No undefined tokens. " + reached + " stylesheets checked." }));
+            return;
+          }
+
+          lint.appendChild(
+            el("p", { class: "pc-note", text: missing.length + " undefined tokens across " + reached + " stylesheets:" })
+          );
+          var list = el("div");
+          missing.forEach(function (name) {
+            var row = el("div", { class: "pc-bar-row" });
+            row.appendChild(el("code", { class: "pc-token-name pc-token-bad", text: name }));
+            row.appendChild(el("span", { class: "pc-token-value", text: Object.keys(used[name]).join(", ") }));
+            list.appendChild(row);
+          });
+          lint.appendChild(list);
+        });
+      })();
+    </script>
+  </body>
+</html>

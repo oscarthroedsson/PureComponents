@@ -1,0 +1,7 @@
+packages:
+  - "packages/*"
+  - "apps/*"
+
+# Vite ships esbuild as a native binary and needs its install script to run.
+onlyBuiltDependencies:
+  - esbuild

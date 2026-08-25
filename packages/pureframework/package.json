@@ -1,0 +1,8 @@
+{
+  "name": "pureframework",
+  "version": "0.0.0",
+  "description": "Not started.",
+  "license": "MIT",
+  "private": true,
+  "type": "module"
+}

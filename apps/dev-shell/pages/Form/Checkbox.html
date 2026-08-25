@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkbox — PureComponents</title>
+    <meta name="pc-description" content="A box that is on, off, or neither." />
+
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/form.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/fieldset.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/field.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/label.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/checkbox.css" />
+
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Checkbox">
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        Both bindings are correct. Wrapping the input in the label needs no ids and cannot come
+        apart; <code>for</code> survives the box moving. Either way the label is part of the target —
+        the box alone is smaller than the 24×24 that WCAG 2.2 asks for, and the two together clear it.
+      </p>
+      <template>
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" checked />
+          Wrapped in the label
+        </label>
+        <div style="display:flex; gap:0.6rem; align-items:center">
+          <input class="pu-checkbox" type="checkbox" id="cb-for" />
+          <label class="pu-label" for="cb-for" style="font-weight:400">Bound with for</label>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="states" data-title="States" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        Checked changes the fill <em>and</em> puts a mark in the box — colour is never the only
+        signal. Indeterminate is a different shape, not a different shade, and it is set from script
+        only: there is no attribute for it, and it means "some of the children are checked", never a
+        third value a user can click to.
+      </p>
+      <template>
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" /> Unchecked
+        </label>
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" checked /> Checked
+        </label>
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" data-indeterminate /> Indeterminate
+        </label>
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" disabled /> Disabled
+        </label>
+        <label class="pu-label">
+          <input class="pu-checkbox" type="checkbox" checked disabled /> Disabled and checked
+        </label>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        The box is measured in <code>em</code>, so it follows the text it sits beside — and a size
+        class on the <code>.pu-form</code> or the <code>.pu-fieldset</code> reaches it without this file
+        knowing they exist.
+      </p>
+      <template>
+        <label class="pu-label" style="font-size:var(--font-size-sm)">
+          <input class="pu-checkbox sm" type="checkbox" checked /> Small
+        </label>
+        <label class="pu-label">
+          <input class="pu-checkbox md" type="checkbox" checked /> Medium
+        </label>
+        <label class="pu-label" style="font-size:var(--font-size-base)">
+          <input class="pu-checkbox lg" type="checkbox" checked /> Large
+        </label>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
+      <p class="pc-note">
+        <code>sharp</code> and <code>smooth</code>, and that is the whole list. There is no
+        <code>rounded</code>: round means "pick one" and square means "pick as many as you like", and
+        that is the only thing telling a checkbox from a radio before anyone has read the label. Leaving
+        the class out is not what enforces it — the radius is capped at a quarter of the box, so a
+        checkbox stays square whatever arrives on the channel. <code>radio.css</code> refuses the
+        same thing from the other side.
+      </p>
+      <template>
+        <label class="pu-label">
+          <input class="pu-checkbox sharp" type="checkbox" checked /> Sharp
+        </label>
+        <label class="pu-label">
+          <input class="pu-checkbox smooth" type="checkbox" checked /> Smooth — the default
+        </label>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="hint-error" data-title="Hint and message" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        A single checkbox that must be ticked is a <code>.pu-field</code> like any other: hint above,
+        message below, and the message row reserved whether or not it shows so the page does not
+        jump. The box turns too — the border alone is not allowed to carry it, which is why the
+        message appears with it. For a group, the message belongs to the <code>&lt;fieldset&gt;</code>
+        and is revealed by <code>aria-invalid</code> on the group: <code>:user-invalid</code> fires
+        on a control, never on the group around it.
+      </p>
+      <template>
+        <div class="pu-field">
+          <p class="pu-field-hint" id="cb-terms-hint">You can withdraw consent at any time.</p>
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" id="cb-terms" aria-describedby="cb-terms-hint" />
+            I accept the terms
+          </label>
+        </div>
+
+        <div class="pu-field">
+          <p class="pu-field-hint" id="cb-bad-hint">You can withdraw consent at any time.</p>
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" id="cb-bad" aria-invalid="true"
+                   aria-describedby="cb-bad-hint cb-bad-msg" />
+            I accept the terms
+          </label>
+          <p class="pu-field-error" id="cb-bad-msg">You have to accept the terms to continue.</p>
+        </div>
+
+        <div class="pu-field">
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" id="cb-req" required
+                   aria-describedby="cb-req-msg" />
+            Required — tick it, untick it, then tab out
+          </label>
+          <p class="pu-field-error" id="cb-req-msg">Native validation, no attribute set by hand.</p>
+        </div>
+
+        <fieldset class="pu-fieldset" aria-invalid="true">
+          <legend>Send me</legend>
+          <p class="pu-field-hint">At least one, please.</p>
+          <label class="pu-label"><input class="pu-checkbox" type="checkbox" /> Receipts</label>
+          <label class="pu-label"><input class="pu-checkbox" type="checkbox" /> Product news</label>
+          <p class="pu-field-error">Pick at least one of these.</p>
+        </fieldset>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="group" data-title="A group of them" data-stage-style="max-width:26rem;">
+      <p class="pc-note">
+        More than one checkbox answering one question is a <code>&lt;fieldset&gt;</code> with a
+        <code>&lt;legend&gt;</code>. The legend is the question; without it a screen reader reads
+        five unrelated options.
+      </p>
+      <template>
+        <fieldset class="pu-fieldset">
+          <legend>Send me</legend>
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" checked /> Receipts
+          </label>
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" /> Product news
+          </label>
+          <label class="pu-label">
+            <input class="pu-checkbox" type="checkbox" /> Someone else's news
+          </label>
+        </fieldset>
+      </template>
+    </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+    <script>
+      // Indeterminate has no attribute — it is a property. The dev shell sets it
+      // so the state can be seen; it is not part of the library.
+      new MutationObserver(() => {
+        document.querySelectorAll('[data-indeterminate]').forEach((el) => {
+          el.indeterminate = true;
+        });
+      }).observe(document.body, { childList: true, subtree: true });
+    </script>
+  </body>
+</html>

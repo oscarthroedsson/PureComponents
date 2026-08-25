@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select — PureComponents</title>
+    <meta name="pc-description" content="Choose one of a known set of values." />
+
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/form.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/field.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/label.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/select.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/input/input.css" />
+
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-component="Form/Select">
+    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        A <code>&lt;select&gt;</code> is for choosing one of a set the consumer already knows. The
+        first option is the empty one — <code>value=""</code> — so the field has no answer until
+        someone gives it one, and <code>required</code> can then catch the case where they did not.
+        A placeholder option is not a label; the <code>&lt;label&gt;</code> still has to be there.
+      </p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-basic">Country</label>
+          <select id="sel-basic" class="pu-select" name="country" required>
+            <option value="">Choose a country</option>
+            <option value="se">Sweden</option>
+            <option value="no">Norway</option>
+            <option value="dk">Denmark</option>
+            <option value="fi">Finland</option>
+          </select>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="with-field" data-title="Hint and message" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Same <code>.pu-field</code> as every other control: label, hint, control, message.
+        <code>aria-describedby</code> lists both ids — CSS cannot draw that connection, so it is
+        markup the consumer owns. The message row is reserved whether or not it is showing, which is
+        what stops the form jumping when it appears.
+      </p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-hint">Delivery</label>
+          <p class="pu-field-hint" id="sel-hint-hint">Weekend delivery costs extra.</p>
+          <select id="sel-hint" class="pu-select" aria-describedby="sel-hint-hint sel-hint-error">
+            <option value="">Choose a slot</option>
+            <option value="std">Standard — 3–5 days</option>
+            <option value="exp">Express — next day</option>
+            <option value="sat">Saturday</option>
+          </select>
+          <p class="pu-field-error" id="sel-hint-error">Choose a delivery slot.</p>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        <code>sm</code> · <code>md</code> · <code>lg</code>. The key alone is already
+        <code>md</code>. A select is a leaf, so a size class on it retunes only that control — to
+        resize a whole group, put the class on <code>.pu-form</code>, <code>.pu-fieldset</code> or
+        <code>.pu-field</code>.
+      </p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-sm">Small</label>
+          <select id="sel-sm" class="pu-select sm">
+            <option>Small</option>
+            <option>Another option</option>
+          </select>
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-md">Medium</label>
+          <select id="sel-md" class="pu-select md">
+            <option>Medium</option>
+            <option>Another option</option>
+          </select>
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-lg">Large</label>
+          <select id="sel-lg" class="pu-select lg">
+            <option>Large</option>
+            <option>Another option</option>
+          </select>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        <code>sharp</code> · <code>smooth</code> (default) · <code>rounded</code> — the same three
+        shapes as the rest of the family, off the same channel.
+      </p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-sharp">Sharp</label>
+          <select id="sel-sharp" class="pu-select sharp">
+            <option>sharp</option>
+          </select>
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-smooth">Smooth</label>
+          <select id="sel-smooth" class="pu-select smooth">
+            <option>smooth</option>
+          </select>
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-rounded">Rounded</label>
+          <select id="sel-rounded" class="pu-select rounded">
+            <option>rounded</option>
+          </select>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="states" data-title="States" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Disabled is native and so is the invalid state — but <code>:user-invalid</code> only fires
+        after the user has been in the field, which is why the JS path
+        <code>aria-invalid="true"</code> is styled beside it and not as a fallback. A select has no
+        read-only: <code>readonly</code> does nothing on it, and the way to lock a choice while
+        still submitting it is <code>disabled</code> plus a hidden input, or a single option left.
+        Hover darkens the border and nothing else; the focus ring comes from <code>main.css</code>,
+        and this file only clears the browser's own outline for a mouse click, where
+        <code>:focus-visible</code> never matches. Every value here is the one <code>.pu-input</code>
+        uses — measured identical, because a disabled select beside a disabled text field has to be
+        the same disabled field.
+      </p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-normal">Normal</label>
+          <select id="sel-normal" class="pu-select">
+            <option>Normal</option>
+            <option>Another option</option>
+          </select>
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-invalid">Invalid</label>
+          <select id="sel-invalid" class="pu-select" aria-invalid="true" aria-describedby="sel-invalid-error">
+            <option value="">Choose an option</option>
+            <option value="1">Option 1</option>
+          </select>
+          <p class="pu-field-error" id="sel-invalid-error">Choose an option to continue.</p>
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-disabled">Disabled — beside a disabled input</label>
+          <select id="sel-disabled" class="pu-select" disabled>
+            <option>Disabled</option>
+          </select>
+          <input class="pu-input" value="Disabled" disabled aria-label="Disabled, for comparison" />
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-option-disabled">One option disabled</label>
+          <select id="sel-option-disabled" class="pu-select">
+            <option value="">Choose a plan</option>
+            <option value="free">Free</option>
+            <option value="pro">Pro</option>
+            <option value="ent" disabled>Enterprise — contact sales</option>
+          </select>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="picker" data-title="The picker" data-stage-style="display:grid; gap:1rem; max-width:26rem; min-height:20rem;">
+      <p class="pc-note">
+        With <code>appearance: none</code> the menu is not in the page at all — the browser hands
+        it to the operating system, which draws it in its own layer. That is why a select on macOS
+        opens <em>over</em> itself: Apple's convention for a pop-up button is to put the current
+        value under the pointer. No CSS reaches that menu.
+        <code>appearance: base-select</code> is the only thing that changes it. The menu becomes an
+        element in the page, anchored under the button, and then it is ours — fill, corner, shadow,
+        the options, and the open and close.
+        It is behind <code>@media (hover: hover) and (pointer: fine)</code> on purpose: a menu drawn
+        in the page replaces the platform's own, and on a touch screen the iOS wheel and the Android
+        list are the better controls. A mouse gets this; a finger keeps the picker it knows.
+      </p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-picker">Open this one</label>
+          <select id="sel-picker" class="pu-select">
+            <button><selectedcontent></selectedcontent></button>
+            <option value="">Choose a plan</option>
+            <option value="free">Free</option>
+            <option value="pro">Pro</option>
+            <option value="team">Team</option>
+            <option value="ent" disabled>Enterprise — contact sales</option>
+          </select>
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-picker-tuned">Tuned through the variables</label>
+          <select id="sel-picker-tuned" class="pu-select rounded"
+                  style="--select-menu-offset: 0.5rem; --select-option-radius: 999px; --select-menu-duration: 0.3s">
+            <option>Alpha</option>
+            <option selected>Bravo</option>
+            <option>Charlie</option>
+          </select>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="optgroup" data-title="Grouped options" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        <code>&lt;optgroup label="…"&gt;</code> is the native way to break a long list into sections,
+        and the group label is announced. It is not selectable and must never be used as a
+        placeholder row.
+      </p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-optgroup">Timezone</label>
+          <select id="sel-optgroup" class="pu-select">
+            <option value="">Choose a timezone</option>
+            <optgroup label="Europe">
+              <option value="sto">Stockholm</option>
+              <option value="lon">London</option>
+              <option value="ber">Berlin</option>
+            </optgroup>
+            <optgroup label="North America">
+              <option value="nyc">New York</option>
+              <option value="chi">Chicago</option>
+              <option value="sfo">San Francisco</option>
+            </optgroup>
+          </select>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="multiple" data-title="Multiple and size" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        <code>multiple</code> and <code>size</code> turn the control into an open list box — a
+        different shape entirely, and it has to look like it belongs to the same family without
+        being forced into the height of a one-line field. Multi-select is hard to operate: it needs
+        a modifier key on a mouse and is easy to break on a touch screen. A group of checkboxes is
+        usually the better answer.
+      </p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-multiple">Tags — multiple</label>
+          <select id="sel-multiple" class="pu-select" multiple aria-describedby="sel-multiple-hint">
+            <option value="css">CSS</option>
+            <option value="html">HTML</option>
+            <option value="a11y">Accessibility</option>
+            <option value="perf">Performance</option>
+          </select>
+          <p class="pu-field-hint" id="sel-multiple-hint">Hold Cmd (Ctrl on Windows) to pick more than one.</p>
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-size">Four rows — size="4"</label>
+          <select id="sel-size" class="pu-select" size="4">
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+            <option>Option 4</option>
+            <option>Option 5</option>
+          </select>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="width" data-title="Width and long text" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Width comes from the parent, not from the longest option — otherwise one country name
+        decides the layout of the whole form. Which means an option longer than the box has to be
+        handled rather than allowed to stretch it.
+      </p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-long">Long option text</label>
+          <select id="sel-long" class="pu-select">
+            <option value="">Choose</option>
+            <option value="a">A short one</option>
+            <option value="b">An option whose text is considerably longer than the box it has to fit inside</option>
+          </select>
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="sel-narrow">Narrow — inline-size on the control</label>
+          <select id="sel-narrow" class="pu-select" style="inline-size: 8rem">
+            <option>Small</option>
+            <option>Medium</option>
+            <option>Large</option>
+          </select>
+        </div>
+      </template>
+    </section>
+
+    <script src="../components.js"></script>
+    <script src="../docs.js"></script>
+  </body>
+</html>

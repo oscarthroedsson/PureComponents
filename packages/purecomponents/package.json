@@ -1,0 +1,8 @@
+{
+  "name": "purecomponents",
+  "version": "0.0.0",
+  "description": "Component layer consuming PureUI. Not started.",
+  "license": "MIT",
+  "private": true,
+  "type": "module"
+}

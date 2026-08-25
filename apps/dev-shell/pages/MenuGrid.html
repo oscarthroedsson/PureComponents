@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu Grid — PureComponents</title>
+    <meta name="pc-description" content="The Menu Grid component displays menu items in a fixed vertical grid layout with submenu support." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/Menu/menu-grid.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="MenuGrid">
+  <section class="pc-demo" id="basic-usage" data-title="Basic Usage" data-stage-style="position: relative; min-height: 300px">
+    <template>
+      <ul class="pu-menu-grid">
+        <li>
+          <p>Menu Item 1</p>
+        </li>
+        <li>
+          <p>Menu Item 2</p>
+        </li>
+        <li>
+          <p>Menu Item 3</p>
+          <ul>
+            <li><a href="#sub1">Submenu Item 1</a></li>
+            <li><a href="#sub2">Submenu Item 2</a></li>
+          </ul>
+        </li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="with-icons" data-title="With Icons" data-stage-style="position: relative; min-height: 200px">
+    <p class="pc-note">Menu Grid items can include icons alongside text.</p>
+    <template>
+      <ul class="pu-menu-grid">
+        <li>
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0L10.5 5.5L16 8L10.5 10.5L8 16L5.5 10.5L0 8L5.5 5.5L8 0Z" />
+          </svg>
+          <p>Home</p>
+        </li>
+        <li>
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0L10.5 5.5L16 8L10.5 10.5L8 16L5.5 10.5L0 8L5.5 5.5L8 0Z" />
+          </svg>
+          <p>About</p>
+        </li>
+        <li>
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0L10.5 5.5L16 8L10.5 10.5L8 16L5.5 10.5L0 8L5.5 5.5L8 0Z" />
+          </svg>
+          <p>Contact</p>
+        </li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="with-submenus" data-title="With Submenus" data-stage-style="position: relative; min-height: 300px">
+    <p class="pc-note">Menu Grid items can have submenus that appear on hover.</p>
+    <template>
+      <ul class="pu-menu-grid">
+        <li>
+          <p>Products</p>
+          <ul>
+            <li><a href="#product1">Product 1</a></li>
+            <li><a href="#product2">Product 2</a></li>
+            <li><a href="#product3">Product 3</a></li>
+          </ul>
+        </li>
+        <li>
+          <p>Services</p>
+          <ul>
+            <li><a href="#service1">Service 1</a></li>
+            <li><a href="#service2">Service 2</a></li>
+          </ul>
+        </li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements" data-stage-style="position: relative; min-height: 200px">
+    <p class="pc-note">Menu Grid should use proper semantic HTML and ARIA attributes for accessibility.</p>
+    <template>
+      <ul class="pu-menu-grid" role="menubar" aria-label="Main menu">
+        <li role="menuitem">
+          <p>Accessible Menu Item</p>
+        </li>
+        <li role="menuitem">
+          <p>Another Item</p>
+        </li>
+      </ul>
+    </template>
+  </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

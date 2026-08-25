@@ -1,0 +1,18 @@
+{
+  "name": "dev-shell",
+  "version": "0.0.0",
+  "description": "Development preview shell for PureUI. Never ships.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "pureui": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^5.4.8"
+  }
+}
