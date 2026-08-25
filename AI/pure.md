@@ -106,23 +106,39 @@ wrong everywhere else.
 
 Report these. Do not fold them into an unrelated change.
 
-- **Undefined tokens.** Several `var(--…)` references have no declaration in
-  `main.css`. `pages/Tokens.html` lists them in red.
-- **`soft` vs `smooth`.** The middle shape is `smooth` in button, alert,
-  dialog, pagination, progress, meter, nav and text; `soft` in badge, pill,
-  avatar and breadcrumbs. One has to go.
-- **`md` missing.** Sixteen stylesheets have no `&.md` block. Some are correct
-  because the base already is `md`; some are unfinished.
+- **Thirteen tokens render red in `pages/Tokens.html`** — `--toast-gap`,
+  `--toast-max-width`, `--toast-offset`, `--toast-stack-overlap`,
+  `--toast-swipe-x`, `--toast-swipe-y`, `--menu-radius`, `--menu-min-width`,
+  `--menu-offset`, `--menu-item-radius`, `--progress-color`,
+  `--progress-track-color`, `--z-index-tooltip`. Every one is used with a
+  fallback — `var(--progress-color, var(--progress-base))` — so they are the
+  consumer's tuning surface working as intended, not missing declarations. The
+  page cannot tell a guarded reference from an unguarded one and paints both
+  red. The debt is in the tool, not the tokens.
+
+- **`soft` vs `smooth`.** Down to one file: `avatar.css` is the only stylesheet
+  still using `soft` for the middle shape, against `smooth` in twenty-three
+  others. Its header also claims "soft is the default, as everywhere else",
+  which is no longer true of anywhere else.
+
+- **`md` missing.** Six component files have no `&.md` block: `a-tag.css`,
+  `loading.css`, `toast.css`, `swap.css`, `menu-grid.css`, `Form/label.css`.
+  Some are correct because the base already is `md` or the component has no
+  size; some are unfinished. Each needs deciding, not assuming.
+
 - **`light-dark()` in the wild.** `alert.css` and `Menu/menu.css` use it while
-  the rest of the library waits for the dark-mode pass. Do not spread it
-  further.
-- **`main.css` structure.** Duplicate `--font-size-base`, `#app` layout rules
-  belonging to the dev shell, `--size-*` tokens referenced but never declared.
-- **Toast JS is broken.** `js/toast/toast.ts` looks for `.toast-container`;
-  markup and CSS say `.pu-toast-container`. The prefix pass missed the TS.
-- **`SemanticNotes/`** is referenced by name but does not exist. WebKit drops
-  list semantics from `<ol>`/`<ul>` styled `list-style: none`, which affects
-  list, nav, breadcrumbs, pagination and menu.
+  the rest of the library waits for the dark-mode pass in `main.css`. Do not
+  spread it further until that pass is decided.
+
+- **`main.css` structure.** `--font-size-base` is declared twice, at lines 62
+  and 77 with the same value. `#app` at line 10 is a dev-shell layout rule that
+  does not belong in the library.
+
+- **`SemanticNotes/`** is referenced by name in older documents but does not
+  exist. The subject is real: WebKit drops list semantics from `<ol>`/`<ul>`
+  styled `list-style: none`, which affects list, nav, breadcrumbs, pagination
+  and menu — all of which set it. CSS cannot fix this; `role="list"` in markup
+  can.
 
 ## Shared memory
 
