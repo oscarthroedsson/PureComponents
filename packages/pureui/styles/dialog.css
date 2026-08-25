@@ -24,7 +24,7 @@ ANIMATION:
 - bottom → slides from/to bottom
 */
 
-dialog.pu-dialog {
+.pu-dialog:where(dialog) {
   --dialog-max-width: 600px;
   --dialog-radius: var(--radius-md);
 

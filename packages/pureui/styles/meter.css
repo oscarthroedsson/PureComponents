@@ -8,7 +8,7 @@ ACCESSIBILITY
   channel: a readout, or wording in the label.
 */
 
-.pu-meter:is(meter) {
+.pu-meter:where(meter) {
   /* FRAME */
   --meter-block-size: 1rem;
   --meter-padding-block: calc(var(--meter-block-size) * 0.1);

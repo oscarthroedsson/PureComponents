@@ -92,7 +92,7 @@ STATE:
 
 /* NATIVE */
 
-.pu-progress:is(progress) {
+.pu-progress:where(progress) {
   inline-size: 100%;
   block-size: var(--progress-size);
 
