@@ -1,4 +1,4 @@
-.pu-label {
+.pu-label:where(label) {
   /* 1. VARIABLES */
   --label-color: var(--form-label-color, var(--color-neutral-900));
   --label-weight: 600;

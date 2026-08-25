@@ -16,7 +16,7 @@ USAGE:
   </body>
 */
 
-.pu-skip-link {
+.pu-skip-link:where(a[href]) {
   position: absolute;
   top: -100px;
   left: 0;

@@ -92,7 +92,7 @@ VARIABLES
   --fieldset-border-color       .panel only
 */
 
-.pu-fieldset {
+.pu-fieldset:where(fieldset) {
   /* 1. VARIABLES */
   /* Half of --form-gap on purpose, and not read from it.
 

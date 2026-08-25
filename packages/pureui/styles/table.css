@@ -59,7 +59,7 @@ VARIABLES
   --table-border-width
 */
 
-.pu-table {
+.pu-table:where(table) {
   --table-padding-block: var(--spacing-75);
   --table-padding-inline: var(--spacing-100);
   --table-font-size: var(--font-size-md);

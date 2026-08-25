@@ -74,7 +74,7 @@ This file is one panel and knows nothing about its neighbours.
 */
 /* ----------------------------------------------------- */
 
-.pu-collapsible {
+.pu-collapsible:where(details) {
   /* VARIABLES */
 
   --collapsible-font-size: var(--font-size-md);

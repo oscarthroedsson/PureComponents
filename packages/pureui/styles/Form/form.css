@@ -93,7 +93,7 @@ NOT HERE:
   Submit controls. A button is .pu-btn and looks after itself.
 */
 
-.pu-form {
+.pu-form:where(form) {
   /* 1. VARIABLES — the channel. Inherited by everything below. */
   --form-font-size: var(--font-size-md);
 
