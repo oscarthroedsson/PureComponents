@@ -60,7 +60,7 @@ VARIABLES
   --range-thumb-border-color
 */
 
-.pu-range {
+.pu-range:where(input[type="range"]) {
   --range-fill: var(--color-neutral-300);
   --range-value: 50%;
 

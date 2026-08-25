@@ -114,7 +114,7 @@ VARIABLES
   --checkbox-mark-size       how much of the box the tick spans
 */
 
-.pu-checkbox {
+.pu-checkbox:where(input[type="checkbox"]) {
   /* 1. VARIABLES */
   --checkbox-size: 1.15em;
   --checkbox-radius: var(--form-radius, var(--radius-smooth));

@@ -192,7 +192,7 @@ stays at full strength while the field is disabled, and the end slot below has
 no such problem — the icon there is a real element drawing in currentColor.
 */
 
-.pu-file {
+.pu-file:where(input[type="file"]) {
   /* 1. VARIABLES */
   --file-font-size: var(--form-font-size, var(--font-size-md));
   --file-line-height: var(--line-height-base);

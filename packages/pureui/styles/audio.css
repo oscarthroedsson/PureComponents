@@ -1,4 +1,4 @@
-.pu-audio {
+.pu-audio:where(audio) {
   /* VARIABLES */
 
   --audio-inline-size: 50rem;

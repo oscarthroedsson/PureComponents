@@ -1,4 +1,4 @@
-.pu-input {
+.pu-input:where(input) {
   --input-font-size: var(--form-font-size, var(--font-size-md));
   --input-padding-block: var(--form-padding-block, 0.5em);
   --input-padding-inline: var(--form-padding-inline, 0.75em);

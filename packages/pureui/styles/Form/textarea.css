@@ -105,7 +105,7 @@ VARIABLES
   --textarea-radius-max         the ceiling the radius is clamped to
 */
 
-.pu-textarea {
+.pu-textarea:where(textarea) {
   /* 1. VARIABLES — each one reads the channel, with its own default as the
      fallback so a bare .pu-textarea works with no .pu-form around it. Never
      declare a --form-* variable here; that would shadow the group's value. */

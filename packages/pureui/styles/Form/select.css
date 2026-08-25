@@ -1,4 +1,4 @@
-.pu-select {
+.pu-select:where(select) {
   /* 1. VARIABLES */
   --select-font-size: var(--form-font-size, var(--font-size-md));
   --select-line-height: var(--line-height-base);

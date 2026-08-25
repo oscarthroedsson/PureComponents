@@ -85,7 +85,7 @@ VARIABLES
   --radio-dot-size           how much of the circle the dot fills
 */
 
-.pu-radio {
+.pu-radio:where(input[type="radio"]) {
   /* 1. VARIABLES */
   --radio-size: 1.15em;
   --radio-border-width: var(--form-border-width, 1px);
