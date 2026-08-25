@@ -1,4 +1,4 @@
-.pu-menu-grid {
+.pu-menu-grid:where(ul, ol) {
   position: fixed;
   top: 50%;
   left: 0;

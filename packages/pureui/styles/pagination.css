@@ -70,7 +70,7 @@ VARIABLES
   --pagination-muted-color   the ellipsis
 */
 
-.pu-pagination {
+.pu-pagination:where(ul, ol) {
   --pagination-gap: var(--spacing-25);
   --pagination-font-size: var(--font-size-md);
   --pagination-cell-size: 2.25em;

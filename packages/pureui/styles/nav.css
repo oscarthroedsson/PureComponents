@@ -28,7 +28,7 @@ USAGE:
   </nav>
 */
 
-.pu-nav {
+.pu-nav:where(ul, ol) {
   list-style: none;
   padding: 0;
   margin: 0;

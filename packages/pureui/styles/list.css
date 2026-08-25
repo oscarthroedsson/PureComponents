@@ -54,7 +54,7 @@ VARIABLES
   --list-border-width
 */
 
-.pu-list {
+.pu-list:where(ul, ol) {
   --list-padding-block: var(--spacing-75);
   --list-padding-inline: var(--spacing-100);
   --list-gap: var(--spacing-75);

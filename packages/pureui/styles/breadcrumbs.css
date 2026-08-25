@@ -1,4 +1,4 @@
-.pu-breadcrumbs {
+.pu-breadcrumbs:where(ol, ul) {
   --breadcrumbs-gap: var(--spacing-0);
   --breadcrumbs-font-size: var(--font-size-md);
   --breadcrumbs-radius: var(--radius-md);

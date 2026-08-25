@@ -113,7 +113,7 @@ HOVER / FOCUS OPEN:
 - click/tap through popovertarget continues to work independently
 */
 
-.pu-menu {
+.pu-menu:where(ul, ol) {
 
   /* COLORS */
 
