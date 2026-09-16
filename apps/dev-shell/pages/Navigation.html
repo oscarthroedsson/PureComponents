@@ -6,25 +6,59 @@
     <title>Navigation — Elements</title>
     <meta
       name="pc-description"
-      content="The Navigation component provides accessible navigation menus with proper semantic HTML and ARIA attributes."
+      content="A list of links for a header, a sidebar or a section menu. The current page is marked with aria-current, not a class. Submenus belong to Menu."
     />
 
     <!-- Library CSS under test -->
     <link rel="stylesheet" href="/pureui/styles/main.css" />
     <link rel="stylesheet" href="/pureui/styles/nav.css" />
     <link rel="stylesheet" href="/pureui/styles/Layout/box.css" />
+    <link rel="stylesheet" href="/pureui/styles/Layout/layout.css" />
     <link rel="stylesheet" href="/pureui/styles/button.css" />
-    <link rel="stylesheet" href="/pureui/styles/badge.css" />
     <link rel="stylesheet" href="/pureui/styles/avatar.css" />
-    <link rel="stylesheet" href="/pureui/styles/list.css" />
 
     <!-- Dev shell (not part of the library) -->
     <link rel="stylesheet" href="./docs.css" />
   </head>
   <body data-component="Navigation">
-    <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+    <section class="pc-doc" id="api" data-title="API">
+      <p>
+        Every key the component answers to. Wrap the list in a <code>&lt;nav&gt;</code> with an
+        <code>aria-label</code>, and put <code>role="list"</code> on the list — the component removes the bullets,
+        and WebKit drops the list role from a list styled that way. For nested links use Menu.
+      </p>
+      <div class="pc-doc-table">
+        <table>
+          <thead><tr><th>Key</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+          <tr><td><code>.pu-nav</code></td><td><span class="pc-cat pc-cat-key"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 14v4.4a.6.6 0 0 0 .6.6H10m9-5v4.4a.6.6 0 0 1-.6.6H14m0-14h4.4a.6.6 0 0 1 .6.6V10M4 10V5.6a.6.6 0 0 1 .6-.6H10m4 14v1a2 2 0 1 1-4 0v-1m-6-9h1a2 2 0 1 1 0 4H4m15-4h1a2 2 0 1 1 0 4h-1m-5-9V4a2 2 0 1 0-4 0v1"/></svg>Key</span></td><td>The key. Requires <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code>, inside a named <code>&lt;nav&gt;</code>.</td></tr>
+          <tr><td><code>nav-horizontal</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>A row. The default.</td></tr>
+          <tr><td><code>nav-vertical</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>A column. Links stretch to the list's width.</td></tr>
+          <tr><td><code>nav-sm</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>Smaller type and tighter links.</td></tr>
+          <tr><td><code>nav-md</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>The default. The base already gives this.</td></tr>
+          <tr><td><code>nav-lg</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>Larger type and roomier links.</td></tr>
+          <tr><td><code>nav-sharp</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>Square link corners.</td></tr>
+          <tr><td><code>nav-smooth</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>The default corner.</td></tr>
+          <tr><td><code>nav-rounded</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>Pill-shaped links.</td></tr>
+          <tr><td><code>aria-current="page"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>The current page. Filled, bolder, and does not answer to hover.</td></tr>
+          <tr><td><code>aria-disabled="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Dimmed and not clickable.</td></tr>
+          <tr><td><code>:hover</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>A sunken ground and the primary colour.</td></tr>
+          <tr><td><code>--nav-gap</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Space between links.</td></tr>
+          <tr><td><code>--nav-link-padding-block</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Link padding, top and bottom.</td></tr>
+          <tr><td><code>--nav-link-padding-inline</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Link padding, start and end.</td></tr>
+          <tr><td><code>--nav-link-radius</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Link corner.</td></tr>
+          <tr><td><code>--nav-link-hover-background</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Hover ground.</td></tr>
+          <tr><td><code>--nav-current-background</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Current page fill.</td></tr>
+          <tr><td><code>--nav-current-color</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Current page text.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="pc-demo" id="default" data-title="Default" data-stage-style="display:flex; flex-direction:column; gap:1rem;">
+      <p class="pc-note">The key, a size and the current page.</p>
       <template>
-        <nav aria-label="Main navigation">
+        <nav aria-label="Main">
           <ul class="pu-nav nav-md" role="list">
             <li><a href="#home" aria-current="page">Home</a></li>
             <li><a href="#about">About</a></li>
@@ -34,65 +68,25 @@
       </template>
     </section>
 
-    <section
-      class="pc-demo"
-      id="layout-variants"
-      data-title="Layout Variants"
-      data-stage-style="display: flex; flex-direction: column; gap: 2rem"
-    >
-      <p class="pc-note">Navigation supports both horizontal (default) and vertical layouts.</p>
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:flex; flex-direction:column; gap:1rem;">
+      <p class="pc-note">Size moves type, padding and the gap between links. Medium is the default.</p>
       <template>
-        <nav aria-label="Horizontal navigation">
-          <ul class="pu-nav nav-md nav-horizontal" role="list">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-        <nav aria-label="Vertical navigation">
-          <ul class="pu-nav nav-md nav-vertical" role="list">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-      </template>
-    </section>
-
-    <section
-      class="pc-demo"
-      id="size-variants"
-      data-title="Size Variants"
-      data-stage-style="display: flex; flex-direction: column; gap: 1rem"
-    >
-      <p class="pc-note">Navigation supports three sizes: small (sm), medium (md), and large (lg).</p>
-      <template>
-        <nav aria-label="Small navigation">
+        <nav aria-label="Small">
           <ul class="pu-nav nav-sm" role="list">
-            <li><a href="#home">Home</a></li>
+            <li><a href="#home" aria-current="page">Home</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
-        <nav aria-label="Medium navigation">
+        <nav aria-label="Medium">
           <ul class="pu-nav nav-md" role="list">
-            <li><a href="#home">Home</a></li>
+            <li><a href="#home" aria-current="page">Home</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
-        <nav aria-label="Large navigation">
+        <nav aria-label="Large">
           <ul class="pu-nav nav-lg" role="list">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-          </ul>
-        </nav>
-      </template>
-    </section>
-
-    <section class="pc-demo" id="current-page-indication" data-title="Current Page Indication">
-      <p class="pc-note">Use <code>aria-current="page"</code> to indicate the current page in navigation.</p>
-      <template>
-        <nav aria-label="Navigation with current page">
-          <ul class="pu-nav nav-md" role="list">
             <li><a href="#home" aria-current="page">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -101,42 +95,55 @@
       </template>
     </section>
 
-    <section
-      class="pc-demo"
-      id="border-radius-variants"
-      data-title="Border Radius Variants"
-      data-stage-style="display: flex; flex-direction: column; gap: 1rem"
-    >
-      <p class="pc-note">Navigation links support different border radius styles: sharp, smooth, and rounded.</p>
+    <section class="pc-demo" id="variants" data-title="Variants" data-stage-style="display:grid; gap:1.5rem; justify-items:start;">
+      <p class="pc-note">Direction and shape. Shape reaches the link, because the link is the thing with a fill.</p>
       <template>
-        <nav aria-label="Sharp navigation">
+        <nav aria-label="Horizontal">
+          <ul class="pu-nav nav-md nav-horizontal" role="list">
+            <li><a href="#home" aria-current="page">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Vertical">
+          <ul class="pu-nav nav-md nav-vertical" role="list">
+            <li><a href="#home" aria-current="page">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Sharp">
           <ul class="pu-nav nav-md nav-sharp" role="list">
-            <li><a href="#home">Sharp</a></li>
-            <li><a href="#about">Links</a></li>
+            <li><a href="#home" aria-current="page">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
-        <nav aria-label="Smooth navigation">
+        <nav aria-label="Smooth">
           <ul class="pu-nav nav-md nav-smooth" role="list">
-            <li><a href="#home">Smooth</a></li>
-            <li><a href="#about">Links</a></li>
+            <li><a href="#home" aria-current="page">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
-        <nav aria-label="Rounded navigation">
+        <nav aria-label="Rounded">
           <ul class="pu-nav nav-md nav-rounded" role="list">
-            <li><a href="#home">Rounded</a></li>
-            <li><a href="#about">Links</a></li>
+            <li><a href="#home" aria-current="page">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
       </template>
     </section>
 
-    <section class="pc-demo" id="accessibility-requirements" data-title="Accessibility Requirements">
-      <p class="pc-note">Navigation must use proper semantic HTML and ARIA attributes for screen reader support.</p>
+    <section class="pc-demo" id="states" data-title="States" data-stage-style="display:flex; flex-direction:column; gap:1rem;">
+      <p class="pc-note"><code>aria-current="page"</code> marks where you are and ignores hover. A disabled link uses <code>aria-disabled</code>, because an <code>&lt;a&gt;</code> can never be <code>:disabled</code>. Hover the other links.</p>
       <template>
-        <nav aria-label="Accessible navigation">
+        <nav aria-label="States">
           <ul class="pu-nav nav-md" role="list">
             <li><a href="#home" aria-current="page">Home</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#beta" aria-disabled="true">Beta</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
@@ -152,20 +159,25 @@
 
     <section class="pc-demo" id="navbar" data-title="Navbar">
       <p class="pc-note">
-        A compact product navbar with a home link, primary navigation, notifications, an account avatar and a primary
-        action.
+        A product header: the home link, the main navigation centred, and the account and a primary action at the end.
+        Box lays it out with <code>data-layout="center-split"</code>.
       </p>
       <template>
-        <nav class="">
-          <ul class="pu-nav nav-md" role="list">
-            <div></div>
-            <li><a href="">Link 1</a></li>
-            <li><a href="">Link 1</a></li>
-            <li><a href="">Link 1</a></li>
-            <li><a href="">Link 1</a></li>
-          </ul>
-          <img src="" />
-        </nav>
+        <header class="pu-box box-sm" data-layout="center-split">
+          <a class="pu-btn btn-md btn-ghost" href="#home"><strong>Pure</strong></a>
+          <nav aria-label="Main">
+            <ul class="pu-nav nav-md" role="list">
+              <li><a href="#overview" aria-current="page">Overview</a></li>
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#team">Team</a></li>
+              <li><a href="#settings">Settings</a></li>
+            </ul>
+          </nav>
+          <div data-layout="center-end" data-gap="sm">
+            <span class="pu-avatar avatar-sm avatar-rounded" aria-hidden="true">OT</span>
+            <a class="pu-btn btn-md" href="#new">New project</a>
+          </div>
+        </header>
       </template>
     </section>
 

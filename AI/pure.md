@@ -125,10 +125,6 @@ Report these. Do not fold them into an unrelated change.
   `--progress-color` and `--progress-track-color` through
   `var(--name, fallback)` without declaring them at the top of the key block.
 
-- **`nav.css` has no component variables.** Sizes, spacing and colours are
-  written straight into the rules, so nothing about it can be tuned from the
-  markup. It also uses `transition: all` and has no reduced-motion block.
-
 - **"Demos only" is wrong in two places.** `pure.md` under Dev shell and
   `css-file.md` step 4 both say a component page holds nothing but its demos.
   `AI/PureUI/doc-page.md` says the page has four parts in order — title and

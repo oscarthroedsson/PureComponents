@@ -42,7 +42,7 @@ window.PC_COMPONENTS = [
   { id: "Dialog",     title: "Dialog",      group: "Core interactive", file: "Dialog.html",     css: ["dialog.css", "button.css"] },
   { id: "Tooltip",    title: "Tooltip",     group: "Core interactive", file: "Tooltip.html",    css: ["tooltip.css", "button.css"] },
   { id: "Menu",       title: "Menu",        group: "Core interactive", file: "Menu.html",       css: ["Menu/menu.css"] },
-  { id: "Navigation", title: "Navigation",  group: "Core interactive", file: "Navigation.html", css: ["nav.css"] },
+  { id: "Navigation", title: "Navigation",  group: "Core interactive", file: "Navigation.html", css: ["nav.css"], elements: ["ul", "ol"] },
   { id: "Tabs",       title: "Tabs",        group: "Core interactive", file: "Tabs.html",       css: ["tabs.css"], elements: ["fieldset", "div"] },
   { id: "SkipLinks",  title: "Skip Links",  group: "Core interactive", file: "SkipLinks.html",  css: ["skip-links.css"] },
 

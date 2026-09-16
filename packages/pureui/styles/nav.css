@@ -1,185 +1,159 @@
-.pu-nav:where(ul, ol) {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: var(--spacing-50);
+/*
+Navigation — a list of links: a site header, a sidebar, a section menu.
 
-  /* Horizontal navigation (default) */
+<nav aria-label="Main">
+  <ul class="pu-nav nav-md" role="list">
+    <li><a href="/" aria-current="page">Home</a></li>
+    <li><a href="/docs">Docs</a></li>
+  </ul>
+</nav>
+
+Submenus belong to Menu. A small-screen toggle needs a script and belongs to
+PureComponents.
+*/
+.pu-nav:where(ul, ol) {
+  /* VARIABLES */
+
+  --nav-font-size: var(--font-size-md);
+  --nav-gap: var(--spacing-50);
+
+  --nav-link-padding-block: var(--spacing-50);
+  --nav-link-padding-inline: var(--spacing-75);
+  --nav-link-radius: var(--radius-smooth);
+  --nav-link-color: var(--color-text);
+  --nav-link-hover-background: var(--color-surface-sunken);
+  --nav-link-hover-color: var(--color-primary);
+
+  --nav-current-background: var(--color-primary);
+  --nav-current-color: var(--color-primary-foreground);
+  --nav-current-font-weight: var(--font-weight-semibold);
+  --nav-current-border-color: transparent;
+
+  --nav-disabled-opacity: 0.5;
+  --nav-duration: var(--duration-fast);
+
+  /* BASE */
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--nav-gap);
+
+  font-size: var(--nav-font-size);
+
+  & > li {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+  }
+
+  & > li > a {
+    display: flex;
+    align-items: center;
+
+    padding-block: var(--nav-link-padding-block);
+    padding-inline: var(--nav-link-padding-inline);
+
+    color: var(--nav-link-color);
+    text-decoration: none;
+
+    /* Transparent at rest. Only forced colours paints it, on the current page. */
+    border: 1px solid transparent;
+    border-radius: var(--nav-link-radius);
+
+    transition:
+      background-color var(--nav-duration),
+      color var(--nav-duration);
+  }
+
+  /* LAYOUT */
+
   &.nav-horizontal {
     flex-direction: row;
     align-items: center;
   }
 
-  /* Vertical navigation */
   &.nav-vertical {
     flex-direction: column;
     align-items: stretch;
+
+    & > li > a {
+      flex: 1 1 auto;
+    }
   }
 
-  /* Navigation items */
-  & > li {
-    position: relative;
-    display: flex;
-    align-items: center;
+  /* SIZE */
+
+  &.nav-sm {
+    --nav-font-size: var(--font-size-sm);
+    --nav-gap: var(--spacing-25);
+    --nav-link-padding-block: var(--spacing-25);
+    --nav-link-padding-inline: var(--spacing-50);
   }
 
-  /* Navigation links */
-  & a {
-    display: flex;
-    align-items: center;
-    padding: var(--spacing-50) var(--spacing-75);
-    color: var(--color-text);
-    text-decoration: none;
-    border-radius: var(--radius-sm);
-    transition: all 0.2s ease;
+  &.nav-md {
+    /* base is already md */
+  }
 
-    /* Focus indicator - WCAG 2.1 AA compliant */
+  &.nav-lg {
+    --nav-font-size: var(--font-size-base);
+    --nav-gap: var(--spacing-75);
+    --nav-link-padding-block: var(--spacing-75);
+    --nav-link-padding-inline: var(--spacing-100);
+  }
 
-    /* Hover state */
+  /* SHAPE — the radius belongs to the link, which is the thing with a fill. */
+
+  &.nav-sharp {
+    --nav-link-radius: var(--radius-sharp);
+  }
+
+  &.nav-smooth {
+    --nav-link-radius: var(--radius-smooth);
+  }
+
+  &.nav-rounded {
+    --nav-link-radius: var(--radius-rounded);
+  }
+
+  /* STATES — from ARIA on the link, never from classes. */
+
+  & > li > a {
+    /* Where you already are does not answer to the pointer. */
     &:hover:not([aria-current="page"]) {
-      background-color: var(--color-surface-sunken);
-      color: var(--color-primary);
+      background-color: var(--nav-link-hover-background);
+      color: var(--nav-link-hover-color);
     }
 
-    /* Active/Current page */
     &[aria-current="page"] {
-      background-color: var(--color-primary);
-      color: var(--color-primary-foreground);
-      font-weight: 600;
+      background-color: var(--nav-current-background);
+      color: var(--nav-current-color);
+      font-weight: var(--nav-current-font-weight);
+      border-color: var(--nav-current-border-color);
     }
 
-    /* Disabled state */
+    /* An <a> can never be :disabled. */
     &[aria-disabled="true"] {
-      opacity: 0.5;
+      opacity: var(--nav-disabled-opacity);
       cursor: not-allowed;
       pointer-events: none;
     }
   }
 
-  /* Size variants */
-  &.nav-sm {
-    gap: var(--spacing-25);
+  @media (forced-colors: active) {
+    /* The fill disappears in forced colours; a border keeps the current page
+       visible. */
+    --nav-current-border-color: CanvasText;
+  }
 
+  @media (prefers-reduced-motion: reduce) {
     & > li > a {
-      padding: var(--spacing-25) var(--spacing-50);
-      font-size: var(--font-size-sm);
-    }
-  }
-
-  &.nav-md {
-    gap: var(--spacing-50);
-
-    & > li > a {
-      padding: var(--spacing-50) var(--spacing-75);
-      font-size: var(--font-size-md);
-    }
-  }
-
-  &.nav-lg {
-    gap: var(--spacing-75);
-
-    & > li > a {
-      padding: var(--spacing-75) var(--spacing-100);
-      font-size: var(--font-size-lg);
-    }
-  }
-
-  /* Border radius variants */
-  &.nav-sharp > li > a {
-    border-radius: var(--radius-sharp);
-  }
-
-  &.nav-smooth > li > a {
-    border-radius: var(--radius-sm);
-  }
-
-  &.nav-rounded > li > a {
-    border-radius: var(--radius-md);
-  }
-}
-
-/* Submenu navigation */
-.pu-nav-submenu {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: none;
-  flex-direction: column;
-  gap: var(--spacing-25);
-  margin-top: var(--spacing-25);
-  padding-left: var(--spacing-75);
-
-  /* Show submenu when parent has aria-expanded="true" */
-  .pu-nav > li[aria-expanded="true"] > &,
-  .pu-nav > li:has(> a[aria-expanded="true"]) > & {
-    display: flex;
-  }
-
-  & > li > a {
-    padding: var(--spacing-25) var(--spacing-50);
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-
-    &:hover {
-      background-color: var(--color-surface-sunken);
-      color: var(--color-primary);
-    }
-  }
-}
-
-/* Mobile menu toggle button */
-.pu-nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  padding: var(--spacing-50);
-  cursor: pointer;
-  color: var(--color-text);
-
-  &:focus-visible {
-    border-radius: var(--radius-sm);
-  }
-
-  &[aria-expanded="true"] {
-    .nav-icon-close {
-      display: block;
-    }
-    .nav-icon-menu {
-      display: none;
-    }
-  }
-
-  &[aria-expanded="false"] {
-    .nav-icon-close {
-      display: none;
-    }
-    .nav-icon-menu {
-      display: block;
-    }
-  }
-}
-
-/* Responsive: Mobile menu */
-@media (max-width: 768px) {
-  .pu-nav-toggle {
-    display: block;
-  }
-
-  .pu-nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: var(--color-surface);
-    flex-direction: column;
-    padding: var(--spacing-50);
-    box-shadow: var(--shadow-md);
-    z-index: var(--z-index-header);
-
-    &[aria-expanded="true"] {
-      display: flex;
+      transition: none;
     }
   }
 }
