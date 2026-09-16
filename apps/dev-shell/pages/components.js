@@ -5,18 +5,45 @@
      - the start page navigation
      - the component <select> in every page header
      - the "required CSS" list shown on each page
+     - the element pills in the page header
+
+   `elements` lists the native elements the component's key is allowed
+   to sit on, taken from the :where() in its stylesheet. Each becomes a
+   pill linking to that element on MDN. An element and its type are
+   written "input/checkbox", which is also how MDN's paths are shaped.
+   A component whose key is a look rather than an element declares none.
 
    Adding a component? Add it here, then create pages/<file>.
    ============================================================ */
 
 window.PC_COMPONENTS = [
+  // ---------- Basics ----------
+  { id: "Motion", title: "Motion", group: "Basics", file: "Motion.html", css: ["Animations/index.css", "button.css"] },
+  { id: "Separator", title: "Separator", group: "Basics", file: "Separator.html", css: ["separator.css", "button.css", "badge.css", "Layout/box.css", "Layout/layout.css"], elements: ["hr"] },
+  { id: "Box", title: "Box", group: "Basics", file: "Box.html", css: ["Layout/box.css"] },
+  { id: "Overflow", title: "Overflow", group: "Basics", file: "Overflow.html", css: ["a-tag.css", "list.css", "card.css", "overflow.css"] },
+  {
+    id: "Layout",
+    title: "Layout",
+    group: "Basics",
+    file: "Layout.html",
+    css: ["button.css", "Form/input/input.css", "Menu/menu.css", "card.css", "avatar.css", "badge.css", "Layout/box.css", "Layout/layout.css"],
+  },
+  {
+    id: "Behavior",
+    title: "Behavior",
+    group: "Basics",
+    file: "Behavior.html",
+    css: ["button.css", "Form/input/input.css", "list.css", "badge.css", "Layout/box.css", "Layout/layout.css", "Layout/behavior.css"],
+  },
+
   // ---------- Core interactive ----------
-  { id: "Button",     title: "Button",      group: "Core interactive", file: "Button.html",     css: ["button.css"] },
+  { id: "Button",     title: "Button",      group: "Core interactive", file: "Button.html",     css: ["button.css"], elements: ["button", "a", "label", "summary"] },
   { id: "Dialog",     title: "Dialog",      group: "Core interactive", file: "Dialog.html",     css: ["dialog.css", "button.css"] },
   { id: "Tooltip",    title: "Tooltip",     group: "Core interactive", file: "Tooltip.html",    css: ["tooltip.css", "button.css"] },
   { id: "Menu",       title: "Menu",        group: "Core interactive", file: "Menu.html",       css: ["Menu/menu.css"] },
-  { id: "MenuGrid",   title: "Menu Grid",   group: "Core interactive", file: "MenuGrid.html",   css: ["Menu/menu-grid.css"] },
   { id: "Navigation", title: "Navigation",  group: "Core interactive", file: "Navigation.html", css: ["nav.css"] },
+  { id: "Tabs",       title: "Tabs",        group: "Core interactive", file: "Tabs.html",       css: ["tabs.css"], elements: ["fieldset", "div"] },
   { id: "SkipLinks",  title: "Skip Links",  group: "Core interactive", file: "SkipLinks.html",  css: ["skip-links.css"] },
 
   // ---------- Form ----------
@@ -50,7 +77,7 @@ window.PC_COMPONENTS = [
   { id: "Collapsible", title: "Collapsible", group: "Content", file: "Collapsible.html", css: ["collapsible.css"] },
   // Accordion is a composition: it groups collapsibles and adds nothing they already do.
   { id: "Accordion",   title: "Accordion",   group: "Content", file: "Accordion.html",   css: ["collapsible.css", "accordion.css"] },
-  { id: "Avatar",    title: "Avatar",    group: "Content", file: "Avatar.html",    css: ["avatar.css"] },
+  { id: "Avatar",    title: "Avatar",    group: "Content", file: "Avatar.html",    css: ["Animations/index.css", "avatar.css"] },
   // Badge demos put a badge inside a .btn, so the page links button.css too.
   { id: "Badge",     title: "Badge",     group: "Content", file: "Badge.html",     css: ["badge.css", "button.css"] },
   { id: "Pill",      title: "Pill",      group: "Content", file: "Pill.html",      css: ["pill.css", "badge.css"] },

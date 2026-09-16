@@ -43,7 +43,7 @@ style the wrong element is the only enforcement it has. Full rules in
 
 ```
 packages/pureui/
-  package.json      name: "pureui", files: ["styles", "js"]
+  package.json      name: "pureui", files: ["index.css", "styles"]
   styles/
     main.css        tokens + global resets. Link first.
     button.css      one file per component
@@ -51,12 +51,12 @@ packages/pureui/
     Menu/
     Animations/
   docs/             usage.md + contribute.md per component
-  js/toast/         toast behaviour layer
 ```
 
-`js/` is the exception to "CSS only" and is unresolved. Toast needs JavaScript
-to render at all, and the behaviour is meant to move to PureComponents when
-that package starts. It sits here for now.
+The package ships toast's styling and motion, not its behaviour. The toast
+behaviour layer lives in `apps/dev-shell/js/toast/` so the demo can create
+toasts; it never ships, and it moves to PureComponents when that package
+starts.
 
 ## Verifying
 
@@ -67,4 +67,4 @@ pnpm dev
 ```
 
 Check every size, every state, keyboard focus, and both stage themes. See
-[pure.md](pure.md) for what the dark stage does and does not tell you.
+[pure.md](pure.md) for how the stage follows the library's scheme.

@@ -1,0 +1,37 @@
+#email-demo {
+  --email-workspace-block-size: 56rem;
+
+  block-size: min(var(--email-workspace-block-size), calc(100dvb - var(--spacing-400)));
+  min-block-size: 0;
+}
+
+.email-container {
+  --email-sidebar-column: 4.5rem;
+  --email-menu-column: calc(var(--email-sidebar-column) * 3.5);
+  --email-inbox-column: calc(var(--email-menu-column) * 1.2);
+
+  display: grid;
+  grid-template-columns:
+    var(--email-sidebar-column)
+    var(--email-menu-column)
+    var(--email-inbox-column)
+    minmax(0, 1fr);
+
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 0;
+}
+
+.email-container > main {
+  display: grid;
+  grid-column: 3 / -1;
+  grid-template-columns: subgrid;
+
+  min-inline-size: 0;
+}
+
+.email-container > *,
+.email-container > main > * {
+  min-inline-size: 0;
+  min-block-size: 0;
+}

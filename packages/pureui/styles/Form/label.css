@@ -1,10 +1,12 @@
-.pu-label:where(label) {
+.pu-label:where(label, p) {
   /* 1. VARIABLES */
-  --label-color: var(--form-label-color, var(--color-neutral-900));
+  --label-color: var(--form-label-color, var(--color-text));
   --label-weight: 600;
-  --label-disabled-color: var(--color-neutral-500);
+  --label-disabled-color: var(--color-text-subtle);
 
   /* 2. BASE */
+  margin: 0;
+
   color: var(--label-color);
   font-weight: var(--label-weight);
 

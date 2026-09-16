@@ -1,135 +1,182 @@
-# Dialog Component
+# Dialog
 
-## Component Overview
+A modal panel. It is a native `<dialog>`, so the browser handles the top
+layer, the backdrop, focus trapping, Escape to close, and making the rest of
+the page inert.
 
-The Dialog component provides accessible modal dialogs for blocking user interactions. It supports both native `<dialog>` elements and custom dialog implementations with proper focus management and ARIA attributes.
-
-### When to Use
-
-- Critical confirmations (delete, save changes)
-- Important information that requires user attention
-- Forms that need to be completed before continuing
-- Multi-step processes
-- Content that should block background interaction
-
-### When NOT to Use
-
-- Non-critical notifications (use Toast or Alert)
-- Simple information display (use Alert)
-- Navigation (use Navigation component)
-- Non-blocking content
-
-## Quick Start
+## Quick start
 
 ```html
-<dialog id="dialog" class="dialog md" aria-labelledby="dialog-title">
+<dialog class="pu-dialog dialog-md" aria-labelledby="confirm-title">
   <div class="dialog-header">
-    <h2 id="dialog-title">Dialog Title</h2>
-    <button class="dialog-close" aria-label="Close dialog">×</button>
+    <h2 id="confirm-title">Delete report?</h2>
+    <button class="pu-btn btn-sm btn-ghost" command="close" commandfor="confirm"
+            aria-label="Close">×</button>
   </div>
-  <div class="dialog-body">Content</div>
+  <div class="dialog-body">
+    <p>This cannot be undone.</p>
+  </div>
   <div class="dialog-footer">
-    <button class="btn" onclick="dialog.close()">Close</button>
+    <button class="pu-btn btn-md btn-tertiary" command="close" commandfor="confirm">Cancel</button>
+    <button class="pu-btn btn-md" data-intent="destructive">Delete</button>
   </div>
 </dialog>
 ```
 
-## Accessibility Requirements
+Open it with `showModal()`, or with a `command` button:
 
-### Required Attributes
+```html
+<button class="pu-btn btn-md" command="show-modal" commandfor="confirm">Delete report</button>
+<dialog id="confirm" class="pu-dialog dialog-md">…</dialog>
+```
 
-- **`aria-labelledby`** - MUST point to dialog title element
-- **`aria-describedby`** - SHOULD point to description (optional)
-- **`aria-label`** - Required on close button
-- **Focus Trap** - Requires JavaScript to trap focus
-- **Focus Return** - Requires JavaScript to return focus to trigger
+Use `showModal()`, not `show()`. Only the modal form gets the backdrop, the
+focus trap and the inert page.
 
-### Keyboard Navigation
+## Parts
 
-- **Tab**: Navigate within dialog (trapped)
-- **Shift+Tab**: Navigate backward (trapped)
-- **Escape**: Close dialog (native `<dialog>` supports this)
-- **Enter**: Activate focused button
+| Class | Does |
+|---|---|
+| `.pu-dialog` | The key. Requires `<dialog>`. |
+| `.dialog-header` | Title row. Holds the close button at the trailing edge. |
+| `.dialog-body` | The content. Scrolls when it is too tall. |
+| `.dialog-footer` | Actions, aligned to the trailing edge. |
 
-### Screen Reader Support
+All three are optional. The body is the one that grows and scrolls; the header
+and footer stay put.
 
-- Dialog title is announced when opened
-- Dialog description is announced (if provided)
-- Focus moves to first focusable element
-- Backdrop is properly handled
+## Classes
 
-## API Reference
+| Class | Does |
+|---|---|
+| `dialog-sm` | 400px, tighter padding, smaller type. |
+| `dialog-md` | 600px. The default. |
+| `dialog-lg` | 800px, roomier padding, larger type. |
+| `dialog-xl` | 1200px. |
+| `dialog-fullscreen` | Fills the viewport, no corner. |
+| `dialog-sharp` | Square corners. |
+| `dialog-smooth` | The same radius `dialog-md` already gives. |
+| `dialog-rounded` | Larger radius. |
 
-### Base Classes
+## Attributes
 
-- `.dialog` - Dialog element class (required)
-- `.dialog-header` - Header section
-- `.dialog-body` - Content section
-- `.dialog-footer` - Footer section
-- `.dialog-close` - Close button
+| Attribute | Does |
+|---|---|
+| `data-placement="right"` | Slides in from the right, full height. |
+| `data-placement="left"` | Slides in from the left, full height. |
+| `data-placement="top"` | Slides down from the top, full width. |
+| `data-placement="bottom"` | Slides up from the bottom, full width. |
+| `data-height="auto"` | Height follows the content, capped at 90dvh. |
+| `data-height="full"` | Fills the viewport height. |
 
-### Size Variants
+Without a placement the dialog is centred and scales in. With one it becomes a
+drawer: it slides, takes the full edge, and rounds only the corners that show.
 
-- `.sm` - Small dialog (400px max-width)
-- `.md` - Medium dialog (600px max-width) - **Default**
-- `.lg` - Large dialog (800px max-width)
-- `.xl` - Extra large dialog (1200px max-width)
-- `.fullscreen` - Fullscreen dialog
+## Variables
 
-### Border Radius Variants
+| Variable | Default | Controls |
+|---|---|---|
+| `--dialog-max-width` | `600px` | Width cap. The dialog is `min(90vw, this)`. |
+| `--dialog-radius` | `var(--radius-md)` | Corner. |
+| `--dialog-backdrop` | `rgb(0 0 0 / 50%)` | The scrim. |
+| `--dialog-enter-transform` | `scale(0.96)` | Where it comes from. |
+| `--dialog-exit-transform` | `scale(1.025)` | Where it goes. |
+| `--dialog-enter-duration` | `280ms` | Opening. |
+| `--dialog-exit-duration` | `180ms` | Closing. |
+| `--dialog-enter-ease` | a spring curve | Opening. |
+| `--dialog-exit-ease` | an ease-in curve | Closing. |
 
-- `.sharp` - No border radius
-- `.smooth` - Small border radius
-- `.rounded` - Large border radius
+```html
+<dialog class="pu-dialog dialog-md" style="--dialog-max-width: 32rem">
+```
+
+## Accessibility
+
+- Name the dialog. `aria-labelledby` pointing at the heading in the header, or
+  `aria-label` when there is no visible title.
+- Do not add `role="dialog"` or `aria-modal` to a native `<dialog>` opened with
+  `showModal()`. The browser provides both.
+- The close button needs an accessible name — `aria-label="Close"` when it is
+  an ×.
+- Escape closes a modal dialog natively. Do not prevent it.
+- Focus moves into the dialog on open and returns to the opener on close. The
+  browser does this; nothing here interferes.
+- Pick the heading level that fits the page. The size classes set the title's
+  size, not its level.
+- The body sets `overscroll-behavior: contain`, so scrolling to the end of the
+  dialog does not start scrolling the page behind it.
+- Motion is removed under `prefers-reduced-motion`.
+
+## The non-native form
+
+For a dialog that cannot be a `<dialog>` — a nested overlay, or a case where
+the top layer is a problem — the key also matches an element carrying
+`role="dialog"`:
+
+```html
+<div class="pu-dialog dialog-md" role="dialog" aria-modal="true"
+     aria-labelledby="t" aria-hidden="false">
+  <div class="dialog-backdrop"></div>
+  <div class="dialog-header"><h2 id="t">Title</h2></div>
+  <div class="dialog-body">…</div>
+</div>
+```
+
+Toggle it with `aria-hidden="false"` or the `dialog-open` class. This form
+gives you the layout and the backdrop and nothing else — focus trapping,
+Escape, and making the page inert are all yours to implement. Prefer the
+native element.
 
 ## Examples
 
-### Basic Dialog
+### Sizes
 
 ```html
-<dialog id="dialog" class="dialog md" aria-labelledby="dialog-title">
-  <div class="dialog-header">
-    <h2 id="dialog-title">Confirm Action</h2>
-    <button class="dialog-close" aria-label="Close dialog" onclick="dialog.close()">×</button>
-  </div>
-  <div class="dialog-body">
-    <p>Are you sure you want to proceed?</p>
-  </div>
-  <div class="dialog-footer">
-    <button class="btn md" onclick="dialog.close()">Cancel</button>
-    <button class="btn md" onclick="dialog.close()">Confirm</button>
-  </div>
+<dialog class="pu-dialog dialog-sm">…</dialog>
+<dialog class="pu-dialog dialog-md">…</dialog>
+<dialog class="pu-dialog dialog-lg">…</dialog>
+<dialog class="pu-dialog dialog-xl">…</dialog>
+```
+
+### A drawer
+
+```html
+<dialog class="pu-dialog dialog-md" data-placement="right" aria-label="Filters">
+  <div class="dialog-header"><h2>Filters</h2></div>
+  <div class="dialog-body">…</div>
 </dialog>
 ```
 
-### Dialog with Description
+### A sheet from the bottom
 
 ```html
-<dialog id="dialog" class="dialog md" aria-labelledby="dialog-title" aria-describedby="dialog-desc">
-  <div class="dialog-header">
-    <h2 id="dialog-title">Delete Item</h2>
-    <button class="dialog-close" aria-label="Close dialog" onclick="dialog.close()">×</button>
-  </div>
-  <div class="dialog-body">
-    <p id="dialog-desc">This action cannot be undone.</p>
-    <p>Are you sure you want to delete this item?</p>
-  </div>
-  <div class="dialog-footer">
-    <button class="btn md" onclick="dialog.close()">Cancel</button>
-    <button class="btn md" onclick="deleteItem(); dialog.close()">Delete</button>
-  </div>
+<dialog class="pu-dialog dialog-md" data-placement="bottom" data-height="auto">
+  <div class="dialog-body">…</div>
 </dialog>
 ```
 
-## Browser Support
+### Fullscreen
 
-- Chrome 37+ (native `<dialog>`)
-- Firefox 98+ (native `<dialog>`)
-- Safari 15.4+ (native `<dialog>`)
-- Edge 79+ (native `<dialog>`)
+```html
+<dialog class="pu-dialog dialog-fullscreen">…</dialog>
+```
 
-## Related Components
+### A form that returns a value
 
-- **Alert** - For non-blocking messages
-- **Toast** - For temporary notifications
-- **Button** - For dialog actions
+```html
+<dialog id="rename" class="pu-dialog dialog-sm" aria-labelledby="rename-title">
+  <form method="dialog">
+    <div class="dialog-header"><h2 id="rename-title">Rename</h2></div>
+    <div class="dialog-body">
+      <input class="pu-input input-md" name="title" aria-label="New name" />
+    </div>
+    <div class="dialog-footer">
+      <button class="pu-btn btn-md btn-tertiary" value="cancel">Cancel</button>
+      <button class="pu-btn btn-md" value="save">Save</button>
+    </div>
+  </form>
+</dialog>
+```
+
+`method="dialog"` closes the dialog on submit and puts the pressed button's
+value in `returnValue`.

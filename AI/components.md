@@ -17,8 +17,9 @@ that CSS cannot express.
 
 Two things point at this package already:
 
-- `packages/pureui/js/toast/` — a toast behaviour layer written in TS. It is
-  behaviour, not styling, and belongs here once this package starts.
+- `apps/dev-shell/js/toast/` — a toast behaviour layer written in TS, used by
+  the dev-shell demo. It is behaviour, not styling, and belongs here once this
+  package starts.
 - `packages/purecomponents/types/` — typing helpers for native element
   properties.
 

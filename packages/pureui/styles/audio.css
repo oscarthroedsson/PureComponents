@@ -5,14 +5,14 @@
   --audio-max-inline-size: 100%;
   --audio-control-gap: var(--spacing-50);
 
-  --audio-border-color: var(--color-neutral-300);
+  --audio-border-color: var(--color-border);
   --audio-border-width: 1px;
   --audio-radius: var(--radius-md);
 
   --audio-shadow: none;
 
-  --audio-surface: var(--color-neutral-100);
-  --audio-color: var(--color-neutral-900);
+  --audio-surface: var(--color-surface-sunken);
+  --audio-color: var(--color-text);
 
   /* BASE */
 
@@ -33,29 +33,29 @@
 
   /* SIZE */
 
-  &.sm {
+  &.audio-sm {
     --audio-control-gap: var(--spacing-25);
   }
 
-  &.md {
+  &.audio-md {
     --audio-control-gap: var(--spacing-50);
   }
 
-  &.lg {
+  &.audio-lg {
     --audio-control-gap: var(--spacing-75);
   }
 
   /* SHAPE */
 
-  &.sharp {
+  &.audio-sharp {
     --audio-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.audio-smooth {
     --audio-radius: var(--radius-md);
   }
 
-  &.rounded {
+  &.audio-rounded {
     --audio-radius: var(--radius-full);
   }
 

@@ -1,139 +1,150 @@
-# Collapsible — how it is built
+# Collapsible — contributing
 
-**File:** `src/Styles/collapsible.css`
-**Key:** `.collapsible`, on a native `<details>`
+## File
 
-## Why native, and why now
+`packages/pureui/styles/collapsible.css`
 
-Until recently there were two real arguments for rebuilding a disclosure out of
-divs: you could not lay out `<summary>`, and you could not animate the panel
-open. Both are gone.
+It imports `./Animations/swap.css` on line 1, so a page linking this file gets
+the two-icon marker without linking anything else.
 
-| Capability | Status |
-|---|---|
-| `display: flex/grid` on `details` and `summary` | Baseline since September 2025 |
-| `::details-content` | Baseline since September 2025 — Chrome 131+, Firefox 143+, Safari 18.4+ |
-| `name` for exclusive groups | Broad support |
-| `interpolate-size` / `calc-size()` | Chromium only. Not Baseline. |
+## Key
 
-So the structure and the styling are safe; only the height animation is not.
-That is the one place this component degrades, and it degrades to "snaps open",
-which is fine.
+```css
+.pu-collapsible:where(details)
+```
 
-This replaced a checkbox-and-label rebuild (`details.css`, deleted). That
-version lost the disclosure semantics, lost keyboard operability, lost the
-browser's find-in-page opening, and its header told consumers to add
-`aria-expanded` and update it with JavaScript the library does not ship.
+`<details>` gives the toggle, the keyboard handling and the open/closed
+announcement for free. A `<div>` with a class gives none of it and CSS cannot
+add any, which is what makes the requirement worth enforcing.
 
-## The marker
-
-`::marker` cannot be rotated — the pseudo-element accepts only a narrow set of
-properties, and `transform` is not among them. Vendors also still disagree on
-styling the marker at all. So the native marker is removed and ours is drawn on
-`summary::after`.
-
-Removing it takes both lines, always:
+## Removing the native marker takes two lines
 
 ```css
 list-style: none;
+
 &::-webkit-details-marker { display: none; }
 ```
 
-`display: flex` on the summary happens to drop the marker in some engines. Do
-not rely on that.
+`list-style` is the standard way out. WebKit still ships its own marker
+pseudo-element, and the vendors have not agreed on styling the marker itself —
+so the file does not style it, it removes it and draws its own.
 
-Ours is a **mask**, not an image:
+## The marker is a mask, not an image
 
 ```css
 background-color: var(--collapsible-marker-color);
 mask-image: var(--collapsible-marker-icon);
 ```
 
-The shape comes from a data URI, the colour from a token. The black inside the
-SVG is only the mask's alpha channel and is never painted — it is not a
-hardcoded colour under §4.4. This is also what makes the icon swappable: a
-consumer cannot select a pseudo-element, so the icon has to be a variable.
+The shape comes from the data URI and the colour from a token, so the marker
+goes through the colour rules like everything else. The black inside the SVG
+is only the mask's alpha channel — it is never painted.
 
-A consumer-supplied `.collapsible-marker` stands ours down through `:has()`,
-the same way `breadcrumbs.css` handles a consumer-supplied separator. That
-symmetry is deliberate — the two components should feel like one library.
+A consumer cannot select `::after`, which is why the icon, size, colour,
+rotation and duration are all variables. Reassigning
+`--collapsible-marker-icon` swaps the whole glyph.
 
-## The swap
-
-The slot means two things depending on what is in it. One icon: it turns. Two
-icons marked `.closed` and `.open`: they cross over.
-
-The first design for this animated *part* of an icon — a plus whose vertical
-stroke retracts into a minus — using two gradient bars and `background-size`.
-It was dropped. It only ever worked for one shape, and it needed a second
-rendering path alongside the mask. Swapping whole objects is general: nothing
-inside either icon has to be animatable, so any pair of shapes works, including
-a consumer's own SVGs.
-
-Detection is `:has(:is(.open, .closed))` on the slot, which is also what stops
-the box itself rotating when it holds a pair — otherwise the frame would spin
-while the icons crossed inside it.
-
-The stack is `display: grid` with both children at `grid-area: 1 / 1`. Grid and
-not `position: absolute`, so the box keeps taking its size from the icons and
-nothing has to be measured.
-
-`display: block` on those children is defence, not looks. `.closed { display:
-none }` is one of the commonest utility rules in other people's stylesheets;
-with no declaration of ours theirs would apply unopposed and the icon would
-vanish with nothing on screen to explain it. That is the price of short class
-names, and it is one line.
-
-### Why the branches say `:not([open])` and `[open]`
-
-Every selector in a nested list keeps its own specificity, so a bare `&` would
-already lose to its `[open]` partner and the swap would work. Both states are
-written out anyway, because leaning on that is a trap: add one class to either
-side later and the swap inverts with nothing to show why. Spelled out, the two
-branches are mutually exclusive and specificity stops being part of the answer.
-
-### Motion is variable reassignment, not new rules
-
-`data-marker-motion` never writes a rule. It reassigns
-`--collapsible-marker-exit-scale` and `--collapsible-marker-exit-rotation` —
-where the outgoing icon goes and where the incoming one comes from. `scale` is
-the default and so has no block at all.
-
-Keep it that way. A fifth motion should cost two declarations, not a new
-selector.
-
-## The animation
+## Two markers, one rule to switch
 
 ```css
-&::details-content { block-size: 0; padding-block: 0; overflow: hidden; … }
-&[open]::details-content { block-size: auto; padding-block: …; }
+& > summary:has(.collapsible-marker)::after { content: none; }
 ```
 
-Three things worth knowing:
+A marker the consumer brought stands ours down on sight. There is nothing to
+switch off and no modifier class involved.
 
-**`interpolate-size` is declared on the component, not on `:root`.** It is what
-lets `block-size` travel to `auto`. Putting an experimental, single-engine
-property in the global scope for one component's sake would be the wrong trade.
+Both marker forms take the same `inline-size`, `block-size`, `flex: none` and
+`margin-inline-start: auto`, so they sit in the same place and the summary row
+does not shift between them.
 
-**The padding is animated along with the height.** `::details-content` is a
-pseudo-element, so the global `* { box-sizing: border-box }` does not reach it;
-with `content-box`, a `block-size: 0` element still shows its padding. Driving
-padding to zero in the closed state is what actually collapses the row.
+## `interpolate-size: allow-keywords`
 
-**`overflow: hidden` clips the panel.** Content that needs to escape the box —
-a popover, an outward focus ring on the very edge — will be cut. The padding
-keeps normal content clear of it.
+Declared on the key rather than on `:root` on purpose. This is what lets
+`block-size` travel to `auto` and gives the panel its slide. One experimental
+property does not belong in the global scope for a single component's sake.
 
-## Deviations from the house standard
+Firefox and Safari ignore it and the panel snaps open — correct, just not
+animated.
 
-**The focus ring is inset.** The house pattern is `outline: 3px` at
-`outline-offset: 2px`. Here the offset is `-3px`, because the panel clips its
-own overflow to keep the corner round and would eat an outward ring. Same
-width, same colour, same contrast — only the direction differs. This is the
-only component that does it.
+## `::details-content`
 
-## What is deliberately not here
+The content is padded, sized and transitioned through the pseudo-element:
 
-Grouping. `accordion.css` composes these; this file knows nothing about
-neighbours. If a rule here starts caring about a sibling, it is in the wrong
-file.
+```css
+&::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition: block-size …, padding-block …, content-visibility …;
+  transition-behavior: allow-discrete;
+}
+```
+
+`allow-discrete` is what carries `content-visibility` across, so the panel
+does not vanish before it has finished closing.
+
+`[open]` sets `block-size: auto` and restores the block padding.
+
+Older engines have no `::details-content` to hang padding on, so the content
+would sit flush against the edge:
+
+```css
+@supports not selector(::details-content) {
+  & > :not(summary) { margin-inline: var(--collapsible-padding-inline); }
+}
+```
+
+Reaching the children directly there, and only there.
+
+## `overflow: hidden` on the key
+
+So the summary's hover fill follows the corner instead of squaring it off.
+
+It also means an outward focus ring would be clipped, which is why the focus
+offset is negative here and only here. Same width, same colour, same 3:1.
+
+## Headings in the summary
+
+```css
+& :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+```
+
+A heading is allowed in a summary — the panel is often a real section. It must
+not bring its own scale with it.
+
+## The swap exception
+
+```css
+&[open] {
+  & > summary::after,
+  & > summary .collapsible-marker:not(.pu-swap) {
+    rotate: var(--collapsible-marker-rotation-open);
+  }
+}
+```
+
+The single-icon slot turns. A `.pu-swap` slot does not — the icons inside it
+do the moving, or the pair would cross while the frame spun.
+
+## Order inside the block
+
+1. Variables
+2. Base
+3. Summary
+4. Marker — ours, yours, the switch
+5. Content, and the `@supports` fallback
+6. Size
+7. Shape
+8. States — `data-marker`, `[open]`
+9. Reduced motion
+
+## Relationship to Accordion
+
+`accordion.css` composes this file by setting its variables — it never
+restyles a panel and never repeats a line of it. The one place the two files
+touch is the size table: the values in `.accordion-sm` / `-md` / `-lg` mirror
+the ones here and have to stay in step.

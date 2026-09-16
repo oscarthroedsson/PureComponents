@@ -1,32 +1,11 @@
-/*
-ACCESSIBILITY REQUIREMENTS:
-- Prefer native <dialog> with showModal()
-- Dialog MUST have aria-labelledby pointing to its title
-- aria-describedby is recommended when a description exists
-- Close button MUST have aria-label="Close dialog" when using icon-only content
-- Native modal <dialog> handles ESC closing and makes content outside the dialog inert
-- Backdrop should use ::backdrop for native dialogs
-
-PLACEMENT:
-- center (default) → grows with content, max 90dvh
-- left / right → full viewport height
-- top / bottom → full viewport width, grows with content
-
-HEIGHT:
-- data-height="auto" → content height, max 90dvh
-- data-height="full" → full viewport height
-
-ANIMATION:
-- center → fade + subtle scale-in / scale-out
-- right → slides from/to right
-- left → slides from/to left
-- top → slides from/to top
-- bottom → slides from/to bottom
-*/
-
 .pu-dialog:where(dialog) {
   --dialog-max-width: 600px;
   --dialog-radius: var(--radius-md);
+
+  /* A scrim darkens whatever is behind it, so it is black in both schemes.
+     A variable rather than a literal, so a consumer can replace it — the one
+     allowance ui-classes.md makes for a translucent overlay. */
+  --dialog-backdrop: rgb(0 0 0 / 50%);
 
   --dialog-enter-transform: scale(0.96);
   --dialog-exit-transform: scale(1.025);
@@ -48,8 +27,8 @@ ANIMATION:
   width: min(90vw, var(--dialog-max-width));
   max-height: 90dvh;
 
-  background-color: var(--color-neutral-100);
-  color: var(--color-neutral-900);
+  background-color: var(--color-surface-raised);
+  color: var(--color-text);
 
   border-radius: var(--dialog-radius);
   box-shadow: var(--shadow-lg);
@@ -82,7 +61,7 @@ ANIMATION:
   }
 
   &::backdrop {
-    background-color: rgb(0 0 0 / 0%);
+    background-color: transparent;
     backdrop-filter: blur(0);
 
     transition:
@@ -93,7 +72,7 @@ ANIMATION:
   }
 
   &:open::backdrop {
-    background-color: rgb(0 0 0 / 50%);
+    background-color: var(--dialog-backdrop);
     backdrop-filter: blur(2px);
 
     transition:
@@ -171,7 +150,7 @@ ANIMATION:
 
   /* SIZE */
 
-  &.sm {
+  &.dialog-sm {
     --dialog-max-width: 400px;
     --dialog-radius: var(--radius-sm);
 
@@ -198,7 +177,7 @@ ANIMATION:
     }
   }
 
-  &.md {
+  &.dialog-md {
     --dialog-max-width: 600px;
     --dialog-radius: var(--radius-md);
 
@@ -207,7 +186,7 @@ ANIMATION:
     }
   }
 
-  &.lg {
+  &.dialog-lg {
     --dialog-max-width: 800px;
     --dialog-radius: var(--radius-lg);
 
@@ -234,12 +213,12 @@ ANIMATION:
     }
   }
 
-  &.xl {
+  &.dialog-xl {
     --dialog-max-width: 1200px;
     --dialog-radius: var(--radius-lg);
   }
 
-  &.fullscreen {
+  &.dialog-fullscreen {
     width: 100vw;
     height: 100dvh;
 
@@ -265,15 +244,15 @@ ANIMATION:
 
   /* BORDER RADIUS */
 
-  &.sharp {
+  &.dialog-sharp {
     --dialog-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.dialog-smooth {
     --dialog-radius: var(--radius-md);
   }
 
-  &.rounded {
+  &.dialog-rounded {
     --dialog-radius: var(--radius-lg);
   }
 
@@ -286,7 +265,7 @@ ANIMATION:
 
     padding: var(--spacing-100) var(--spacing-150);
 
-    border-bottom: 1px solid var(--color-neutral-200);
+    border-bottom: 1px solid var(--color-border);
 
     h1,
     h2,
@@ -299,7 +278,7 @@ ANIMATION:
       font-size: var(--font-size-xl);
       font-weight: 600;
 
-      color: var(--color-neutral-900);
+      color: var(--color-text);
     }
 
     [command="close"] {
@@ -332,7 +311,7 @@ ANIMATION:
 
     padding: var(--spacing-100) var(--spacing-150);
 
-    border-top: 1px solid var(--color-neutral-200);
+    border-top: 1px solid var(--color-border);
   }
 
   /* REDUCED MOTION */
@@ -350,7 +329,7 @@ ANIMATION:
 
 @starting-style {
   dialog.pu-dialog:open::backdrop {
-    background-color: rgb(0 0 0 / 0%);
+    background-color: transparent;
     backdrop-filter: blur(0);
   }
 }
@@ -368,7 +347,7 @@ ANIMATION:
   justify-content: center;
 
   &[aria-hidden="false"],
-  &.open {
+  &.dialog-open {
     display: flex;
   }
 
@@ -378,7 +357,7 @@ ANIMATION:
 
     z-index: calc(var(--z-index-modal) - 1);
 
-    background-color: rgb(0 0 0 / 50%);
+    background-color: var(--dialog-backdrop);
     backdrop-filter: blur(2px);
   }
 }

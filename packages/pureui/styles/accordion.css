@@ -1,55 +1,9 @@
-/* -----------------Content Board----------------------- */
-/*
-ACCESSIBILITY REQUIREMENTS:
-- The group is presentation. Every accessibility guarantee lives in the
-  <details>/<summary> pairs inside it — see collapsible.css, which this file
-  requires and never overrides.
-
-- "Only one open at a time" comes from the native `name` attribute on each
-  <details>, not from this class and not from JavaScript. Same name, same
-  group. Drop `name` and several panels may stand open at once.
-
-- Do not reach for role="tablist" or role="tabpanel". An accordion is not a tab
-  set: its panels stack, they are all in the Tab sequence, and more than one
-  can be open. Those roles would promise arrow-key navigation that does not
-  exist here.
-
-- The ARIA APG's accordion pattern rebuilds this out of buttons and
-  aria-expanded because it assumes JavaScript. Its keyboard contract — Enter
-  and Space on the trigger, normal Tab order — is what <summary> already gives.
-
-USAGE:
-<div class="pu-accordion md">
-  <details class="pu-collapsible" name="faq">
-    <summary>How do I create an account?</summary>
-    <p>Click the "Sign up" button in the top right corner.</p>
-  </details>
-  <details class="pu-collapsible" name="faq">
-    <summary>I forgot my password.</summary>
-    <p>Use "Forgot password" on the sign-in page.</p>
-  </details>
-</div>
-
-SIZE:  sm · md · lg   (md is the default; carried down to every panel)
-SHAPE: sharp · smooth · rounded
-
-VARIANTS:
-- separate → the panels stay apart as individual cards instead of joining
-             into one block
-
-NOT HERE:
-Everything a single panel does — padding, the marker, the open animation, the
-focus ring. That is collapsible.css. This file only describes what happens when
-panels stand next to each other.
-*/
-/* ----------------------------------------------------- */
-
 .pu-accordion {
   /* VARIABLES */
 
   --accordion-radius: var(--radius-md);
   --accordion-border-width: 1px;
-  --accordion-border-color: var(--color-neutral-300);
+  --accordion-border-color: var(--color-border);
   --accordion-gap: var(--spacing-50);
 
   /* BASE */
@@ -86,7 +40,7 @@ panels stand next to each other.
    * table in collapsible.css and have to stay in step with it — the one place
    * the two files touch.
    */
-  &.sm {
+  &.accordion-sm {
     --accordion-radius: var(--radius-sm);
     --accordion-gap: var(--spacing-25);
 
@@ -98,7 +52,7 @@ panels stand next to each other.
     }
   }
 
-  &.md {
+  &.accordion-md {
     --accordion-radius: var(--radius-md);
     --accordion-gap: var(--spacing-50);
 
@@ -110,7 +64,7 @@ panels stand next to each other.
     }
   }
 
-  &.lg {
+  &.accordion-lg {
     --accordion-radius: var(--radius-lg);
     --accordion-gap: var(--spacing-75);
 
@@ -124,15 +78,15 @@ panels stand next to each other.
 
   /* SHAPE */
 
-  &.sharp {
+  &.accordion-sharp {
     --accordion-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.accordion-smooth {
     --accordion-radius: var(--radius-md);
   }
 
-  &.rounded {
+  &.accordion-rounded {
     --accordion-radius: var(--radius-lg);
   }
 
@@ -143,7 +97,7 @@ panels stand next to each other.
    * takes its own border and corner back, which is the look a FAQ usually
    * wants when the questions are unrelated.
    */
-  &.separate {
+  &.accordion-separate {
     border: none;
     border-radius: 0;
     overflow: visible;

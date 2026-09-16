@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Progress — PureComponents</title>
+    <title>Progress — Elements</title>
     <meta
       name="pc-description"
       content="Progress uses the native &lt;progress&gt; element. One colour drives the bar: the fill is that colour and the track is the same colour at low opacity."
@@ -35,12 +35,12 @@
       <template>
         <div>
           <label for="upload">Uploading</label>
-          <progress id="upload" class="pu-progress md" value="45" max="100"></progress>
+          <progress id="upload" class="pu-progress progress-md" value="45" max="100"></progress>
         </div>
 
         <div>
           <label for="download">Downloading</label>
-          <progress id="download" class="pu-progress md" value="75" max="100"></progress>
+          <progress id="download" class="pu-progress progress-md" value="75" max="100"></progress>
         </div>
       </template>
     </section>
@@ -67,27 +67,27 @@
       <template>
         <div>
           <label for="c-primary">primary</label>
-          <progress id="c-primary" class="pu-progress md" value="60" max="100"></progress>
+          <progress id="c-primary" class="pu-progress progress-md" value="60" max="100"></progress>
         </div>
 
         <div>
           <label for="c-success">success</label>
-          <progress id="c-success" class="pu-progress md" data-color="success" value="100" max="100"></progress>
+          <progress id="c-success" class="pu-progress progress-md" data-color="success" value="100" max="100"></progress>
         </div>
 
         <div>
           <label for="c-error">error</label>
-          <progress id="c-error" class="pu-progress md" data-color="error" value="30" max="100"></progress>
+          <progress id="c-error" class="pu-progress progress-md" data-color="error" value="30" max="100"></progress>
         </div>
 
         <div>
           <label for="c-warning">warning</label>
-          <progress id="c-warning" class="pu-progress md" data-color="warning" value="60" max="100"></progress>
+          <progress id="c-warning" class="pu-progress progress-md" data-color="warning" value="60" max="100"></progress>
         </div>
 
         <div>
           <label for="c-info">info</label>
-          <progress id="c-info" class="pu-progress md" data-color="info" value="80" max="100"></progress>
+          <progress id="c-info" class="pu-progress progress-md" data-color="info" value="80" max="100"></progress>
         </div>
       </template>
     </section>
@@ -117,7 +117,7 @@
           <label for="v-hsl">--progress-color: hsl()</label>
           <progress
             id="v-hsl"
-            class="pu-progress md"
+            class="pu-progress progress-md"
             style="--progress-color: hsl(280 80% 55%)"
             value="70"
             max="100"
@@ -126,14 +126,14 @@
 
         <div>
           <label for="v-hex">--progress-color: hex</label>
-          <progress id="v-hex" class="pu-progress md" style="--progress-color: #ff0055" value="55" max="100"></progress>
+          <progress id="v-hex" class="pu-progress progress-md" style="--progress-color: #ff0055" value="55" max="100"></progress>
         </div>
 
         <div>
           <label for="v-track">--progress-color + --progress-track-color</label>
           <progress
             id="v-track"
-            class="pu-progress md"
+            class="pu-progress progress-md"
             style="--progress-color: #0ea5e9; --progress-track-color: #1e293b"
             value="40"
             max="100"
@@ -144,7 +144,7 @@
           <label for="v-oklch">--progress-color: oklch()</label>
           <progress
             id="v-oklch"
-            class="pu-progress md"
+            class="pu-progress progress-md"
             style="--progress-color: oklch(0.7 0.2 20)"
             value="65"
             max="100"
@@ -161,22 +161,22 @@
       data-title="Size Variants"
       data-stage-style="display: flex; flex-direction: column; gap: 1rem; align-items: stretch;"
     >
-      <p class="pc-note">Three sizes: <code>sm</code>, <code>md</code> (default) and <code>lg</code>.</p>
+      <p class="pc-note">Three sizes: <code>progress-sm</code>, <code>progress-md</code> (default) and <code>progress-lg</code>.</p>
 
       <template>
         <div>
           <label for="s-sm">Small</label>
-          <progress id="s-sm" class="pu-progress sm" value="50" max="100"></progress>
+          <progress id="s-sm" class="pu-progress progress-sm" value="50" max="100"></progress>
         </div>
 
         <div>
           <label for="s-md">Medium</label>
-          <progress id="s-md" class="pu-progress md" value="50" max="100"></progress>
+          <progress id="s-md" class="pu-progress progress-md" value="50" max="100"></progress>
         </div>
 
         <div>
           <label for="s-lg">Large</label>
-          <progress id="s-lg" class="pu-progress lg" value="50" max="100"></progress>
+          <progress id="s-lg" class="pu-progress progress-lg" value="50" max="100"></progress>
         </div>
       </template>
     </section>
@@ -190,24 +190,24 @@
       data-stage-style="display: flex; flex-direction: column; gap: 1rem; align-items: stretch;"
     >
       <p class="pc-note">
-        <code>sharp</code>, <code>smooth</code> and <code>rounded</code> (default). The fill inherits the radius from
+        <code>progress-sharp</code>, <code>progress-smooth</code> and <code>progress-rounded</code> (default). The fill inherits the radius from
         the bar, so it never has to be repeated per browser engine.
       </p>
 
       <template>
         <div>
           <label for="r-sharp">sharp</label>
-          <progress id="r-sharp" class="pu-progress lg sharp" value="60" max="100"></progress>
+          <progress id="r-sharp" class="pu-progress progress-lg progress-sharp" value="60" max="100"></progress>
         </div>
 
         <div>
           <label for="r-smooth">smooth</label>
-          <progress id="r-smooth" class="pu-progress lg smooth" value="60" max="100"></progress>
+          <progress id="r-smooth" class="pu-progress progress-lg progress-smooth" value="60" max="100"></progress>
         </div>
 
         <div>
           <label for="r-rounded">rounded</label>
-          <progress id="r-rounded" class="pu-progress lg rounded" value="60" max="100"></progress>
+          <progress id="r-rounded" class="pu-progress progress-lg progress-rounded" value="60" max="100"></progress>
         </div>
       </template>
     </section>
@@ -230,12 +230,12 @@
       <template>
         <div>
           <label for="loading">Loading</label>
-          <progress id="loading" class="pu-progress md"></progress>
+          <progress id="loading" class="pu-progress progress-md"></progress>
         </div>
 
         <div>
           <label for="loading-color">Loading, coloured</label>
-          <progress id="loading-color" class="pu-progress md" data-color="info"></progress>
+          <progress id="loading-color" class="pu-progress progress-md" data-color="info"></progress>
         </div>
       </template>
     </section>
@@ -257,7 +257,7 @@
         <div class="pu-progress-wrapper">
           <label class="progress-label" for="p-restore">Restoring backup</label>
           <span class="progress-value">45%</span>
-          <progress id="p-restore" class="pu-progress md" value="45" max="100"></progress>
+          <progress id="p-restore" class="pu-progress progress-md" value="45" max="100"></progress>
         </div>
       </template>
     </section>
@@ -280,7 +280,7 @@
 
       <template>
         <div
-          class="pu-progress-bar md"
+          class="pu-progress-bar progress-md"
           role="progressbar"
           aria-label="Storage used"
           aria-valuenow="72"
@@ -291,7 +291,7 @@
         </div>
 
         <div
-          class="pu-progress-bar lg"
+          class="pu-progress-bar progress-lg"
           data-color="warning"
           role="progressbar"
           aria-label="Quota"

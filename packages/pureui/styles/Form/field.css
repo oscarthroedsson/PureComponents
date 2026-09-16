@@ -3,11 +3,11 @@
   --field-font-size: var(--form-font-size, var(--font-size-md));
   --field-gap: var(--form-field-gap, var(--spacing-25));
 
-  --field-hint-color: var(--form-hint-color, var(--color-neutral-500));
+  --field-hint-color: var(--form-hint-color, var(--color-text-muted));
   --field-error-color: var(--form-error-color, var(--color-error));
 
   /* max() puts a readability floor under the small text: it never drops
-     below 12px, but it still grows with the field on .lg. */
+     below 12px, but it still grows with the field on .field-lg. */
   --field-message-font-size: max(0.85em, var(--font-size-sm));
   --field-message-line-height: 1.2;
 
@@ -29,24 +29,24 @@
   }
 
   /* 3. SIZE — a group rewrites the channel, so the control follows too. */
-  &.sm {
+  &.field-sm {
     --form-font-size: var(--font-size-sm);
   }
-  &.md {
+  &.field-md {
     /* base is already md */
   }
-  &.lg {
+  &.field-lg {
     --form-font-size: var(--font-size-base);
   }
 
   /* 4. SHAPE */
-  &.sharp {
+  &.field-sharp {
     --form-radius: var(--radius-sharp);
   }
-  &.smooth {
+  &.field-smooth {
     --form-radius: var(--radius-md);
   }
-  &.rounded {
+  &.field-rounded {
     --form-radius: var(--radius-rounded);
   }
 
@@ -56,7 +56,7 @@
   }
 
   &:has(:disabled) > .pu-label {
-    color: var(--label-disabled-color, var(--color-neutral-500));
+    color: var(--label-disabled-color, var(--color-text-subtle));
   }
 }
 
@@ -72,7 +72,7 @@
 }
 
 .pu-field-hint {
-  --field-hint-text: var(--form-hint-color, var(--color-neutral-500));
+  --field-hint-text: var(--form-hint-color, var(--color-text-muted));
   color: var(--field-hint-text);
 }
 

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Label — PureComponents</title>
+    <title>Label — Elements</title>
     <meta name="pc-description" content="The name of a control. Its own file, because nothing owns it." />
 
     <link rel="stylesheet" href="/pureui/styles/main.css" />
@@ -27,6 +27,22 @@
         <div class="pu-field">
           <label class="pu-label" for="lb-basic">Email</label>
           <input id="lb-basic" class="pu-input" type="email" autocomplete="email" />
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="content-group" data-title="Content group label" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        A <code>&lt;p class="pu-label"&gt;</code> can provide visible label text for non-form content.
+        The labelled element points back to it with <code>aria-labelledby</code>.
+      </p>
+      <template>
+        <div>
+          <p id="lb-content-group" class="pu-label">General</p>
+          <ul role="list" aria-labelledby="lb-content-group">
+            <li>Inbox</li>
+            <li>Sent</li>
+          </ul>
         </div>
       </template>
     </section>
@@ -78,7 +94,7 @@
         all reach it without this file knowing that any of them exist.
       </p>
       <template>
-        <form class="pu-form sm" aria-label="Small">
+        <form class="pu-form form-sm" aria-label="Small">
           <div class="pu-field">
             <label class="pu-label" for="lb-sm">Small group</label>
             <input id="lb-sm" class="pu-input" type="text" />
@@ -90,7 +106,7 @@
             <input id="lb-md" class="pu-input" type="text" />
           </div>
         </form>
-        <form class="pu-form lg" aria-label="Large">
+        <form class="pu-form form-lg" aria-label="Large">
           <div class="pu-field">
             <label class="pu-label" for="lb-lg">Large group</label>
             <input id="lb-lg" class="pu-input" type="text" />

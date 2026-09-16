@@ -1,90 +1,3 @@
-/* -----------------Content Board----------------------- */
-/*
-ACCESSIBILITY REQUIREMENTS:
-- A badge carries its meaning in its text, never in its colour. data-intent
-  fills the box; the word inside is what a screen reader reads and what a
-  colour-blind reader has left. "Failed" filled red, not a red dot.
-
-- aria-label on a bare <span> is not reliably exposed by assistive tech,
-  because a <span> has no role for the name to attach to. Do not reach for
-  it. Where the badge repeats something already written out, hide it with
-  aria-hidden="true" and let the surrounding control carry the name.
-
-- A count that changes while the page is open has to be announced by a
-  container the badge sits inside — role="status" belongs on that container,
-  not on the badge. The badge is the value, not the live region.
-
-- The key may sit on <a> for a tag filter or a category link. It then gets
-  the focus ring from main.css, like every other focusable thing in the
-  library — this file must never draw one of its own. It may not sit on
-  <button> — an interactive chip is Pill.
-
-- Text contrast is 4.5:1 in every variant. Every intent token in main.css is
-  a light pastel, so the text is always the dark end of the scale — plain
-  --color-neutral-900 with no intent, and that intent darkened toward black
-  when there is one. Measured worst case 5.34:1, on error. Light text on any
-  of these fills would land near 1.5:1, which is what the @supports guard
-  below the intents exists to prevent.
-
-- .outline carries the whole box on its border alone. Against a white page
-  that border measures 2.5:1 neutral, and less on an intent, because every
-  intent token in main.css is a pale pastel. WCAG 1.4.11 asks 3:1 of a
-  graphic needed to identify a component — reported, not worked around here,
-  since the fix belongs to the tokens in main.css and not to this file.
-
-
-USAGE:
-
-<span class="pu-badge">New</span>
-<span class="pu-badge lg outline" data-intent="warning">Pending review</span>
-<a class="pu-badge ghost" href="/tags/css">css</a>
-
-<button class="pu-btn" aria-label="Notifications, 3 unread">
-  Notifications
-  <span class="pu-badge sm rounded" aria-hidden="true">3</span>
-</button>
-
-
-SIZE:  sm · md · lg   (md is the default; the key alone is already md)
-
-A badge stays a badge at every size. The scale tops out below body text on
-purpose — lg is a badge you can read across a table, not a heading. One
-variable, --badge-font-size, and the whole box follows it in em.
-
-SHAPE: sharp · smooth · rounded   (smooth is the default, as everywhere else)
-
-VARIANT:
-- (none)    a light neutral box. The default.
-- outline   the fill dropped, the border kept.
-- ghost     both dropped. For a dense list where the boxes would fight each
-            other and the words are enough. Same meaning as .ghost on .pu-btn.
-
-INTENT:
-- data-intent="info" · "success" · "warning" · "error"
-
-Each one sets the fill and the border to its token, and darkens that same
-token for the text, so a red badge reads in dark red and a yellow one in dark
-olive. Nothing else in the file derives a colour.
-
-
-CUSTOMIZATION:
-- --badge-font-size       the one measurement. The box derives from it.
-- --badge-background · --badge-border-color · --badge-color
-- --badge-intent-shade    what an intent's text is darkened toward
-- --badge-padding-inline · --badge-padding-block · --badge-gap
-- --badge-radius · --badge-border-width
-
-
-NOT HERE:
-The corner mark — a presence dot, an unread count hung on an avatar or a
-button. That is anchored to another element's edge, which is a different
-primitive, and it becomes its own component (working name Indicator).
-
-Interaction. A badge does not respond to the pointer and has no hover. A
-chip you can press is Pill; a chip you can dismiss is Pill with a button.
-*/
-/* ----------------------------------------------------- */
-
 .pu-badge {
   /* VARIABLES */
 
@@ -98,9 +11,9 @@ chip you can press is Pill; a chip you can dismiss is Pill with a button.
   --badge-radius: var(--radius-md);
   --badge-border-width: 1px;
 
-  --badge-background: var(--color-neutral-200);
-  --badge-border-color: var(--color-neutral-400);
-  --badge-color: var(--color-neutral-900);
+  --badge-background: var(--color-surface-muted);
+  --badge-border-color: var(--color-border);
+  --badge-color: var(--color-text);
 
   /*
    * The one colour in this file that is not a token. It is the far end an
@@ -221,32 +134,32 @@ chip you can press is Pill; a chip you can dismiss is Pill with a button.
    * giving back some of the em padding — which is the right lever anyway: a
    * small badge is a tight badge, not just a badge in smaller type.
    */
-  &.sm {
+  &.badge-sm {
     --badge-font-size: var(--font-size-xs);
 
     --badge-padding-inline: 0.5em;
     --badge-padding-block: 0.15em;
   }
 
-  &.md {
+  &.badge-md {
     --badge-font-size: var(--font-size-sm);
   }
 
-  &.lg {
+  &.badge-lg {
     --badge-font-size: var(--font-size-md);
   }
 
   /* SHAPE — after the sizes, so it replaces whatever radius they carry. */
 
-  &.sharp {
+  &.badge-sharp {
     --badge-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.badge-smooth {
     --badge-radius: var(--radius-md);
   }
 
-  &.rounded {
+  &.badge-rounded {
     --badge-radius: var(--radius-full);
   }
 
@@ -317,17 +230,21 @@ chip you can press is Pill; a chip you can dismiss is Pill with a button.
   /*
    * VARIANTS — after the intents, so they strip whatever fill an intent
    * put there. Written before them the two blocks tie on specificity and
-   * source order hands it to the intent, which left .outline and .ghost
+   * source order hands it to the intent, which left .badge-outline and .badge-ghost
    * silently filled.
    */
 
-  &.outline {
+  /* Transparent, so the label sits on the page and takes the page's text
+     colour — not the intent's foreground, which is meant for a fill. */
+  &.badge-outline {
     --badge-background: transparent;
+    --badge-color: var(--color-text);
   }
 
-  &.ghost {
+  &.badge-ghost {
     --badge-background: transparent;
     --badge-border-width: 0;
+    --badge-color: var(--color-text);
   }
 
   /* STATES */

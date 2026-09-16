@@ -7,10 +7,10 @@
   --input-padding-inline-end: var(--input-padding-inline);
   --input-radius: var(--form-radius, var(--radius-smooth));
   --input-border-width: var(--form-border-width, 1px);
-  --input-border-color: var(--form-border-color, var(--color-neutral-500));
-  --input-surface: var(--form-surface, var(--color-neutral-100));
-  --input-color: var(--form-color, var(--color-neutral-900));
-  --input-placeholder-color: var(--color-neutral-500);
+  --input-border-color: var(--form-border-color, var(--color-border-strong));
+  --input-surface: var(--form-surface, var(--color-surface-sunken));
+  --input-color: var(--form-color, var(--color-text));
+  --input-placeholder-color: var(--color-text-subtle);
   --input-line-height: var(--line-height-base);
 
   --input-min-block-size: calc(1lh + (var(--input-padding-block) * 2) + (var(--input-border-width) * 2));
@@ -116,30 +116,30 @@
   }
 
   /* 3. SIZE */
-  &.sm {
+  &.input-sm {
     --input-font-size: var(--font-size-sm);
   }
-  &.md {
+  &.input-md {
     /* base is already md */
   }
-  &.lg {
+  &.input-lg {
     --input-font-size: var(--font-size-base);
   }
 
   /* 4. SHAPE */
-  &.sharp {
+  &.input-sharp {
     --input-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.input-smooth {
     --input-radius: var(--radius-smooth);
   }
-  &.rounded {
+  &.input-rounded {
     --input-radius: var(--radius-rounded);
   }
 
   /* 4b. VARIANT */
-  &.ghost {
+  &.input-ghost {
     --input-surface: transparent;
     --input-border-color: transparent;
   }
@@ -149,7 +149,7 @@
      show that it is hovered, wrong or disabled. Only its resting state is
      invisible. */
   &:hover:not(:disabled, :read-only) {
-    --input-border-color: var(--color-neutral-700);
+    --input-border-color: color-mix(in oklab, var(--color-border-strong), var(--shade-hover));
   }
 
   &:is(:user-invalid, [aria-invalid="true"]) {
@@ -166,9 +166,9 @@
   }
 
   &:disabled {
-    --input-surface: var(--color-neutral-200);
-    --input-border-color: var(--color-neutral-400);
-    --input-color: var(--color-neutral-500);
+    --input-surface: var(--color-surface-muted);
+    --input-border-color: var(--color-border);
+    --input-color: var(--color-text-subtle);
     cursor: not-allowed;
   }
 
@@ -257,7 +257,7 @@ VARIABLES
   /* 1. VARIABLES */
   --input-group-icon-size: 1em;
   --input-group-icon-gap: 0.5em;
-  --input-group-icon-color: var(--color-neutral-500);
+  --input-group-icon-color: var(--color-text-subtle);
   --input-group-icon-inset: var(--form-padding-inline, 0.75em);
 
   /* What the control's padding has to become on a side that holds an icon:
@@ -337,7 +337,7 @@ VARIABLES
      A greyed-out field with a full-strength icon reads as the one part
      still working. */
   &:has(> .pu-input:disabled) > .input-icon {
-    color: var(--color-neutral-400);
+    color: var(--color-text-subtle);
     cursor: not-allowed;
   }
 }

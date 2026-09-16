@@ -1,12 +1,3 @@
-/* ============================================================
-   PURECOMPONENTS — DEV SHELL
-   Dev tooling only. Not part of the published library.
-
-   Everything here is namespaced `pc-` and uses its own `--pc-*`
-   tokens on purpose: the shell must stay readable even when the
-   library's own tokens are mid-refactor or broken.
-   ============================================================ */
-
 :root {
   --pc-bg: #ffffff;
   --pc-bg-sunken: #f4f5f7;
@@ -82,6 +73,7 @@ body {
 .pc-pane-head,
 .pc-footer,
 .pc-home-layout,
+.pc-composition-feed,
 .pc-skip {
   font-family: var(--pc-ui);
 }
@@ -136,6 +128,29 @@ body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
 }
 .pc-home:hover {
   color: var(--pc-accent);
+}
+
+.pc-section-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.pc-section-nav a {
+  color: var(--pc-text-dim);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.35rem 0.55rem;
+  border-radius: var(--pc-radius-sm);
+}
+.pc-section-nav a:hover,
+.pc-section-nav a[aria-current="page"] {
+  color: var(--pc-text);
+  background: var(--pc-bg-sunken);
+}
+.pc-section-nav a:focus-visible {
+  outline: 2px solid var(--pc-accent);
+  outline-offset: 1px;
 }
 
 .pc-select {
@@ -359,6 +374,235 @@ body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
   }
 }
 
+/* Compositions fill the main content column and switch between the rendered
+   interface and its editable source instead of squeezing both side by side. */
+
+.pc-composition-switcher {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pc-composition-tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.4rem;
+  border-bottom: 1px solid var(--pc-border);
+  background: var(--pc-bg-sunken);
+}
+
+.pc-composition-tabs button {
+  font: inherit;
+  font-family: var(--pc-ui);
+  font-size: 0.78rem;
+  color: var(--pc-text-dim);
+  background: transparent;
+  border: 0;
+  border-radius: var(--pc-radius-sm);
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+}
+
+.pc-composition-tabs button:hover {
+  color: var(--pc-text);
+}
+
+.pc-composition-tabs button[aria-selected="true"] {
+  color: var(--pc-text);
+  background: var(--pc-bg-raised);
+  box-shadow: var(--pc-shadow);
+}
+
+.pc-composition-tabs button:focus-visible {
+  outline: 2px solid var(--pc-accent);
+  outline-offset: 1px;
+}
+
+.pc-composition-switcher > .pc-pane {
+  grid-column: 1 / -1;
+}
+
+.pc-composition-switcher > .pc-pane[hidden] {
+  display: none;
+}
+
+.pc-composition-demo .pc-stage {
+  min-height: 16rem;
+  padding: 2rem;
+}
+
+.pc-composition-demo .pc-stage-inner {
+  display: block;
+  max-width: none;
+}
+
+/* Composition pages use a vertical feed. These viewers are separate from
+   the editable side-by-side examples on element pages. */
+.pc-composition-feed {
+  display: grid;
+  gap: 4.5rem;
+  font-family: var(--pc-ui);
+}
+
+.pc-composition-entry {
+  min-width: 0;
+  scroll-margin-top: calc(var(--pc-topbar-h) + 2rem);
+}
+
+.pc-composition-entry + .pc-composition-entry {
+  padding-top: 4.5rem;
+  border-top: 1px solid var(--pc-border);
+}
+
+.pc-composition-entry-head {
+  margin-bottom: 1rem;
+}
+
+.pc-composition-entry-head h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.15rem;
+}
+
+.pc-composition-entry-head p {
+  max-width: 70ch;
+  margin: 0;
+  color: var(--pc-text-dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.pc-composition-viewer {
+  overflow: hidden;
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-radius);
+  background: var(--pc-bg-raised);
+  box-shadow: var(--pc-shadow);
+}
+
+.pc-composition-view-tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.4rem;
+  border-bottom: 1px solid var(--pc-border);
+  background: var(--pc-bg-sunken);
+}
+
+.pc-composition-view-tabs button {
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--pc-radius-sm);
+  padding: 0.4rem 0.75rem;
+  background: transparent;
+  color: var(--pc-text-dim);
+  font: inherit;
+  font-size: 0.78rem;
+}
+
+.pc-composition-view-tabs button:hover {
+  color: var(--pc-text);
+}
+
+.pc-composition-view-tabs button[aria-selected="true"] {
+  background: var(--pc-bg-raised);
+  color: var(--pc-text);
+  box-shadow: var(--pc-shadow);
+}
+
+.pc-composition-view-tabs button:focus-visible {
+  outline: 2px solid var(--pc-accent);
+  outline-offset: 1px;
+}
+
+.pc-composition-view-panel {
+  min-block-size: var(--pc-composition-height);
+  background: var(--pc-bg-sunken);
+}
+
+.pc-composition-iframe {
+  display: block;
+  width: 100%;
+  height: var(--pc-composition-height);
+  border: 0;
+  background: var(--pc-bg-raised);
+}
+
+.pc-composition-placeholder {
+  min-block-size: var(--pc-composition-height);
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  color: var(--pc-text-dim);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.pc-composition-code-toolbar {
+  min-height: 2.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid var(--pc-border);
+  background: var(--pc-bg-raised);
+  color: var(--pc-text-dim);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pc-composition-code-toolbar button {
+  cursor: pointer;
+  margin-left: auto;
+  border: 1px solid var(--pc-border);
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  background: transparent;
+  color: var(--pc-text-dim);
+  font: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.pc-composition-code-toolbar button:hover {
+  border-color: var(--pc-border-strong);
+  color: var(--pc-text);
+}
+
+.pc-composition-code-toolbar button:focus-visible {
+  outline: 2px solid var(--pc-accent);
+  outline-offset: 1px;
+}
+
+.pc-composition-code {
+  box-sizing: border-box;
+  height: calc(var(--pc-composition-height) - 2.3rem);
+  margin: 0;
+  overflow: auto;
+  padding: 1rem;
+  background: var(--pc-code-bg);
+  color: var(--pc-text);
+  font-family: var(--pc-mono);
+  font-size: 0.78rem;
+  line-height: 1.65;
+  tab-size: 2;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.pc-composition-error {
+  margin: 0;
+  padding: 2rem;
+  color: #e5484d;
+}
+
+@media (max-width: 640px) {
+  .pc-composition-feed {
+    gap: 3rem;
+  }
+
+  .pc-composition-entry + .pc-composition-entry {
+    padding-top: 3rem;
+  }
+}
+
 .pc-pane {
   background: var(--pc-bg-raised);
   display: flex;
@@ -448,12 +692,12 @@ body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
   flex: 1;
   padding: 1.25rem;
   overflow: auto;
-  background-color: var(--pc-stage-light);
+  background-color: var(--color-surface);
   color: #14171f;
 }
 
 :root[data-pc-stage="dark"] .pc-stage {
-  background-color: var(--pc-stage-dark);
+  background-color: var(--color-surface);
   color: #e6e9ef;
 }
 
@@ -486,12 +730,95 @@ body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
   letter-spacing: -0.03em;
   margin: 0 0 0.5rem;
 }
+.pc-hero .pc-eyebrow {
+  color: var(--pc-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
 .pc-hero p {
   color: var(--pc-text-dim);
   font-size: 1rem;
   line-height: 1.6;
   max-width: 60ch;
   margin: 0;
+}
+
+.pc-library-home .pc-hero {
+  padding: 2rem 0 1rem;
+}
+.pc-section-grid {
+  list-style: none;
+  margin: 2.5rem 0 4rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.pc-section-card {
+  min-height: 15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.35rem;
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-radius);
+  background: var(--pc-bg-raised);
+  color: var(--pc-text);
+  text-decoration: none;
+  box-shadow: var(--pc-shadow);
+  transition:
+    border-color 140ms ease,
+    transform 140ms ease,
+    box-shadow 140ms ease;
+}
+.pc-section-card:hover {
+  border-color: var(--pc-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.08);
+}
+.pc-section-card:focus-visible {
+  outline: 2px solid var(--pc-accent);
+  outline-offset: 3px;
+}
+.pc-section-card-count {
+  color: var(--pc-text-dim);
+  font-family: var(--pc-mono);
+  font-size: 0.72rem;
+}
+.pc-section-card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.pc-section-card-blurb {
+  color: var(--pc-text-dim);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+.pc-section-card-link {
+  color: var(--pc-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-top: auto;
+}
+
+@media (max-width: 760px) {
+  .pc-section-grid {
+    grid-template-columns: 1fr;
+  }
+  .pc-section-card {
+    min-height: 11rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-section-card {
+    transition: none;
+  }
 }
 
 .pc-filter {
@@ -771,9 +1098,9 @@ body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
    ============================================================ */
 
 :root {
-  --pc-cat-part-ink: #663399;
-  --pc-cat-part-border: #A476DD;
-  --pc-cat-part-bg: #E7D7FE;
+  --pc-cat-key-ink: #663399;
+  --pc-cat-key-border: #A476DD;
+  --pc-cat-key-bg: #E7D7FE;
 
   --pc-cat-size-ink: #1B42B7;
   --pc-cat-size-border: #5E87EA;
@@ -802,6 +1129,10 @@ body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
   --pc-cat-variables-ink: #00584F;
   --pc-cat-variables-border: #009C8F;
   --pc-cat-variables-bg: #B4E8DF;
+
+  --pc-cat-info-ink: #0B4F8A;
+  --pc-cat-info-border: #4A90D9;
+  --pc-cat-info-bg: #D6EAFB;
 
   --pc-cat-animations-ink: #9B004E;
   --pc-cat-animations-border: #DB638C;
@@ -835,10 +1166,10 @@ body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
   color: currentColor;
 }
 
-.pc-cat-part {
-  --pc-cat-ink: var(--pc-cat-part-ink);
-  --pc-cat-border: var(--pc-cat-part-border);
-  --pc-cat-bg: var(--pc-cat-part-bg);
+.pc-cat-key {
+  --pc-cat-ink: var(--pc-cat-key-ink);
+  --pc-cat-border: var(--pc-cat-key-border);
+  --pc-cat-bg: var(--pc-cat-key-bg);
 }
 
 .pc-cat-size {
@@ -881,6 +1212,36 @@ body:not(.pc-ready) :is(.pc-demo, .pc-doc) {
   --pc-cat-ink: var(--pc-cat-variables-ink);
   --pc-cat-border: var(--pc-cat-variables-border);
   --pc-cat-bg: var(--pc-cat-variables-bg);
+}
+
+.pc-cat-info {
+  --pc-cat-ink: var(--pc-cat-info-ink);
+  --pc-cat-border: var(--pc-cat-info-border);
+  --pc-cat-bg: var(--pc-cat-info-bg);
+}
+
+/* An element pill is a category pill that happens to be a link. The
+   monospace face is what separates a tag name from a category name at a
+   glance, and the underline only on hover keeps the row from reading as
+   a wall of links. */
+.pc-element {
+  font-family: var(--pc-mono);
+  text-decoration: none;
+}
+.pc-element:hover {
+  text-decoration: underline;
+}
+.pc-element:focus-visible {
+  outline: 2px solid var(--pc-accent);
+  outline-offset: 2px;
+}
+
+.pc-elements {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
 }
 
 .pc-cat-animations {

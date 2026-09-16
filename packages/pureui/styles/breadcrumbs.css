@@ -4,16 +4,16 @@
   --breadcrumbs-radius: var(--radius-md);
 
   --breadcrumbs-separator: ">";
-  --breadcrumbs-separator-color: var(--color-neutral-400);
+  --breadcrumbs-separator-color: var(--color-text-subtle);
   --breadcrumbs-separator-space: var(--spacing-50);
 
   --breadcrumbs-crumb-padding-inline: var(--spacing-25);
   --breadcrumbs-crumb-padding-block: var(--spacing-15);
   --breadcrumbs-crumb-background: transparent;
 
-  --breadcrumbs-link-color: var(--color-neutral-500);
-  --breadcrumbs-hover-color: var(--color-neutral-900);
-  --breadcrumbs-current-color: var(--color-neutral-900);
+  --breadcrumbs-link-color: var(--color-text-subtle);
+  --breadcrumbs-hover-color: var(--color-text);
+  --breadcrumbs-current-color: var(--color-text);
 
   /* BASE */
   margin: 0;
@@ -104,23 +104,23 @@
 
   /* SEPARATOR VARIANTS — the list, or a single gap. */
 
-  &.slash,
-  & > li.slash {
+  &.breadcrumbs-slash,
+  & > li.breadcrumbs-slash {
     --breadcrumbs-separator: "/";
   }
 
-  &.chevron,
-  & > li.chevron {
+  &.breadcrumbs-chevron,
+  & > li.breadcrumbs-chevron {
     --breadcrumbs-separator: "›";
   }
 
-  &.arrow,
-  & > li.arrow {
+  &.breadcrumbs-arrow,
+  & > li.breadcrumbs-arrow {
     --breadcrumbs-separator: "→";
   }
 
-  &.dot,
-  & > li.dot {
+  &.breadcrumbs-dot,
+  & > li.breadcrumbs-dot {
     --breadcrumbs-separator: "•";
   }
 
@@ -139,19 +139,19 @@
 
   /* SIZE */
 
-  &.sm {
+  &.breadcrumbs-sm {
     --breadcrumbs-font-size: var(--font-size-sm);
     --breadcrumbs-separator-space: var(--spacing-25);
     --breadcrumbs-radius: var(--radius-sm);
   }
 
-  &.md {
+  &.breadcrumbs-md {
     --breadcrumbs-font-size: var(--font-size-md);
     --breadcrumbs-separator-space: var(--spacing-50);
     --breadcrumbs-radius: var(--radius-md);
   }
 
-  &.lg {
+  &.breadcrumbs-lg {
     --breadcrumbs-font-size: var(--font-size-base);
     --breadcrumbs-separator-space: var(--spacing-75);
     --breadcrumbs-radius: var(--radius-lg);
@@ -159,18 +159,18 @@
 
   /* SHAPE — after the sizes, so it replaces the radius they set. */
 
-  &.sharp,
-  & .sharp {
+  &.breadcrumbs-sharp,
+  & .breadcrumbs-sharp {
     --breadcrumbs-radius: var(--radius-sharp);
   }
 
-  &.smooth,
-  & .smooth {
+  &.breadcrumbs-smooth,
+  & .breadcrumbs-smooth {
     --breadcrumbs-radius: var(--radius-md);
   }
 
-  &.rounded,
-  & .rounded {
+  &.breadcrumbs-rounded,
+  & .breadcrumbs-rounded {
     --breadcrumbs-radius: var(--radius-full);
   }
 }

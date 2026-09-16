@@ -1,28 +1,52 @@
-# Tooltip Component - Contribution Guide
+# Tooltip — contributing
 
-## Code Structure
+## File
 
-- **CSS File**: `src/Styles/tooltip.css`
+`packages/pureui/styles/tooltip.css`
 
-## Implementation Details
+## Structure
 
-- Two implementation approaches: `::before` pseudo-element (data-tip) and `[role="tooltip"]` element
-- Absolute positioning for tooltip placement
-- Opacity transitions for smooth appearance
-- Position variants for top, right, left, bottom
-- Keyboard accessibility via `:focus-visible`
+The file has three parts.
 
-## Design Tokens Used
+**The anchor rule.** A `:where()` rule gives any element that carries
+`aria-describedby` and has a `.pu-tooltip` child an `anchor-name`. It is
+wrapped in `:where()` so it costs no specificity, and it uses `anchor-scope`
+so nested triggers do not capture each other's tooltips.
 
-- Colors: Hard-coded dark background (#333) and white text
-- Spacing: `--spacing-25`, `--spacing-50`
-- Typography: `--font-size-sm`, `--font-size-xs`
-- Border radius: `0.25rem` (hard-coded)
-- Z-index: `99` (hard-coded)
+**The key block.** `.pu-tooltip` is a plain class — HTML has no element that
+means "tooltip", so nothing is required through `:where()`. The block holds
+the one variable, the base look, the four placements, the three sizes, and
+the open state.
 
-## Accessibility Implementation
+**Two `@supports` blocks.** `:interest-source` sets the show and hide delays
+where the browser has it. The negated block provides a `:hover, :focus-visible`
+fallback where it does not.
 
-- ARIA role and describedby pattern
-- Keyboard accessibility with focus-visible
-- Screen reader support via aria-describedby
-- Pointer events disabled to prevent interaction issues
+## Positioning
+
+Placement is `position-area` against the anchor, not offsets. Each placement
+also sets `position-try-fallbacks`, so the browser flips the tooltip to a side
+where it fits rather than letting it overflow the viewport.
+
+`max-width` is `min(24rem, calc(100vw - 1rem))`, so a long tooltip wraps
+rather than running off a narrow screen.
+
+## Visibility
+
+The tooltip is a popover. `:popover-open` sets the visible state, and
+`@starting-style` gives it something to animate from. `display` and `overlay`
+are in the transition list with `allow-discrete`, which is what lets it fade
+out instead of disappearing.
+
+## Variables
+
+| Variable | Default | Controls |
+|---|---|---|
+| `--tooltip-offset` | `0.5em` | Applied as `margin`, so it holds on every side. |
+
+## Constraints
+
+- No radius token. The corner is `0.35em` so it tracks the font size — a
+  small tooltip gets a proportionally small corner.
+- Colours come from `--color-surface-inverted` and `--color-text-inverted`.
+- `transition-duration` drops to `0ms` under `prefers-reduced-motion`.

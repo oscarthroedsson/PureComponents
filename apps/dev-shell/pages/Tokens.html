@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Design tokens — PureComponents</title>
+    <title>Design tokens — Elements</title>
 
     <!-- Library CSS under test: this page reads the tokens straight off :root -->
     <link rel="stylesheet" href="/pureui/styles/main.css" />
@@ -95,27 +95,43 @@
 
         /* --- token names, in the order main.css declares them --- */
         var COLORS = [
-          "--color-primary", "--color-secondary", "--color-accent-light",
+          "--color-primary", "--color-secondary", "--color-accent",
           "--color-success", "--color-error", "--color-warning", "--color-info",
+          "--color-destructive",
         ];
         var NEUTRALS = [
+          "--color-neutral-0", "--color-neutral-50",
           "--color-neutral-100", "--color-neutral-200", "--color-neutral-300",
           "--color-neutral-400", "--color-neutral-500", "--color-neutral-600",
           "--color-neutral-700", "--color-neutral-800", "--color-neutral-900",
+          "--color-neutral-950",
+        ];
+        var ROLES = [
+          "--color-surface", "--color-surface-raised", "--color-surface-sunken",
+          "--color-surface-inverted", "--color-surface-muted",
+          "--color-text", "--color-text-muted", "--color-text-subtle", "--color-text-inverted",
+          "--color-border-subtle", "--color-border", "--color-border-strong",
+          "--color-focus-ring",
         ];
         var SPACING = [
-          "--spacing-1", "--spacing-15", "--spacing-25", "--spacing-50", "--spacing-75",
+          "--spacing-0", "--spacing-1", "--spacing-15", "--spacing-25", "--spacing-50", "--spacing-75",
           "--spacing-100", "--spacing-125", "--spacing-150", "--spacing-200",
           "--spacing-300", "--spacing-400",
         ];
         var RADIUS = ["--radius-none", "--radius-xs", "--radius-sm", "--radius-md", "--radius-lg", "--radius-full"];
-        var SHADOWS = ["--shadow-sm", "--shadow-md", "--shadow-lg", "--shadow-left"];
+        var SHAPE = ["--radius-sharp", "--radius-smooth", "--radius-rounded"];
+        var SHADOWS = ["--shadow-xs", "--shadow-sm", "--shadow-md", "--shadow-lg", "--shadow-xl"];
         var TYPE = [
           "--font-family-base", "--font-family-heading",
           "--font-size-xs", "--font-size-sm", "--font-size-md", "--font-size-base",
           "--font-size-lg", "--font-size-xl", "--font-size-2xl", "--font-size-3xl",
           "--font-size-h1", "--font-size-h2", "--font-size-h3",
           "--font-size-h4", "--font-size-h5", "--font-size-h6",
+          "--font-size-control-sm", "--font-size-control-md", "--font-size-control-lg",
+          "--font-size-body", "--font-size-body-sm", "--font-size-caption",
+          "--line-height-tight", "--line-height-base", "--line-height-heading",
+          "--tracking-base", "--tracking-heading",
+          "--font-weight-regular", "--font-weight-semibold", "--font-weight-bold",
         ];
 
         var lint = el("div", { class: "pc-lint" }, [el("p", { class: "pc-note", text: "Checking stylesheets…" })]);
@@ -124,19 +140,36 @@
           title: "Design tokens",
           lede:
             "Read live off :root, so this page shows what the browser actually resolves — " +
-            "not what main.css was meant to declare. A token rendered in red is used somewhere but never defined.",
+            "not what main.css was meant to declare. A token rendered in red is used without a fallback and never defined.",
           homeHref: "../index.html",
           sections: [
-            { id: "brand", title: "Brand colors", node: swatchGrid(COLORS) },
-            { id: "neutrals", title: "Neutrals", node: swatchGrid(NEUTRALS) },
+            {
+              id: "roles",
+              title: "Roles",
+              note: "What a component is allowed to ask for. Every one of these answers a question about meaning — what is body text, what sits under a card — and carries both a light and a dark face.",
+              node: swatchGrid(ROLES),
+            },
+            { id: "brand", title: "Brand and status", node: swatchGrid(COLORS) },
+            {
+              id: "neutrals",
+              title: "Palette",
+              note: "Raw pigment. The roles above are built from these, and no component reads them directly — a component that does names a value instead of a job, so it can follow neither the scheme nor a brand. Listed for reference, not for use.",
+              node: swatchGrid(NEUTRALS),
+            },
             { id: "spacing", title: "Spacing", node: barList(SPACING) },
-            { id: "radius", title: "Border radius", node: boxList(RADIUS, "border-radius") },
+            { id: "radius", title: "Border radius", note: "One knob: <code>--radius-base</code>. Every step is derived from it, so <code>--radius-base: 0</code> squares the library.", node: boxList(RADIUS, "border-radius") },
+            {
+              id: "shape",
+              title: "Shape",
+              note: "Not three more values — three names. <code>sharp</code>, <code>smooth</code> and <code>rounded</code> are the shape words in the class vocabulary, and these point at <code>--radius-none</code>, <code>--radius-md</code> and <code>--radius-full</code>. A component asks for the shape and cannot drift out of step with the scale.",
+              node: boxList(SHAPE, "border-radius"),
+            },
             { id: "shadows", title: "Shadows", node: boxList(SHADOWS, "box-shadow") },
             { id: "typography", title: "Typography", node: typeList(TYPE) },
             {
               id: "undefined-tokens",
               title: "Undefined tokens",
-              note: "Every <code>var(--x)</code> in the stylesheets, checked against every <code>--x:</code> declaration. Anything listed here resolves to nothing at runtime.",
+              note: "Every <code>var(--x)</code> in the stylesheets, checked against every <code>--x:</code> declaration. A bare <code>var(--x)</code> with no declaration resolves to nothing at runtime and is a bug. A <code>var(--x, fallback)</code> with no declaration is the consumer override surface and is listed separately.",
               node: lint,
             },
           ],
@@ -166,6 +199,7 @@
         ).then(function (results) {
           var defined = {};
           var used = {};
+          var bare = {};
           var reached = 0;
 
           results.forEach(function (r) {
@@ -175,9 +209,10 @@
             var declRe = /(--[\w-]+)\s*:/g;
             while ((d = declRe.exec(r.text))) defined[d[1]] = true;
             var u;
-            var useRe = /var\(\s*(--[\w-]+)/g;
+            var useRe = /var\(\s*(--[\w-]+)\s*([,)])/g;
             while ((u = useRe.exec(r.text))) {
               (used[u[1]] = used[u[1]] || {})[r.file] = true;
+              if (u[2] === ")") (bare[u[1]] = bare[u[1]] || {})[r.file] = true;
             }
           });
 
@@ -193,28 +228,49 @@
             return;
           }
 
-          var missing = Object.keys(used)
+          function rows(names, bad) {
+            var list = el("div");
+            names.forEach(function (name) {
+              var row = el("div", { class: "pc-bar-row" });
+              row.appendChild(el("code", { class: bad ? "pc-token-name pc-token-bad" : "pc-token-name", text: name }));
+              row.appendChild(el("span", { class: "pc-token-value", text: Object.keys(used[name]).join(", ") }));
+              list.appendChild(row);
+            });
+            return list;
+          }
+
+          var missing = Object.keys(bare)
             .filter(function (name) {
               return !defined[name];
             })
             .sort();
 
+          var tuning = Object.keys(used)
+            .filter(function (name) {
+              return !defined[name] && !bare[name];
+            })
+            .sort();
+
           if (!missing.length) {
             lint.appendChild(el("p", { class: "pc-note", text: "No undefined tokens. " + reached + " stylesheets checked." }));
-            return;
+          } else {
+            lint.appendChild(
+              el("p", { class: "pc-note", text: missing.length + " undefined tokens across " + reached + " stylesheets:" })
+            );
+            lint.appendChild(rows(missing, true));
           }
 
-          lint.appendChild(
-            el("p", { class: "pc-note", text: missing.length + " undefined tokens across " + reached + " stylesheets:" })
-          );
-          var list = el("div");
-          missing.forEach(function (name) {
-            var row = el("div", { class: "pc-bar-row" });
-            row.appendChild(el("code", { class: "pc-token-name pc-token-bad", text: name }));
-            row.appendChild(el("span", { class: "pc-token-value", text: Object.keys(used[name]).join(", ") }));
-            list.appendChild(row);
-          });
-          lint.appendChild(list);
+          if (tuning.length) {
+            lint.appendChild(
+              el("p", {
+                class: "pc-note",
+                text:
+                  tuning.length +
+                  " more are reached only through var(--x, fallback). Undeclared on purpose: the fallback carries the value and the name is the consumer's override. Not errors.",
+              })
+            );
+            lint.appendChild(rows(tuning, false));
+          }
         });
       })();
     </script>

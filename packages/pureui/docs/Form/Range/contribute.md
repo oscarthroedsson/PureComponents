@@ -1,50 +1,110 @@
-# Range — how it is built
+# Range — contributing
+
+## File
+
+`packages/pureui/styles/Form/range.css`
+
+## Key
+
+```css
+.pu-range:where(input[type="range"])
+```
+
+The type is part of the requirement. Only a real range gives the drag, the
+arrow keys, Home and End, and the value announcement.
 
 ## Everything derives from one variable
 
-`--range-track-size` is the only number. The thumb is `0.75` of it, the block
-padding `0.25`, the inline padding `0.5`, and the fill height is the track
-minus twice the block padding. A size class sets that one variable and the
-whole control follows — which is why the size blocks are one line each.
+```css
+--range-track-size: 1rem;
 
-## Why the fill is a gradient
+--range-track-padding-block: calc(var(--range-track-size) * 0.25);
+--range-track-padding-inline: calc(var(--range-track-size) * 0.5);
+--range-fill-size: calc(var(--range-track-size) - 2 * var(--range-track-padding-block));
+--range-thumb-size: calc(var(--range-track-size) * 0.75);
+```
 
-`appearance: none` is required to style the track at all, and once it is set
-Chromium has no pseudo-element for the filled portion. So the track's
-background is a hard-stop `linear-gradient` at `--range-value`.
+So the three size classes move one property each and the whole control scales
+in proportion.
 
-The consequence is documented in the header and in usage.md: the fill needs a
-line of consumer JavaScript to follow the thumb. That is a deliberate trade —
-the alternative was leaving the control fully native, which would have meant
-no track styling, no shape classes and no size classes.
+## `--range-value` cannot be computed here
 
-## The vendor pseudo-elements are written twice
+The fill is a `linear-gradient` with a hard stop:
 
-`::-webkit-slider-runnable-track` / `::-moz-range-track` and
-`::-webkit-slider-thumb` / `::-moz-range-thumb` cannot be combined into one
-selector list — if either engine does not recognise a selector in the list, it
-drops the whole rule. So each pair is written out separately with the same
-body. This is one of the few places in the library that repeats itself, and it
-has to.
+```css
+background: linear-gradient(
+  to right,
+  var(--range-fill) var(--range-value),
+  transparent var(--range-value)
+);
+```
 
-WebKit also needs `margin-block-start` on the thumb to centre it against the
-track; Firefox centres it natively and would be pushed off by the same rule.
+CSS has no access to the element's value as a number, so the percentage has to
+come from the consumer's script. The default of `50%` means an unwired slider
+still looks like a slider rather than an empty track.
 
-## The invalid state is on the thumb
+The thumb's position is the browser's and is always correct.
+
+`to right` is physical. The fill does not flip in a right-to-left document.
+
+## The vendor pseudo-elements never share a rule
+
+A selector list holding one unknown pseudo-element is dropped whole, so a
+`-webkit-` and a `-moz-` selector written together apply in **neither** engine.
+One rule each, always:
+
+```
+::-webkit-slider-runnable-track   ::-moz-range-track
+::-webkit-slider-thumb            ::-moz-range-thumb
+```
+
+The two track rules are identical and the two thumb rules nearly so — the
+WebKit thumb also needs `appearance: none` and a `margin-block-start` to centre
+itself on the track, which Firefox does on its own.
+
+## The track is the element, the fill is the pseudo-element
+
+`background-color: var(--range-track-color)` on the key is the groove. The
+runnable track carries the gradient inside it, inset by the key's padding.
+That is why there are two radius variables: `--range-track-radius` for the
+outer groove and `--range-fill-radius` for the bar inside it.
+
+`range-smooth` is the only shape that sets them differently — `--radius-sm`
+outside, `--radius-xs` inside — because a small fill inside a small groove
+needs the tighter corner to stay concentric.
+
+## Invalid comes before `:disabled`
+
+Same specificity, so source order decides, and a disabled control must not
+read as wrong.
 
 A range has no border to turn red, so the thumb carries it — the part that
-answers for the value. It sits **before** `:disabled` on purpose: same
-specificity, so source order decides, and a disabled control must not read as
-wrong.
+answers for the value.
 
-## Known, measured failure
+`:user-invalid` rarely fires here, because a range always has a value, so
+`[aria-invalid]` is the path that matters. Colour is never the only signal: the
+`.pu-field-error` appears and `aria-invalid` is what assistive technology
+hears.
 
-`--color-error` is `#f87171`, 2.77:1 on white, under the 3:1 of 1.4.11 for the
-invalid thumb. Used anyway by decision, pending a darker error token — the same
-call `textarea.css` and `input.css` record.
+## Where it departs from the family
 
-## Design tokens
+- **It does not read the channel.** Every other control in the Form family
+  takes its colours, border and radius from `--form-*` with a fallback. This
+  file uses library tokens directly, so a `.pu-form.form-rounded` or a custom
+  `--form-surface` does not reach it.
+- **No `:hover` state.** Every other control darkens its border on hover.
+- **No `prefers-reduced-motion` block.** There are no transitions in the file,
+  so nothing needs removing — but there are also no transitions on the thumb,
+  which every other control has on its colours.
+- **`range-primary`** is an emphasis word that no other component uses.
+  `secondary`, `tertiary`, `ghost` and `outline` are the shared vocabulary.
 
-`--color-neutral-*`, `--color-primary`, `--color-error`, `--radius-*`.
-`color-mix()` is used once, for the primary thumb's border, which AGENTS.md
-§4.4 allows.
+## Order inside the block
+
+1. Variables
+2. Base
+3. Vendor pseudo-elements, one rule each
+4. Size
+5. Colour variant
+6. Shape
+7. States

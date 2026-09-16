@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Separator — Elements</title>
+    <meta
+      name="pc-description"
+      content="A semantic rule between related regions. It fills the available length without establishing a larger parent, with horizontal as the default and an explicit vertical orientation for rows."
+    />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/separator.css" />
+    <link rel="stylesheet" href="/pureui/styles/button.css" />
+    <link rel="stylesheet" href="/pureui/styles/badge.css" />
+    <link rel="stylesheet" href="/pureui/styles/Layout/box.css" />
+    <link rel="stylesheet" href="/pureui/styles/Layout/layout.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Separator">
+    <section class="pc-doc" id="api" data-title="API">
+      <h2>API</h2>
+      <table class="pc-doc-table">
+        <thead>
+          <tr><th>Key</th><th>Type</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>.pu-separator</code></td>
+            <td><span class="pc-cat pc-cat-key">Key</span></td>
+            <td>The key on a native <code>&lt;hr&gt;</code>. Horizontal by default.</td>
+          </tr>
+          <tr>
+            <td><code>separator-vertical</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>A vertical rule that takes the block size its parent already provides.</td>
+          </tr>
+          <tr>
+            <td><code>--separator-thickness</code></td>
+            <td><span class="pc-cat pc-cat-variables">Variables</span></td>
+            <td>The line thickness. Defaults to <code>1px</code>.</td>
+          </tr>
+          <tr>
+            <td><code>--separator-color</code></td>
+            <td><span class="pc-cat pc-cat-variables">Variables</span></td>
+            <td>The line colour. Defaults to <code>var(--color-border)</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="pc-demo" id="default" data-title="Default" data-stage-style="display: block; inline-size: 100%;">
+      <p class="pc-note">
+        The key alone is horizontal. Native <code>&lt;hr&gt;</code> supplies the separator semantics; the component
+        removes the browser's margins and lets the parent's gap own the surrounding space.
+      </p>
+      <template>
+        <section class="pu-box box-md" data-direction="vertical" data-layout="start-top" data-gap="md">
+          <p>Account details</p>
+          <hr class="pu-separator" />
+          <p>Notification preferences</p>
+        </section>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="variants" data-title="Variants" data-stage-style="display: block; inline-size: 100%;">
+      <p class="pc-note">
+        The vertical modifier stretches to the height the row already gets from its content. Keep
+        <code>aria-orientation="vertical"</code> beside the class so semantics and presentation agree.
+      </p>
+      <template>
+        <div class="pu-box box-sm" data-layout="center-start" data-gap="sm">
+          <button class="pu-btn btn-md btn-ghost" type="button">Undo</button>
+          <button class="pu-btn btn-md btn-ghost" type="button">Redo</button>
+          <hr class="pu-separator separator-vertical" aria-orientation="vertical" />
+          <button class="pu-btn btn-md btn-ghost" type="button">Preview</button>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="behavior" data-title="Behavior" data-stage-style="display: block; inline-size: 100%;">
+      <p class="pc-note">
+        Both rules fill only space the parent already has. Their zero minimum sizes and shrinkable Flex participation
+        let the parent constrain them instead of being enlarged by them.
+      </p>
+      <template>
+        <div class="pu-box box-md" data-layout="center-start" data-gap="md">
+          <span class="pu-badge badge-md">Start</span>
+          <hr class="pu-separator" />
+          <span class="pu-badge badge-md">End</span>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="custom-override" data-title="Custom/Override" data-stage-style="display: grid; gap: 1.5rem; inline-size: 100%;">
+      <p class="pc-note">
+        Thickness and colour are variables rather than named variants, so the same API accepts any suitable length
+        and design token.
+      </p>
+      <template>
+        <hr
+          class="pu-separator"
+          style="--separator-thickness: 3px; --separator-color: var(--color-primary)"
+        />
+
+        <div class="pu-box box-sm" data-layout="center-start" data-gap="md">
+          <span>Before</span>
+          <hr
+            class="pu-separator separator-vertical"
+            aria-orientation="vertical"
+            style="--separator-thickness: 4px; --separator-color: var(--color-success)"
+          />
+          <span>After</span>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-doc" id="other" data-title="Other">
+      <h2>Other</h2>
+      <p>The fixed section vocabulary ends here. What follows is specific to this component.</p>
+    </section>
+
+    <section class="pc-doc" id="semantics" data-title="Semantics">
+      <h2>Semantics</h2>
+      <p>
+        Use the native separator when the break between regions is meaningful. Add
+        <code>aria-hidden="true"</code> when a line is only decoration, and never make it the only cue that two
+        regions differ.
+      </p>
+    </section>
+
+    <section class="pc-doc" id="compositions" data-title="Compositions">
+      <p>Complete interface parts built only from existing PureUI components.</p>
+    </section>
+
+    <section class="pc-demo" id="editor-toolbar" data-title="Editor Toolbar">
+      <p class="pc-note">
+        A vertical separator groups related actions without setting the toolbar's height. The buttons establish the
+        row; the separator only occupies that available block size.
+      </p>
+      <template>
+        <nav class="pu-box box-sm" data-layout="center-start" data-gap="sm" aria-label="Editor actions">
+          <button class="pu-btn btn-md btn-ghost" type="button">Undo</button>
+          <button class="pu-btn btn-md btn-ghost" type="button">Redo</button>
+          <hr class="pu-separator separator-vertical" aria-orientation="vertical" />
+          <button class="pu-btn btn-md btn-ghost" type="button">Preview</button>
+          <button class="pu-btn btn-md" type="button">Publish</button>
+        </nav>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="account-settings" data-title="Account Settings">
+      <p class="pc-note">
+        Horizontal separators divide complete settings rows. The parent owns all spacing through
+        <code>data-gap</code>; the separators add no hidden margins of their own.
+      </p>
+      <template>
+        <section class="pu-box box-md" data-direction="vertical" data-layout="start-top" data-gap="md" aria-labelledby="account-settings-title">
+          <header class="pu-box box-none" data-layout="center-between" data-gap="md">
+            <h2 id="account-settings-title">Account settings</h2>
+            <span class="pu-badge badge-md">Active</span>
+          </header>
+
+          <hr class="pu-separator" />
+
+          <div class="pu-box box-none" data-layout="center-between" data-gap="md">
+            <div>
+              <strong>Email</strong>
+              <p>oscar@example.com</p>
+            </div>
+            <button class="pu-btn btn-md btn-outline" type="button">Edit</button>
+          </div>
+
+          <hr class="pu-separator" />
+
+          <div class="pu-box box-none" data-layout="center-between" data-gap="md">
+            <div>
+              <strong>Password</strong>
+              <p>Last changed 3 months ago</p>
+            </div>
+            <button class="pu-btn btn-md btn-outline" type="button">Change</button>
+          </div>
+        </section>
+      </template>
+    </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

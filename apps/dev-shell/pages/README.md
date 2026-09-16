@@ -12,10 +12,10 @@ A component page contains nothing but its demos. The shell builds the rest.
 ```html
 <body data-component="Button">
   <section class="pc-demo" id="sizes" data-title="Sizes">
-    <p class="pc-note">Three sizes: <code>sm</code>, <code>md</code>, <code>lg</code>.</p>
+    <p class="pc-note">Three sizes: <code>btn-sm</code>, <code>btn-md</code>, <code>btn-lg</code>.</p>
     <template>
-      <button class="pu-btn sm">Small</button>
-      <button class="pu-btn md">Medium</button>
+      <button class="pu-btn btn-sm">Small</button>
+      <button class="pu-btn btn-md">Medium</button>
     </template>
   </section>
 

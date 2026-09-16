@@ -1,0 +1,267 @@
+[data-layout] {
+  /* VARIABLES */
+
+  --layout-gap: var(--spacing-0);
+
+  /* BASE
+
+     Horizontal is the default. Direction changes the flow, while
+     data-layout continues to describe cross-axis alignment first and
+     main-axis distribution second. */
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  gap: var(--layout-gap);
+
+  min-inline-size: 0;
+  max-inline-size: 100%;
+
+  /* Direct children must be allowed to shrink inside the layout. */
+  & > * {
+    min-inline-size: 0;
+    min-block-size: 0;
+    max-inline-size: 100%;
+  }
+
+  &[data-direction="vertical"] {
+    flex-direction: column;
+  }
+
+  /* GAP */
+
+  &[data-gap="none"] {
+    --layout-gap: var(--spacing-0);
+  }
+
+  &[data-gap="xs"] {
+    --layout-gap: var(--spacing-50);
+  }
+
+  &[data-gap="sm"] {
+    --layout-gap: var(--spacing-75);
+  }
+
+  &[data-gap="md"] {
+    --layout-gap: var(--spacing-100);
+  }
+
+  &[data-gap="lg"] {
+    --layout-gap: var(--spacing-150);
+  }
+
+  &[data-gap="xl"] {
+    --layout-gap: var(--spacing-200);
+  }
+
+  /* HORIZONTAL
+
+     The first word is the vertical cross-axis alignment. The second word
+     distributes children along the horizontal flow. */
+
+  &:not([data-direction="vertical"]):is(
+    [data-layout="top-start"],
+    [data-layout="top-center"],
+    [data-layout="top-between"],
+    [data-layout="top-around"],
+    [data-layout="top-end"],
+    [data-layout="top-split"]
+  ) {
+    align-items: start;
+  }
+
+  &:not([data-direction="vertical"]):is(
+    [data-layout="center-start"],
+    [data-layout="center-center"],
+    [data-layout="center-between"],
+    [data-layout="center-around"],
+    [data-layout="center-end"],
+    [data-layout="center-split"]
+  ) {
+    align-items: center;
+  }
+
+  &:not([data-direction="vertical"]):is(
+    [data-layout="bottom-start"],
+    [data-layout="bottom-center"],
+    [data-layout="bottom-between"],
+    [data-layout="bottom-around"],
+    [data-layout="bottom-end"],
+    [data-layout="bottom-split"]
+  ) {
+    align-items: end;
+  }
+
+  &:not([data-direction="vertical"]):is(
+    [data-layout="top-start"],
+    [data-layout="center-start"],
+    [data-layout="bottom-start"]
+  ) {
+    justify-content: start;
+  }
+
+  &:not([data-direction="vertical"]):is(
+    [data-layout="top-center"],
+    [data-layout="center-center"],
+    [data-layout="bottom-center"]
+  ) {
+    justify-content: center;
+  }
+
+  &:not([data-direction="vertical"]):is(
+    [data-layout="top-between"],
+    [data-layout="center-between"],
+    [data-layout="bottom-between"]
+  ) {
+    justify-content: space-between;
+  }
+
+  &:not([data-direction="vertical"]):is(
+    [data-layout="top-around"],
+    [data-layout="center-around"],
+    [data-layout="bottom-around"]
+  ) {
+    justify-content: space-around;
+  }
+
+  &:not([data-direction="vertical"]):is(
+    [data-layout="top-end"],
+    [data-layout="center-end"],
+    [data-layout="bottom-end"]
+  ) {
+    justify-content: end;
+  }
+
+  /* VERTICAL
+
+     The first word is the horizontal cross-axis alignment. The second word
+     distributes children along the vertical flow. */
+
+  &[data-direction="vertical"]:is(
+    [data-layout="start-top"],
+    [data-layout="start-center"],
+    [data-layout="start-between"],
+    [data-layout="start-around"],
+    [data-layout="start-bottom"],
+    [data-layout="start-split"]
+  ) {
+    align-items: start;
+  }
+
+  &[data-direction="vertical"]:is(
+    [data-layout="center-top"],
+    [data-layout="center-center"],
+    [data-layout="center-between"],
+    [data-layout="center-around"],
+    [data-layout="center-bottom"],
+    [data-layout="center-split"]
+  ) {
+    align-items: center;
+  }
+
+  &[data-direction="vertical"]:is(
+    [data-layout="end-top"],
+    [data-layout="end-center"],
+    [data-layout="end-between"],
+    [data-layout="end-around"],
+    [data-layout="end-bottom"],
+    [data-layout="end-split"]
+  ) {
+    align-items: end;
+  }
+
+  &[data-direction="vertical"]:is(
+    [data-layout="start-top"],
+    [data-layout="center-top"],
+    [data-layout="end-top"]
+  ) {
+    justify-content: start;
+  }
+
+  &[data-direction="vertical"]:is(
+    [data-layout="start-center"],
+    [data-layout="center-center"],
+    [data-layout="end-center"]
+  ) {
+    justify-content: center;
+  }
+
+  &[data-direction="vertical"]:is(
+    [data-layout="start-between"],
+    [data-layout="center-between"],
+    [data-layout="end-between"]
+  ) {
+    justify-content: space-between;
+  }
+
+  &[data-direction="vertical"]:is(
+    [data-layout="start-around"],
+    [data-layout="center-around"],
+    [data-layout="end-around"]
+  ) {
+    justify-content: space-around;
+  }
+
+  &[data-direction="vertical"]:is(
+    [data-layout="start-bottom"],
+    [data-layout="center-bottom"],
+    [data-layout="end-bottom"]
+  ) {
+    justify-content: end;
+  }
+
+  /* SPLIT
+
+     Equal outer tracks keep the second of exactly three direct children
+     geometrically centred even when the outer children have different sizes. */
+
+  &:not([data-direction="vertical"])[data-layout$="-split"] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, max-content) minmax(0, 1fr);
+    justify-content: normal;
+
+    & > :first-child {
+      justify-self: start;
+    }
+
+    & > :nth-child(2) {
+      justify-self: center;
+    }
+
+    & > :last-child {
+      justify-self: end;
+    }
+  }
+
+  &[data-direction="vertical"][data-layout$="-split"] {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) minmax(0, max-content) minmax(0, 1fr);
+    align-content: normal;
+
+    & > :first-child {
+      align-self: start;
+    }
+
+    & > :nth-child(2) {
+      align-self: center;
+    }
+
+    & > :last-child {
+      align-self: end;
+    }
+  }
+
+  &[data-direction="vertical"][data-layout="start-split"] {
+    justify-items: start;
+  }
+
+  &[data-direction="vertical"][data-layout="center-split"] {
+    justify-items: center;
+  }
+
+  &[data-direction="vertical"][data-layout="end-split"] {
+    justify-items: end;
+  }
+}

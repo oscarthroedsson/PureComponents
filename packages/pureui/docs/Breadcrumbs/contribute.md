@@ -1,117 +1,126 @@
-# Breadcrumbs — how it is built
+# Breadcrumbs — contributing
 
-File: `src/Styles/breadcrumbs.css`. Key class `.breadcrumbs`, on the `<ol>`.
+## File
 
-## The separator is a variable, not a selector
+`packages/pureui/styles/breadcrumbs.css`
 
-A consumer cannot select `::after`. That is the whole reason
-`--breadcrumbs-separator` exists rather than a set of override rules: the
-variable is the only door into generated content, and AGENTS §4.3 says that is
-what component variables are for.
+## Key
 
-Everything else about the separator follows from it. The variant classes
-(`slash`, `chevron`, `arrow`, `dot`) are one line each and do nothing but
-reassign the variable — no second mechanism, no rule that has to be kept in sync
-with the first.
+```css
+.pu-breadcrumbs:where(ol, ul)
+```
 
-That is also why the ready-made mark is a string and not a drawn shape. DaisyUI
-builds its chevron out of a rotated box with two borders, which is crisper, but
-a box cannot be swapped for a character. It would make `chevron` behave unlike
-every other separator in the file, and AGENTS §2 puts consistency above a
-locally better solution.
+A trail is a list. `<ol>` is the honest choice because the order carries
+meaning, but `<ul>` is accepted.
 
-Custom properties inherit, so the same variable set on an `<li>` changes only
-that crumb's own `::after`. Per-crumb separators cost nothing extra; they fall
-out of where the variable is declared.
+The component sets `list-style: none`, which costs the list role in WebKit.
+`role="list"` in the markup is the only fix, and every example carries it.
 
-## Why the mark sits on `li:not(:last-child)::after`
+## The separator is generated, with an escape hatch
 
-Not `li + li::before`. With `::after` the mark belongs to the crumb in front of
-it, which is also where a consumer's own separator element goes — one place, one
-mental model, and `li:last-child` silences both.
+The mark is a `::after` on every `<li>` except the last:
 
-The known limit: `:last-child` matches the last element, not the last *visible*
-one. Hide the final crumb with `display: none` and the crumb before it keeps its
-separator. It is documented rather than worked around, because every fix for it
-breaks a different case.
+```css
+& > li:not(:last-child)::after {
+  content: var(--breadcrumbs-separator);
+}
+```
 
-## `@supports` around the silenced mark
+Because it comes from a variable, a consumer changes it with one declaration
+and never touches a rule.
 
-Generated content is read aloud by some screen readers — VoiceOver says "greater
-than" between every crumb. `content: … / ""` empties the alternative text and
-silences it.
+### Silencing it
 
-The catch is what happens where that syntax is unknown: the whole declaration is
-invalid, and the separator disappears entirely. So the plain rule is written
-first and the silenced one sits inside `@supports (content: "x" / "")`. A
-browser that cannot silence it still draws it; the failure mode is a spoken
-separator, not a missing one.
+```css
+@supports (content: "x" / "") {
+  & > li:not(:last-child)::after {
+    content: var(--breadcrumbs-separator) / "";
+  }
+}
+```
 
-## `:has()` for the consumer's own element
+The same mark with its alternative text emptied, so assistive technology skips
+it. It is kept in a separate `@supports` block rather than merged into the
+rule above: where the syntax is unknown the whole declaration is dropped, and
+dropping this one only loses the silencing, not the separator.
+
+### A separator the consumer brought
 
 ```css
 & > li:has(> .breadcrumbs-separator)::after { content: none; }
+& > li:last-child > .breadcrumbs-separator { display: none; }
 ```
 
-The alternative was an attribute the consumer sets to say "I brought my own".
-`:has()` removes that step: the element is its own announcement, and a gap with
-two separators in it cannot be built by accident.
+The first stands our own mark down wherever the consumer supplied one, so the
+two never double up. The second makes sure nothing follows the last crumb,
+whoever drew it.
 
-`& > li:last-child > .breadcrumbs-separator { display: none }` is the same
-courtesy in the other direction — it lets a template loop emit identical markup
-for every item without an `if not last`.
-
-The crumb rule is written as `& > li > :not(.breadcrumbs-separator)`, so a
-separator element does not pick up the crumb's padding, background and radius.
-
-## Shape reaches one level down on purpose
+## Crumb padding excludes the separator
 
 ```css
-&.sharp,  & .sharp  { --breadcrumbs-radius: var(--radius-sharp); }
+& > li > :not(.breadcrumbs-separator) { padding-inline: …; }
 ```
 
-The same three words work on the list and on a crumb. No `:has()`, no
-specificity fight: an inherited value is the weakest thing in the cascade, so an
-element that declares the variable itself always beats the one it would have
-inherited, and one that does not falls back to the list. "Mine if I have it,
-otherwise my parent's" is built-in behaviour, not something written here.
+The separator has its own spacing from `--breadcrumbs-separator-space`. Giving
+it the crumb's padding as well would double the gap.
 
-Every crumb carries padding and `background-color: transparent` from the start.
-Without them a radius is invisible and a consumer who sets a background gets a
-tight, square chip and has to undo our work. With them,
-`--breadcrumbs-crumb-background` is the only thing they set.
+## Variants apply at two levels
 
-## Current page
+```css
+&.breadcrumbs-slash,
+& > li.breadcrumbs-slash { --breadcrumbs-separator: "/"; }
+```
 
-Styled through `[aria-current="page"]`, never `:last-child`. The attribute is
-what carries the meaning (AGENTS §4.6); the colour only follows it. A crumb that
-never gets the attribute renders as a plain link, and that is deliberate — a
-fallback to `:last-child` would make broken markup look finished and hide the
-bug it exists to prevent.
+On the list it changes every gap; on a single `<li>` it changes only the gap
+after that crumb, because the variable is read by that item's own
+pseudo-element. The shape classes are doubled the same way.
 
-Colour is not the sole carrier: the weight changes with it, and `aria-current`
-says it outright to anyone not looking at the screen.
+## Order inside the block
 
-## Contrast
+1. Variables
+2. Base
+3. Items and crumbs
+4. Separator — generated, silenced, consumer-supplied
+5. Separator variants
+6. Current page
+7. Size
+8. Shape — after size, so it replaces the radius the size set
 
-`--breadcrumbs-link-color` is `--color-neutral-500`, 4.8:1 on white. The obvious
-lighter choice, `--color-neutral-400`, is 2.6:1 and fails the 4.5:1 floor — it
-is used for the separator only, which is decoration and hidden from assistive
-tech.
+## The current crumb does not hover
 
-The previous version dimmed non-current crumbs with `opacity: 0.6`. That is gone.
-Opacity multiplies against whatever is behind it, so the contrast of a crumb
-became a property of the page's background rather than of this file.
+```css
+& > li > [aria-current="page"] {
+  &:hover { color: …; text-decoration: none; }
+}
+```
 
-## Known limits
+Where you already are does not answer to the pointer. The rule is driven by
+`aria-current`, not by a class, because the attribute is what tells assistive
+technology the same thing.
 
-- **Dark mode.** The colours are tokens, so this component inherits dark mode for
-  free when `main.css` gets it. Until then the current crumb is
-  `--color-neutral-900` and disappears on a dark background — the same as every
-  other token-correct component in the library. See AGENTS §8.
-- **RTL.** Spacing uses logical properties and follows the direction. The default
-  `>` does not flip; swap `--breadcrumbs-separator` under `[dir="rtl"]`.
-- **No collapse.** Long trails wrap. Choosing which crumbs to drop is a decision
-  about content, not about CSS.
-- **`role="list"`.** Required in markup, cannot be supplied from CSS. See
-  `SemanticNotes/semantics-breadcrumbs.md`.
+## Sizes carry radius
+
+Each size sets font size, separator spacing **and** radius, so a small trail
+gets a proportionally small crumb corner. The shape classes come after and
+replace it.
+
+## Variables
+
+| Variable | Default |
+|---|---|
+| `--breadcrumbs-gap` | `var(--spacing-0)` |
+| `--breadcrumbs-font-size` | `var(--font-size-md)` |
+| `--breadcrumbs-radius` | `var(--radius-md)` |
+| `--breadcrumbs-separator` | `">"` |
+| `--breadcrumbs-separator-color` | `var(--color-text-subtle)` |
+| `--breadcrumbs-separator-space` | `var(--spacing-50)` |
+| `--breadcrumbs-crumb-padding-inline` | `var(--spacing-25)` |
+| `--breadcrumbs-crumb-padding-block` | `var(--spacing-15)` |
+| `--breadcrumbs-crumb-background` | `transparent` |
+| `--breadcrumbs-link-color` | `var(--color-text-subtle)` |
+| `--breadcrumbs-hover-color` | `var(--color-text)` |
+| `--breadcrumbs-current-color` | `var(--color-text)` |
+
+The crumb background defaults to `transparent` so a trail is plain text until
+someone asks for chips. The radius and padding are declared regardless, so
+setting the one variable is enough to get them.

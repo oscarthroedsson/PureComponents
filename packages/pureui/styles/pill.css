@@ -1,122 +1,3 @@
-/* -----------------Content Board----------------------- */
-/*
-ACCESSIBILITY REQUIREMENTS:
-- A pill is the interactive counterpart to Badge. Badge annotates something
-  else and never responds to the pointer; a pill is its own object and does.
-  Where the two sit in the same row they measure alike on purpose — same
-  height floor, same em-derived box.
-
-- The key is a look, not an element, and which element it sits on decides
-  what the pill *is*:
-
-    <button class="pu-pill">      an action
-    <a class="pu-pill" href>      a destination — a tag page, a filtered view
-    <label class="pu-pill">       a selection, with the input inside it
-    <span class="pu-pill">        a removable tag; the container is not the control
-    <li class="pu-pill">          the same, inside a <ul> of tags
-
-  The <label> form is the one that carries state without JavaScript. The
-  input keeps its own role, the label gives it a name, and Tab and Space
-  work because nothing was reconstructed. :has(:checked) below only paints
-  what the checkbox already reports.
-
-- A removable tag is two controls, never one. The tag is the text; the
-  remove control is a separate <button> beside it with its own accessible
-  name. Written as a single <button aria-label="Remove JavaScript">, the
-  tag itself stops existing as an object and the whole pill becomes a
-  destructive control — which is also why the key may not be a <button>
-  when a remove button is inside it: a <button> cannot contain a <button>.
-
-- Selection is never carried by colour alone. A selected pill fills, and it
-  also shows a marker. The marker occupies its space at all times and only
-  its opacity changes, so selecting does not resize the pill and the row
-  does not reflow under the pointer. It appears only where the pill is
-  actually selectable — a plain action pill gets no invisible glyph.
-
-- Every interactive form gets the focus ring from main.css, and this file
-  draws none of its own. The <label> form works because its input covers the
-  whole pill: the ring is drawn around whatever has focus, so at full size it
-  traces the pill instead of an invisible point beside it.
-
-- The pill is at least 24px tall at every size, so it clears the 24x24
-  target floor without needing padding a consumer has to remember to add.
-
-- Text contrast is 4.5:1 or better in every state. Measured worst case is
-  neutral-900 on neutral-400 at :active, 5.2:1. Selected fills with
-  --color-primary and keeps the dark text, 7.0:1 — not the light text .pu-btn
-  uses on the same token, which does not measure.
-
-- .outline carries the box on its border alone, and --color-neutral-400
-  measures 2.5:1 against a white page. WCAG 1.4.11 asks 3:1 of a graphic
-  needed to identify a component. Reported, not worked around here: the fix
-  belongs to the tokens in main.css.
-
-
-USAGE:
-
-<button class="pu-pill">Filter</button>
-<a class="pu-pill" href="/tags/css">css</a>
-
-<label class="pu-pill">
-  <input type="checkbox" name="topic" value="design" />
-  Design
-</label>
-
-<span class="pu-pill outline">
-  JavaScript
-  <button class="pill-remove" aria-label="Remove JavaScript">&times;</button>
-</span>
-
-<button class="pu-pill" aria-pressed="true">Unread only</button>
-
-
-SIZE:  sm · md · lg   (md is the default; the key alone is already md)
-
-Same scale as .pu-btn — 12 / 14 / 16px — because that is what a pill is: a
-small button. One variable, --pill-font-size, and the whole box follows it
-in em. Heights land at 24.8 / 28.6 / 32.4px.
-
-SHAPE: sharp · smooth · rounded   (smooth is the default, as everywhere else)
-
-VARIANT:
-- (none)    a light neutral box. The default.
-- outline   the fill dropped, the border kept.
-- ghost     both dropped. For a dense row where the boxes would fight each
-            other. Same meaning as .ghost on .pu-btn and .pu-badge.
-
-STATE:
-- :hover · :active          neutral steps, no derived colour
-- :focus-visible            the ring from main.css, not drawn here
-- :has(:checked)            the <label> form, selected
-- [aria-pressed="true"]     the <button> form, a toggle
-- :disabled · [aria-disabled="true"]
-
-
-CUSTOMIZATION:
-- --pill-font-size            the one measurement. The box derives from it.
-- --pill-background · --pill-border-color · --pill-color
-- --pill-background-hover · --pill-background-active
-- --pill-selected-background · --pill-selected-color · --pill-selected-marker
-- --pill-padding-inline · --pill-padding-block · --pill-gap
-- --pill-radius · --pill-border-width
-- --pill-remove-radius
-
-
-NOT HERE:
-Intent. data-intent="success" on a pill would say the same thing a badge
-says, in a box you can press. Status is Badge's job; a pill is categorical.
-Keeping the two apart is what makes the pair readable.
-
-Colour derivation. There is no color-mix() and no relative syntax in this
-file — every state is a plain step along the neutral scale. That is why it
-needs no @supports guard, and why the main.css dark-mode pass carries it
-for free.
-
-Loading and skeleton go on top, from loading.css, and are not rebuilt per
-component.
-*/
-/* ----------------------------------------------------- */
-
 .pu-pill {
   /* VARIABLES */
 
@@ -130,20 +11,20 @@ component.
   --pill-radius: var(--radius-md);
   --pill-border-width: 1px;
 
-  --pill-background: var(--color-neutral-200);
-  --pill-border-color: var(--color-neutral-400);
-  --pill-color: var(--color-neutral-900);
+  --pill-background: var(--color-surface-muted);
+  --pill-border-color: var(--color-border);
+  --pill-color: var(--color-text);
 
   /*
    * The hover and active fills are variables rather than values written in
    * the state blocks, and that is a specificity decision, not a taste one.
-   * `.pu-pill.outline` is (0,2,0) and `.pu-pill:hover` is (0,1,1), so a state
+   * `.pu-pill.pill-outline` is (0,2,0) and `.pu-pill:hover` is (0,1,1), so a state
    * that wrote --pill-background directly would lose to every variant and
-   * .outline would have had no hover at all. Each variant writes its own
+   * .pill-outline would have had no hover at all. Each variant writes its own
    * pair below; the state block only ever swaps which one is in play.
    */
-  --pill-background-hover: var(--color-neutral-300);
-  --pill-background-active: var(--color-neutral-400);
+  --pill-background-hover: color-mix(in oklab, var(--color-surface-muted), var(--shade-hover));
+  --pill-background-active: color-mix(in oklab, var(--color-surface-muted), var(--shade-active));
 
   --pill-selected-background: var(--color-primary);
   --pill-selected-border-color: var(--color-primary);
@@ -153,7 +34,7 @@ component.
    * --color-neutral-100 on this same token, which lands near 2.2:1 — a
    * token problem reported in AGENTS.md §8, and not one to copy here.
    */
-  --pill-selected-color: var(--color-neutral-900);
+  --pill-selected-color: var(--color-primary-foreground);
 
   /*
    * The mark that says "selected" without relying on the fill. Content,
@@ -308,31 +189,31 @@ component.
 
   /* SIZE */
 
-  &.sm {
+  &.pill-sm {
     --pill-font-size: var(--font-size-sm);
 
     --pill-padding-inline: 0.65em;
   }
 
-  &.md {
+  &.pill-md {
     --pill-font-size: var(--font-size-md);
   }
 
-  &.lg {
+  &.pill-lg {
     --pill-font-size: var(--font-size-base);
   }
 
   /* SHAPE — after the sizes, so it replaces whatever radius they carry. */
 
-  &.sharp {
+  &.pill-sharp {
     --pill-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.pill-smooth {
     --pill-radius: var(--radius-md);
   }
 
-  &.rounded {
+  &.pill-rounded {
     --pill-radius: var(--radius-full);
   }
 
@@ -344,19 +225,19 @@ component.
    * step and stop looking like itself the moment the pointer arrived.
    */
 
-  &.outline {
+  &.pill-outline {
     --pill-background: transparent;
 
-    --pill-background-hover: var(--color-neutral-200);
-    --pill-background-active: var(--color-neutral-300);
+    --pill-background-hover: var(--color-surface-muted);
+    --pill-background-active: color-mix(in oklab, var(--color-surface-muted), var(--shade-hover));
   }
 
-  &.ghost {
+  &.pill-ghost {
     --pill-background: transparent;
     --pill-border-color: transparent;
 
-    --pill-background-hover: var(--color-neutral-200);
-    --pill-background-active: var(--color-neutral-300);
+    --pill-background-hover: var(--color-surface-muted);
+    --pill-background-active: color-mix(in oklab, var(--color-surface-muted), var(--shade-hover));
   }
 
   /* STATES */
@@ -365,7 +246,7 @@ component.
    * :is(button, a, label) does two jobs. It keeps hover and the pointer
    * away from the <span> and <li> forms, which are containers and not
    * controls — and it raises these rules to (0,2,1), above the (0,2,0) of
-   * every variant above, so .outline and .ghost keep their hover.
+   * every variant above, so .pill-outline and .pill-ghost keep their hover.
    */
   &:is(button, a, label) {
     cursor: pointer;
@@ -381,8 +262,8 @@ component.
     }
 
     &:is(:disabled, [aria-disabled="true"]) {
-      --pill-background: var(--color-neutral-200);
-      --pill-color: var(--color-neutral-500);
+      --pill-background: var(--color-surface-muted);
+      --pill-color: var(--color-text-subtle);
 
       cursor: not-allowed;
 
@@ -394,7 +275,7 @@ component.
   }
 
   /*
-   * SELECTED — after the variants, so a selected .outline fills instead of
+   * SELECTED — after the variants, so a selected .pill-outline fills instead of
    * staying transparent. Written before them the two tie on specificity
    * and source order hands it to the variant, which is how a selected pill
    * ends up looking unselected.
@@ -409,7 +290,7 @@ component.
 
     /* The fill already changed; the border is what hover has left to say. */
     &:hover {
-      --pill-border-color: var(--color-neutral-900);
+      --pill-border-color: var(--color-primary-active);
     }
   }
 
@@ -479,12 +360,12 @@ component.
     }
 
     &:hover {
-      background-color: var(--color-neutral-400);
+      background-color: color-mix(in oklab, transparent, var(--color-shade) 20%);
     }
 
 
     &:is(:disabled, [aria-disabled="true"]) {
-      color: var(--color-neutral-500);
+      color: var(--color-text-subtle);
 
       cursor: not-allowed;
 

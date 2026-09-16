@@ -4,60 +4,31 @@ One file per component, in `packages/pureui/styles/`. The rules for what the
 classes must be are in [ui-classes.md](ui-classes.md); this document covers
 the file itself.
 
+The three files in `styles/Layout/` are the deliberate exception. `box.css`
+owns the `.pu-box` key. `layout.css` and `behavior.css` are attribute modules
+scoped to that key, not independent components, so they do not invent another
+key class or empty size, shape and state sections merely to fit this template.
+Each module owns its own public docs and is registered as its own dev-shell
+page.
+
 ---
 
 ## Mandatory sections, in this order
 
-Every file has all seven. A file missing one is unfinished.
+Every component file has all six. A component file missing one is unfinished.
+The two attribute modules above contain only the sections their API actually
+has.
 
 | # | Section | Required |
 |---|---|---|
-| 1 | Header comment | Always |
-| 2 | Variables | Always — even if there is one |
-| 3 | Base | Always |
-| 4 | Size | Always, unless the component has no size |
-| 5 | Shape / variants | When the component has them |
-| 6 | States | Always — focus alone makes it non-optional |
-| 7 | `@keyframes` | When something animates |
+| 1 | Variables | Always — even if there is one |
+| 2 | Base | Always |
+| 3 | Size | Always, unless the component has no size |
+| 4 | Shape / variants | When the component has them |
+| 5 | States | Always — focus alone makes it non-optional |
+| 6 | `@keyframes` | When something animates |
 
-## 1. Header comment
-
-Comes first, before any CSS. States the accessibility contract before anything
-else, then how the component is used.
-
-```css
-/* -----------------Content Board----------------------- */
-/*
-ACCESSIBILITY REQUIREMENTS:
-- The key only applies on <table>. A grid of divs is not announced as a
-  table and gives a screen reader no row or column position.
-- Every data column needs a <th scope="col">.
-- Focus comes from main.css. This file must never draw its own outline.
-
-USAGE:
-
-<table class="pu-table md">
-  <thead>…</thead>
-  <tbody>…</tbody>
-</table>
-
-SIZE:  sm · md · lg   (md is the default; the key alone is already md)
-
-SHAPE: sharp · smooth · rounded
-
-VARIANTS:
-- striped    every other row filled
-- compact    padding halved
-
-NOT HERE:
-Loading and skeleton come from loading.css and are not rebuilt per component.
-*/
-```
-
-`ACCESSIBILITY REQUIREMENTS` and `USAGE` are required. The rest appear when the
-component has them.
-
-## 2. Variables
+## 1. Variables
 
 **All component variables are declared at the top of the key block. Never
 further down the file.**
@@ -90,7 +61,7 @@ no internal jargon.
 Variables are also how pseudo-elements stay adjustable. A consumer cannot
 select `::before`, so every part of one that might need changing is a variable.
 
-## 3–6. The key block
+## 2–5. The key block
 
 ```css
 .pu-btn:where(button, a, label, summary) {
@@ -112,13 +83,13 @@ select `::before`, so every part of one that might need changing is a variable.
   border-radius: var(--btn-radius);
 
   /* 3. SIZE */
-  &.sm { --btn-padding-block: var(--spacing-25); }
-  &.lg { --btn-padding-block: var(--spacing-75); }
+  &.btn-sm { --btn-padding-block: var(--spacing-25); }
+  &.btn-lg { --btn-padding-block: var(--spacing-75); }
 
   /* 4. SHAPE / VARIANTS */
-  &.sharp   { --btn-radius: 0; }
-  &.rounded { --btn-radius: var(--radius-full); }
-  &.ghost   { --btn-surface: transparent; }
+  &.btn-sharp   { --btn-radius: 0; }
+  &.btn-rounded { --btn-radius: var(--radius-full); }
+  &.btn-ghost   { --btn-surface: transparent; }
 
   /* 5. STATES */
   &:hover {
@@ -146,6 +117,8 @@ properties. The base already says where `--btn-radius` is used.
 
 - Everything nested inside the key block. Nothing at top level except the key
   and `@keyframes`.
+- Every modifier and every part is written `<name>-<word>`, where `<name>` is
+  the key without its `pu-`. See [ui-classes.md](ui-classes.md) section 1.
 - No hardcoded colours. See [ui-classes.md](ui-classes.md) section 4.
 - `prefers-reduced-motion` honoured wherever something animates.
 - English in comments.
@@ -170,12 +143,12 @@ properties. The base already says where `--btn-radius` is used.
 
 - Key class present, everything nested inside it.
 - Key requires its native element through `:where()` where one exists.
+- Every modifier and part namespaced to the component.
 - Component variables at the top of the key block, plainly named.
 - No hardcoded colours, no raw values where a token exists.
-- `sm` / `md` / `lg` behave, `md` is the default.
+- Sizes and variants carry the component's namespace, `md` is the default.
 - States driven by native attributes, then ARIA, then `data-`.
 - Focus indicator visible and to spec.
-- Header comment states the accessibility contract.
 - Registered in `components.js`, demo page renders, seen in a browser.
 - `usage.md` and `contribute.md` written.
 - Naming matches every other component.

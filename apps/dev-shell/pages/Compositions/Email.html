@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email workspace — Pure Composition</title>
+
+    <!-- Dev shell only. PureUI CSS is loaded inside the lazy preview. -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-page="compositions">
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui">
+        Composition examples are loaded on demand and need JavaScript.
+      </p>
+    </noscript>
+
+    <script src="../components.js"></script>
+    <script src="./compositions.js"></script>
+    <script src="../docs.js"></script>
+    <script src="./Email/examples.js"></script>
+    <script type="module">
+      import "./composition-viewer.js";
+
+      (function () {
+        "use strict";
+
+        var el = window.PCDocs.el;
+        var about = el("div", { class: "pc-doc-body" });
+        about.innerHTML =
+          "<p>This demo builds a complete visual email workspace from PureUI components and a composition-owned " +
+          "four-column grid. The grid stays local because this page structure is not a reusable library primitive.</p>" +
+          "<p>The preview is interactive: switch accounts, filter and select messages, compose mail, " +
+          "connect another inbox and create folders without leaving the composition.</p>";
+
+        var feed = el("div");
+        window.PCCompositionViewer.mount(feed, {
+          name: "Email workspace",
+          examples: window.PC_EMAIL_EXAMPLES || [],
+        });
+
+        window.PCDocs.buildPage({
+          title: "Email workspace",
+          lede: "A full visual inbox assembled from PureUI with a composition-owned four-column grid.",
+          homeHref: "../../index.html",
+          sections: [
+            { id: "about", title: "About", node: about },
+            { id: "examples", title: "Example", node: feed },
+          ],
+        });
+      })();
+    </script>
+  </body>
+</html>

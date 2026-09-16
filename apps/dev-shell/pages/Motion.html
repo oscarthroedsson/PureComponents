@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motion — Elements</title>
+    <meta name="pc-description" content="Composable CSS motion: choose an effect, its trigger, and whether it targets the host or its children." />
+
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/Animations/index.css" />
+    <link rel="stylesheet" href="/pureui/styles/button.css" />
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Motion">
+
+  <section class="pc-demo" id="default" data-title="Default" data-stage-style="display: flex; gap: 2rem; align-items: center; min-height: 8rem;">
+    <p class="pc-note">The host is the target by default. Hold the button with a pointer or keyboard to drive <code>--motion-progress</code> from 0 to 1.</p>
+    <template>
+      <button type="button" class="pu-btn pu-motion"
+              data-motion="press" data-motion-on="active">
+        Hold me
+      </button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="variants" data-title="Variants" data-stage-style="display: flex; gap: 3rem; align-items: center; flex-wrap: wrap; min-height: 10rem;">
+    <p class="pc-note">Hover or focus each button. Slide names describe the direction travelled into the resting position.</p>
+    <template>
+      <button type="button" class="pu-btn pu-motion" data-motion="scale-in" data-motion-on="hover focus">Scale in</button>
+      <button type="button" class="pu-btn pu-motion" data-motion="slide-left" data-motion-on="hover focus">Slide left</button>
+      <button type="button" class="pu-btn pu-motion" data-motion="slide-right" data-motion-on="hover focus">Slide right</button>
+      <button type="button" class="pu-btn pu-motion" data-motion="slide-up" data-motion-on="hover focus">Slide up</button>
+      <button type="button" class="pu-btn pu-motion" data-motion="slide-down" data-motion-on="hover focus">Slide down</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="children" data-title="Compositions" data-stage-style="min-height: 9rem;">
+    <p class="pc-note">The trigger stays on the parent while every direct child reads the inherited progress. Tab into the group to test <code>focus-within</code>.</p>
+    <template>
+      <div class="pu-motion" data-motion="fade-in"
+           data-motion-on="hover focus-within" data-motion-scope="children"
+           style="display: flex; gap: 1rem; --motion-stagger: 60ms;">
+        <button type="button" class="pu-btn">One</button>
+        <button type="button" class="pu-btn">Two</button>
+        <button type="button" class="pu-btn">Three</button>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="expand-layout" data-title="Expand — overlay or reflow" data-stage-style="display: grid; gap: 3rem; min-height: 12rem;">
+    <p class="pc-note"><code>overlay</code> keeps the label after the collection still. <code>reflow</code> grows the collection&rsquo;s real gap and moves the label, without reserving that space before hover.</p>
+    <template>
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div class="pu-motion" data-motion="expand-right" data-motion-layout="overlay" data-motion-on="hover focus-within" data-motion-scope="children" style="display: flex; --motion-expand-step: 1rem;">
+          <button type="button" class="pu-btn btn-sm">One</button>
+          <button type="button" class="pu-btn btn-sm">Two</button>
+          <button type="button" class="pu-btn btn-sm">Three</button>
+        </div>
+        <span>Overlay neighbour</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div class="pu-motion" data-motion="expand-right" data-motion-layout="reflow" data-motion-on="hover focus-within" data-motion-scope="children" style="display: flex; --motion-expand-step: 1rem;">
+          <button type="button" class="pu-btn btn-sm">One</button>
+          <button type="button" class="pu-btn btn-sm">Two</button>
+          <button type="button" class="pu-btn btn-sm">Three</button>
+        </div>
+        <span>Reflow neighbour</span>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="state" data-title="States" data-stage-style="display: flex; gap: 2rem; align-items: center; min-height: 8rem;">
+    <p class="pc-note"><code>pressed</code> reads the semantic <code>aria-pressed</code> state. Click to toggle it; motion does not invent a parallel active state.</p>
+    <template>
+      <button type="button" class="pu-btn pu-motion"
+              data-motion="scale-in" data-motion-on="pressed"
+              aria-pressed="false">
+        Toggle pressed
+      </button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="custom" data-title="Custom/Override" data-stage-style="display: flex; gap: 2rem; align-items: center; min-height: 8rem;">
+    <p class="pc-note">Timing and distance are variables, so a consumer can retune an existing effect without adding a selector.</p>
+    <template>
+      <button type="button" class="pu-btn pu-motion"
+              data-motion="slide-left" data-motion-on="hover focus"
+              style="--motion-distance: 3rem; --motion-duration: 600ms; --motion-easing: var(--ease-out);">
+        Custom slide
+      </button>
+    </template>
+  </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+    <script>
+      document.addEventListener("click", function (event) {
+        var button = event.target.closest('[data-motion-on~="pressed"]');
+        if (!button) return;
+        button.setAttribute(
+          "aria-pressed",
+          button.getAttribute("aria-pressed") === "true" ? "false" : "true"
+        );
+      });
+    </script>
+  </body>
+</html>

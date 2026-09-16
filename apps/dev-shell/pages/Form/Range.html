@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Range — PureComponents</title>
+    <title>Range — Elements</title>
     <meta name="pc-description" content="A slider, left native on purpose." />
 
     <link rel="stylesheet" href="/pureui/styles/main.css" />
@@ -44,13 +44,13 @@
       <template>
         <div class="pu-field">
           <label class="pu-label" for="rg-fill">Volume — drag it</label>
-          <input id="rg-fill" class="pu-range primary" type="range" min="0" max="100" value="40"
+          <input id="rg-fill" class="pu-range range-primary" type="range" min="0" max="100" value="40"
                  style="--range-value: 40%"
                  oninput="this.style.setProperty('--range-value', (this.value / this.max * 100) + '%')" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rg-nofill">The same slider without it</label>
-          <input id="rg-nofill" class="pu-range primary" type="range" min="0" max="100" value="40" />
+          <input id="rg-nofill" class="pu-range range-primary" type="range" min="0" max="100" value="40" />
         </div>
       </template>
     </section>
@@ -58,7 +58,7 @@
     <section class="pc-demo" id="variants" data-title="Variants" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
         Neutral by default, so a slider does not shout in a form full of quiet controls.
-        <code>primary</code> puts the brand green on the line and on the thumb.
+        <code>range-primary</code> puts the brand green on the line and on the thumb.
       </p>
       <template>
         <div class="pu-field">
@@ -67,7 +67,7 @@
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rg-primary">Primary</label>
-          <input id="rg-primary" class="pu-range primary" type="range" min="0" max="100" value="40" />
+          <input id="rg-primary" class="pu-range range-primary" type="range" min="0" max="100" value="40" />
         </div>
       </template>
     </section>
@@ -83,15 +83,15 @@
       <template>
         <div class="pu-field">
           <label class="pu-label" for="rg-sm">Small</label>
-          <input id="rg-sm" class="pu-range sm" type="range" min="0" max="100" value="40" />
+          <input id="rg-sm" class="pu-range range-sm" type="range" min="0" max="100" value="40" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rg-md">Medium</label>
-          <input id="rg-md" class="pu-range md" type="range" min="0" max="100" value="40" />
+          <input id="rg-md" class="pu-range range-md" type="range" min="0" max="100" value="40" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rg-lg">Large</label>
-          <input id="rg-lg" class="pu-range lg" type="range" min="0" max="100" value="40" />
+          <input id="rg-lg" class="pu-range range-lg" type="range" min="0" max="100" value="40" />
         </div>
       </template>
     </section>
@@ -99,25 +99,25 @@
     <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
         One class shapes both surfaces: the capsule and the fill inside it.
-        <code>smooth</code> gives the fill a tighter radius than the capsule, because the fill is
+        <code>range-smooth</code> gives the fill a tighter radius than the capsule, because the fill is
         half the height and the same radius would read as a pill there.
       </p>
       <template>
         <div class="pu-field">
           <label class="pu-label" for="rg-sharp">Sharp</label>
-          <input id="rg-sharp" class="pu-range sharp" type="range" min="0" max="100" value="40" />
+          <input id="rg-sharp" class="pu-range range-sharp" type="range" min="0" max="100" value="40" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rg-smooth">Smooth</label>
-          <input id="rg-smooth" class="pu-range smooth" type="range" min="0" max="100" value="40" />
+          <input id="rg-smooth" class="pu-range range-smooth" type="range" min="0" max="100" value="40" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rg-rounded">Rounded</label>
-          <input id="rg-rounded" class="pu-range rounded" type="range" min="0" max="100" value="40" />
+          <input id="rg-rounded" class="pu-range range-rounded" type="range" min="0" max="100" value="40" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rg-thick">A thicker track — --range-track-size</label>
-          <input id="rg-thick" class="pu-range primary rounded" type="range" min="0" max="100" value="40"
+          <input id="rg-thick" class="pu-range range-primary range-rounded" type="range" min="0" max="100" value="40"
                  style="--range-track-size: 0.6rem" />
         </div>
       </template>

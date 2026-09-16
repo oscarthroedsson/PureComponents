@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Table — PureComponents</title>
+    <title>Table — Elements</title>
     <meta name="pc-description" content="Table spacing. The class goes on the table and reaches every cell from there." />
 
     <!-- Library CSS under test -->
@@ -19,7 +19,7 @@
       <p class="pc-note">The class goes on the <code>&lt;table&gt;</code>. Every cell is reached from there.</p>
 
       <template>
-        <table class="pu-table md">
+        <table class="pu-table table-md">
           <caption>Team members</caption>
           <thead>
             <tr>
@@ -51,41 +51,41 @@
 
     <section class="pc-demo" id="alignment" data-title="Alignment">
       <p class="pc-note">
-        <code>start</code> (default), <code>center</code> and <code>end</code>. The class works at any level, because
+        <code>table-start</code> (default), <code>table-center</code> and <code>table-end</code>. The class works at any level, because
         <code>text-align</code> inherits — the nearest ancestor that sets a value wins, and a value set directly on an
         element always beats an inherited one.
       </p>
 
       <p class="pc-note">
-        The baseline is <code>start</code> rather than the browser default, which gives <code>td</code> start and
+        The baseline is <code>table-start</code> rather than the browser default, which gives <code>td</code> start and
         <code>th</code> center — a header centred over left-aligned data.
       </p>
 
       <template>
-        <table class="pu-table md">
+        <table class="pu-table table-md">
           <caption>One cell overridden</caption>
           <thead>
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Role</th>
-              <th scope="col" class="end">Commits</th>
+              <th scope="col" class="table-end">Commits</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th scope="row">Ada Lovelace</th>
               <td>Engineering</td>
-              <td class="end">1284</td>
+              <td class="table-end">1284</td>
             </tr>
             <tr>
               <th scope="row">Grace Hopper</th>
               <td>Compilers</td>
-              <td class="end">907</td>
+              <td class="table-end">907</td>
             </tr>
           </tbody>
         </table>
 
-        <table class="pu-table md center">
+        <table class="pu-table table-md table-center">
           <caption>Table set to center, one row back to start</caption>
           <thead>
             <tr>
@@ -98,7 +98,7 @@
               <td>Ada Lovelace</td>
               <td>Engineering</td>
             </tr>
-            <tr class="start">
+            <tr class="table-start">
               <td>Grace Hopper</td>
               <td>Compilers</td>
             </tr>
@@ -109,11 +109,11 @@
 
     <section class="pc-demo" id="size-variants" data-title="Size Variants">
       <p class="pc-note">
-        <code>sm</code>, <code>md</code> (default) and <code>lg</code> move cell padding and type size together.
+        <code>table-sm</code>, <code>table-md</code> (default) and <code>table-lg</code> move cell padding and type size together.
       </p>
 
       <template>
-        <table class="pu-table sm">
+        <table class="pu-table table-sm">
           <caption>sm</caption>
           <thead>
             <tr>
@@ -133,7 +133,7 @@
           </tbody>
         </table>
 
-        <table class="pu-table md">
+        <table class="pu-table table-md">
           <caption>md</caption>
           <thead>
             <tr>
@@ -153,7 +153,7 @@
           </tbody>
         </table>
 
-        <table class="pu-table lg">
+        <table class="pu-table table-lg">
           <caption>lg</caption>
           <thead>
             <tr>

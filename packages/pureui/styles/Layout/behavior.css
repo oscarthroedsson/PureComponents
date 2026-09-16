@@ -1,0 +1,205 @@
+/* INLINE SIZE
+
+   One word applies to both axes. An inline-* value changes only this axis.
+   In a two-word state pair, the first word is always inline. */
+
+[data-layout] > :is(
+  [data-behavior="auto"],
+  [data-behavior="inline-auto"],
+  [data-behavior="auto-auto"],
+  [data-behavior="auto-expand"],
+  [data-behavior="auto-compact"]
+) {
+  inline-size: auto;
+}
+
+[data-layout] > :is(
+  [data-behavior="expand"],
+  [data-behavior="inline-expand"],
+  [data-behavior="expand-auto"],
+  [data-behavior="expand-expand"],
+  [data-behavior="expand-compact"]
+) {
+  inline-size: auto;
+}
+
+[data-layout] > :is(
+  [data-behavior="compact"],
+  [data-behavior="inline-compact"],
+  [data-behavior="compact-auto"],
+  [data-behavior="compact-expand"],
+  [data-behavior="compact-compact"]
+) {
+  inline-size: fit-content;
+}
+
+/* BLOCK SIZE
+
+   A block-* value changes only this axis. In a two-word state pair, the
+   second word is always block. An axis that is not named keeps the
+   component's base sizing. */
+
+[data-layout] > :is(
+  [data-behavior="auto"],
+  [data-behavior="block-auto"],
+  [data-behavior="auto-auto"],
+  [data-behavior="expand-auto"],
+  [data-behavior="compact-auto"]
+) {
+  block-size: auto;
+}
+
+[data-layout] > :is(
+  [data-behavior="expand"],
+  [data-behavior="block-expand"],
+  [data-behavior="auto-expand"],
+  [data-behavior="expand-expand"],
+  [data-behavior="compact-expand"]
+) {
+  block-size: auto;
+}
+
+[data-layout] > :is(
+  [data-behavior="compact"],
+  [data-behavior="block-compact"],
+  [data-behavior="auto-compact"],
+  [data-behavior="expand-compact"],
+  [data-behavior="compact-compact"]
+) {
+  block-size: fit-content;
+}
+
+/* HORIZONTAL FLEX
+
+   Inline is the main axis, so its state controls flex participation. Block
+   is the cross axis, so expand stretches it and the other explicit states
+   return it to the parent's alignment. */
+
+[data-layout]:not([data-direction="vertical"], [data-layout$="-split"]) > :is(
+  [data-behavior="auto"],
+  [data-behavior="compact"],
+  [data-behavior="inline-auto"],
+  [data-behavior="inline-compact"],
+  [data-behavior="auto-auto"],
+  [data-behavior="auto-expand"],
+  [data-behavior="auto-compact"],
+  [data-behavior="compact-auto"],
+  [data-behavior="compact-expand"],
+  [data-behavior="compact-compact"]
+) {
+  flex: 0 1 auto;
+}
+
+[data-layout]:not([data-direction="vertical"], [data-layout$="-split"]) > :is(
+  [data-behavior="expand"],
+  [data-behavior="inline-expand"],
+  [data-behavior="expand-auto"],
+  [data-behavior="expand-expand"],
+  [data-behavior="expand-compact"]
+) {
+  flex: 1 1 0;
+}
+
+[data-layout]:not([data-direction="vertical"], [data-layout$="-split"]) > :is(
+  [data-behavior="block-auto"],
+  [data-behavior="block-compact"],
+  [data-behavior="auto"],
+  [data-behavior="compact"],
+  [data-behavior="auto-auto"],
+  [data-behavior="auto-compact"],
+  [data-behavior="expand-auto"],
+  [data-behavior="expand-compact"],
+  [data-behavior="compact-auto"],
+  [data-behavior="compact-compact"]
+) {
+  align-self: auto;
+}
+
+[data-layout]:not([data-direction="vertical"], [data-layout$="-split"]) > :is(
+  [data-behavior="expand"],
+  [data-behavior="block-expand"],
+  [data-behavior="auto-expand"],
+  [data-behavior="expand-expand"],
+  [data-behavior="compact-expand"]
+) {
+  align-self: stretch;
+}
+
+/* VERTICAL FLEX
+
+   Block becomes the main axis and Inline becomes the cross axis. */
+
+[data-layout][data-direction="vertical"]:not([data-layout$="-split"]) > :is(
+  [data-behavior="auto"],
+  [data-behavior="compact"],
+  [data-behavior="block-auto"],
+  [data-behavior="block-compact"],
+  [data-behavior="auto-auto"],
+  [data-behavior="auto-compact"],
+  [data-behavior="expand-auto"],
+  [data-behavior="expand-compact"],
+  [data-behavior="compact-auto"],
+  [data-behavior="compact-compact"]
+) {
+  flex: 0 1 auto;
+}
+
+[data-layout][data-direction="vertical"]:not([data-layout$="-split"]) > :is(
+  [data-behavior="expand"],
+  [data-behavior="block-expand"],
+  [data-behavior="auto-expand"],
+  [data-behavior="expand-expand"],
+  [data-behavior="compact-expand"]
+) {
+  flex: 1 1 0;
+}
+
+[data-layout][data-direction="vertical"]:not([data-layout$="-split"]) > :is(
+  [data-behavior="inline-auto"],
+  [data-behavior="inline-compact"],
+  [data-behavior="auto"],
+  [data-behavior="compact"],
+  [data-behavior="auto-auto"],
+  [data-behavior="auto-expand"],
+  [data-behavior="auto-compact"],
+  [data-behavior="compact-auto"],
+  [data-behavior="compact-expand"],
+  [data-behavior="compact-compact"]
+) {
+  align-self: auto;
+}
+
+[data-layout][data-direction="vertical"]:not([data-layout$="-split"]) > :is(
+  [data-behavior="expand"],
+  [data-behavior="inline-expand"],
+  [data-behavior="expand-auto"],
+  [data-behavior="expand-expand"],
+  [data-behavior="expand-compact"]
+) {
+  align-self: stretch;
+}
+
+/* SPLIT GRID
+
+   Split owns three fixed regions. Expand fills the assigned track on the
+   requested axis without changing the geometric centre of the grid. */
+
+[data-layout][data-layout$="-split"] > :is(
+  [data-behavior="expand"],
+  [data-behavior="inline-expand"],
+  [data-behavior="expand-auto"],
+  [data-behavior="expand-expand"],
+  [data-behavior="expand-compact"]
+) {
+  justify-self: stretch;
+}
+
+[data-layout][data-layout$="-split"] > :is(
+  [data-behavior="expand"],
+  [data-behavior="block-expand"],
+  [data-behavior="auto-expand"],
+  [data-behavior="expand-expand"],
+  [data-behavior="compact-expand"]
+) {
+  align-self: stretch;
+}

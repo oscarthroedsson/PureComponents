@@ -1,159 +1,140 @@
 # Badge
 
-A small box of text that labels, counts, or states the status of something
-next to it.
-
-## When to use
-
-- Status: `Draft`, `Published`, `Failed`
-- Category or tag labels
-- Counts on a control: unread, pending, items in a cart
-- Metadata beside a title
-
-## When not to use
-
-- **You can click it** → Pill. A badge does not respond to the pointer and has
-  no hover state.
-- **It hangs on the corner of something** — a presence dot on an avatar, an
-  unread mark floating over a button. That is a different primitive, anchored
-  to another element's edge, and it is its own component.
-- **It is the only thing saying what happened** → Alert. A badge annotates
-  something already on the page.
+A small label that annotates something else — a status beside a row, a count
+beside a title, a tag on a card. A badge is not interactive. Something you
+click or dismiss is a pill.
 
 ## Quick start
 
 ```html
-<span class="badge">New</span>
-<span class="badge" data-intent="success">Published</span>
-<span class="badge outline" data-intent="warning">Pending review</span>
+<span class="pu-badge badge-md">New</span>
 ```
 
-The key alone is already `md` and already `smooth`. You only add a class to move
-away from that.
+## Classes
 
-## API
+| Class | Does |
+|---|---|
+| `.pu-badge` | The key. |
+| `badge-sm` | Smaller type and tighter padding. |
+| `badge-md` | The default. |
+| `badge-lg` | Larger type. |
+| `badge-sharp` | Square corners. |
+| `badge-smooth` | The same radius `badge-md` already gives. |
+| `badge-rounded` | Fully round ends. |
+| `badge-outline` | No fill. Border and page text colour. |
+| `badge-ghost` | No fill, no border. |
 
-### Element
+The key is a plain class — HTML has no badge element. Put it on a `<span>`,
+or on an `<a>` when the badge is also a link.
 
-| Element | Allowed | Why |
+## Attributes
+
+| Attribute | Does |
+|---|---|
+| `data-intent="info"` | Blue fill. |
+| `data-intent="success"` | Green fill. |
+| `data-intent="warning"` | Yellow fill. |
+| `data-intent="error"` | Red fill. |
+
+An intent reads in its own colour darkened — a red badge in dark red, a
+yellow one in dark olive — rather than in neutral black.
+
+`badge-outline` and `badge-ghost` strip the fill an intent puts there and
+return the label to the page's text colour.
+
+## Variables
+
+| Variable | Default | Controls |
 |---|---|---|
-| `<span>` | yes | The default. A badge is a run of text. |
-| `<a>` | yes | A tag filter or a category link. Gets the house focus ring. |
-| `<button>` | no | An interactive chip is Pill. |
-
-### Size — `sm` · `md` · `lg`
-
-`md` is the default. The scale stays inside badge territory on purpose: `lg`
-is a badge you can read across a table, not a heading. It never reaches body
-text size. Rendered heights are 17px, 24.8px and 28.6px.
-
-`sm` is the one size that also tightens the padding — `--font-size-xs` is the
-smallest type token there is, so below it the box can only shrink by giving
-padding back.
-
-### Shape — `sharp` · `smooth` · `rounded`
-
-`smooth` is the default, as everywhere else in the library. Size and shape are
-independent — `sm rounded` and `lg sharp` both work.
-
-### Variant — `outline` · `ghost`
-
-| Class | What it does |
-|---|---|
-| *(none)* | A light neutral box. |
-| `outline` | The fill dropped, the border kept — it takes the intent's colour if there is one. |
-| `ghost` | Both dropped — text alone. For a dense list where the boxes would fight each other. Same meaning `ghost` has on `.btn`. |
-
-### Intent — `data-intent`
-
-`info` · `success` · `warning` · `error`
-
-Intent fills the box with its token and darkens that same token for the text —
-so a yellow badge reads in dark olive and a red one in dark red, rather than
-both in neutral black. That holds on `outline` and `ghost` too. It never
-replaces the word inside the badge, though — see accessibility below.
+| `--badge-font-size` | `var(--font-size-sm)` | Type size. |
+| `--badge-font-weight` | `var(--font-weight-subheading)` | Weight. |
+| `--badge-padding-inline` | `0.7em` | Left and right padding. |
+| `--badge-padding-block` | `0.35em` | Top and bottom padding. |
+| `--badge-gap` | `0.4em` | Space between an icon and the text. |
+| `--badge-radius` | `var(--radius-md)` | Corner. |
+| `--badge-border-width` | `1px` | Border. |
+| `--badge-background` | `var(--color-surface-muted)` | Fill. |
+| `--badge-border-color` | `var(--color-border)` | Border colour. |
+| `--badge-color` | `var(--color-text)` | Label colour. |
+| `--badge-intent-shade` | `black` | The far end an intent's text is darkened toward. |
 
 ```html
-<span class="badge" data-intent="error">Failed</span>
-<span class="badge outline" data-intent="info">Beta</span>
+<span class="pu-badge badge-md" style="--badge-radius: 0">Flat</span>
 ```
 
-### Icons
+## Content
 
-An icon inside a badge is sized from the badge's own font size, so it follows
-every size class. No wrapper element is needed — the spacing between the text
-and the icon comes from `gap`.
+An `svg`, `img` or `i` that is a direct child is sized to `1em` and follows
+the text at every size. An `svg` takes `currentColor`.
 
-```html
-<span class="badge" data-intent="success">
-  <svg viewBox="0 0 16 16" aria-hidden="true">…</svg>
-  Verified
-</span>
-```
+A badge is a leaf. Headings and paragraphs inside one are flattened to badge
+text so they do not break the box — but a heading in a badge still puts a
+phantom entry in the document outline. Do not put one there.
 
-Decorative icons get `aria-hidden="true"`.
-
-## Customization
-
-Set any of these inline on the element or on a container:
-
-```html
-<span class="badge" style="--badge-background: var(--color-neutral-100)">Quieter</span>
-```
-
-| Variable | Controls |
-|---|---|
-| `--badge-font-size` | The one measurement. The whole box derives from it. |
-| `--badge-background` · `--badge-border-color` · `--badge-color` | The three colours. Each is a plain token. |
-| `--badge-intent-shade` | What an intent's text is darkened toward. |
-| `--badge-padding-inline` · `--badge-padding-block` · `--badge-gap` | Spacing, in `em`. |
-| `--badge-radius` · `--badge-border-width` | The box. |
-| `--badge-focus-color` | The focus ring, when the key sits on an `<a>`. |
-
-Every one of them resolves to a token from `main.css`, so overriding one keeps
-the badge inside the design system rather than outside it.
+Numbers use tabular figures, so a count that changes does not shift the box
+under it.
 
 ## Accessibility
 
-**The text carries the meaning, never the colour.** `data-intent` tints the
-box; the word inside is what a screen reader reads and what a colour-blind
-reader has left. Write `Failed` tinted red, not a red dot.
+- A badge that carries meaning needs that meaning in text, not in colour
+  alone. `data-intent="error"` plus the word "Failed", not red on its own.
+- A count next to a label should say what it counts — `aria-label="3 unread
+  messages"` on the badge, or visually hidden text beside it.
+- The key on an `<a>` is the one interactive case. It gets a pointer cursor
+  and underlines on hover.
+- A badge is not a control. Do not put a `<button>` inside one.
 
-**Do not put `aria-label` on the badge.** A bare `<span>` has no role for a
-name to attach to, so assistive tech does not reliably expose it. Where the
-badge repeats something already written out, hide it and let the surrounding
-control carry the whole name:
+## Examples
 
-```html
-<button class="btn" aria-label="Notifications, 3 unread">
-  Notifications
-  <span class="badge sm rounded" aria-hidden="true">3</span>
-</button>
-```
-
-**A count that changes while the page is open** is announced by a container
-the badge sits inside. `role="status"` belongs on that container — the badge
-is the value, not the live region:
+### Sizes
 
 ```html
-<p role="status">
-  Unread messages: <span class="badge rounded" data-intent="info">7</span>
-</p>
+<span class="pu-badge badge-sm">Small</span>
+<span class="pu-badge badge-md">Medium</span>
+<span class="pu-badge badge-lg">Large</span>
 ```
 
-**On an `<a>`** the badge gets the house focus indicator: a 3px outline at 2px
-offset. Nothing to add.
+### Intents
 
-**Contrast.** A badge with no intent uses `--color-neutral-900`. An intent
-darkens its own token instead, at a fixed 40% — a ceiling, not a taste:
-`error` is the tightest of the four and lands on 5.34:1 there. Measured worst
-case across every variant on the demo page: 5.34:1. On browsers without
-`color-mix()` the neutral text stands instead, still 6.46:1 or better.
+```html
+<span class="pu-badge badge-md" data-intent="info">Info</span>
+<span class="pu-badge badge-md" data-intent="success">Passed</span>
+<span class="pu-badge badge-md" data-intent="warning">Review</span>
+<span class="pu-badge badge-md" data-intent="error">Failed</span>
+```
 
-The intent tokens in `main.css` are all pale pastels, so light text on them
-would land near 1.5:1 — never do that.
+### Variants
 
-The border is the one thing under the line: `--color-neutral-400` measures
-2.5:1 against a white page, and an intent border less than that. It matters
-for `outline`, where the border is the whole box. The fix belongs to the
-tokens in `main.css`, not to this component.
+```html
+<span class="pu-badge badge-md badge-outline">Outline</span>
+<span class="pu-badge badge-md badge-ghost">Ghost</span>
+```
+
+### Shape
+
+```html
+<span class="pu-badge badge-md badge-sharp">Sharp</span>
+<span class="pu-badge badge-md badge-smooth">Smooth</span>
+<span class="pu-badge badge-md badge-rounded">Rounded</span>
+```
+
+### With an icon
+
+```html
+<span class="pu-badge badge-md" data-intent="success">
+  <svg aria-hidden="true" viewBox="0 0 24 24">…</svg>
+  Passed
+</span>
+```
+
+### A count
+
+```html
+<span class="pu-badge badge-sm badge-rounded" aria-label="3 unread messages">3</span>
+```
+
+### As a link
+
+```html
+<a href="/tags/css" class="pu-badge badge-md">css</a>
+```

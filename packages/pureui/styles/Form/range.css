@@ -1,71 +1,9 @@
-/*
-Range — a slider for a value where the exact number does not matter.
-
-USAGE:
-  <input class="pu-range" type="range" min="0" max="100" value="40">
-  <input class="pu-range primary lg" type="range" min="0" max="100" value="40">
-
-THE FILL IS NOT AUTOMATIC
-
-The track is painted with a gradient that stops at --range-value, because
-neither engine offers a pseudo-element for the filled part of a range once
-appearance: none is set. That variable does not update itself. The library
-ships no JavaScript, so a consumer who wants the fill to follow the thumb
-sets it on input:
-
-  el.style.setProperty("--range-value", (el.value / el.max * 100) + "%")
-
-Left alone the fill sits at 50% and the thumb still moves, works and submits.
-That is the trade: the control is correct without script, and only the
-decoration needs one.
-
-ACCESSIBILITY REQUIREMENTS:
-- MUST be named by a <label for>. A slider with no name is announced as a
-  bare number.
-- ALWAYS set min and max. Without them the range is 0-100 whatever the
-  numbers on screen say, and the announced value is wrong.
-- A range is announced as a slider with a number. If the number means
-  something — kronor, minutes, a percentage — say so with aria-valuetext.
-  CSS cannot.
-- NEVER the only way to enter a value that has to be exact. Pair it with a
-  number field when precision matters; dragging to one specific value is a
-  motor-control barrier (2.5.1).
-- appearance: none removes the control from Windows High Contrast Mode. Same
-  trade as checkbox.css, radio.css and select.css.
-- The focus ring comes from main.css. This file draws none, and nothing here
-  clips, so the ring can never be cut.
-- Colour is never the only signal for the invalid state: the .pu-field-error
-  appears and aria-invalid is what assistive tech hears.
-- KNOWN, MEASURED FAILURE: --color-error is #f87171, 2.77:1 on white, under
-  the 3:1 of 1.4.11 for the invalid thumb. Used anyway by decision, pending a
-  darker error token — the same call textarea.css records.
-
-SIZE:    sm . md (default) . lg   — one variable, --range-track-size; the
-         thumb, the padding and the fill are all derived from it.
-SHAPE:   sharp . smooth . rounded (default)
-VARIANT: primary — brand colour on the fill and the thumb. Neutral by
-         default, so a slider does not shout in a quiet form.
-
-VARIABLES
-  --range-value              where the fill stops. See above; not automatic.
-  --range-track-size         the whole control derives from this
-  --range-track-color        the unfilled part
-  --range-track-radius
-  --range-fill               the filled part
-  --range-fill-radius        tighter than the track at smooth, because the
-                             fill is half the height and would read as a pill
-  --range-thumb-size         0.75 of the track
-  --range-thumb-color
-  --range-thumb-border-width
-  --range-thumb-border-color
-*/
-
 .pu-range:where(input[type="range"]) {
-  --range-fill: var(--color-neutral-300);
+  --range-fill: var(--color-border);
   --range-value: 50%;
 
   --range-track-size: 1rem;
-  --range-track-color: var(--color-neutral-200);
+  --range-track-color: var(--color-surface-muted);
   --range-track-radius: var(--radius-full);
   --range-fill-radius: var(--range-track-radius);
   --range-track-padding-block: calc(var(--range-track-size) * 0.25);
@@ -76,9 +14,9 @@ VARIABLES
   );
 
   --range-thumb-size: calc(var(--range-track-size) * 0.75);
-  --range-thumb-color: var(--color-neutral-400);
+  --range-thumb-color: var(--color-border-strong);
   --range-thumb-border-width: 1px;
-  --range-thumb-border-color: var(--color-neutral-500);
+  --range-thumb-border-color: var(--color-border-strong);
 
   appearance: none;
   box-sizing: border-box;
@@ -136,34 +74,30 @@ VARIABLES
     background-color: var(--range-thumb-color);
   }
 
-  &.sm {
+  &.range-sm {
     --range-track-size: 0.75rem;
   }
-  &.md {
+  &.range-md {
     --range-track-size: 1rem;
   }
-  &.lg {
+  &.range-lg {
     --range-track-size: 1.25rem;
   }
 
-  &.primary {
+  &.range-primary {
     --range-fill: var(--color-primary);
     --range-thumb-color: var(--color-primary);
-    --range-thumb-border-color: color-mix(
-      in srgb,
-      var(--color-primary),
-      var(--color-neutral-900) 25%
-    );
+    --range-thumb-border-color: color-mix(in oklab, var(--color-primary), var(--color-shade) 25%);
   }
 
-  &.sharp {
+  &.range-sharp {
     --range-track-radius: var(--radius-sharp);
   }
-  &.smooth {
+  &.range-smooth {
     --range-track-radius: var(--radius-sm);
     --range-fill-radius: var(--radius-xs);
   }
-  &.rounded {
+  &.range-rounded {
     --range-track-radius: var(--radius-full);
   }
 
@@ -179,9 +113,9 @@ VARIABLES
   }
 
   &:disabled {
-    --range-fill: var(--color-neutral-300);
-    --range-thumb-color: var(--color-neutral-300);
-    --range-thumb-border-color: var(--color-neutral-400);
+    --range-fill: var(--color-border);
+    --range-thumb-color: var(--color-border);
+    --range-thumb-border-color: var(--color-border);
     cursor: not-allowed;
   }
 }

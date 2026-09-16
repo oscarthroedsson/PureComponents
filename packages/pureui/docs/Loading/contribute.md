@@ -1,35 +1,56 @@
-# Loading Component - Contribution Guide
+# Loading — contributing
 
-## Code Structure
+## File
 
-- **CSS File**: `src/Styles/loading.css`
+`packages/pureui/styles/loading.css`
 
-## Implementation Details
+## Structure
 
-- The class is the opt-in, `aria-busy="true"` is the state. Everything is
-  nested inside `.loading`, so nothing reaches an element that did not ask.
-- The element is dimmed with `opacity`. Its own colours are kept — no fill
-  is painted over the content.
-- The glow is an `::after` covering the element, moved by
-  `background-position` rather than by translating a narrow box. A
-  translating box has to be clipped by the host, and putting `overflow` on
-  someone else's component while it loads is not this file's to do.
-- `border-radius: inherit` on the glow, so it follows whatever corner the
-  element already has.
-- `@keyframes` sits outside the rule: the name is globally scoped, and a
-  parser that meets it inside a style rule drops it silently.
+The key block is empty. Everything sits inside `&[aria-busy="true"]`, so the
+class on its own paints nothing and the attribute is the only switch. The
+variables are declared there for the same reason — they exist while the state
+does. A consumer overrides them inline on the host element, which wins over
+the block either way.
 
-## Design Tokens Used
+## How the sweep works
 
-- `--loading-glow` is a light translucent white, not `currentColor`. The
-  adaptive version was tried and dropped: on a light surface it resolves to
-  near-black, and a dark band travelling across reads as a smear rather than
-  as a glow.
-- No library colour tokens are read directly — loading has to work on top
-  of anything.
+The glow is a `::after` pseudo-element covering the host, carrying a
+`linear-gradient` band held in the middle of an image twice the width of the
+box. The animation moves `background-position`, not the element.
 
-## Accessibility Implementation
+The alternative — a narrow absolutely positioned box translating across — has
+to be clipped by the host, and putting `overflow` on someone else's component
+while it loads is not this file's to do.
 
-- `prefers-reduced-motion: reduce` stops the glow and holds it still.
-- The overlay is `pointer-events: none`, so it never eats a click.
-- Loading does not disable anything. That stays with the consumer.
+`border-radius: inherit` makes the glow follow whatever corner the host
+already has, so it fits a sharp button and a round avatar without knowing
+which it is on.
+
+`pointer-events: none` keeps the overlay from swallowing clicks.
+
+## Keyframes
+
+`@keyframes loading-sweep` sits outside the rule. `@keyframes` registers a
+globally scoped name, and a parser that meets it inside a style rule drops it
+without a word.
+
+`100%` puts the band at the leading edge and `0%` at the trailing one, so
+counting down runs it left to right. The extra 50% at either end carries it
+fully off the box before it turns around.
+
+## Variables
+
+| Variable | Default | Controls |
+|---|---|---|
+| `--loading-opacity` | `0.55` | Host fade. |
+| `--loading-glow` | `rgb(255 255 255 / 0.6)` | Band colour. |
+| `--loading-angle` | `100deg` | Band angle. |
+| `--loading-duration` | `1.4s` | One pass. |
+
+`--loading-glow` is a translucent overlay expressed as a component variable,
+which is the allowance the colour rule makes for exactly this.
+
+## Reduced motion
+
+The animation is removed and the band is held at `65% 0` — just off the
+middle, so it reads as a sheen rather than a stripe across the element.

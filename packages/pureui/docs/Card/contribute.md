@@ -1,153 +1,149 @@
-# Card — how it is built
+# Card — contributing
 
-`src/Styles/card.css`. One key block, everything nested inside it.
+## File
 
-## The three decisions that shape the file
+`packages/pureui/styles/card.css`
 
-### 1. The card has no padding. The parts do.
+## Key
 
-If the padding sat on the card, `.card-media` could never reach the edges
-without negative margins. So the card is `padding: 0` and each of
-`.card-header`, `.card-body`, `.card-footer` carries its own.
+`.pu-card` is a plain class. `<article>` is often right and `<div>` is often
+right, and picking between them is a document-structure decision the
+component cannot make.
 
-That creates one problem, solved in two rules:
+## The key has no padding
+
+```css
+padding: 0;
+```
+
+The parts carry it. That is what lets `.card-media` reach the edges without
+fighting anything, and it is the single decision the rest of the file is
+built on.
 
 ```css
 & > :is(.card-header, .card-body, .card-footer) {
   padding: var(--card-padding-block) var(--card-padding-inline);
 }
+```
 
+## The seam rule
+
+```css
 & > :is(.card-header, .card-body, .card-footer)
   + :is(.card-header, .card-body, .card-footer) {
   padding-block-start: 0;
 }
 ```
 
-Two padded parts in a row would stack two paddings into the seam and make
-it twice the size of the gap to the card's own edge. Dropping the upper one
-makes the seam measure exactly one padding — the same as every edge — so
-the rhythm is even all the way down without a single border.
+Two padded parts in a row would stack two paddings into the seam and make it
+twice the size of the card's own edge padding. Dropping the upper one leaves
+the seam measuring exactly one padding, the same as every edge.
 
-`.card-media` is deliberately absent from that list. It has no padding, so
-a part that follows it keeps its full top padding, and a part *before* it
-keeps its full bottom padding. That is what makes header-above-media and
-header-below-media both work off DOM order alone, with no variant class.
+`.card-media` is deliberately absent from the list, so a part that follows the
+media keeps its full top padding.
 
-### 2. Flex column, not grid, in the default orientation.
-
-Grid with named areas would force a fixed visual order and kill the
-header-above-media case. Flex column follows the DOM, and it makes the
-footer alignment trivial:
+## Equal heights
 
 ```css
-& > .card-body   { flex: 1 1 auto; }
-& > .card-footer { margin-block-start: auto; }
+block-size: 100%;
 ```
 
-Together with `block-size: 100%` on the card, a row of cards in a grid with
-`align-items: stretch` gets equal heights and level footers however unequal
-the text is. This is the mechanic from MDN's Layout cookbook, and it is the
-main thing the old `height: fit-content` made impossible.
+Cards live in rows. Filling the height lets a grid hand every card in a row
+the same one, which is what makes the footers line up. On its own, with
+nothing to fill, this resolves to the content height.
 
-Outside a stretching parent, `block-size: 100%` resolves against an auto
-height and falls back to the content height. Nothing to guard against.
+`.card-body` takes `flex: 1 1 auto` and `.card-footer` takes
+`margin-block-start: auto`, so the footer sits at the bottom whatever the body
+did. That is the whole reason a row of cards with unequal text still lines up.
 
-### 3. `.horizontal` is the one place that switches to grid.
+## `overflow: hidden`
 
-Row direction alone would lay the parts out beside each other rather than
-beside the media. Named areas keep the media in one column and let the
-parts go on stacking in the other:
+So the media respects the radius. Safe for focus rings because the padded
+parts keep every control clear of the edge.
+
+## Horizontal is a grid, not a row
 
 ```css
-grid-template-areas:
-  "media header"
-  "media body"
-  "media footer";
+&.card-horizontal { display: grid; }
 ```
 
-The media side comes from DOM order, read with `:has()`:
+`flex-direction: row` alone would put the parts beside each other instead of
+beside the media. Named grid areas keep the media in one column and let the
+parts go on stacking in the other.
+
+The trailing-media case is a `:has()` rule:
 
 ```css
-&:has(> :is(.card-header, .card-body, .card-footer) ~ .card-media) { … }
+&:has(> :is(.card-header, .card-body, .card-footer) ~ .card-media)
 ```
 
-Media after the content means media on the trailing side. Same classes, no
-second variant. The seam rule from §1 still applies, because the parts are
-still adjacent siblings and still stacked in the same column.
+Media after the content in the DOM swaps the column order. Same markup, no
+extra class.
 
-Losing free DOM ordering here costs nothing — in horizontal the media is a
-full-height column, so the only choice left is which side it is on.
+The footer's `margin-block-start: auto` is reset to `0` inside the grid — the
+grid row already puts it last.
 
-## Naming
-
-`horizontal` matches `nav.css`, `Menu/menu.css`, `radio.css` and
-`checkbox.css`, which is why it is not `side`. Column is the default and
-needs no class; the modifier names the deviation, same as `nav`.
-
-The shape scale uses `smooth`, not `soft` — the same side of that split as
-button, alert, dialog, pagination, progress, meter and nav. See AGENTS.md §8.
-
-## Size is density
-
-`sm`/`md`/`lg` set padding and type scale. They set no width, and neither
-does the base — the parent sizes the card, as in every card library worth
-copying. `--card-max-width` is there for the exception.
-
-This is why `--card-width-xs` … `--card-width-xl` in `main.css` are now
-unreferenced. Five steps against a three-step size scale never lined up.
-Removing them is a `main.css` change and has not been made.
-
-## The interactive card
-
-`data-interactive` plus one `<a class="card-link">`:
+## `.card-title` is a size, not a level
 
 ```css
-.card-link::after { content: ""; position: absolute; inset: 0; z-index: 0; }
-
-& :is(a:not(.card-link), button, input, select, textarea, label, summary) {
-  position: relative;
-  z-index: 1;
+.card-title {
+  font-size: var(--card-title-size);
 }
 ```
 
-The overlay makes the whole card the link's hit area while keeping exactly
-one thing in the tab order. Everything else clickable is lifted above the
-overlay so it keeps working.
+The class sets the size, the element sets the outline level. Kept apart on
+purpose so a card can sit at any depth of a page without the component
+deciding whether it is an `<h2>` or an `<h4>`.
 
-The focus ring goes on the card, via `&:has(.card-link:focus-visible)`,
-because the link's real box is the invisible overlay — a ring on the link
-itself would trace the title text, not the thing being activated. The
-link's own outline is suppressed for the same reason.
+## `data-interactive`
 
-The card's own outline is not clipped by `overflow: hidden`; an element's
-outline is painted outside its box, and overflow only clips descendants.
+The stretched hit area is a pseudo-element on `.card-action`:
 
-## Why `overflow: hidden` is safe here
+```css
+.card-action::after { content: ""; position: absolute; inset: 0; z-index: 0; }
+```
 
-It is on the card so `.card-media` respects the radius. It does clip
-descendants, which would matter for a focus ring on a control inside — a
-ring is 5px wide (3px outline + 2px offset). The smallest padding in the
-size scale is 12px, so every control stays clear of the edge. That is a
-constraint on `--card-padding-block` / `--card-padding-inline`, and it is
-stated in the file header.
+One link or button keeps the accessible name and stays the only primary action
+in the tab order. Anything else clickable has to sit above that overlay to stay
+reachable with a mouse, which is what the `z-index: 1` rule on nested controls
+does. The primary action is excluded from that rule so its pseudo-element keeps
+the card, rather than the action itself, as its containing block.
 
-## Tokens
+`position: relative` on the key is what the overlay resolves against, and it
+is declared inside `[data-interactive]` rather than in the base — a card that
+is not interactive should not establish a containing block it has no use for.
 
-Every colour is a token from `main.css` — surface, text, subtitle, border.
-No `light-dark()`: alert and menu already use it ahead of the dark-mode pass
-and AGENTS.md §8 says not to spread it further.
+## Order inside the block
 
-Consequence: on a dark background the filled card is a light surface, the
-same as `dialog.css`, and `outline`/`ghost` lose their text. That resolves
-with the `main.css` dark-mode pass, not here.
+1. Variables
+2. Base
+3. Parts
+4. Size
+5. Orientation
+6. Shape
+7. Emphasis
+8. States
+9. Media queries
 
-`prefers-contrast: more` raises the border to `--color-neutral-600` and 2px.
-The default border is intentionally below 3:1 — a card is a container, not a
-control, so SC 1.4.11 does not apply to it, and every mainstream library
-draws it light for the same reason.
+## Media aspect ratio
 
-## Not built
+`--card-media-aspect-ratio` defaults to `auto`, which is the image's own
+shape, and `object-fit` never bites. Set the variable and every image in the
+row crops to the same box instead.
 
-- No `.card-action` slot in the header (ShadCN's `CardAction`). The footer
-  covers actions today.
-- No `image-full` / overlay-text variant.
+`.card-media` takes `flex: none` so a media band on top does not stretch to
+fill the card's height.
+
+## Variables
+
+Fifteen, covering surface, text, border, radius, shadow, padding, type and
+media. Sizes move `--card-padding-*`, `--card-font-size` and
+`--card-title-size`; shapes move `--card-radius`; emphasis moves
+`--card-surface` and `--card-border-*`. No rule in the file writes those
+properties directly outside the base.
+
+## Media queries
+
+- `prefers-reduced-motion` — `transition-duration: 0ms`.
+- `prefers-contrast: more` — border to 2px and to `--color-border-strong`.
+- `forced-colors: active` — Canvas, CanvasText, CanvasText border.

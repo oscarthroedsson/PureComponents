@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>main-dev.css — typography</title>
+
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/button.css" />
+    <link rel="stylesheet" href="/pureui/styles/badge.css" />
+    <link rel="stylesheet" href="/pureui/styles/alert.css" />
+
+    <style>
+      /* Two themes, written as a consumer would write them: inputs only. */
+      [data-theme="ikea"] {
+        --color-primary: #0058a3;
+        --color-secondary: #ffdb00;
+        --color-secondary-foreground: var(--color-neutral-900);
+        --radius-base: 0;
+      }
+
+      [data-theme="thule"] {
+        --color-primary: #1a1a1a;
+        --color-secondary: #d0021b;
+        --color-primary-foreground: #ffffff;
+        --font-size-control-md: var(--font-size-base);
+      }
+
+      /* This page only. Not a proposal for the library. */
+      body { margin: 0; background: var(--color-surface); color: var(--color-text);
+             padding: var(--spacing-200, 2rem); }
+      main { max-inline-size: 64rem; margin-inline: auto;
+             display: flex; flex-direction: column; gap: 2.5rem; }
+      section { display: flex; flex-direction: column; gap: 0.75rem; }
+      .lede { color: var(--color-text-muted); max-inline-size: 46rem; }
+      .card { background: var(--color-surface-raised); border: 1px solid var(--color-border);
+              border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+      .row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+      .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem; }
+      .swatches { display: flex; gap: 0.25rem; }
+      .swatches i { display: block; inline-size: 3rem; block-size: 2rem; border-radius: 4px;
+                    outline: 1px solid var(--color-border); }
+      .tag { font-family: var(--font-family-mono); font-size: var(--font-size-caption);
+             color: var(--color-text-muted); }
+      /* A visible box, so text-box trimming can be seen rather than believed. */
+      .box { background: var(--color-primary-surface); outline: 1px dashed var(--color-primary-border); }
+      .toggle { position: sticky; inset-block-start: 0; z-index: 10; background: var(--color-surface);
+                padding-block: 0.75rem; border-block-end: 1px solid var(--color-border); }
+      hr { border: none; border-block-start: 1px solid var(--color-border-subtle); margin: 0; }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <div class="toggle row">
+        <strong>data-scheme:</strong>
+        <button class="pu-btn btn-sm" onclick="document.documentElement.removeAttribute('data-scheme')">OS</button>
+        <button class="pu-btn btn-sm" onclick="document.documentElement.dataset.scheme='light'">light</button>
+        <button class="pu-btn btn-sm" onclick="document.documentElement.dataset.scheme='dark'">dark</button>
+      </div>
+
+      <section>
+        <h1>main-dev.css — typography</h1>
+        <p class="lede">
+          Section 4 rendering. Every heading and paragraph on this page has
+          margin 0; the gaps come from flex gap on the container, which is the
+          point of zeroing them.
+        </p>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>The heading scale</h2>
+        <p class="lede">Its own scale, not a pick from the control ramp.</p>
+        <div class="card">
+          <h1>h1 — 2.5rem / 40px</h1>
+          <h2>h2 — 2rem / 32px</h2>
+          <h3>h3 — 1.75rem / 28px</h3>
+          <h4>h4 — 1.5rem / 24px</h4>
+          <h5>h5 — 1.25rem / 20px</h5>
+          <h6>h6 — 1.125rem / 18px, still above body</h6>
+          <p>p — 1rem / 16px body copy, for the comparison.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>The two scales are independent</h2>
+        <p class="lede">
+          The right column sets two lines on its wrapper —
+          <code>--font-size-control-md: var(--font-size-base)</code> and the
+          same for sm. Control text moves up a step; the heading does not move.
+          The swatches read the role tokens, which is what a migrated component
+          will do. Real buttons still read the ramp, so they are in the last
+          section instead.
+        </p>
+        <div class="two">
+          <div class="card">
+            <span class="tag">default</span>
+            <h4>A heading</h4>
+            <p style="font-size: var(--font-size-control-sm)">control-sm</p>
+            <p style="font-size: var(--font-size-control-md)">control-md</p>
+            <p style="font-size: var(--font-size-control-lg)">control-lg</p>
+          </div>
+          <div class="card" style="--font-size-control-sm: var(--font-size-md); --font-size-control-md: var(--font-size-base); --font-size-control-lg: var(--font-size-lg)">
+            <span class="tag">control scale +1 step</span>
+            <h4>A heading</h4>
+            <p style="font-size: var(--font-size-control-sm)">control-sm</p>
+            <p style="font-size: var(--font-size-control-md)">control-md</p>
+            <p style="font-size: var(--font-size-control-lg)">control-lg</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>text-box</h2>
+        <p class="lede">
+          Both headings have identical padding. The dashed box is the element.
+          Left keeps the half-leading; right is trimmed to cap height and
+          baseline, so the padding is what the eye actually measures.
+        </p>
+        <div class="two">
+          <div class="card">
+            <span class="tag">--text-box-heading: normal</span>
+            <h3 class="box" style="--text-box-heading: normal; padding: 1rem">Handgloves</h3>
+          </div>
+          <div class="card">
+            <span class="tag">trim-both cap alphabetic</span>
+            <h3 class="box" style="padding: 1rem">Handgloves</h3>
+          </div>
+        </div>
+        <p class="lede">
+          Unsupported browsers drop the declaration and render the left box.
+          Nothing in the library is tuned against the trim.
+        </p>
+      </section>
+
+      <section>
+        <h2>Leading</h2>
+        <div class="two">
+          <div class="card">
+            <span class="tag">--line-height-heading — 1.2</span>
+            <p style="line-height: var(--line-height-heading); font-size: var(--font-size-h4)">
+              A heading that runs long enough to wrap onto a second line and a third
+            </p>
+          </div>
+          <div class="card">
+            <span class="tag">--line-height-body — 1.5</span>
+            <p style="line-height: var(--line-height-body)">
+              Body copy at the body leading. The library ships four steps —
+              tight, snug, base, relaxed — and three roles pointing into them,
+              so a component picks the role and cannot pick a bare number.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Tracking</h2>
+        <div class="card">
+          <p style="letter-spacing: var(--tracking-heading)">tracking-heading — tight, for large text</p>
+          <p style="letter-spacing: var(--tracking-body)">tracking-body — the base, 0em</p>
+          <p style="letter-spacing: var(--tracking-widest)">tracking-widest — the ramp still exists</p>
+          <p class="tag">All five derive from --tracking-base. One knob retunes the lot.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Weight, caption, mono</h2>
+        <div class="card">
+          <p style="font-weight: var(--font-weight-regular)">regular 400</p>
+          <p style="font-weight: var(--font-weight-medium)">medium 500</p>
+          <p style="font-weight: var(--font-weight-subheading)">subheading / semibold 600</p>
+          <p style="font-weight: var(--font-weight-heading)">heading / bold 700</p>
+          <p><small>small — --font-size-caption, 12px</small></p>
+          <p>Inline <code>--font-size-mono</code> beside sans, corrected to 0.9375em.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>text-wrap</h2>
+        <div class="two">
+          <div class="card" style="max-inline-size: 22rem">
+            <span class="tag">balance — on every heading</span>
+            <h4>A headline long enough that the browser has to break it somewhere</h4>
+          </div>
+          <div class="card" style="max-inline-size: 22rem">
+            <span class="tag">pretty — on every paragraph</span>
+            <p>A paragraph that runs on far enough to risk leaving one lonely word stranded</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Theming</h2>
+        <p class="lede">
+          Two themes and the page default, side by side in one document. Each
+          theme block sets inputs only — primary, secondary, a radius. Every
+          derived token recomputes on the themed element because the role
+          block's selector is <code>:root, [data-theme]</code>.
+        </p>
+        <div class="two">
+          <div class="card">
+            <span class="tag">no theme</span>
+            <div class="swatches">
+              <i style="background: var(--color-primary)"></i>
+              <i style="background: var(--color-primary-hover)"></i>
+              <i style="background: var(--color-primary-surface)"></i>
+              <i style="background: var(--color-primary-border)"></i>
+            </div>
+            <button class="pu-btn btn-md">Save</button>
+          </div>
+          <div class="card" data-theme="ikea">
+            <span class="tag">data-theme="ikea"</span>
+            <div class="swatches">
+              <i style="background: var(--color-primary)"></i>
+              <i style="background: var(--color-primary-hover)"></i>
+              <i style="background: var(--color-primary-surface)"></i>
+              <i style="background: var(--color-primary-border)"></i>
+            </div>
+            <button class="pu-btn btn-md" style="background: var(--color-primary); color: var(--color-primary-foreground)">Save</button>
+          </div>
+          <div class="card" data-theme="thule">
+            <span class="tag">data-theme="thule"</span>
+            <div class="swatches">
+              <i style="background: var(--color-primary)"></i>
+              <i style="background: var(--color-primary-hover)"></i>
+              <i style="background: var(--color-primary-surface)"></i>
+              <i style="background: var(--color-primary-border)"></i>
+            </div>
+            <button class="pu-btn btn-md" style="background: var(--color-primary); color: var(--color-primary-foreground)">Save</button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Theme and scheme are independent</h2>
+        <p class="lede">
+          The right block carries both <code>data-theme="ikea"</code> and
+          <code>data-scheme="dark"</code>. One attribute each, so they no longer
+          fight over the same one.
+        </p>
+        <div class="two">
+          <div class="card" data-theme="ikea" data-scheme="light" style="background: var(--color-surface-raised); color: var(--color-text)">
+            <span class="tag">ikea + light</span>
+            <h4>Handgloves</h4>
+            <p>Body copy on the themed surface.</p>
+            <div class="swatches"><i style="background: var(--color-primary)"></i><i style="background: var(--color-surface-sunken)"></i></div>
+          </div>
+          <div class="card" data-theme="ikea" data-scheme="dark" style="background: var(--color-surface-raised); color: var(--color-text)">
+            <span class="tag">ikea + dark</span>
+            <h4>Handgloves</h4>
+            <p>Body copy on the themed surface.</p>
+            <div class="swatches"><i style="background: var(--color-primary)"></i><i style="background: var(--color-surface-sunken)"></i></div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Components, unmigrated</h2>
+        <p class="lede">
+          These still read the ramp directly. They render as they do today; the
+          migration is what moves them onto the roles.
+        </p>
+        <div class="row">
+          <button class="pu-btn btn-sm">sm</button>
+          <button class="pu-btn btn-md">md</button>
+          <button class="pu-btn btn-lg">lg</button>
+          <span class="pu-badge" data-intent="success">success</span>
+          <span class="pu-badge" data-intent="warning">warning</span>
+        </div>
+        <div class="pu-alert" data-intent="info" role="status">
+          <p>An alert, on the new base.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

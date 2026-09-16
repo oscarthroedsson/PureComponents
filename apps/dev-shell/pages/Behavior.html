@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Behavior — Elements</title>
+    <meta
+      name="pc-description"
+      content="Explicit inline and block sizing for a direct child of a Box layout. Change both axes together, one named axis, or give each axis a different behavior."
+    />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/button.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/input/input.css" />
+    <link rel="stylesheet" href="/pureui/styles/list.css" />
+    <link rel="stylesheet" href="/pureui/styles/badge.css" />
+    <link rel="stylesheet" href="/pureui/styles/Layout/box.css" />
+    <link rel="stylesheet" href="/pureui/styles/Layout/layout.css" />
+    <link rel="stylesheet" href="/pureui/styles/Layout/behavior.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Behavior">
+    <section class="pc-doc" id="api" data-title="API">
+      <h2>API</h2>
+      <table class="pc-doc-table">
+        <thead>
+          <tr><th>Key</th><th>Type</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>data-behavior="auto|expand|compact"</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Applies one explicit behavior to both inline and block.</td>
+          </tr>
+          <tr>
+            <td><code>data-behavior="inline-&lt;auto|expand|compact&gt;"</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Changes inline only. Block keeps the component's base sizing.</td>
+          </tr>
+          <tr>
+            <td><code>data-behavior="block-&lt;auto|expand|compact&gt;"</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Changes block only. Inline keeps the component's base sizing.</td>
+          </tr>
+          <tr>
+            <td><code>data-behavior="&lt;inline&gt;-&lt;block&gt;"</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Sets both axes independently; each word is auto, expand or compact.</td>
+          </tr>
+          <tr>
+            <td><code>auto</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Explicit CSS automatic sizing. It is not the same as omitting an axis.</td>
+          </tr>
+          <tr>
+            <td><code>expand</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Fills the available space on the selected axis.</td>
+          </tr>
+          <tr>
+            <td><code>compact</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Uses content-sized space on the selected axis.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="pc-demo" id="default" data-title="Default">
+      <p class="pc-note">
+        The search changes inline only and takes the slack. Block is omitted, so every control keeps its component
+        height. Behavior only needs a direct parent with <code>data-layout</code>; neither element has to be a Box.
+      </p>
+      <template>
+        <div class="pu-box box-sm" data-layout="center-start" data-gap="sm">
+          <button class="pu-btn btn-md btn-ghost" type="button" data-behavior="inline-compact">Filters</button>
+          <input
+            class="pu-input input-md"
+            type="search"
+            placeholder="Search projects"
+            aria-label="Search projects"
+            data-behavior="inline-expand"
+          />
+          <button class="pu-btn btn-md" type="button" data-behavior="inline-compact">Create</button>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-doc" id="other" data-title="Other">
+      <h2>Other</h2>
+      <p>The grammar below separates an omitted axis from an explicitly automatic one.</p>
+    </section>
+
+    <section class="pc-doc" id="reading-behavior" data-title="Reading Behavior">
+      <h2>Reading Behavior</h2>
+      <table class="pc-doc-table">
+        <thead>
+          <tr><th>Value</th><th>Inline</th><th>Block</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>compact</code></td><td>compact</td><td>compact</td></tr>
+          <tr><td><code>inline-compact</code></td><td>compact</td><td>component base</td></tr>
+          <tr><td><code>block-compact</code></td><td>component base</td><td>compact</td></tr>
+          <tr><td><code>expand-compact</code></td><td>expand</td><td>compact</td></tr>
+          <tr><td><code>compact-expand</code></td><td>compact</td><td>expand</td></tr>
+          <tr><td><code>auto-expand</code></td><td>auto</td><td>expand</td></tr>
+        </tbody>
+      </table>
+      <p>
+        No attribute keeps both component bases. A named axis changes only that axis. Two behavior words always read
+        inline first and block second.
+      </p>
+    </section>
+
+    <section class="pc-demo" id="omitted-versus-auto" data-title="Omitted Versus Auto" data-stage-style="display: grid; gap: 1rem;">
+      <p class="pc-note">
+        Input is full-width by base. Omitting inline preserves that; <code>inline-auto</code> deliberately replaces it
+        with automatic inline sizing.
+      </p>
+      <template>
+        <div class="pu-box box-none" data-direction="vertical" data-layout="start-top" data-gap="xs">
+          <span class="pu-badge badge-md">No behavior: component base</span>
+          <input class="pu-input input-md" type="text" value="Input keeps full width" />
+        </div>
+
+        <div class="pu-box box-none" data-direction="vertical" data-layout="start-top" data-gap="xs">
+          <span class="pu-badge badge-md">inline-auto: explicit auto</span>
+          <input class="pu-input input-md" type="text" value="Input becomes automatic" data-behavior="inline-auto" />
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="one-or-both-axes"
+      data-title="One or Both Axes"
+    >
+      <p class="pc-note">
+        <code>inline-expand</code> fills the row but keeps Button's base height. The single word <code>expand</code>
+        fills both the remaining inline space and the height established by the reference Box.
+      </p>
+      <template>
+        <div class="pu-box box-md" data-layout="top-start" data-gap="md">
+          <div
+            class="pu-box box-sm"
+            data-direction="vertical"
+            data-layout="start-top"
+            data-gap="xs"
+            data-behavior="inline-compact"
+          >
+            <span class="pu-badge badge-sm">Reference</span>
+            <span class="pu-badge badge-sm">sets</span>
+            <span class="pu-badge badge-sm">height</span>
+          </div>
+          <button class="pu-btn btn-md" type="button" data-behavior="inline-expand">Inline only</button>
+          <button class="pu-btn btn-md" type="button" data-behavior="expand">Both axes</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="mixed-axes"
+      data-title="Mixed Axes"
+      data-stage-style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr)); gap: 1rem;"
+    >
+      <p class="pc-note">Two behavior words always mean inline first and block second.</p>
+      <template>
+        <div class="pu-box box-md" data-layout="top-start" data-gap="sm">
+          <div class="pu-box box-sm" data-direction="vertical" data-layout="start-top" data-gap="xs">
+            <span class="pu-badge badge-sm">Reference</span>
+            <span class="pu-badge badge-sm">height</span>
+          </div>
+          <button class="pu-btn btn-md" type="button" data-behavior="expand-compact">Wide, content-height</button>
+        </div>
+
+        <div class="pu-box box-md" data-layout="top-start" data-gap="sm">
+          <div class="pu-box box-sm" data-direction="vertical" data-layout="start-top" data-gap="xs">
+            <span class="pu-badge badge-sm">Reference</span>
+            <span class="pu-badge badge-sm">height</span>
+          </div>
+          <button class="pu-btn btn-md" type="button" data-behavior="compact-expand">Content-width, tall</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="vertical-growth"
+      data-title="Vertical Growth"
+    >
+      <p class="pc-note">
+        The outer row gets its height from the reference Box. The vertical workspace expands to that height, then its
+        middle control takes the remaining block space and the available inline space.
+      </p>
+      <template>
+        <div class="pu-box box-md" data-layout="top-start" data-gap="md">
+          <div
+            class="pu-box box-sm"
+            data-direction="vertical"
+            data-layout="start-top"
+            data-gap="xs"
+            data-behavior="inline-compact"
+          >
+            <span class="pu-badge badge-sm">Reference</span>
+            <span class="pu-badge badge-sm">sets</span>
+            <span class="pu-badge badge-sm">the</span>
+            <span class="pu-badge badge-sm">height</span>
+            <span class="pu-badge badge-sm">for</span>
+            <span class="pu-badge badge-sm">the row</span>
+          </div>
+
+          <div
+            class="pu-box box-sm"
+            data-direction="vertical"
+            data-layout="start-top"
+            data-gap="sm"
+            data-behavior="expand"
+          >
+            <button class="pu-btn btn-sm btn-ghost" type="button" data-behavior="inline-expand">Header</button>
+            <button class="pu-btn btn-sm" type="button" data-behavior="expand">Expanding workspace</button>
+            <button class="pu-btn btn-sm btn-ghost" type="button" data-behavior="inline-expand">Footer</button>
+          </div>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-doc" id="compositions" data-title="Compositions">
+      <p>Complete interface parts built only from existing PureUI components.</p>
+    </section>
+
+    <section class="pc-demo" id="filter-toolbar" data-title="Filter Toolbar">
+      <p class="pc-note">
+        Nested Boxes let the action group stay inline-compact while the query field owns the flexible inline region.
+        Neither overrides block, so every control retains its component height.
+      </p>
+      <template>
+        <form class="pu-box box-md" data-layout="center-start" data-gap="md" role="search">
+          <input
+            class="pu-input input-md"
+            type="search"
+            placeholder="Search all files"
+            aria-label="Search all files"
+            data-behavior="inline-expand"
+          />
+          <div class="pu-box box-none" data-layout="center-end" data-gap="xs" data-behavior="inline-compact">
+            <button class="pu-btn btn-md btn-ghost" type="button">Type</button>
+            <button class="pu-btn btn-md btn-ghost" type="button">Owner</button>
+            <button class="pu-btn btn-md" type="submit">Search</button>
+          </div>
+        </form>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="list-columns" data-title="List Columns">
+      <p class="pc-note">
+        Each List expands inline and keeps its own block sizing. Long content can shrink inside an equal column
+        instead of forcing the Box wider.
+      </p>
+      <template>
+        <div class="pu-box box-md" data-layout="top-start" data-gap="md">
+          <ul class="pu-list list-sm" role="list" aria-label="Design tasks" data-behavior="inline-expand">
+            <li><strong class="list-title">Design</strong></li>
+            <li><p class="item-text">Review navigation states</p></li>
+            <li><p class="item-text">Approve mobile layout</p></li>
+          </ul>
+
+          <ul class="pu-list list-sm" role="list" aria-label="Development tasks" data-behavior="inline-expand">
+            <li><strong class="list-title">Development</strong></li>
+            <li><p class="item-text">Build layout attributes</p></li>
+            <li><p class="item-text">Verify overflow handling</p></li>
+          </ul>
+
+          <ul class="pu-list list-sm" role="list" aria-label="Release tasks" data-behavior="inline-expand">
+            <li><strong class="list-title">Release</strong></li>
+            <li><p class="item-text">Write migration notes</p></li>
+            <li><p class="item-text">Publish package</p></li>
+          </ul>
+        </div>
+      </template>
+    </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

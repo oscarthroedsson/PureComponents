@@ -1,110 +1,3 @@
-/*
-Textarea — the box when the text runs to more than one line.
-
-  <textarea class="pu-textarea" rows="4"></textarea>
-  <textarea class="pu-textarea lg rounded" rows="6"></textarea>
-  <textarea class="pu-textarea" data-sizing="content"></textarea>
-
-The same box as .pu-input, from the same --form-* channel, so a textarea and an
-input in one form are the same field with a different number of lines. What
-is written here is only what having more than one line changes: how tall it
-starts, whether it can be dragged, and whether it grows on its own.
-
-The box itself is not described twice. Every measurement comes from the
-channel — see form.css for how it works, and input/input.css for the
-single-line sibling this file deliberately mirrors.
-
-
-HEIGHT — three ways, and they do not fight
-
-  rows="4"                the platform's answer, and the default. The
-                          browser sizes the box to that many lines. Nothing
-                          here overrides it.
-  --textarea-min-block-size
-                          a floor in case rows is missing. Two lines, so a
-                          textarea with no attributes is still visibly not
-                          an input.
-  data-sizing="content"   the box follows what is typed into it, growing and
-                          shrinking as lines are added and removed. No
-                          JavaScript, no scroll-height measuring, no hidden
-                          mirror element.
-
-field-sizing: content is Baseline as of Safari 26.2 and Firefox 152, which
-is recent. Where it is not supported the declaration is ignored and the box
-stays the size rows gave it — the field still works, it just does not grow.
-That is why it is opt-in and why rows stays on the element.
-
-
-NOT HERE
-
-Icons. .pu-input-group centres what it holds against a box one line tall, and
-against six lines it would float in the middle of the text. A mark on a
-textarea belongs above it or below it, which is .pu-field's business.
-
-A character counter. It is content, not styling — and it has to be announced
-politely, which is aria-live and markup, not CSS.
-
-
-ACCESSIBILITY REQUIREMENTS:
-- MUST be named by a <label for>. A placeholder is not a label, and in a box
-  this large a disappearing one is worse: there is nothing left to say what
-  the paragraph being typed is for.
-- resize is an accessibility feature, not decoration. Someone at 200% zoom
-  needs to be able to make the box bigger, and 1.4.4 does not let us take
-  that away. This file never sets resize: none. It restricts the axis, which
-  is a layout decision, not a removal — the useful direction stays.
-- data-sizing="content" removes the need to resize at all, which is better
-  than allowing it. It is also why the max is a variable rather than a
-  fixed value: a box that stops growing and starts scrolling at a height
-  the consumer did not choose is worse than one that keeps going.
-- The focus ring comes from main.css. This file draws none, and the border
-  is a border, never an outline — an outline written here would outrank the
-  global :focus-visible and the field would show no ring while focused.
-- The border carries 1.4.11 on its own at 3:1. --color-neutral-500 measures
-  4.76:1 on white and is the lightest neutral in main.css that clears it.
-- KNOWN, MEASURED FAILURE: --color-error is #f87171, 2.77:1 on white, under
-  the 3:1 of 1.4.11 as an invalid border. Used anyway by decision, pending a
-  darker error token. The invalid state is never carried by that colour
-  alone — the message appears and aria-invalid is set.
-- A read-only textarea is not disabled: it is focusable, selectable and
-  submitted. Only the cursor separates them.
-
-SIZE:  sm · md (default) · lg
-  A leaf, so a size class rewrites only this control's own variables. To
-  resize a whole form or group, put the class on .pu-form, .pu-fieldset or .pu-field.
-
-SHAPE: sharp · smooth (default) · rounded
-  rounded is capped — see --textarea-radius-max. A textarea is tall, and an
-  uncapped 999px turns it into a stadium. The cap is the radius a one-line
-  control at the same scale resolves to, so a rounded textarea and a rounded
-  input carry the same corner.
-
-VARIANT:
-  (none)   a filled box with a border. The default.
-  ghost    fill and border dropped, every measurement kept. Same meaning as
-           .ghost on .pu-input, .pu-btn and .pu-badge.
-
-RESIZE: data-resize="vertical | none | both"
-  vertical is the default and is not declared — the browser already resizes
-  both ways, and horizontal dragging breaks the column the field sits in.
-  "none" is offered because a data-sizing="content" box has nothing to drag
-  for, and refused everywhere else: see the note on 1.4.4 above.
-
-STATE
-  :hover · :disabled · :read-only
-  :user-invalid / [aria-invalid="true"]   both, always. Native validation
-  fires the first; Zod, Yup and React Hook Form fire only the second.
-
-VARIABLES
-  --textarea-font-size          --textarea-surface
-  --textarea-padding-block      --textarea-color
-  --textarea-padding-inline     --textarea-placeholder-color
-  --textarea-radius             --textarea-line-height
-  --textarea-border-width       --textarea-min-block-size
-  --textarea-border-color       --textarea-max-block-size
-  --textarea-radius-max         the ceiling the radius is clamped to
-*/
-
 .pu-textarea:where(textarea) {
   /* 1. VARIABLES — each one reads the channel, with its own default as the
      fallback so a bare .pu-textarea works with no .pu-form around it. Never
@@ -140,10 +33,10 @@ VARIABLES
       ) / 2
   );
   --textarea-border-width: var(--form-border-width, 1px);
-  --textarea-border-color: var(--form-border-color, var(--color-neutral-500));
-  --textarea-surface: var(--form-surface, var(--color-neutral-100));
-  --textarea-color: var(--form-color, var(--color-neutral-900));
-  --textarea-placeholder-color: var(--color-neutral-500);
+  --textarea-border-color: var(--form-border-color, var(--color-border-strong));
+  --textarea-surface: var(--form-surface, var(--color-surface-sunken));
+  --textarea-color: var(--form-color, var(--color-text));
+  --textarea-placeholder-color: var(--color-text-subtle);
 
   /* The same as .pu-input's. A paragraph could argue for looser, but the only
      line-height token in main.css is --line-height-base, and inventing a
@@ -197,29 +90,29 @@ VARIABLES
   }
 
   /* 3. SIZE */
-  &.sm {
+  &.textarea-sm {
     --textarea-font-size: var(--font-size-sm);
   }
-  &.md {
+  &.textarea-md {
     /* base is already md */
   }
-  &.lg {
+  &.textarea-lg {
     --textarea-font-size: var(--font-size-base);
   }
 
   /* 4. SHAPE */
-  &.sharp {
+  &.textarea-sharp {
     --textarea-radius: var(--radius-sharp);
   }
-  &.smooth {
+  &.textarea-smooth {
     --textarea-radius: var(--radius-smooth);
   }
-  &.rounded {
+  &.textarea-rounded {
     --textarea-radius: var(--radius-rounded);
   }
 
   /* 4b. VARIANT */
-  &.ghost {
+  &.textarea-ghost {
     --textarea-surface: transparent;
     --textarea-border-color: transparent;
   }
@@ -245,7 +138,7 @@ VARIABLES
      order decides, and the states have to win: a ghost field still has to
      show that it is hovered, wrong or disabled. */
   &:hover:not(:disabled, :read-only) {
-    --textarea-border-color: var(--color-neutral-700);
+    --textarea-border-color: color-mix(in oklab, var(--color-border-strong), var(--shade-hover));
   }
 
   &:is(:user-invalid, [aria-invalid="true"]) {
@@ -260,9 +153,9 @@ VARIABLES
   }
 
   &:disabled {
-    --textarea-surface: var(--color-neutral-200);
-    --textarea-border-color: var(--color-neutral-400);
-    --textarea-color: var(--color-neutral-500);
+    --textarea-surface: var(--color-surface-muted);
+    --textarea-border-color: var(--color-border);
+    --textarea-color: var(--color-text-subtle);
     cursor: not-allowed;
     resize: none;
   }

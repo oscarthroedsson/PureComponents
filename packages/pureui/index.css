@@ -1,0 +1,62 @@
+@layer pureui.base, pureui.components, pureui.layout, pureui.behavior, pureui.utilities;
+
+@import "./styles/main.css" layer(pureui.base);
+
+/* Motion primitives */
+@import "./styles/Animations/index.css" layer(pureui.components);
+
+/* Structural primitives */
+@import "./styles/separator.css" layer(pureui.components);
+
+/* Core interactive */
+@import "./styles/button.css" layer(pureui.components);
+@import "./styles/dialog.css" layer(pureui.components);
+@import "./styles/tooltip.css" layer(pureui.components);
+@import "./styles/Menu/menu.css" layer(pureui.components);
+@import "./styles/nav.css" layer(pureui.components);
+@import "./styles/tabs.css" layer(pureui.components);
+@import "./styles/skip-links.css" layer(pureui.components);
+
+/* Form */
+@import "./styles/Form/form.css" layer(pureui.components);
+@import "./styles/Form/field.css" layer(pureui.components);
+@import "./styles/Form/fieldset.css" layer(pureui.components);
+@import "./styles/Form/input/input.css" layer(pureui.components);
+@import "./styles/Form/label.css" layer(pureui.components);
+@import "./styles/Form/textarea.css" layer(pureui.components);
+@import "./styles/Form/checkbox.css" layer(pureui.components);
+@import "./styles/Form/radio.css" layer(pureui.components);
+@import "./styles/Form/range.css" layer(pureui.components);
+@import "./styles/Form/select.css" layer(pureui.components);
+@import "./styles/Form/input/file.css" layer(pureui.components);
+
+/* Feedback */
+@import "./styles/alert.css" layer(pureui.components);
+@import "./styles/toast.css" layer(pureui.components);
+@import "./styles/progress.css" layer(pureui.components);
+@import "./styles/meter.css" layer(pureui.components);
+@import "./styles/loading.css" layer(pureui.components);
+
+/* Data display */
+@import "./styles/table.css" layer(pureui.components);
+@import "./styles/list.css" layer(pureui.components);
+@import "./styles/Layout/box.css" layer(pureui.components);
+@import "./styles/card.css" layer(pureui.components);
+@import "./styles/pagination.css" layer(pureui.components);
+@import "./styles/breadcrumbs.css" layer(pureui.components);
+
+/* Content */
+@import "./styles/collapsible.css" layer(pureui.components);
+@import "./styles/accordion.css" layer(pureui.components);
+@import "./styles/avatar.css" layer(pureui.components);
+@import "./styles/badge.css" layer(pureui.components);
+@import "./styles/pill.css" layer(pureui.components);
+@import "./styles/audio.css" layer(pureui.components);
+@import "./styles/a-tag.css" layer(pureui.components);
+
+/* Box layout system */
+@import "./styles/Layout/layout.css" layer(pureui.layout);
+@import "./styles/Layout/behavior.css" layer(pureui.behavior);
+
+/* Utilities */
+@import "./styles/overflow.css" layer(pureui.utilities);

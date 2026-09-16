@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>File — PureComponents</title>
+    <title>File — Elements</title>
     <meta name="pc-description" content="Choosing a file to upload, with the button the browser gives us." />
 
     <link rel="stylesheet" href="/pureui/styles/main.css" />
@@ -78,42 +78,42 @@
 
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:1rem; max-width:30rem;">
       <p class="pc-note">
-        <code>sm</code>, <code>md</code> (default), <code>lg</code>. The class rewrites one variable
+        <code>file-sm</code>, <code>file-md</code> (default), <code>file-lg</code>. The class rewrites one variable
         and the button follows, because <code>font: inherit</code> is what carries the size across
         into the pseudo-element. It is a leaf, so the class here resizes only this control — put it
         on <code>.pu-form</code>, <code>.pu-fieldset</code> or <code>.pu-field</code> to move a whole group.
       </p>
       <template>
-        <input class="pu-file sm" type="file" aria-label="Small" />
+        <input class="pu-file file-sm" type="file" aria-label="Small" />
         <input class="pu-file" type="file" aria-label="Medium" />
-        <input class="pu-file lg" type="file" aria-label="Large" />
+        <input class="pu-file file-lg" type="file" aria-label="Large" />
       </template>
     </section>
 
     <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:1rem; max-width:30rem;">
       <p class="pc-note">
-        <code>sharp</code>, <code>smooth</code> (default), <code>rounded</code>. The button's leading
+        <code>file-sharp</code>, <code>file-smooth</code> (default), <code>file-rounded</code>. The button's leading
         corners take the box's inner radius — the outer radius less the border's width — so a rounded
         field ends in a half-circle that meets the border rather than cutting across it.
       </p>
       <template>
-        <input class="pu-file sharp" type="file" aria-label="Sharp" />
-        <input class="pu-file smooth" type="file" aria-label="Smooth" />
-        <input class="pu-file rounded" type="file" aria-label="Rounded" />
+        <input class="pu-file file-sharp" type="file" aria-label="Sharp" />
+        <input class="pu-file file-smooth" type="file" aria-label="Smooth" />
+        <input class="pu-file file-rounded" type="file" aria-label="Rounded" />
       </template>
     </section>
 
     <section class="pc-demo" id="ghost" data-title="Ghost" data-stage-style="display:grid; gap:1rem; max-width:30rem;">
       <p class="pc-note">
-        <code>ghost</code> removes the <em>field's</em> box, not the control inside it — the same
+        <code>file-ghost</code> removes the <em>field's</em> box, not the control inside it — the same
         thing it means on <code>.pu-input</code>. The button keeps its surface, and closes its own shape,
         because with no border around it there is no longer an edge for its flat side to sit against.
         For a file field inside a surface that already reads as a box; never on its own, where a
         borderless field says nothing about where to click.
       </p>
       <template>
-        <input class="pu-file ghost" type="file" aria-label="Ghost" />
-        <input class="pu-file ghost rounded" type="file" aria-label="Ghost, rounded" />
+        <input class="pu-file file-ghost" type="file" aria-label="Ghost" />
+        <input class="pu-file file-ghost file-rounded" type="file" aria-label="Ghost, rounded" />
       </template>
     </section>
 
@@ -199,13 +199,13 @@
             <input id="file-ch-1" class="pu-file" type="file" />
           </div>
         </form>
-        <form class="pu-form lg rounded">
+        <form class="pu-form form-lg form-rounded">
           <div class="pu-field">
             <label class="pu-label" for="file-ch-2">form lg rounded</label>
             <input id="file-ch-2" class="pu-file" type="file" />
           </div>
         </form>
-        <form class="pu-form" style="--form-surface: var(--color-neutral-200)">
+        <form class="pu-form" style="--form-surface: var(--color-surface-muted)">
           <div class="pu-field">
             <label class="pu-label" for="file-ch-3">--form-surface rewritten</label>
             <input id="file-ch-3" class="pu-file" type="file" />
@@ -222,7 +222,7 @@
       </p>
       <template>
         <input class="pu-file" type="file" aria-label="Primary button"
-               style="--file-button-surface: var(--color-primary); --file-button-color: var(--color-neutral-100)" />
+               style="--file-button-surface: var(--color-primary); --file-button-color: var(--color-primary-foreground)" />
         <input class="pu-file" type="file" aria-label="Wider gap"
                style="--file-button-gap: 1.5rem" />
         <input class="pu-file" type="file" aria-label="No divider"

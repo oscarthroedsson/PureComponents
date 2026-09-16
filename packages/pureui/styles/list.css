@@ -1,170 +1,194 @@
-/*
-List — spacing and a hairline for native list markup.
-
-The class goes on the <ul> or <ol>. Every item is reached from
-there, so the whole list stays one unit.
-
-  <ul class="pu-list md">
-    <li>Item</li>
-    <li>Item</li>
-  </ul>
-
-Markers are removed: this is a list of rows, not a bulleted list of
-prose. A reading list with bullets is a different thing and should
-keep its markers.
-
-Each <li> is a row on its own — padding and a hairline between it
-and the next. .item-row is only needed when a row holds media beside
-its text.
-
-  <li class="item-row">
-    <img src="…" alt="" />
-    <div>
-      <p class="item-title">Ada Lovelace</p>
-      <p class="item-text">Engineering</p>
-    </div>
-  </li>
-
-
-SIZE
-  sm | md (default) | lg      item padding, type size, media size
-
-ALIGNMENT
-  .item-row takes top | center (default) | bottom for how the media
-  and the text line up against each other.
-
-
-ACCESSIBILITY
-- .list-title is an <li>, so a screen reader counts it as an item.
-  A heading before the list is the better answer where it matters.
-- An <img> that only decorates a row takes alt="".
-
-
-VARIABLES
-  --list-padding-block
-  --list-padding-inline
-  --list-gap                 between media and text in a row
-  --list-font-size
-  --list-title-font-size
-  --list-media-size
-
-  --list-color               item text
-  --list-muted-color         secondary text
-  --list-border-color        the hairline between items
-  --list-border-width
-*/
-
 .pu-list:where(ul, ol) {
-  --list-padding-block: var(--spacing-75);
+  /* VARIABLES */
+
+  --list-padding-block: var(--spacing-100);
   --list-padding-inline: var(--spacing-100);
   --list-gap: var(--spacing-75);
-  --list-font-size: var(--font-size-md);
-  --list-title-font-size: var(--font-size-md);
-  --list-media-size: 2.5rem;
 
-  --list-color: var(--color-neutral-800);
-  --list-muted-color: var(--color-neutral-600);
-  --list-border-color: var(--color-neutral-200);
-  --list-border-width: 1px;
+  /* BASE */
+
+  box-sizing: border-box;
+
+  min-inline-size: 0;
+  max-inline-size: 100%;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: var(--list-gap);
 
   margin: 0;
-  padding: 0;
+  padding-block: var(--list-padding-block);
+  padding-inline: var(--list-padding-inline);
 
   list-style: none;
 
-  font-size: var(--list-font-size);
-  color: var(--list-color);
+  /* SIZE */
 
-  /* ITEMS */
-  & > li {
-    padding: var(--list-padding-block) var(--list-padding-inline);
-    border-block-end: var(--list-border-width) solid var(--list-border-color);
+  &.list-none {
+    --list-padding-block: var(--spacing-0);
+    --list-padding-inline: var(--spacing-0);
+    --list-gap: var(--spacing-0);
   }
 
-  /* The list ends on content, not on a stray line. */
-  & > li:last-child {
-    border-block-end: none;
+  &.list-xs {
+    --list-padding-block: var(--spacing-50);
+    --list-padding-inline: var(--spacing-50);
+    --list-gap: var(--spacing-25);
   }
 
-  & p {
-    margin: 0;
+  &.list-sm {
+    --list-padding-block: var(--spacing-75);
+    --list-padding-inline: var(--spacing-75);
+    --list-gap: var(--spacing-50);
   }
 
-  /* TITLE */
-  & .list-title {
-    font-size: var(--list-title-font-size);
-    font-weight: var(--font-weight-subheading);
-
-    color: var(--list-color);
+  &.list-lg {
+    --list-padding-block: var(--spacing-150);
+    --list-padding-inline: var(--spacing-150);
+    --list-gap: var(--spacing-100);
   }
 
-  /* ROW */
-  & .item-row {
-    display: flex;
-    align-items: center;
-
-    gap: var(--list-gap);
-
-    & > :is(img, svg) {
-      inline-size: var(--list-media-size);
-      block-size: var(--list-media-size);
-
-      flex: none;
-
-      object-fit: cover;
-    }
-
-    & > :not(img, svg) {
-      min-inline-size: 0;
-    }
-
-    &.top {
-      align-items: start;
-    }
-
-    &.center {
-      align-items: center;
-    }
-
-    &.bottom {
-      align-items: end;
-    }
+  &.list-xl {
+    --list-padding-block: var(--spacing-200);
+    --list-padding-inline: var(--spacing-200);
+    --list-gap: var(--spacing-150);
   }
 
-  & .item-title {
-    font-weight: var(--font-weight-subheading);
+  /* DIRECTION */
+
+  &[data-direction="vertical"] {
+    flex-direction: column;
   }
 
-  & .item-text {
-    color: var(--list-muted-color);
+  &[data-direction="horizontal"] {
+    flex-direction: row;
   }
+}
+
+/*
+ * The ancestor is specificity-neutral, so ListItem keeps key specificity
+ * while only rendering as a direct li child of a semantic List.
+ */
+:where(.pu-list:where(ul, ol)) > .pu-list-item:where(li) {
+  /* VARIABLES */
+
+  --list-item-padding-block: var(--spacing-100);
+  --list-item-padding-inline: var(--spacing-100);
+
+  --list-item-radius: var(--radius-sharp);
+  --list-item-background: transparent;
+  --list-item-hover-background: color-mix(in oklab, var(--color-surface-raised), var(--shade-hover));
+  --list-item-active-background: color-mix(in oklab, var(--color-surface-raised), var(--shade-active));
+
+  --list-item-color: var(--color-text);
+  --list-item-muted-color: var(--color-text-muted);
+
+  /* BASE */
+
+  box-sizing: border-box;
+
+  min-inline-size: 0;
+  max-inline-size: 100%;
+
+  padding-block: var(--list-item-padding-block);
+  padding-inline: var(--list-item-padding-inline);
+
+  border-radius: var(--list-item-radius);
+  background-color: var(--list-item-background);
+  color: var(--list-item-color);
 
   /* SIZE */
 
-  &.sm {
-    --list-padding-block: var(--spacing-50);
-    --list-padding-inline: var(--spacing-75);
-    --list-gap: var(--spacing-50);
-    --list-font-size: var(--font-size-sm);
-    --list-title-font-size: var(--font-size-sm);
-    --list-media-size: 2rem;
+  &.list-item-none {
+    --list-item-padding-block: var(--spacing-0);
+    --list-item-padding-inline: var(--spacing-0);
   }
 
-  &.md {
-    --list-padding-block: var(--spacing-75);
-    --list-padding-inline: var(--spacing-100);
-    --list-gap: var(--spacing-75);
-    --list-font-size: var(--font-size-md);
-    --list-title-font-size: var(--font-size-md);
-    --list-media-size: 2.5rem;
+  &.list-item-xs {
+    --list-item-padding-block: var(--spacing-50);
+    --list-item-padding-inline: var(--spacing-50);
   }
 
-  &.lg {
-    --list-padding-block: var(--spacing-100);
-    --list-padding-inline: var(--spacing-125);
-    --list-gap: var(--spacing-100);
-    --list-font-size: var(--font-size-base);
-    --list-title-font-size: var(--font-size-base);
-    --list-media-size: 3rem;
+  &.list-item-sm {
+    --list-item-padding-block: var(--spacing-75);
+    --list-item-padding-inline: var(--spacing-75);
+  }
+
+  &.list-item-lg {
+    --list-item-padding-block: var(--spacing-150);
+    --list-item-padding-inline: var(--spacing-150);
+  }
+
+  &.list-item-xl {
+    --list-item-padding-block: var(--spacing-200);
+    --list-item-padding-inline: var(--spacing-200);
+  }
+
+  /* PARTS */
+
+  & .list-item-title {
+    font-weight: var(--font-weight-subheading);
+  }
+
+  & .list-item-text {
+    color: var(--list-item-muted-color);
+  }
+
+  /* INTERACTIVE */
+
+  &[data-interactive] {
+    position: relative;
+
+    cursor: pointer;
+
+    transition: background-color var(--transition-fast);
+  }
+
+  &[data-interactive] .list-item-action {
+    padding: 0;
+    border: 0;
+
+    background: none;
+    color: inherit;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    text-align: inherit;
+    white-space: normal;
+    cursor: pointer;
+
+    &::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      z-index: 0;
+    }
+  }
+
+  /* Secondary controls remain above the primary action overlay. */
+  &[data-interactive] :is(a, button, input, select, textarea, label, summary):not(.list-item-action) {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* STATES */
+
+  &[data-interactive]:hover {
+    --list-item-background: var(--list-item-hover-background);
+  }
+
+  &[data-interactive]:has(.list-item-action:is([aria-current]:not([aria-current="false"]), [aria-pressed="true"])) {
+    --list-item-background: var(--list-item-active-background);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &[data-interactive] {
+      transition-duration: 0ms;
+    }
   }
 }

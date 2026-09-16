@@ -1,144 +1,146 @@
 # Breadcrumbs
 
-The trail that says where on the site you are.
+The trail back up from where you are. A list of links with a separator drawn
+between them.
+
+## Quick start
 
 ```html
 <nav aria-label="Breadcrumb">
-  <ol class="breadcrumbs md" role="list">
+  <ol class="pu-breadcrumbs breadcrumbs-md" role="list">
     <li><a href="/">Home</a></li>
-    <li><a href="/category">Category</a></li>
-    <li><span aria-current="page">Current page</span></li>
+    <li><a href="/reports">Reports</a></li>
+    <li><span aria-current="page">Q4</span></li>
   </ol>
 </nav>
 ```
 
-The class goes on the `<ol>`. An `<ol>` and not a `<ul>`: the order is the
-hierarchy, not a presentation choice. The numbers are turned off; the order is
-not.
+The `<nav aria-label="Breadcrumb">` wrapper and `role="list"` are both
+required. See **Accessibility**.
 
-## When to use it
+## Classes
 
-- Showing where a page sits in a hierarchy that is more than two levels deep.
-- Giving a way back up that is not the browser's back button.
-
-## When not to use it
-
-- Primary navigation — that is `nav.css`.
-- Steps in a flow. A breadcrumb says where you are, not how far you have got;
-  use Progress for that.
-- Two levels. "Home > Page" is a link, not a trail.
-
-## Three things belong to your markup
-
-The library ships no JavaScript and cannot write markup for you. These three are
-yours, and without them the component is wrong however good it looks:
-
-| Attribute | Goes on | Why |
-|---|---|---|
-| `aria-label="Breadcrumb"` | the `<nav>` | Tells this landmark from the page's other navs. |
-| `role="list"` | the `<ol>` | `list-style: none` makes WebKit stop announcing it as a list at all. This writes the role back without bringing the numbers with it. |
-| `aria-current="page"` | the current crumb | On the element, never on the `<li>`. |
-
-`aria-current` is also what the current-page styling hangs on. Leave it off and
-the crumb renders as a plain link — which is the honest result, because without
-it nothing has told anyone which page they are on.
-
-## Size
-
-`sm` · `md` · `lg`, on the `<ol>`. `md` is what the key class alone gives you;
-the class is there to say it out loud.
-
-## Shape
-
-`sharp` · `smooth` · `rounded`, on the `<ol>` — or on a single crumb:
-
-```html
-<ol class="breadcrumbs sharp" role="list">
-  <li><a href="/">Home</a></li>
-  <li class="rounded"><a href="/category">Category</a></li>
-  <li><span aria-current="page">Current page</span></li>
-</ol>
-```
-
-A crumb that carries its own shape wins; one that does not falls back to the
-list's.
-
-Corners only show once something is drawn behind them. The crumbs carry padding
-and a transparent background from the start, so this is all a chip takes:
-
-```html
-<ol class="breadcrumbs rounded" role="list"
-    style="--breadcrumbs-crumb-background: var(--color-neutral-200)">
-```
-
-## The separator
-
-The default mark is `>`. Four variant classes reassign it and do nothing else:
-
-| Class | Mark |
+| Class | Does |
 |---|---|
-| — | `>` |
-| `slash` | `/` |
-| `chevron` | `›` |
-| `arrow` | `→` |
-| `dot` | `•` |
+| `.pu-breadcrumbs` | The key. Requires `<ol>` or `<ul>`. |
+| `breadcrumbs-sm` | Smaller type, tighter separators, smaller radius. |
+| `breadcrumbs-md` | The default. |
+| `breadcrumbs-lg` | Larger type, wider separators, larger radius. |
+| `breadcrumbs-sharp` | Square crumb corners. |
+| `breadcrumbs-smooth` | The same radius `breadcrumbs-md` already gives. |
+| `breadcrumbs-rounded` | Fully round crumb corners. |
+| `breadcrumbs-slash` | `/` as the separator. |
+| `breadcrumbs-chevron` | `›` as the separator. |
+| `breadcrumbs-arrow` | `→` as the separator. |
+| `breadcrumbs-dot` | `•` as the separator. |
+| `.breadcrumbs-separator` | A separator element you supply yourself. |
 
-For a mark we do not ship, set the variable yourself:
+## Separators
+
+The default is `>`. The four variants change it.
+
+Put one on the **list** and every gap changes:
 
 ```html
-<!-- every gap -->
-<ol class="breadcrumbs" role="list" style="--breadcrumbs-separator: '»'">
-
-<!-- only the gap after this crumb -->
-<li style="--breadcrumbs-separator: '|'">
+<ol class="pu-breadcrumbs breadcrumbs-md breadcrumbs-chevron" role="list">…</ol>
 ```
 
-It takes an image too — `url("/icons/chevron.svg")` — but a content image cannot
-be resized. When the size matters, use an element instead:
+Put one on a single **`<li>`** and only the gap after that crumb changes:
+
+```html
+<li class="breadcrumbs-arrow"><a href="/reports">Reports</a></li>
+```
+
+Any other mark comes from the variable:
+
+```html
+<ol class="pu-breadcrumbs breadcrumbs-md" role="list"
+    style="--breadcrumbs-separator: '»'">
+```
+
+### Supplying your own element
+
+For an icon rather than a character, put a `.breadcrumbs-separator` inside the
+`<li>`. The generated mark stands down wherever one is present, so the two
+never double up, and nothing is drawn after the last crumb whichever way it
+was made.
 
 ```html
 <li>
-  <a href="/category">Category</a>
+  <a href="/reports">Reports</a>
   <span class="breadcrumbs-separator" aria-hidden="true">
-    <svg …></svg>
+    <svg viewBox="0 0 24 24">…</svg>
   </span>
 </li>
 ```
 
-Two things you do not have to do: our own mark switches itself off when it sees
-yours, so a gap can never end up with two; and the last crumb hides its
-separator either way, so a loop can emit the same markup for every item, last
-one included.
+## Shape on one crumb
 
-Your separator takes `aria-hidden="true"`. Ours is kept away from assistive tech
-already.
+The shape classes also work on a single crumb, which is useful when one is
+given a background:
+
+```html
+<li class="breadcrumbs-rounded"><a href="/reports">Reports</a></li>
+```
 
 ## Variables
 
-Set them on the `<ol>` for the whole trail, or on an `<li>` for one crumb —
-custom properties inherit, and a crumb's own value always beats the list's.
+| Variable | Default | Controls |
+|---|---|---|
+| `--breadcrumbs-gap` | `var(--spacing-0)` | Space between list items. |
+| `--breadcrumbs-font-size` | `var(--font-size-md)` | Type size. |
+| `--breadcrumbs-radius` | `var(--radius-md)` | Crumb corner. |
+| `--breadcrumbs-separator` | `">"` | The mark itself. |
+| `--breadcrumbs-separator-color` | `var(--color-text-subtle)` | Its colour. |
+| `--breadcrumbs-separator-space` | `var(--spacing-50)` | Space either side of it. |
+| `--breadcrumbs-crumb-padding-inline` | `var(--spacing-25)` | Crumb padding, horizontal. |
+| `--breadcrumbs-crumb-padding-block` | `var(--spacing-15)` | Crumb padding, vertical. |
+| `--breadcrumbs-crumb-background` | `transparent` | Crumb fill. |
+| `--breadcrumbs-link-color` | `var(--color-text-subtle)` | Link colour. |
+| `--breadcrumbs-hover-color` | `var(--color-text)` | Link colour on hover. |
+| `--breadcrumbs-current-color` | `var(--color-text)` | The current crumb. |
 
-| Variable | Default |
-|---|---|
-| `--breadcrumbs-gap` | `var(--spacing-0)` |
-| `--breadcrumbs-font-size` | `var(--font-size-md)` |
-| `--breadcrumbs-radius` | `var(--radius-md)` |
-| `--breadcrumbs-separator` | `">"` |
-| `--breadcrumbs-separator-color` | `var(--color-neutral-400)` |
-| `--breadcrumbs-separator-space` | `var(--spacing-50)` |
-| `--breadcrumbs-crumb-padding-inline` | `var(--spacing-25)` |
-| `--breadcrumbs-crumb-padding-block` | `var(--spacing-15)` |
-| `--breadcrumbs-crumb-background` | `transparent` |
-| `--breadcrumbs-link-color` | `var(--color-neutral-500)` |
-| `--breadcrumbs-hover-color` | `var(--color-neutral-900)` |
-| `--breadcrumbs-current-color` | `var(--color-neutral-900)` |
-| `--breadcrumbs-focus-color` | `var(--color-primary)` |
+## Accessibility
 
-`--breadcrumbs-link-color` is the one to leave alone. `--color-neutral-500` is
-4.8:1 on white; anything lighter drops the crumbs below the contrast floor.
+- Wrap the list in `<nav aria-label="Breadcrumb">`. Without the label a screen
+  reader announces an unnamed navigation region, and a page usually has more
+  than one.
+- `role="list"` on the `<ol>`. The component sets `list-style: none`, and
+  WebKit drops list semantics from a list styled that way. CSS cannot put them
+  back.
+- The last crumb carries `aria-current="page"`. It is where you already are,
+  so it is not a link and it does not respond to hover.
+- The generated separator has its alternative text emptied where the browser
+  supports it, so assistive technology skips it. A separator you supply
+  yourself needs `aria-hidden="true"`.
+- A hovered link underlines as well as changing colour, so colour is not the
+  only signal.
 
-## Long trails
+## Examples
 
-The row wraps rather than overflowing. There is no collapse-to-ellipsis
-behaviour, because deciding which crumbs to drop is a decision about your
-content, not about CSS.
+### Sizes
+
+```html
+<ol class="pu-breadcrumbs breadcrumbs-sm" role="list">…</ol>
+<ol class="pu-breadcrumbs breadcrumbs-md" role="list">…</ol>
+<ol class="pu-breadcrumbs breadcrumbs-lg" role="list">…</ol>
+```
+
+### Separator variants
+
+```html
+<ol class="pu-breadcrumbs breadcrumbs-md breadcrumbs-slash" role="list">…</ol>
+<ol class="pu-breadcrumbs breadcrumbs-md breadcrumbs-chevron" role="list">…</ol>
+<ol class="pu-breadcrumbs breadcrumbs-md breadcrumbs-arrow" role="list">…</ol>
+<ol class="pu-breadcrumbs breadcrumbs-md breadcrumbs-dot" role="list">…</ol>
+```
+
+### Crumbs with a background
+
+```html
+<ol class="pu-breadcrumbs breadcrumbs-md" role="list"
+    style="--breadcrumbs-crumb-background: var(--color-surface-sunken)">
+  <li><a href="/">Home</a></li>
+  <li><span aria-current="page">Reports</span></li>
+</ol>
+```

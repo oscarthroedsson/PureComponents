@@ -1,0 +1,1904 @@
+<div id="email-demo" data-direction="vertical" data-layout="start-top" data-gap="sm">
+  <svg width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-plus"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 5v14M5 12h14" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-x"
+        viewBox="0 0 24 24"
+      >
+        <path d="m6 6 12 12M18 6 6 18" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-search"
+        viewBox="0 0 24 24"
+      >
+        <circle cx="11" cy="11" r="7" />
+        <path d="m16 16 4 4" />
+      </symbol>
+      <!-- Action symbols use Lucide's 24px geometry so the toolbar shares one visual language. -->
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-more"
+        viewBox="0 0 24 24"
+      >
+        <circle cx="12" cy="12" r="1" />
+        <circle cx="12" cy="5" r="1" />
+        <circle cx="12" cy="19" r="1" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-inbox"
+        viewBox="0 0 24 24"
+      >
+        <path d="M4 5h16v14H4zM4 13h4l2 3h4l2-3h4" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-send"
+        viewBox="0 0 24 24"
+      >
+        <path d="m3 11 18-8-8 18-2-8-8-2Z" />
+        <path d="m11 13 5-5" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-draft"
+        viewBox="0 0 24 24"
+      >
+        <path d="M5 3h10l4 4v14H5zM14 3v5h5M8 13h8M8 17h6" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-sparkle"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="m12 2 1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2ZM5 14l1.1 2.9L9 18l-2.9 1.1L5 22l-1.1-2.9L1 18l2.9-1.1L5 14Z"
+        />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-bell"
+        viewBox="0 0 24 24"
+      >
+        <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-chevron-right"
+        viewBox="0 0 24 24"
+      >
+        <path d="m9 18 6-6-6-6" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-chevron-left"
+        viewBox="0 0 24 24"
+      >
+        <path d="m15 18-6-6 6-6" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-arrow-left"
+        viewBox="0 0 24 24"
+      >
+        <path d="m12 19-7-7 7-7" />
+        <path d="M19 12H5" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-trash"
+        viewBox="0 0 24 24"
+      >
+        <path d="M3 6h18" />
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+        <path d="M10 11v6M14 11v6" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-archive"
+        viewBox="0 0 24 24"
+      >
+        <rect width="20" height="5" x="2" y="3" rx="1" />
+        <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" />
+        <path d="M10 12h4" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-check"
+        viewBox="0 0 24 24"
+      >
+        <path d="m5 12 4 4L19 6" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-star"
+        viewBox="0 0 24 24"
+      >
+        <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-reply"
+        viewBox="0 0 24 24"
+      >
+        <path d="m9 8-5 4 5 4v-3h5c3 0 5 2 6 5 0-6-3-9-8-9H9V8Z" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-download"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 3v12M7 10l5 5 5-5M4 20h16" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-file"
+        viewBox="0 0 24 24"
+      >
+        <path d="M6 3h8l4 4v14H6zM14 3v5h4" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-code"
+        viewBox="0 0 24 24"
+      >
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="m9 9-3 3 3 3M15 9l3 3-3 3" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-logout"
+        viewBox="0 0 24 24"
+      >
+        <path d="M10 5H5v14h5M14 8l4 4-4 4M8 12h10" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-calendar"
+        viewBox="0 0 24 24"
+      >
+        <rect x="3" y="5" width="18" height="16" rx="2" />
+        <path d="M7 3v4M17 3v4M3 10h18M8 14h3M8 17h6" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-tasks"
+        viewBox="0 0 24 24"
+      >
+        <rect x="4" y="3" width="16" height="18" rx="2" />
+        <path d="m8 9 1.5 1.5L12 8M14 9h3M8 15l1.5 1.5L12 14M14 15h3" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-warning"
+        viewBox="0 0 24 24"
+      >
+        <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-image"
+        viewBox="0 0 24 24"
+      >
+        <rect x="3" y="4" width="18" height="16" rx="2" />
+        <circle cx="8" cy="9" r="1.5" />
+        <path d="m4 17 5-5 4 4 2-2 5 4" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-video"
+        viewBox="0 0 24 24"
+      >
+        <rect x="3" y="5" width="14" height="14" rx="2" />
+        <path d="m17 10 4-3v10l-4-3" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-support"
+        viewBox="0 0 24 24"
+      >
+        <path d="M4 14v-2a8 8 0 0 1 16 0v2M4 14v4h4v-6H4M20 14v4h-4v-6h4M16 19c-1 2-3 2-5 2" />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-settings"
+        viewBox="0 0 24 24"
+      >
+        <circle cx="12" cy="12" r="3" />
+        <path
+          d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3A1.7 1.7 0 0 0 14 21v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6 1.7 1.7 0 0 0 10 3v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9A1.7 1.7 0 0 0 21 10h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"
+        />
+      </symbol>
+      <symbol
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="email-icon-diamond"
+        viewBox="0 0 24 24"
+      >
+        <path d="m12 3 8 7-8 11-8-11 8-7ZM4 10h16M9 3l-2 7 5 11 5-11-2-7" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <section class="email-container pu-card card-smooth" aria-label="Pure visual email workspace">
+    <aside
+      class="pu-card card-sm card-sharp pu-box box-sm box-sharp"
+      data-direction="vertical"
+      data-layout="center-between"
+      data-gap="sm"
+      aria-label="Connected accounts"
+    >
+      <nav
+        class="pu-box box-none"
+        data-direction="vertical"
+        data-layout="start-top"
+        data-behavior="inline-expand"
+        aria-label="Accounts"
+      >
+        <ul
+          class="pu-list list-sm list-items-none list-ghost pu-box box-none"
+          role="list"
+          data-direction="vertical"
+          data-layout="center-top"
+          data-gap="xs"
+          data-behavior="inline-expand"
+        >
+          <li class="pu-box box-none list-item-xs" data-layout="center-center" data-behavior="inline-expand">
+            <button
+              class="pu-btn btn-sm btn-secondary"
+              type="button"
+              data-icon-only="true"
+              data-behavior="inline-expand"
+              aria-label="Pure workspace"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 5h5v5H6zM13 5h5v8h-5zM6 12h5v7H6zM13 15h5v4h-5z" />
+              </svg>
+            </button>
+          </li>
+          <li class="pu-box box-none" data-layout="center-center" data-behavior="inline-expand">
+            <button
+              class="pu-btn btn-sm btn-ghost"
+              type="button"
+              data-account-name="Alex Morgan"
+              data-account-email="alex@pureui.dev"
+              aria-label="Switch to Alex Morgan"
+              aria-pressed="true"
+              aria-describedby="email-tip-alex"
+              data-icon-only="true"
+              data-behavior="inline-expand"
+            >
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/pureui.png" alt=""
+              /></span>
+              <span
+                id="email-tip-alex"
+                class="pu-tooltip tooltip-sm"
+                role="tooltip"
+                popover="hint"
+                data-placement="right"
+                >Alex Morgan</span
+              >
+            </button>
+          </li>
+          <li class="pu-box box-none" data-layout="center-center" data-behavior="inline-expand">
+            <button
+              class="pu-btn btn-sm btn-ghost"
+              type="button"
+              data-account-name="Maya Chen"
+              data-account-email="maya@pureui.dev"
+              aria-label="Switch to Maya Chen"
+              aria-pressed="false"
+              aria-describedby="email-tip-maya"
+              data-icon-only="true"
+              data-behavior="inline-expand"
+            >
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/purecomponents.png" alt=""
+              /></span>
+              <span
+                id="email-tip-maya"
+                class="pu-tooltip tooltip-sm"
+                role="tooltip"
+                popover="hint"
+                data-placement="right"
+                >Maya Chen</span
+              >
+            </button>
+          </li>
+          <li class="pu-box box-none" data-layout="center-center" data-behavior="inline-expand">
+            <button
+              class="pu-btn btn-sm btn-ghost"
+              type="button"
+              data-account-name="Theo Lind"
+              data-account-email="theo@pureui.dev"
+              aria-label="Switch to Theo Lind"
+              aria-pressed="false"
+              aria-describedby="email-tip-theo"
+              data-icon-only="true"
+              data-behavior="inline-expand"
+            >
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/pureframework.png" alt=""
+              /></span>
+              <span
+                id="email-tip-theo"
+                class="pu-tooltip tooltip-sm"
+                role="tooltip"
+                popover="hint"
+                data-placement="right"
+                >Theo Lind</span
+              >
+            </button>
+          </li>
+          <li class="pu-box box-none list-item-xs" data-layout="center-center" data-behavior="inline-expand">
+            <button
+              class="pu-btn btn-sm btn-ghost"
+              type="button"
+              data-icon-only="true"
+              data-behavior="inline-expand"
+              commandfor="email-connect-dialog"
+              command="show-modal"
+              aria-label="Connect another email account"
+            >
+              <svg aria-hidden="true"><use href="#email-icon-plus" /></svg>
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <button
+        class="pu-btn btn-sm btn-ghost"
+        type="button"
+        data-icon-only="true"
+        data-behavior="inline-compact"
+        aria-label="Sign out"
+      >
+        <svg aria-hidden="true"><use href="#email-icon-logout" /></svg>
+      </button>
+    </aside>
+
+    <aside
+      class="pu-card card-sm card-sharp pu-box box-md box-sharp"
+      data-direction="vertical"
+      data-layout="start-top"
+      data-gap="sm"
+      aria-label="Mailbox navigation"
+    >
+      <div class="pu-card card-sm card-outline" data-behavior="block-compact">
+        <div class="card-header" data-layout="center-between" data-gap="sm">
+          <div class="pu-box box-none" data-layout="center-start" data-gap="sm">
+            <span class="pu-avatar avatar-sm avatar-smooth"
+              ><img id="email-profile-avatar" src="/pages/Demos/assets/storage/avatars/pureui.png" alt=""
+            /></span>
+            <span class="pu-box box-none" data-direction="vertical" data-layout="start-top" data-gap="none">
+              <strong id="email-profile-name">Alex Morgan</strong>
+              <small id="email-profile-address" class="item-text">alex@pureui.dev</small>
+            </span>
+          </div>
+          <div class="pu-menu menu-sm" data-placement="block-end" data-behavior="inline-compact">
+            <button
+              class="pu-btn btn-sm btn-ghost menu-trigger"
+              type="button"
+              data-icon-only="true"
+              popovertarget="email-profile-menu"
+              aria-label="More account actions"
+            >
+              <svg aria-hidden="true"><use href="#email-icon-more" /></svg>
+            </button>
+            <ul id="email-profile-menu" class="menu-content" popover="auto" role="menu" aria-label="Account actions">
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" role="menuitem">
+                  Account details
+                </button>
+              </li>
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" role="menuitem">
+                  Pause syncing
+                </button>
+              </li>
+              <li class="menu-separator" aria-hidden="true"></li>
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" role="menuitem">
+                  Disconnect account
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <input
+        id="email-sidebar-search"
+        class="pu-input input-sm"
+        type="search"
+        size="18"
+        placeholder="Search here…"
+        aria-label="Search mail"
+      />
+      <button
+        class="pu-btn btn-sm btn-smooth btn-primary"
+        type="button"
+        data-behavior="inline-expand"
+        commandfor="email-compose-dialog"
+        command="show-modal"
+      >
+        <svg aria-hidden="true"><use href="#email-icon-plus" /></svg>Compose email
+      </button>
+
+      <nav
+        class="pu-box box-none"
+        data-direction="vertical"
+        data-layout="start-between"
+        data-gap="none"
+        data-behavior="expand"
+        aria-label="Email sections"
+      >
+        <div
+          class="pu-box box-none"
+          data-direction="vertical"
+          data-layout="start-top"
+          data-gap="sm"
+          data-behavior="inline-expand"
+        >
+          <div class="pu-menu menu-sm menu-inline menu-indent-none" data-behavior="inline-expand">
+            <p id="email-general-label" class="pu-label">General</p>
+            <ul id="email-general-list" class="menu-content" role="list" aria-labelledby="email-general-label">
+              <li class="menu-item">
+                <button
+                  class="pu-btn btn-sm btn-ghost menu-control"
+                  type="button"
+                  aria-current="page"
+                  data-mailbox="Inbox"
+                >
+                  <svg aria-hidden="true"><use href="#email-icon-inbox" /></svg>Inbox<span class="menu-shortcut"
+                    >1,897</span
+                  >
+                </button>
+              </li>
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="Sent">
+                  <svg aria-hidden="true"><use href="#email-icon-send" /></svg>Sent
+                </button>
+              </li>
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="Drafts">
+                  <svg aria-hidden="true"><use href="#email-icon-draft" /></svg>Drafts<span class="menu-shortcut"
+                    >8</span
+                  >
+                </button>
+              </li>
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="AI Features">
+                  <svg aria-hidden="true"><use href="#email-icon-sparkle" /></svg>AI Features
+                </button>
+              </li>
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="Calendar">
+                  <svg aria-hidden="true"><use href="#email-icon-calendar" /></svg>Calendar
+                </button>
+              </li>
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="Tasks">
+                  <svg aria-hidden="true"><use href="#email-icon-tasks" /></svg>Tasks &amp; To-dos
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="pu-menu menu-sm menu-inline menu-indent-none" data-behavior="inline-expand">
+            <div class="pu-box box-none" data-layout="center-between" data-gap="xs">
+              <p id="email-folders-label" class="pu-label">Folders</p>
+              <button
+                class="pu-btn btn-sm btn-ghost"
+                type="button"
+                data-icon-only="true"
+                commandfor="email-folder-dialog"
+                command="show-modal"
+                aria-label="Create folder"
+              >
+                <svg aria-hidden="true"><use href="#email-icon-plus" /></svg>
+              </button>
+            </div>
+            <ul id="email-folder-list" class="menu-content" role="list" aria-labelledby="email-folders-label">
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="Operations">
+                  <svg aria-hidden="true"><use href="#email-icon-file" /></svg>Operations
+                </button>
+              </li>
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="Front-End">
+                  <svg aria-hidden="true"><use href="#email-icon-code" /></svg>Front-End
+                </button>
+              </li>
+              <li class="menu-item">
+                <button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="UI Design">
+                  <svg aria-hidden="true"><use href="#email-icon-diamond" /></svg>UI Design
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pu-menu menu-sm menu-inline menu-indent-none" data-behavior="inline-expand">
+          <p id="email-support-label" class="pu-label">Support &amp; settings</p>
+          <ul id="email-support-list" class="menu-content" role="list" aria-labelledby="email-support-label">
+            <li class="menu-item">
+              <button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="Support">
+                <svg aria-hidden="true"><use href="#email-icon-support" /></svg>Support
+              </button>
+            </li>
+            <li class="menu-item">
+              <button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="Settings">
+                <svg aria-hidden="true"><use href="#email-icon-settings" /></svg>Settings
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <article class="pu-card card-sm card-outline" data-behavior="block-compact" aria-labelledby="email-storage-title">
+        <div class="card-body">
+          <div data-direction="vertical" data-layout="start-top" data-gap="sm">
+            <strong id="email-storage-title" class="card-title">Total storage</strong>
+            <span class="card-subtitle"><b>100GB</b> used from 256GB</span>
+            <progress class="pu-progress progress-sm progress-rounded" value="39" max="100">39%</progress>
+            <button
+              class="pu-btn btn-sm btn-secondary"
+              type="button"
+              data-behavior="inline-expand"
+              commandfor="email-upgrade-dialog"
+              command="show-modal"
+            >
+              Upgrade
+            </button>
+          </div>
+        </div>
+      </article>
+    </aside>
+
+    <main>
+      <section
+        class="pu-card card-sm card-sharp"
+        data-direction="vertical"
+        data-layout="start-top"
+        data-gap="none"
+        aria-label="Inbox column"
+      >
+        <header class="pu-box box-md box-sharp" data-layout="center-between" data-gap="sm">
+          <h1 class="card-title">Good Morning, <span id="email-greeting-name">Alex</span></h1>
+          <span id="email-total-label" class="card-subtitle">1,897 Emails</span>
+        </header>
+
+        <section
+          data-direction="vertical"
+          data-layout="start-top"
+          data-gap="none"
+          data-behavior="expand"
+          aria-label="Message list"
+        >
+          <header
+            class="pu-box box-md box-sharp"
+            data-direction="vertical"
+            data-layout="start-top"
+            data-gap="xs"
+            data-behavior="inline-expand"
+          >
+            <div class="tabs-container" data-layout="center-start" data-gap="xs" data-behavior="inline-expand">
+              <div
+                id="email-category-filters"
+                role="group"
+                aria-label="Message filters"
+                data-layout="center-start"
+                data-gap="none"
+                data-behavior="inline-expand"
+              >
+                <button class="pu-btn btn-sm email-filter-button" type="button" aria-pressed="true" data-filter="all">
+                  All
+                </button>
+                <button
+                  class="pu-btn btn-sm email-filter-button"
+                  type="button"
+                  aria-pressed="false"
+                  data-filter="unread"
+                >
+                  Unread
+                </button>
+                <button
+                  class="pu-btn btn-sm email-filter-button"
+                  type="button"
+                  aria-pressed="false"
+                  data-filter="other"
+                >
+                  Others
+                </button>
+              </div>
+
+              <button
+                id="email-category-add"
+                class="pu-btn btn-sm email-category-add"
+                type="button"
+                commandfor="email-category-dialog"
+                command="show-modal"
+                data-icon-only="true"
+                aria-label="Add category"
+                data-behavior="inline-compact"
+              >
+                <svg aria-hidden="true"><use href="#email-icon-plus" /></svg>
+              </button>
+            </div>
+            <div class="pu-input-group" data-behavior="inline-expand">
+              <svg class="input-icon" data-placement="start" aria-hidden="true"><use href="#email-icon-search" /></svg>
+              <input
+                id="email-global-search"
+                class="pu-input input-sm"
+                type="search"
+                size="32"
+                placeholder="Search anything…"
+                aria-label="Search the workspace"
+              />
+            </div>
+          </header>
+          <ul
+            id="email-message-list"
+            class="pu-list list-none pu-overflow overflow-y"
+            role="list"
+            data-behavior="expand"
+          >
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/pureui.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>John Doe</strong><time class="list-item-text">Just now</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="john"
+                  data-unread="true"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Important Update on Your Account
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/purecomponents.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Sarah Miller</strong><time class="list-item-text">10 min ago</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="sarah"
+                  data-unread="true"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Your Subscription Renewal Notice
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth">C</span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Tech Support</strong><time class="list-item-text">1 hour ago</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="tech"
+                  data-unread="false"
+                  data-kind="other"
+                  aria-pressed="false"
+                >
+                  System Maintenance Scheduled
+                </button>
+                <span class="list-item-text">Maintenance starts tonight.</span>
+                <footer data-layout="center-start" data-gap="xs">
+                  <span class="pu-pill pill-sm pill-outline"
+                    ><svg aria-hidden="true"><use href="#email-icon-file" /></svg>Document.pdf</span
+                  >
+                </footer>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/pureframework.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Mark Davis</strong><time class="list-item-text">2 hours ago</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="mark"
+                  data-unread="true"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Meeting Reminder: 3 PM Today
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/pureui.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Jane Holmes</strong><time class="list-item-text">4 hours ago</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="pure"
+                  data-unread="false"
+                  data-kind="primary"
+                  aria-pressed="true"
+                >
+                  Action Required: Unpaid Invoice
+                </button>
+                <span class="list-item-text">Payment is due March 10.</span>
+                <footer data-layout="center-start" data-gap="xs">
+                  <span class="pu-pill pill-sm pill-outline"
+                    ><svg aria-hidden="true"><use href="#email-icon-file" /></svg>Invoice.pdf</span
+                  ><span class="pu-pill pill-sm pill-outline"
+                    ><svg aria-hidden="true"><use href="#email-icon-image" /></svg>Screenshot.jpg</span
+                  >
+                </footer>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/purecomponents.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Elena Rossi</strong><time class="list-item-text">5 hours ago</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="elena"
+                  data-unread="true"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Updated Launch Checklist for Friday
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/pureframework.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Daniel Kim</strong><time class="list-item-text">Yesterday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="daniel"
+                  data-unread="false"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Design Review Notes and Next Steps
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth">P</span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Priya Shah</strong><time class="list-item-text">Yesterday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="priya"
+                  data-unread="false"
+                  data-kind="other"
+                  aria-pressed="false"
+                >
+                  Q3 Research Summary Is Ready
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth">F</span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Finance Team</strong><time class="list-item-text">Monday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="finance"
+                  data-unread="true"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Your Expense Report Was Approved
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/purecomponents.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Olivia Brown</strong><time class="list-item-text">Monday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="olivia"
+                  data-unread="false"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Customer Interview Highlights
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth">G</span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>GitHub</strong><time class="list-item-text">Sunday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="github"
+                  data-unread="false"
+                  data-kind="other"
+                  aria-pressed="false"
+                >
+                  Security Alert Resolved
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/pureframework.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Noah Williams</strong><time class="list-item-text">Sunday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="noah"
+                  data-unread="true"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Frontend Handoff Completed
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/purecomponents.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Maya Chen</strong><time class="list-item-text">Saturday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="maya"
+                  data-unread="false"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Updated Component Audit
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/pureui.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Amelia Grant</strong><time class="list-item-text">Friday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="amelia"
+                  data-unread="false"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Budget Estimate Ready for Review
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/pureframework.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Leo Martins</strong><time class="list-item-text">Friday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="leo"
+                  data-unread="true"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Updated Sprint Priorities
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth">C</span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Community Team</strong><time class="list-item-text">Thursday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="community"
+                  data-unread="false"
+                  data-kind="other"
+                  aria-pressed="false"
+                >
+                  Invitation: Pure UI Office Hours
+                </button>
+              </div>
+            </li>
+            <li class="pu-list-item list-item-sm" data-interactive data-layout="top-start" data-gap="sm">
+              <span class="pu-avatar avatar-sm avatar-smooth"
+                ><img src="/pages/Demos/assets/storage/avatars/purecomponents.png" alt=""
+              /></span>
+              <div data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                <header data-layout="center-between" data-gap="sm" data-behavior="inline-expand">
+                  <strong>Ethan Walker</strong><time class="list-item-text">Thursday</time>
+                </header>
+                <button
+                  class="list-item-action list-item-title"
+                  type="button"
+                  data-message-id="ethan"
+                  data-unread="false"
+                  data-kind="primary"
+                  aria-pressed="false"
+                >
+                  Accessibility Audit Follow-up
+                </button>
+              </div>
+            </li>
+            <li id="email-empty-state" class="pu-list-item list-item-sm" hidden>
+              <span class="list-item-text">No emails match this view.</span>
+            </li>
+          </ul>
+        </section>
+      </section>
+
+      <section
+        class="pu-card card-sm card-sharp"
+        data-direction="vertical"
+        data-layout="start-top"
+        data-gap="none"
+        aria-label="Reader column"
+      >
+        <header
+          class="pu-box box-md box-sharp"
+          data-layout="center-between"
+          data-gap="md"
+          data-behavior="inline-expand"
+        >
+          <nav data-layout="center-start" data-gap="sm" aria-label="Message actions">
+            <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" aria-label="Back to messages">
+              <svg aria-hidden="true"><use href="#email-icon-arrow-left" /></svg>
+            </button>
+            <span class="email-toolbar-separator" role="separator" aria-orientation="vertical"></span>
+            <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" aria-label="Delete">
+              <svg aria-hidden="true"><use href="#email-icon-trash" /></svg>
+            </button>
+            <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" aria-label="Archive">
+              <svg aria-hidden="true"><use href="#email-icon-archive" /></svg>
+            </button>
+            <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" aria-label="Report">
+              <svg aria-hidden="true"><use href="#email-icon-warning" /></svg>
+            </button>
+            <span class="email-toolbar-separator" role="separator" aria-orientation="vertical"></span>
+            <div class="pu-menu menu-sm" data-placement="block-end">
+              <button
+                class="pu-btn btn-sm btn-ghost menu-trigger"
+                type="button"
+                data-icon-only="true"
+                popovertarget="email-toolbar-menu"
+                aria-label="More message actions"
+              >
+                <svg aria-hidden="true"><use href="#email-icon-more" /></svg>
+              </button>
+              <ul
+                id="email-toolbar-menu"
+                class="menu-content"
+                popover="auto"
+                role="menu"
+                aria-label="More message actions"
+              >
+                <li class="menu-item">
+                  <button class="pu-btn btn-sm btn-ghost menu-control" type="button" role="menuitem">
+                    Mark as unread
+                  </button>
+                </li>
+                <li class="menu-item">
+                  <button class="pu-btn btn-sm btn-ghost menu-control" type="button" role="menuitem">
+                    Move to folder
+                  </button>
+                </li>
+                <li class="menu-item">
+                  <button class="pu-btn btn-sm btn-ghost menu-control" type="button" role="menuitem">
+                    Print email
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <nav data-layout="center-end" data-gap="sm" aria-label="Message navigation">
+            <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" aria-label="Previous email">
+              <svg aria-hidden="true"><use href="#email-icon-chevron-left" /></svg>
+            </button>
+            <span class="pu-badge badge-sm">1 of 18</span>
+            <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" aria-label="Next email">
+              <svg aria-hidden="true"><use href="#email-icon-chevron-right" /></svg>
+            </button>
+          </nav>
+        </header>
+
+        <div
+          class="pu-box box-md box-sharp email-reader-surface"
+          style="--box-background: var(--color-surface)"
+          data-direction="vertical"
+          data-layout="start-top"
+          data-gap="none"
+          data-behavior="expand"
+        >
+          <section
+            id="email-reader-pane"
+            class="pu-card card-elevated card-smooth"
+            data-direction="vertical"
+            data-layout="start-top"
+            data-gap="none"
+            data-behavior="expand"
+            aria-label="Selected email"
+          >
+            <header
+              class="pu-box box-sm box-sharp"
+              data-layout="center-between"
+              data-gap="md"
+              data-behavior="inline-expand"
+            >
+              <h2 id="email-reader-subject" class="card-title" data-behavior="inline-expand">
+                Action Required: Unpaid Invoice
+              </h2>
+              <time id="email-reader-date" class="card-subtitle" data-behavior="inline-compact"
+                >15 Feb 2025, 10:43 PM</time
+              >
+            </header>
+
+            <div
+              class="pu-box box-md box-sharp"
+              data-layout="center-between"
+              data-gap="md"
+              data-behavior="inline-expand"
+            >
+              <div data-layout="center-start" data-gap="sm" data-behavior="inline-expand">
+                <span class="pu-avatar avatar-sm avatar-smooth">
+                  <img id="email-reader-avatar" src="/pages/Demos/assets/storage/avatars/pureui.png" alt="" />
+                </span>
+
+                <span data-direction="vertical" data-layout="start-top" data-gap="xs" data-behavior="inline-expand">
+                  <span data-layout="center-start" data-gap="xs" data-behavior="inline-expand">
+                    <span class="pu-badge badge-sm badge-rounded" data-intent="info">
+                      <svg role="img" aria-label="Verified">
+                        <use href="#email-icon-check" />
+                      </svg>
+                    </span>
+
+                    <strong id="email-reader-sender" data-behavior="inline-compact"> Jane Holmes </strong>
+
+                    <span class="card-subtitle" aria-hidden="true">│</span>
+
+                    <span id="email-reader-address" class="card-subtitle" data-behavior="inline-expand">
+                      jane@cosmos.example
+                    </span>
+                  </span>
+
+                  <small class="card-subtitle">
+                    <span>To: <b>Alex Morgan</b></span> ·
+                    <span>Cc: Maya Chen</span>
+                  </small>
+                </span>
+              </div>
+              <nav data-layout="top-start" data-gap="xs" data-behavior="inline-compact" aria-label="Sender actions">
+                <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" aria-label="Star email">
+                  <svg aria-hidden="true"><use href="#email-icon-star" /></svg>
+                </button>
+                <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" aria-label="Reply">
+                  <svg aria-hidden="true"><use href="#email-icon-reply" /></svg>
+                </button>
+                <button
+                  class="pu-btn btn-sm btn-ghost"
+                  type="button"
+                  data-icon-only="true"
+                  aria-label="More sender actions"
+                >
+                  <svg aria-hidden="true"><use href="#email-icon-more" /></svg>
+                </button>
+              </nav>
+            </div>
+
+            <article
+              class="pu-card card-sm card-ghost pu-box box-sm box-sharp"
+              data-direction="vertical"
+              data-layout="start-top"
+              data-gap="lg"
+              data-behavior="expand"
+            >
+              <div id="email-important-alert" class="pu-alert alert-sm alert-smooth" data-intent="info">
+                <svg class="alert-icon" aria-hidden="true"><use href="#email-icon-sparkle" /></svg>
+                <p class="alert-message">This message is highly important.</p>
+              </div>
+              <div
+                id="email-reader-body"
+                class="pu-overflow overflow-y"
+                data-behavior="expand"
+                role="region"
+                aria-label="Message content"
+                tabindex="0"
+              >
+                <p>Dear Alex Morgan,</p>
+                <p>I hope this message finds you well.</p>
+                <p>
+                  This is a friendly reminder that invoice #12345 is now due for payment. Please settle the amount by
+                  March 10, 2025, to avoid any late fees or service interruptions.
+                </p>
+                <p>
+                  The outstanding balance is <b>$4,850.00</b>. Please include invoice #12345 as the payment reference so
+                  our accounts team can match the transfer without delay.
+                </p>
+                <p>
+                  Please find the invoice attached for your reference. If you have already processed this payment,
+                  please disregard this notice.
+                </p>
+                <p>
+                  You can review the billing details, payment terms, and itemized charges in the attached document. The
+                  invoice includes the services delivered during the latest billing period and the applicable taxes.
+                </p>
+                <p>
+                  If your finance team requires a purchase order, tax certificate, or updated vendor information before
+                  releasing the payment, reply to this email and we will provide it as soon as possible.
+                </p>
+                <p>
+                  Once the payment has cleared, you will receive a confirmation for your records. Bank processing times
+                  may vary, so the confirmation can arrive a few business days after the transfer is initiated.
+                </p>
+                <p>If you have any questions or require further details, feel free to reach out.</p>
+                <p>Best regards,<br /><b>Jane Holmes</b><br /><br />Accounts Manager<br />Cosmos</p>
+              </div>
+              <details
+                id="email-attachments"
+                class="pu-collapsible collapsible-sm collapsible-smooth"
+                data-behavior="expand-compact"
+                open
+              >
+                <summary>
+                  <strong>Attachment</strong>
+                  <span data-layout="center-start" data-gap="sm">
+                    <small>Secured by <b>Pure.ai</b></small></span
+                  >
+                </summary>
+                <ul class="pu-list list-none" role="list" data-layout="start" data-gap="xs">
+                  <li class="list-item-sm" data-layout="top-start" data-behavior="auto">
+                    <button
+                      class="pu-btn btn-xs btn-outline btn-smooth"
+                      style="--btn-surface: transparent"
+                      data-layout="top-start"
+                      data-gap="xs"
+                      data-behavior="auto"
+                    >
+                      <strong>Invoice.pdf</strong>
+                    </button>
+                  </li>
+
+                  <li class="list-item-xs email-attachment-item" data-layout="top-start" data-behavior="auto">
+                    <button
+                      class="pu-btn btn-xs btn-outline btn-smooth"
+                      style="--btn-surface: transparent"
+                      data-layout="top-start"
+                      data-gap="xs"
+                      data-behavior="auto"
+                    >
+                      <strong>Screenshot.jpg</strong>
+                    </button>
+                  </li>
+
+                  <li class="list-item-xs email-attachment-item" data-layout="top-start" data-behavior="auto">
+                    <button
+                      class="pu-btn btn-xs btn-outline btn-smooth"
+                      style="--btn-surface: transparent"
+                      data-layout="top-start"
+                      data-gap="xs"
+                      data-behavior="auto"
+                    >
+                      <strong>Recording.mp4</strong>
+                    </button>
+                  </li>
+                </ul>
+              </details>
+            </article>
+          </section>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <p id="email-live-status" class="pu-badge badge-sm" aria-live="polite">Email workspace ready.</p>
+
+  <dialog id="email-connect-dialog" class="pu-dialog dialog-sm dialog-rounded">
+    <form method="dialog" id="email-connect-form" class="pu-form form-sm">
+      <header class="dialog-header">
+        <div>
+          <h2>Connect an inbox</h2>
+          <p class="pu-field-hint">Bring another account into your workspace.</p>
+        </div>
+        <button
+          class="pu-btn btn-sm btn-ghost"
+          type="button"
+          commandfor="email-connect-dialog"
+          command="close"
+          data-icon-only="true"
+          aria-label="Close"
+        >
+          <svg aria-hidden="true"><use href="#email-icon-x" /></svg>
+        </button>
+      </header>
+      <div class="dialog-body" data-direction="vertical" data-layout="start-top" data-gap="md">
+        <fieldset class="pu-fieldset fieldset-sm">
+          <legend>Choose a provider</legend>
+          <label class="pu-pill pill-md pill-outline"
+            ><input type="radio" name="provider" value="Google" checked />Google</label
+          ><label class="pu-pill pill-md pill-outline"
+            ><input type="radio" name="provider" value="Outlook" />Outlook</label
+          >
+        </fieldset>
+        <div class="pu-field field-sm">
+          <label class="pu-label" for="email-connect-address">Email address</label
+          ><input
+            id="email-connect-address"
+            class="pu-input input-md"
+            type="email"
+            name="email"
+            placeholder="you@company.com"
+            required
+          />
+        </div>
+      </div>
+      <footer class="dialog-footer">
+        <button class="pu-btn btn-sm btn-ghost" type="submit">Cancel</button
+        ><button class="pu-btn btn-sm" type="submit" value="connect">Connect inbox</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="email-folder-dialog" class="pu-dialog dialog-sm dialog-rounded">
+    <form method="dialog" id="email-folder-form" class="pu-form form-sm">
+      <header class="dialog-header">
+        <div>
+          <h2>Create folder</h2>
+          <p class="pu-field-hint">Add a destination to the sidebar.</p>
+        </div>
+      </header>
+      <div class="dialog-body">
+        <div class="pu-field field-sm">
+          <label class="pu-label" for="email-folder-name">Folder name</label
+          ><input
+            id="email-folder-name"
+            class="pu-input input-md"
+            type="text"
+            name="folder"
+            placeholder="e.g. Marketing"
+            maxlength="28"
+            required
+          />
+        </div>
+      </div>
+      <footer class="dialog-footer">
+        <button class="pu-btn btn-sm btn-ghost" type="submit">Cancel</button
+        ><button class="pu-btn btn-sm" type="submit" value="create">Create folder</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="email-category-dialog" class="pu-dialog dialog-sm dialog-rounded" aria-labelledby="email-category-title">
+    <form method="dialog" id="email-category-form" class="pu-form form-sm">
+      <header class="dialog-header">
+        <div>
+          <h2 id="email-category-title">Add category</h2>
+          <p class="pu-field-hint">Create another message category.</p>
+        </div>
+      </header>
+      <div class="dialog-body">
+        <div class="pu-field field-sm">
+          <label class="pu-label" for="email-category-name">Category name</label
+          ><input
+            id="email-category-name"
+            class="pu-input input-md"
+            type="text"
+            name="category"
+            placeholder="e.g. Newsletters"
+            maxlength="20"
+            required
+          />
+        </div>
+      </div>
+      <footer class="dialog-footer">
+        <button class="pu-btn btn-sm btn-ghost" type="submit">Cancel</button
+        ><button class="pu-btn btn-sm" type="submit" value="create">Add category</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="email-compose-dialog" class="pu-dialog dialog-md dialog-rounded" aria-labelledby="email-compose-title">
+    <form
+      method="dialog"
+      id="email-compose-form"
+      class="pu-form form-md"
+      data-direction="vertical"
+      data-layout="start-top"
+      data-gap="none"
+    >
+      <header class="dialog-header" data-layout="center-between" data-gap="md" data-behavior="inline-expand">
+        <div data-layout="center-start" data-gap="sm" data-behavior="inline-expand">
+          <span class="pu-avatar avatar-sm avatar-smooth"
+            ><img src="/pages/Demos/assets/storage/avatars/pureui.png" alt=""
+          /></span>
+          <span data-direction="vertical" data-layout="start-top" data-gap="none">
+            <h2 id="email-compose-title">New message</h2>
+            <span class="pu-field-hint">From Alex Morgan · alex@pureui.dev</span>
+          </span>
+        </div>
+        <button
+          class="pu-btn btn-sm btn-ghost"
+          type="button"
+          commandfor="email-compose-dialog"
+          command="close"
+          data-icon-only="true"
+          aria-label="Close new message"
+        >
+          <svg aria-hidden="true"><use href="#email-icon-x" /></svg>
+        </button>
+      </header>
+      <div
+        class="dialog-body"
+        data-direction="vertical"
+        data-layout="start-top"
+        data-gap="lg"
+        data-behavior="inline-expand"
+      >
+        <div class="pu-field field-md" data-behavior="inline-expand">
+          <label class="pu-label" for="email-compose-to">To</label>
+          <input
+            id="email-compose-to"
+            class="pu-input input-md input-smooth"
+            type="email"
+            name="to"
+            placeholder="name@example.com"
+            autocomplete="email"
+            required
+          />
+        </div>
+        <div class="pu-field field-md" data-behavior="inline-expand">
+          <label class="pu-label" for="email-compose-cc">Cc <span class="pu-field-hint">Optional</span></label>
+          <input
+            id="email-compose-cc"
+            class="pu-input input-md input-smooth"
+            type="email"
+            name="cc"
+            placeholder="copy@example.com"
+            autocomplete="email"
+          />
+        </div>
+        <div class="pu-field field-md" data-behavior="inline-expand">
+          <label class="pu-label" for="email-compose-subject">Subject</label>
+          <input
+            id="email-compose-subject"
+            class="pu-input input-md input-smooth"
+            type="text"
+            name="subject"
+            placeholder="What is this email about?"
+            required
+          />
+        </div>
+        <div class="pu-field field-md" data-behavior="inline-expand">
+          <label class="pu-label" for="email-compose-message">Message</label>
+          <textarea
+            id="email-compose-message"
+            class="pu-textarea textarea-md textarea-smooth"
+            name="message"
+            rows="9"
+            data-resize="none"
+            placeholder="Write your message…"
+            required
+          ></textarea>
+        </div>
+      </div>
+      <footer class="dialog-footer" data-layout="center-between" data-gap="md" data-behavior="inline-expand">
+        <button class="pu-btn btn-sm btn-ghost" type="submit" value="draft" formnovalidate>Save draft</button>
+        <div data-layout="center-end" data-gap="sm">
+          <button class="pu-btn btn-sm btn-ghost" type="button" commandfor="email-compose-dialog" command="close">
+            Cancel
+          </button>
+          <button class="pu-btn btn-md" type="submit" value="send">
+            <svg aria-hidden="true"><use href="#email-icon-send" /></svg>Send email
+          </button>
+        </div>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="email-upgrade-dialog" class="pu-dialog dialog-sm dialog-rounded">
+    <form method="dialog" class="pu-form form-sm">
+      <header class="dialog-header">
+        <div>
+          <h2>Upgrade to Pure Pro</h2>
+          <p class="pu-field-hint">More space and connected accounts.</p>
+        </div>
+      </header>
+      <div class="dialog-body" data-direction="vertical" data-layout="start-top" data-gap="md">
+        <span class="pu-pill pill-lg">$12 <small>per month</small></span>
+        <ul class="pu-list list-sm">
+          <li>256GB visual email storage</li>
+          <li>Unlimited connected inboxes</li>
+          <li>AI priority summaries</li>
+        </ul>
+      </div>
+      <footer class="dialog-footer">
+        <button class="pu-btn btn-sm btn-ghost" type="submit">Maybe later</button
+        ><button class="pu-btn btn-sm" type="submit">Start demo plan</button>
+      </footer>
+    </form>
+  </dialog>
+</div>
+
+<script>
+  (function () {
+    "use strict";
+
+    var root = document.querySelector("#email-demo");
+    if (!root) return;
+
+    var live = root.querySelector("#email-live-status");
+    var messages = {
+      john: [
+        "John Doe",
+        "john@pureui.dev",
+        "Important Update on Your Account",
+        "Just now",
+        "/pages/Demos/assets/storage/avatars/pureui.png",
+      ],
+      sarah: [
+        "Sarah Miller",
+        "sarah@pureui.dev",
+        "Your Subscription Renewal Notice",
+        "10 min ago",
+        "/pages/Demos/assets/storage/avatars/purecomponents.png",
+      ],
+      tech: [
+        "Tech Support",
+        "support@pureui.dev",
+        "System Maintenance Scheduled",
+        "1 hour ago",
+        "/pages/Demos/assets/storage/avatars/purecomponents.png",
+      ],
+      mark: [
+        "Mark Davis",
+        "mark@pureui.dev",
+        "Meeting Reminder: 3 PM Today",
+        "2 hours ago",
+        "/pages/Demos/assets/storage/avatars/pureframework.png",
+      ],
+      pure: [
+        "Jane Holmes",
+        "jane@cosmos.example",
+        "Action Required: Unpaid Invoice",
+        "15 Feb 2025, 10:43 PM",
+        "/pages/Demos/assets/storage/avatars/pureui.png",
+      ],
+      elena: [
+        "Elena Rossi",
+        "elena@pureui.dev",
+        "Updated Launch Checklist for Friday",
+        "Today, 5:18 PM",
+        "/pages/Demos/assets/storage/avatars/purecomponents.png",
+      ],
+      daniel: [
+        "Daniel Kim",
+        "daniel@pureui.dev",
+        "Design Review Notes and Next Steps",
+        "Yesterday, 4:42 PM",
+        "/pages/Demos/assets/storage/avatars/pureframework.png",
+      ],
+      priya: [
+        "Priya Shah",
+        "priya@insight.example",
+        "Q3 Research Summary Is Ready",
+        "Yesterday, 11:26 AM",
+        "/pages/Demos/assets/storage/avatars/pureui.png",
+      ],
+      finance: [
+        "Finance Team",
+        "finance@pureui.dev",
+        "Your Expense Report Was Approved",
+        "Monday, 3:05 PM",
+        "/pages/Demos/assets/storage/avatars/pureframework.png",
+      ],
+      olivia: [
+        "Olivia Brown",
+        "olivia@research.example",
+        "Customer Interview Highlights",
+        "Monday, 9:14 AM",
+        "/pages/Demos/assets/storage/avatars/purecomponents.png",
+      ],
+      github: [
+        "GitHub",
+        "notifications@github.com",
+        "Security Alert Resolved",
+        "Sunday, 8:37 PM",
+        "/pages/Demos/assets/storage/avatars/pureui.png",
+      ],
+      noah: [
+        "Noah Williams",
+        "noah@pureui.dev",
+        "Frontend Handoff Completed",
+        "Sunday, 2:19 PM",
+        "/pages/Demos/assets/storage/avatars/pureframework.png",
+      ],
+      maya: [
+        "Maya Chen",
+        "maya@pureui.dev",
+        "Updated Component Audit",
+        "Saturday, 10:02 AM",
+        "/pages/Demos/assets/storage/avatars/purecomponents.png",
+      ],
+      amelia: [
+        "Amelia Grant",
+        "amelia@pureui.dev",
+        "Budget Estimate Ready for Review",
+        "Friday, 4:48 PM",
+        "/pages/Demos/assets/storage/avatars/pureui.png",
+      ],
+      leo: [
+        "Leo Martins",
+        "leo@pureui.dev",
+        "Updated Sprint Priorities",
+        "Friday, 1:22 PM",
+        "/pages/Demos/assets/storage/avatars/pureframework.png",
+      ],
+      community: [
+        "Community Team",
+        "community@pureui.dev",
+        "Invitation: Pure UI Office Hours",
+        "Thursday, 5:30 PM",
+        "/pages/Demos/assets/storage/avatars/pureui.png",
+      ],
+      ethan: [
+        "Ethan Walker",
+        "ethan@pureui.dev",
+        "Accessibility Audit Follow-up",
+        "Thursday, 9:16 AM",
+        "/pages/Demos/assets/storage/avatars/purecomponents.png",
+      ],
+    };
+
+    function announce(message) {
+      live.textContent = message;
+    }
+
+    root.addEventListener("click", function (event) {
+      var trigger = event.target.closest("[commandfor]");
+      if (trigger) {
+        var dialog = document.getElementById(trigger.getAttribute("commandfor"));
+        var command = trigger.getAttribute("command");
+        if (dialog && command === "show-modal" && !dialog.open) dialog.showModal();
+        if (dialog && command === "close" && dialog.open) dialog.close();
+      }
+
+      var mailbox = event.target.closest("[data-mailbox]");
+      if (mailbox) {
+        root.querySelectorAll("[data-mailbox]").forEach(function (item) {
+          item.removeAttribute("aria-current");
+        });
+        mailbox.setAttribute("aria-current", "page");
+        root.querySelector("#email-total-label").textContent =
+          mailbox.dataset.mailbox === "Inbox" ? "1,897 Emails" : mailbox.dataset.mailbox;
+        announce(mailbox.dataset.mailbox + " opened.");
+      }
+    });
+
+    root.querySelectorAll("[data-account-name]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        root.querySelectorAll("[data-account-name]").forEach(function (item) {
+          item.setAttribute("aria-pressed", "false");
+        });
+        button.setAttribute("aria-pressed", "true");
+        root.querySelector("#email-profile-name").textContent = button.dataset.accountName;
+        root.querySelector("#email-profile-address").textContent = button.dataset.accountEmail;
+        root.querySelector("#email-greeting-name").textContent = button.dataset.accountName.split(" ")[0];
+        var source = button.querySelector("img");
+        if (source) root.querySelector("#email-profile-avatar").src = source.src;
+        announce(button.dataset.accountName + " selected.");
+      });
+    });
+
+    var messageButtons = Array.from(root.querySelectorAll("[data-message-id]"));
+    var searchFields = [root.querySelector("#email-sidebar-search"), root.querySelector("#email-global-search")];
+    var selectedFilter = "all";
+
+    function filterMessages() {
+      var query = searchFields
+        .map(function (field) {
+          return field.value.trim().toLowerCase();
+        })
+        .filter(Boolean)
+        .join(" ");
+      var shown = 0;
+      messageButtons.forEach(function (button) {
+        var matchesFilter =
+          selectedFilter === "all" ||
+          (selectedFilter === "unread" && button.dataset.unread === "true") ||
+          (selectedFilter === "other" && button.dataset.kind === "other");
+        var matchesQuery = !query || button.closest("li").textContent.toLowerCase().includes(query);
+        button.closest("li").hidden = !(matchesFilter && matchesQuery);
+        if (!button.closest("li").hidden) shown += 1;
+      });
+      root.querySelector("#email-empty-state").hidden = shown !== 0;
+    }
+
+    searchFields.forEach(function (field) {
+      field.addEventListener("input", filterMessages);
+    });
+    root.querySelector("#email-category-filters").addEventListener("click", function (event) {
+      var filter = event.target.closest("[data-filter]");
+      if (!filter) return;
+      root.querySelectorAll("#email-category-filters [data-filter]").forEach(function (item) {
+        item.setAttribute("aria-pressed", item === filter ? "true" : "false");
+      });
+      selectedFilter = filter.dataset.filter;
+      filterMessages();
+    });
+
+    messageButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var message = messages[button.dataset.messageId];
+        if (!message) return;
+        root.querySelector("#email-reader-sender").textContent = message[0];
+        root.querySelector("#email-reader-address").textContent = message[1];
+        root.querySelector("#email-reader-subject").textContent = message[2];
+        root.querySelector("#email-reader-date").textContent = message[3];
+        root.querySelector("#email-reader-avatar").src = message[4];
+        messageButtons.forEach(function (item) {
+          var selected = item === button;
+          item.setAttribute("aria-pressed", selected ? "true" : "false");
+        });
+        announce(message[2] + " opened.");
+      });
+    });
+
+    var folderForm = root.querySelector("#email-folder-form");
+    folderForm.addEventListener("submit", function (event) {
+      if (!event.submitter || event.submitter.value !== "create") return;
+      event.preventDefault();
+      var input = folderForm.elements.folder;
+      if (!input.reportValidity()) return;
+      var li = document.createElement("li");
+      li.className = "menu-item";
+      li.innerHTML =
+        '<button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-mailbox="' +
+        input.value.replace(/"/g, "&quot;") +
+        '">' +
+        input.value.replace(/</g, "&lt;") +
+        "</button>";
+      root.querySelector("#email-folder-list").appendChild(li);
+      root.querySelector("#email-folder-dialog").close();
+      announce(input.value + " folder created.");
+      folderForm.reset();
+    });
+
+    var categoryForm = root.querySelector("#email-category-form");
+    categoryForm.addEventListener("submit", function (event) {
+      if (!event.submitter || event.submitter.value !== "create") return;
+      event.preventDefault();
+      var input = categoryForm.elements.category;
+      if (!input.reportValidity()) return;
+
+      var filter = document.createElement("button");
+      filter.className = "pu-btn btn-sm email-filter-button";
+      filter.type = "button";
+      filter.dataset.filter = "category:" + input.value;
+      filter.setAttribute("aria-pressed", "false");
+      filter.textContent = input.value;
+      root.querySelector("#email-category-filters").appendChild(filter);
+
+      filter.click();
+      root.querySelector("#email-category-dialog").close();
+      announce(input.value + " category created.");
+      categoryForm.reset();
+    });
+
+    var connectForm = root.querySelector("#email-connect-form");
+    connectForm.addEventListener("submit", function (event) {
+      if (!event.submitter || event.submitter.value !== "connect") return;
+      event.preventDefault();
+      if (!connectForm.reportValidity()) return;
+      root.querySelector("#email-connect-dialog").close();
+      announce(connectForm.elements.email.value + " connected to the demo.");
+      connectForm.reset();
+    });
+
+    var composeForm = root.querySelector("#email-compose-form");
+    composeForm.addEventListener("submit", function (event) {
+      var action = event.submitter ? event.submitter.value : "send";
+      if (action !== "send") {
+        announce("Message saved as a draft.");
+        return;
+      }
+      event.preventDefault();
+      if (!composeForm.reportValidity()) return;
+      root.querySelector("#email-compose-dialog").close();
+      announce("Email sent to " + composeForm.elements.to.value + ".");
+      composeForm.reset();
+    });
+  })();
+</script>

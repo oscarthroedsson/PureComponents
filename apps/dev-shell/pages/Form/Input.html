@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Input — PureComponents</title>
+    <title>Input — Elements</title>
     <meta name="pc-description" content="The single-line text box, in every type that renders as one." />
 
     <link rel="stylesheet" href="/pureui/styles/main.css" />
@@ -16,7 +16,7 @@
   </head>
   <body data-component="Form/Input">
     <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">The key alone is already <code>md</code>. Width comes from the parent — the input fills it.</p>
+      <p class="pc-note">The key alone is already <code>input-md</code>. Width comes from the parent — the input fills it.</p>
       <template>
         <div class="pu-field">
           <label class="pu-label" for="example">Example</label>
@@ -27,39 +27,39 @@
 
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
-        <code>sm</code> · <code>md</code> · <code>lg</code> — 12 / 14 / 16px. Only the font size is
+        <code>input-sm</code> · <code>input-md</code> · <code>input-lg</code> — 12 / 14 / 16px. Only the font size is
         set; padding and the height floor are in <code>em</code> and follow it.
       </p>
       <template>
         <div class="pu-field">
           <label class="pu-label" for="small">Small</label>
-          <input id="small" class="pu-input sm" type="text" value="Small" />
+          <input id="small" class="pu-input input-sm" type="text" value="Small" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="medium">Medium</label>
-          <input id="medium" class="pu-input md" type="text" value="Medium" />
+          <input id="medium" class="pu-input input-md" type="text" value="Medium" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="large">Large</label>
-          <input id="large" class="pu-input lg" type="text" value="Large" />
+          <input id="large" class="pu-input input-lg" type="text" value="Large" />
         </div>
       </template>
     </section>
 
     <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note"><code>sharp</code> · <code>smooth</code> (default) · <code>rounded</code>.</p>
+      <p class="pc-note"><code>input-sharp</code> · <code>input-smooth</code> (default) · <code>input-rounded</code>.</p>
       <template>
         <div class="pu-field">
           <label class="pu-label" for="sharp">Sharp</label>
-          <input id="sharp" class="pu-input sharp" type="text" value="sharp" />
+          <input id="sharp" class="pu-input input-sharp" type="text" value="sharp" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="smooth">Smooth</label>
-          <input id="smooth" class="pu-input smooth" type="text" value="smooth" />
+          <input id="smooth" class="pu-input input-smooth" type="text" value="smooth" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rounded">Rounded</label>
-          <input id="rounded" class="pu-input rounded" type="text" value="rounded" />
+          <input id="rounded" class="pu-input input-rounded" type="text" value="rounded" />
         </div>
       </template>
     </section>
@@ -95,19 +95,19 @@
       <template>
         <div class="pu-field">
           <label class="pu-label" for="ghost-filled">Ghost, filled</label>
-          <input id="ghost-filled" class="pu-input ghost" type="text" value="Storgatan 14" />
+          <input id="ghost-filled" class="pu-input input-ghost" type="text" value="Storgatan 14" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="ghost-empty">Ghost, empty</label>
-          <input id="ghost-empty" class="pu-input ghost" type="text" placeholder="Placeholder still reads" />
+          <input id="ghost-empty" class="pu-input input-ghost" type="text" placeholder="Placeholder still reads" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="ghost-invalid">Ghost, invalid</label>
-          <input id="ghost-invalid" class="pu-input ghost" type="text" value="Wrong" aria-invalid="true" />
+          <input id="ghost-invalid" class="pu-input input-ghost" type="text" value="Wrong" aria-invalid="true" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="ghost-disabled">Ghost, disabled</label>
-          <input id="ghost-disabled" class="pu-input ghost" type="text" value="Disabled" disabled />
+          <input id="ghost-disabled" class="pu-input input-ghost" type="text" value="Disabled" disabled />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="filled">Filled</label>
@@ -170,7 +170,7 @@
           <label class="pu-label" for="icon-lg">Larger and rounded — the icon follows the field</label>
           <div class="pu-input-group">
             <svg class="input-icon" data-placement="start" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-            <input id="icon-lg" class="pu-input lg rounded" type="search" value="pure" />
+            <input id="icon-lg" class="pu-input input-lg input-rounded" type="search" value="pure" />
           </div>
         </div>
         <div class="pu-field">
@@ -253,7 +253,7 @@
       <template>
         <div class="pu-field">
           <label class="pu-label" for="number-sm">Small</label>
-          <input id="number-sm" class="pu-input sm" type="number" value="111111" step="1" />
+          <input id="number-sm" class="pu-input input-sm" type="number" value="111111" step="1" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="number-md">Medium</label>
@@ -261,7 +261,7 @@
         </div>
         <div class="pu-field">
           <label class="pu-label" for="number-lg">Large</label>
-          <input id="number-lg" class="pu-input lg" type="number" value="111111" step="1" />
+          <input id="number-lg" class="pu-input input-lg" type="number" value="111111" step="1" />
         </div>
       </template>
     </section>
@@ -284,7 +284,7 @@
         </div>
         <div class="pu-field">
           <label class="pu-label" for="number-ghost">Ghost</label>
-          <input id="number-ghost" class="pu-input ghost" type="number" value="42" step="1" />
+          <input id="number-ghost" class="pu-input input-ghost" type="number" value="42" step="1" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="number-readonly">Read only</label>

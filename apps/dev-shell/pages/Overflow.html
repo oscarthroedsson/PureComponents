@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overflow — Elements</title>
+    <meta
+      name="pc-description"
+      content="A scroll container that stays shrinkable inside constrained layouts. Use the key for both axes or select horizontal or vertical overflow without adding sizing rules to its children."
+    />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/a-tag.css" />
+    <link rel="stylesheet" href="/pureui/styles/list.css" />
+    <link rel="stylesheet" href="/pureui/styles/card.css" />
+    <link rel="stylesheet" href="/pureui/styles/overflow.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Overflow">
+    <section class="pc-doc" id="api" data-title="API">
+      <h2>API</h2>
+      <table class="pc-doc-table">
+        <thead>
+          <tr><th>Key</th><th>Type</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>.pu-overflow</code></td>
+            <td><span class="pc-cat pc-cat-key">Key</span></td>
+            <td>Allows automatic scrolling on both axes.</td>
+          </tr>
+          <tr>
+            <td><code>.overflow-x</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Allows horizontal scrolling and closes the vertical axis.</td>
+          </tr>
+          <tr>
+            <td><code>.overflow-y</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Allows vertical scrolling and closes the horizontal axis.</td>
+          </tr>
+          <tr>
+            <td><code>--overflow-x</code></td>
+            <td><span class="pc-cat pc-cat-variables">Variables</span></td>
+            <td>Controls horizontal overflow; defaults to <code>auto</code>.</td>
+          </tr>
+          <tr>
+            <td><code>--overflow-y</code></td>
+            <td><span class="pc-cat pc-cat-variables">Variables</span></td>
+            <td>Controls vertical overflow; defaults to <code>auto</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="pc-demo" id="default" data-title="Default">
+      <p class="pc-note">
+        The key enables both axes. The fixed preview size only establishes the boundary that makes overflow observable.
+      </p>
+      <template>
+        <div
+          class="pu-overflow"
+          role="region"
+          aria-label="Two-axis overflow example"
+          tabindex="0"
+          style="inline-size: 18rem; block-size: 9rem; padding: var(--spacing-100); border: 1px solid var(--color-border); border-radius: var(--radius-md)"
+        >
+          <div style="inline-size: 30rem">
+            <h3>Release checklist with a deliberately wide content area</h3>
+            <p>Review tokens, component states, keyboard behavior and responsive layouts.</p>
+            <p>Confirm documentation, package exports, examples and visual regression coverage.</p>
+            <p>Sign off the release after every required check has passed.</p>
+          </div>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="variants" data-title="Variants" data-stage-style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr)); gap: 1rem; align-items: start">
+      <p class="pc-note">
+        A named axis is the only one users can scroll. Descendants keep ownership of their own sizing and wrapping behavior.
+      </p>
+      <template>
+        <div
+          class="pu-overflow overflow-x"
+          role="region"
+          aria-label="Horizontal overflow example"
+          tabindex="0"
+          style="inline-size: 18rem; padding: var(--spacing-100); border: 1px solid var(--color-border); border-radius: var(--radius-md)"
+        >
+          <p style="inline-size: 32rem; white-space: nowrap">Planning → Design → Implementation → Review → Release → Monitoring</p>
+        </div>
+
+        <div
+          class="pu-overflow overflow-y"
+          role="region"
+          aria-label="Vertical overflow example"
+          tabindex="0"
+          style="inline-size: 18rem; block-size: 9rem; padding: var(--spacing-100); border: 1px solid var(--color-border); border-radius: var(--radius-md)"
+        >
+          <h3>Deployment activity</h3>
+          <p>Validate the production configuration.</p>
+          <p>Review observability and alert routing.</p>
+          <p>Check the long identifier release-2026-08-30-production-europe-stockholm-primary before deployment.</p>
+          <p>Deploy the application and monitor its health.</p>
+          <p>Record the outcome and notify the team.</p>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="custom-override" data-title="Custom/Override">
+      <p class="pc-note">The component variables accept the native CSS overflow values.</p>
+      <template>
+        <div
+          class="pu-overflow"
+          role="region"
+          aria-label="Custom overflow example"
+          tabindex="0"
+          style="--overflow-x: hidden; --overflow-y: scroll; inline-size: 18rem; block-size: 8rem; padding: var(--spacing-100); border: 1px solid var(--color-border); border-radius: var(--radius-md)"
+        >
+          <h3>Always-visible vertical scrollbar</h3>
+          <p>This example uses the variables rather than an axis utility.</p>
+          <p>The scrollbar remains present even when the content becomes shorter.</p>
+          <p>Prefer the utilities when their automatic behavior is enough.</p>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-doc" id="other" data-title="Other">
+      <h2>Other</h2>
+      <p>The examples below show Overflow composed with another PureUI component.</p>
+    </section>
+
+    <section class="pc-demo" id="vertical-scroll-region" data-title="Vertical Scroll Region">
+      <p class="pc-note">
+        <code>overflow-y</code> turns the bounded body into the only vertical scroll region and closes its horizontal axis. The summary sits outside that region, so it stays visible while the six file rows scroll.
+      </p>
+      <template>
+        <article class="pu-card card-md card-rounded card-elevated" style="block-size: 18rem; max-inline-size: 27rem">
+          <header class="card-header" style="border-block-end: 1px solid var(--color-border)">
+            <h3 class="card-title">Downloads</h3>
+            <p class="card-subtitle">6 files · 48.7 MB</p>
+          </header>
+          <div class="card-body pu-overflow overflow-y" style="padding: 0">
+            <ul class="pu-list list-sm" role="list" aria-label="Downloaded files">
+              <li class="item-row" data-interactive>
+                <span aria-hidden="true" style="display: grid; place-items: center; inline-size: 2rem; block-size: 2rem; flex: none; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface-muted); color: var(--color-text-muted); font-size: 0.625rem; font-weight: var(--font-weight-subheading)">FIG</span>
+                <div>
+                  <a class="pu-link list-action item-title" href="data:text/plain,PureUI%20design%20file" download="pure-ui-kit.fig">pure-ui-kit.fig</a>
+                  <p class="item-text">Figma · Today, 14:32</p>
+                </div>
+                <span class="item-text" style="margin-inline-start: auto; display: inline-flex; align-items: center; gap: var(--spacing-50); white-space: nowrap">
+                  12.4 MB
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="inline-size: 1rem; block-size: 1rem">
+                    <path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" />
+                  </svg>
+                </span>
+              </li>
+              <li class="item-row" data-interactive>
+                <span aria-hidden="true" style="display: grid; place-items: center; inline-size: 2rem; block-size: 2rem; flex: none; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface-muted); color: var(--color-text-muted); font-size: 0.625rem; font-weight: var(--font-weight-subheading)">ZIP</span>
+                <div>
+                  <a class="pu-link list-action item-title" href="data:text/plain,PureUI%20brand%20assets" download="brand-assets.zip">brand-assets.zip</a>
+                  <p class="item-text">Archive · Yesterday</p>
+                </div>
+                <span class="item-text" style="margin-inline-start: auto; display: inline-flex; align-items: center; gap: var(--spacing-50); white-space: nowrap">
+                  28.6 MB
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="inline-size: 1rem; block-size: 1rem">
+                    <path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" />
+                  </svg>
+                </span>
+              </li>
+              <li class="item-row" data-interactive>
+                <span aria-hidden="true" style="display: grid; place-items: center; inline-size: 2rem; block-size: 2rem; flex: none; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface-muted); color: var(--color-text-muted); font-size: 0.625rem; font-weight: var(--font-weight-subheading)">PDF</span>
+                <div>
+                  <a class="pu-link list-action item-title" href="data:text/plain,PureUI%20component%20audit" download="component-audit.pdf">component-audit.pdf</a>
+                  <p class="item-text">Document · Aug 28</p>
+                </div>
+                <span class="item-text" style="margin-inline-start: auto; display: inline-flex; align-items: center; gap: var(--spacing-50); white-space: nowrap">
+                  2.8 MB
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="inline-size: 1rem; block-size: 1rem">
+                    <path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" />
+                  </svg>
+                </span>
+              </li>
+              <li class="item-row" data-interactive>
+                <span aria-hidden="true" style="display: grid; place-items: center; inline-size: 2rem; block-size: 2rem; flex: none; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface-muted); color: var(--color-text-muted); font-size: 0.625rem; font-weight: var(--font-weight-subheading)">JSON</span>
+                <div>
+                  <a class="pu-link list-action item-title" href="data:application/json,%7B%22library%22%3A%22PureUI%22%7D" download="design-tokens.json">design-tokens.json</a>
+                  <p class="item-text">Data · Aug 27</p>
+                </div>
+                <span class="item-text" style="margin-inline-start: auto; display: inline-flex; align-items: center; gap: var(--spacing-50); white-space: nowrap">
+                  18 KB
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="inline-size: 1rem; block-size: 1rem">
+                    <path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" />
+                  </svg>
+                </span>
+              </li>
+              <li class="item-row" data-interactive>
+                <span aria-hidden="true" style="display: grid; place-items: center; inline-size: 2rem; block-size: 2rem; flex: none; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface-muted); color: var(--color-text-muted); font-size: 0.625rem; font-weight: var(--font-weight-subheading)">MD</span>
+                <div>
+                  <a class="pu-link list-action item-title" href="data:text/markdown,%23%20PureUI%20release%20notes" download="release-notes.md">release-notes.md</a>
+                  <p class="item-text">Markdown · Aug 26</p>
+                </div>
+                <span class="item-text" style="margin-inline-start: auto; display: inline-flex; align-items: center; gap: var(--spacing-50); white-space: nowrap">
+                  42 KB
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="inline-size: 1rem; block-size: 1rem">
+                    <path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" />
+                  </svg>
+                </span>
+              </li>
+              <li class="item-row" data-interactive>
+                <span aria-hidden="true" style="display: grid; place-items: center; inline-size: 2rem; block-size: 2rem; flex: none; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface-muted); color: var(--color-text-muted); font-size: 0.625rem; font-weight: var(--font-weight-subheading)">WEBP</span>
+                <div>
+                  <a class="pu-link list-action item-title" href="data:text/plain,PureUI%20image%20preview" download="hero-preview.webp">hero-preview.webp</a>
+                  <p class="item-text">Image · Aug 25</p>
+                </div>
+                <span class="item-text" style="margin-inline-start: auto; display: inline-flex; align-items: center; gap: var(--spacing-50); white-space: nowrap">
+                  4.9 MB
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="inline-size: 1rem; block-size: 1rem">
+                    <path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" />
+                  </svg>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </article>
+      </template>
+    </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

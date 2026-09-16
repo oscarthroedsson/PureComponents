@@ -1,40 +1,6 @@
-/* -----------------Content Board----------------------- */
-/*
-ACCESSIBILITY REQUIREMENTS:
-- The key only applies on <a>. On anything else it does nothing, and that is
-  deliberate: a link that is not an anchor is not reachable by keyboard, is
-  not announced as a link, and has no href for the browser to act on.
-
-- Colour is the only thing separating this link from surrounding text until
-  the pointer arrives, and the underline is decoration rather than the
-  affordance. WCAG 1.4.1 asks that colour never be the sole carrier of
-  meaning, so .pu-link belongs to navigation, lists and standalone links —
-  not to a link buried in a paragraph of body text. A link inside running
-  prose needs an underline that is there from the start; set
-  --link-underline-rest-size to 1px for that case.
-
-- The focus ring comes from main.css. This file must never draw one of its
-  own, and must never remove one.
-
-- The underline animates, so prefers-reduced-motion is honoured below.
-
-USAGE:
-
-<a class="pu-link" href="/about">About</a>
-
-<a class="pu-link" href="/docs" style="--link-underline-rest-size: 1px">
-  a link that is underlined before you touch it
-</a>
-
-COLOR:
-The link takes body text colour at rest and the primary colour on hover, so
-it reads as text until it is aimed at. Both are variables; a consumer who
-wants the link coloured from the start sets --link-color.
-*/
-
 .pu-link:where(a) {
   /* 1. VARIABLES */
-  --link-color: var(--color-neutral-900);
+  --link-color: var(--color-text);
   --link-hover-color: var(--color-primary);
 
   --link-underline-color: var(--link-hover-color);

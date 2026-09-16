@@ -1,68 +1,117 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-
-/* Intent colours. Imported here so every page that links main.css gets them,
-   and always before any component stylesheet — see intent.css on link order. */
-@import url("./intent.css");
-* {
-  box-sizing: border-box;
+:root,
+[data-theme] {
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #9f9fa9;
+  --color-neutral-500: #71717b;
+  --color-neutral-600: #52525c;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
 }
-
-#app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 2rem;
-  height: 100dvh;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-  margin: 0px;
-}
-p {
-  margin: 0px;
-}
-fieldset {
-  padding: 0px;
-}
-
-/* ====================
-   BRAND IDENTITY
-   ==================== */
 
 :root {
-  /* 🎨 Färger */
-  --color-primary: hsl(142, 71%, 45%); /* Används till knappar, länkar */
-  --color-secondary: hsl(189, 94%, 43%); /* Varumärkesaccent */
-  --color-accent-light: hsl(46, 98%, 68%);
+  color-scheme: light;
+}
 
-  /* ===== ⚪ Neutrals ===== */
-  --color-neutral-50: #f8fafc;
-  --color-neutral-100: #f1f5f9;
-  --color-neutral-200: #e1e7ef;
-  --color-neutral-300: #cbd5e1;
-  --color-neutral-400: #94a3b8;
-  --color-neutral-500: #64748b;
-  --color-neutral-600: #475569;
-  --color-neutral-700: #334155;
-  --color-neutral-800: #1e293b;
-  --color-neutral-900: #0f1729;
+[data-scheme="light"] {
+  color-scheme: light;
+}
 
-  --color-destructive: #f00c0c;
+[data-scheme="dark"] {
+  color-scheme: dark;
+}
 
-  /* ===== Semantic Colors (för framtida alerts m.m.) ===== */
-  --color-success: #4ade80;
-  --color-error: #f87171;
-  --color-warning: #facc15;
+:root,
+[data-theme] {
+  --color-surface: light-dark(
+    var(--color-neutral-50),
+    color-mix(in oklab, var(--color-neutral-900), var(--color-neutral-950))
+  );
+  --color-surface-raised: light-dark(var(--color-neutral-0), var(--color-neutral-900));
+  --color-surface-sunken: light-dark(var(--color-neutral-100), var(--color-neutral-950));
+  --color-surface-inverted: light-dark(var(--color-neutral-900), var(--color-neutral-100));
+  --color-surface-muted: light-dark(var(--color-neutral-200), var(--color-neutral-700));
+
+  --color-text: light-dark(var(--color-neutral-900), var(--color-neutral-100));
+  --color-text-muted: light-dark(var(--color-neutral-600), var(--color-neutral-400));
+  --color-text-subtle: light-dark(var(--color-neutral-500), var(--color-neutral-400));
+  --color-text-inverted: light-dark(var(--color-neutral-50), var(--color-neutral-900));
+
+  --color-border-subtle: light-dark(var(--color-neutral-100), var(--color-neutral-800));
+  --color-border: light-dark(var(--color-neutral-200), var(--color-neutral-700));
+  --color-border-strong: light-dark(var(--color-neutral-500), var(--color-neutral-500));
+
+  --color-shade: light-dark(#000000, #ffffff);
+  --shade-hover: var(--color-shade) 12%;
+  --shade-active: var(--color-shade) 12%;
+  --tint-surface: 12%;
+  --tint-border: 48%;
+
+  /* rebeccapurple, added to CSS Color 4 in memory of Rebecca Meyer. */
+  --color-primary: #663399;
+  --color-secondary: hsl(210, 94%, 42%);
+  --color-accent: hsl(46 98% 68%);
   --color-info: #38bdf8;
-  --font-family-heading: "Playfair Display", serif;
+  --color-success: #4ade80;
+  --color-warning: #facc15;
+  --color-error: #f87171;
+  --color-destructive: #e60c0c;
 
-  --color-focus-ring: #1447e6;
+  --color-primary-foreground: var(--color-neutral-0);
+  --color-secondary-foreground: var(--color-neutral-50);
+  --color-accent-foreground: var(--color-neutral-900);
+  --color-info-foreground: var(--color-neutral-900);
+  --color-success-foreground: var(--color-neutral-900);
+  --color-warning-foreground: var(--color-neutral-900);
+  --color-error-foreground: var(--color-neutral-900);
+  --color-destructive-foreground: #ffffff;
 
+  --color-primary-hover: color-mix(in oklab, var(--color-primary), var(--shade-hover));
+  --color-primary-active: color-mix(in oklab, var(--color-primary), var(--shade-active));
+  --color-secondary-hover: color-mix(in oklab, var(--color-secondary), var(--shade-hover));
+  --color-secondary-active: color-mix(in oklab, var(--color-secondary), var(--shade-active));
+  --color-destructive-hover: color-mix(in oklab, var(--color-destructive), var(--shade-hover));
+  --color-destructive-active: color-mix(in oklab, var(--color-destructive), var(--shade-active));
+
+  --color-primary-surface: color-mix(in oklab, var(--color-primary) var(--tint-surface), var(--color-surface));
+  --color-secondary-surface: color-mix(in oklab, var(--color-secondary) var(--tint-surface), var(--color-surface));
+  --color-info-surface: color-mix(in oklab, var(--color-info) var(--tint-surface), var(--color-surface));
+  --color-success-surface: color-mix(in oklab, var(--color-success) var(--tint-surface), var(--color-surface));
+  --color-warning-surface: color-mix(in oklab, var(--color-warning) var(--tint-surface), var(--color-surface));
+  --color-error-surface: color-mix(in oklab, var(--color-error) var(--tint-surface), var(--color-surface));
+  --color-destructive-surface: color-mix(in oklab, var(--color-destructive) var(--tint-surface), var(--color-surface));
+
+  --color-primary-border: color-mix(in oklab, var(--color-primary) var(--tint-border), var(--color-surface));
+  --color-secondary-border: color-mix(in oklab, var(--color-secondary) var(--tint-border), var(--color-surface));
+  --color-info-border: color-mix(in oklab, var(--color-info) var(--tint-border), var(--color-surface));
+  --color-success-border: color-mix(in oklab, var(--color-success) var(--tint-border), var(--color-surface));
+  --color-warning-border: color-mix(in oklab, var(--color-warning) var(--tint-border), var(--color-surface));
+  --color-error-border: color-mix(in oklab, var(--color-error) var(--tint-border), var(--color-surface));
+  --color-destructive-border: color-mix(in oklab, var(--color-destructive) var(--tint-border), var(--color-surface));
+
+  --color-focus-ring: light-dark(#1447e6, #93c5fd);
+}
+
+:root,
+[data-theme] {
+  --font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-heading: var(--font-family-base);
+  --font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --font-size-xs: 0.6875rem;
+  --font-size-sm: 0.75rem;
+  --font-size-md: 0.875rem;
   --font-size-base: 1rem;
-  --line-height-base: 1.5;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 3rem;
 
-  /* 🪄 Rubriker */
   --font-size-h1: 2.5rem;
   --font-size-h2: 2rem;
   --font-size-h3: 1.75rem;
@@ -70,111 +119,192 @@ fieldset {
   --font-size-h5: 1.25rem;
   --font-size-h6: 1.125rem;
 
-  /* Font sizes */
-  --font-size-xs: 0.625rem; /*10px*/
-  --font-size-sm: 0.75rem; /*12px*/
-  --font-size-md: 0.875rem; /*14px*/
-  --font-size-base: 1rem;
-  --font-size-lg: 1.25rem; /*20px*/
-  --font-size-xl: 1.5rem; /*24px*/
-  --font-size-2xl: 2rem; /*32px*/
-  --font-size-3xl: 3rem; /*48px*/
-  --font-weight-subheading: 600;
+  --font-size-control-sm: var(--font-size-sm);
+  --font-size-control-md: var(--font-size-md);
+  --font-size-control-lg: var(--font-size-base);
+  --font-size-body: var(--font-size-base);
+  --font-size-body-sm: var(--font-size-md);
+  --font-size-caption: var(--font-size-sm);
+  --font-size-mono: 0.9375em;
 
-  /* width */
-  --card-width-xs: calc(var(--spacing-100) * 12.5);
-  --card-width-sm: calc(var(--spacing-100) * 18.75);
-  --card-width-md: calc(var(--spacing-100) * 25);
-  --card-width-lg: calc(var(--spacing-100) * 31.25);
-  --card-width-xl: calc(var(--spacing-100) * 37.5);
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.35;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.7;
+  --line-height-control: var(--line-height-tight);
+  --line-height-body: var(--line-height-base);
+  --line-height-heading: var(--line-height-tight);
 
-  /* 📐 Spacing */
+  --tracking-base: 0em;
+  --tracking-tighter: calc(var(--tracking-base) - 0.05em);
+  --tracking-tight: calc(var(--tracking-base) - 0.025em);
+  --tracking-wide: calc(var(--tracking-base) + 0.025em);
+  --tracking-wider: calc(var(--tracking-base) + 0.05em);
+  --tracking-widest: calc(var(--tracking-base) + 0.1em);
+  --tracking-control: var(--tracking-base);
+  --tracking-body: var(--tracking-base);
+  --tracking-heading: var(--tracking-tight);
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-heading: var(--font-weight-bold);
+  --font-weight-subheading: var(--font-weight-semibold);
+
+  --text-box-heading: normal;
+  --text-box-body: normal;
+  --text-box-control: normal;
+}
+
+body {
+  margin: 0;
+
+  color: var(--color-text);
+
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--tracking-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--tracking-heading);
+
+  text-box: var(--text-box-heading);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+h5 {
+  font-size: var(--font-size-h5);
+}
+
+h6 {
+  font-size: var(--font-size-h6);
+}
+
+p {
+  margin: 0;
+
+  text-box: var(--text-box-body);
+  text-wrap: pretty;
+}
+
+small {
+  font-size: var(--font-size-caption);
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-mono);
+}
+
+:root,
+[data-theme] {
+  --spacing-base: 0.25rem;
+
   --spacing-0: 0;
-  --spacing-1: 0.1rem;
-  --spacing-15: 0.15rem;
-  --spacing-25: 0.25rem; /* 4px */
-  --spacing-50: 0.5rem; /* 8px */
-  --spacing-75: 0.75rem; /* 12px */
-  --spacing-100: 1rem; /* 16px */
-  --spacing-125: 1.25rem; /* 20px */
-  --spacing-150: 1.5rem; /* 24px */
-  --spacing-200: 2rem; /* 32px */
-  --spacing-300: 3rem; /* 48px */
-  --spacing-400: 4rem; /* 64px */
+  --spacing-1: calc(var(--spacing-base) * 0.4);
+  --spacing-15: calc(var(--spacing-base) * 0.6);
+  --spacing-25: calc(var(--spacing-base) * 1);
+  --spacing-50: calc(var(--spacing-base) * 2);
+  --spacing-75: calc(var(--spacing-base) * 3);
+  --spacing-100: calc(var(--spacing-base) * 4);
+  --spacing-125: calc(var(--spacing-base) * 5);
+  --spacing-150: calc(var(--spacing-base) * 6);
+  --spacing-200: calc(var(--spacing-base) * 8);
+  --spacing-300: calc(var(--spacing-base) * 12);
+  --spacing-400: calc(var(--spacing-base) * 16);
 
-  /* 🧊 Border radius */
-  --radius-none: 0px;
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  --radius-base: 8px;
+
+  --radius-none: 0;
+  --radius-xs: calc(var(--radius-base) * 0.25);
+  --radius-sm: calc(var(--radius-base) * 0.5);
+  --radius-md: var(--radius-base);
+  --radius-lg: calc(var(--radius-base) * 1.5);
   --radius-full: 999px;
 
-  /* Wondering if I should use this borders instead */
-  --radius-sharp: 0px;
-  /* 8px, not 2px. Every component in the library draws its smooth shape at
-     --radius-md, and this token — which named the same idea — was declared
-     at 2px and then used by nobody. Set to what the library actually looks
-     like, so the shape trio can be read off one line instead of three
-     components' worth of guessing. */
-  --radius-smooth: 8px;
-  --radius-rounded: 999px;
+  --radius-sharp: var(--radius-none);
+  --radius-smooth: var(--radius-md);
+  --radius-rounded: var(--radius-full);
 
-  /* ☁️ Skuggor */
-  --shadow-sm: 0px 0px 10px 7px rgba(0, 0, 0, 0.43);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
-  --shadow-left: -21px 0px 10px -15px rgba(0, 0, 0, 0.2);
+  --shadow-color: light-dark(hsl(215 25% 15%), hsl(0 0% 0%));
+  --shadow-tint-subtle: color-mix(in srgb, var(--shadow-color) 6%, transparent);
+  --shadow-tint: color-mix(in srgb, var(--shadow-color) 10%, transparent);
+  --shadow-tint-strong: color-mix(in srgb, var(--shadow-color) 15%, transparent);
 
-  /* 🎯 Focus ring */
+  --shadow-xs: 0 1px 2px var(--shadow-tint-subtle);
+  --shadow-sm: 0 1px 3px var(--shadow-tint);
+  --shadow-md: 0 4px 6px var(--shadow-tint);
+  --shadow-lg: 0 10px 15px var(--shadow-tint-strong);
+  --shadow-xl: 0 20px 25px -5px var(--shadow-tint-strong), 0 8px 10px -6px var(--shadow-tint-strong);
+
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-medium: 300ms;
+  --duration-slow: 500ms;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  --transition-fast: var(--duration-fast) ease-in-out;
+  --transition-medium: var(--duration-medium) ease;
+
+  --z-index-base: 0;
+  --z-index-sticky: 900;
+  --z-index-header: 1000;
+  --z-index-dropdown: 1010;
+  --z-index-overlay: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-toast: 1100;
+  --z-index-tooltip: 1200;
+
   --focus-ring-width: 1px;
   --focus-ring-offset: 2px;
   --focus-ring-color: var(--color-focus-ring);
-
-  /* 🎬 Transitions */
-  --transition-fast: 0.15s ease-in-out;
-  --transition-medium: 0.3s ease;
-
-  /* 📌 Z-index */
-  --z-index-header: 1000;
-  --z-index-modal: 1050;
-  --z-index-toast: 1100;
-
-  /* Icon size */
-  --icon-size-sm-w: 18px;
-  --icon-size-sm-h: 18px;
-
-  --icon-size-md-w: 20px;
-  --icon-size-md-h: 20px;
-
-  --icon-size-lg-w: 24px;
-  --icon-size-lg-h: 24px;
 }
 
-/* ====================
-   FOCUS RING
-   ==================== */
+* {
+  box-sizing: border-box;
+}
+
+fieldset {
+  padding: 0;
+}
 
 :focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
-
-/*
-Measured against the worse of a white page and the #f1f5f9 stage. WCAG 2.1 AA
-asks 3:1 of a focus indicator (1.4.11), and that ratio is a property of the
-colour alone — a thicker ring does not raise it.
-
-  #193cb8  blue-800     8.05:1   in use
-  #1447e6  blue-700     6.24:1
-  #4f39f6  indigo-600   5.90:1
-  #8e51ff  violet-500   4.02:1
-  #ad46ff  purple-500   3.76:1
-
-Below 3:1 at every width, colour is why:
-
-  #00a6f4  sky-500      2.47:1
-  #00d3f2  cyan-400     1.65:1
-  #05df72  green-400    1.62:1
-  #9ae600  lime-400     1.40:1
-*/

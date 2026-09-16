@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>List — PureComponents</title>
+    <title>List — Elements</title>
     <meta
       name="pc-description"
       content="List spacing. The class goes on the ul or ol and every item is reached from there."
@@ -28,10 +28,10 @@
       .pc-stage-inner .demo-frame {
         inline-size: min(30rem, 100%);
 
-        border: 1px solid var(--color-neutral-200);
+        border: 1px solid var(--color-border);
         border-radius: var(--radius-lg);
 
-        background-color: #fff;
+        background-color: var(--color-surface-raised);
 
         overflow: hidden;
       }
@@ -43,19 +43,19 @@
 
         padding: var(--spacing-75) var(--spacing-100);
 
-        border-block-end: 1px solid var(--color-neutral-200);
+        border-block-end: 1px solid var(--color-border);
       }
 
       .pc-stage-inner .demo-frame-title {
         font-weight: 600;
-        color: var(--color-neutral-900);
+        color: var(--color-text);
       }
 
       .pc-stage-inner .demo-frame-sub {
         margin-inline-start: auto;
 
         font-size: var(--font-size-sm);
-        color: var(--color-neutral-500);
+        color: var(--color-text-subtle);
       }
 
       /* Media: cover art and avatars, both sized by the list. */
@@ -86,8 +86,8 @@
 
       .pc-stage-inner .demo-icon {
         background-image: none;
-        background-color: var(--color-neutral-200);
-        color: var(--color-neutral-600);
+        background-color: var(--color-surface-muted);
+        color: var(--color-text-muted);
 
         border-radius: var(--radius-full);
       }
@@ -107,7 +107,7 @@
 
         font-variant-numeric: tabular-nums;
         font-weight: 600;
-        color: var(--color-neutral-400);
+        color: var(--color-text-subtle);
       }
 
       /* Pushed to the far end. */
@@ -118,7 +118,7 @@
 
         font-size: var(--font-size-sm);
         font-variant-numeric: tabular-nums;
-        color: var(--color-neutral-500);
+        color: var(--color-text-subtle);
       }
 
       .pc-stage-inner .demo-actions {
@@ -137,7 +137,7 @@
         flex: none;
 
         border-radius: var(--radius-full);
-        background-color: var(--color-neutral-400);
+        background-color: var(--color-border-strong);
       }
 
       .pc-stage-inner .demo-dot.on {
@@ -185,7 +185,7 @@
             <span class="demo-frame-sub">this month</span>
           </div>
 
-          <ul class="pu-list md">
+          <ul class="pu-list list-md">
             <li class="item-row">
               <span class="demo-rank" aria-hidden="true">1</span>
               <span class="demo-cover" style="--g1: #f472b6; --g2: #a855f7" aria-hidden="true">
@@ -207,7 +207,7 @@
                 <span class="item-text demo-truncate">Aurora Fields</span>
               </div>
               <div class="demo-actions">
-                <button class="pu-btn ghost sm" type="button" data-icon-only="true" aria-label="Play Dreams of Tomorrow">
+                <button class="pu-btn btn-ghost btn-sm" type="button" data-icon-only="true" aria-label="Play Dreams of Tomorrow">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -244,7 +244,7 @@
                 <span class="item-text demo-truncate">The Midnight Collective</span>
               </div>
               <div class="demo-actions">
-                <button class="pu-btn ghost sm" type="button" data-icon-only="true" aria-label="Play track">
+                <button class="pu-btn btn-ghost btn-sm" type="button" data-icon-only="true" aria-label="Play track">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -281,7 +281,7 @@
                 <span class="item-text demo-truncate">Sun Valley</span>
               </div>
               <div class="demo-actions">
-                <button class="pu-btn ghost sm" type="button" data-icon-only="true" aria-label="Play Golden Hour">
+                <button class="pu-btn btn-ghost btn-sm" type="button" data-icon-only="true" aria-label="Play Golden Hour">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -316,7 +316,7 @@
             <span class="demo-frame-sub">3 of 5 approved</span>
           </div>
 
-          <ul class="pu-list md">
+          <ul class="pu-list list-md">
             <li class="item-row">
               <span class="demo-avatar" style="--g1: #34d399; --g2: #059669" aria-hidden="true">AL</span>
               <div class="demo-stack">
@@ -356,7 +356,7 @@
       </p>
 
       <template>
-        <ul class="pu-list md">
+        <ul class="pu-list list-md">
           <li class="item-row">
             <span class="demo-dot on" aria-hidden="true"></span>
             api-gateway
@@ -376,17 +376,36 @@
       </template>
     </section>
 
+    <!-- ITEM PADDING -->
+
+    <section class="pc-demo" id="item-padding" data-title="Item padding">
+      <p class="pc-note">
+        <code>list-items-none</code> removes padding from the direct <code>&lt;li&gt;</code> elements when another
+        PureUI layout class owns their placement. The list keeps its semantics and optional rules.
+      </p>
+
+      <template>
+        <div class="demo-frame">
+          <ul class="pu-list list-md list-items-none" role="list">
+            <li class="list-item-xs">First item uses the smallest item padding</li>
+            <li>Second item reaches the list edge</li>
+            <li class="list-item-xs">Third item uses the smallest item padding</li>
+          </ul>
+        </div>
+      </template>
+    </section>
+
     <!-- ALIGNMENT -->
 
     <section class="pc-demo" id="alignment" data-title="Row alignment">
       <p class="pc-note">
-        <code>top</code>, <code>center</code> (default) and <code>bottom</code> decide how the media lines up against
+        <code>list-top</code>, <code>list-center</code> (default) and <code>list-bottom</code> decide how the media lines up against
         text that runs to more than one line.
       </p>
 
       <template>
-        <ul class="pu-list md">
-          <li class="item-row top">
+        <ul class="pu-list list-md">
+          <li class="item-row list-top">
             <span class="demo-icon" aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
@@ -408,7 +427,7 @@
               >
             </div>
           </li>
-          <li class="item-row center">
+          <li class="item-row list-center">
             <span class="demo-icon" aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
@@ -430,7 +449,7 @@
               >
             </div>
           </li>
-          <li class="item-row bottom">
+          <li class="item-row list-bottom">
             <span class="demo-icon" aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
@@ -453,6 +472,38 @@
       </template>
     </section>
 
+    <!-- INTERACTIVE -->
+
+    <section class="pc-demo" id="interactive-rows" data-title="Interactive Rows">
+      <p class="pc-note">
+        <code>data-interactive</code> gives a direct item a flat hover surface. Its one
+        <code>.list-action</code> extends across the row without adding Card elevation; secondary controls remain reachable.
+        <code>list-ghost</code> removes the permanent rules so the interaction surfaces carry the separation.
+      </p>
+
+      <template>
+        <div class="demo-frame">
+          <ul class="pu-list list-md list-ghost" role="list">
+            <li class="item-row" data-interactive>
+              <span class="demo-avatar" style="--g1: #38bdf8; --g2: #2563eb" aria-hidden="true">AM</span>
+              <div class="demo-stack">
+                <button class="list-action item-title" type="button" aria-pressed="false">Open Alex's message</button>
+                <span class="item-text">Received five minutes ago</span>
+              </div>
+              <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" aria-label="More actions">⋮</button>
+            </li>
+            <li class="item-row" data-interactive>
+              <span class="demo-avatar" style="--g1: #a78bfa; --g2: #7c3aed" aria-hidden="true">MC</span>
+              <div class="demo-stack">
+                <button class="list-action item-title" type="button" aria-pressed="true">Open Maya's message</button>
+                <span class="item-text">Selected row</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </template>
+    </section>
+
     <!-- SIZES -->
 
     <section
@@ -462,14 +513,14 @@
       data-stage-style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;"
     >
       <p class="pc-note">
-        <code>sm</code>, <code>md</code> (default) and <code>lg</code> move item padding, type size and media size
+        <code>list-sm</code>, <code>list-md</code> (default) and <code>list-lg</code> move item padding, type size and media size
         together — the avatars follow because they read <code>--list-media-size</code>.
       </p>
 
       <template>
         <div class="demo-frame" style="inline-size: 15rem">
           <div class="demo-frame-head"><span class="demo-frame-title">sm</span></div>
-          <ul class="pu-list sm">
+          <ul class="pu-list list-sm">
             <li class="item-row">
               <span class="demo-avatar" style="--g1: #34d399; --g2: #059669" aria-hidden="true">AL</span>
               <div class="demo-stack">
@@ -489,7 +540,7 @@
 
         <div class="demo-frame" style="inline-size: 17rem">
           <div class="demo-frame-head"><span class="demo-frame-title">md</span></div>
-          <ul class="pu-list md">
+          <ul class="pu-list list-md">
             <li class="item-row">
               <span class="demo-avatar" style="--g1: #34d399; --g2: #059669" aria-hidden="true">AL</span>
               <div class="demo-stack">
@@ -509,7 +560,7 @@
 
         <div class="demo-frame" style="inline-size: 19rem">
           <div class="demo-frame-head"><span class="demo-frame-title">lg</span></div>
-          <ul class="pu-list lg">
+          <ul class="pu-list list-lg">
             <li class="item-row">
               <span class="demo-avatar" style="--g1: #34d399; --g2: #059669" aria-hidden="true">AL</span>
               <div class="demo-stack">

@@ -1,91 +1,9 @@
-/*
-ACCESSIBILITY REQUIREMENTS:
-- Use role="alert" for important, time-sensitive messages
-- Use role="status" for non-urgent status updates
-- role="alert" already provides assertive live-region behavior
-- role="status" already provides polite live-region behavior
-- Do not add aria-live unless intentionally overriding the role's default behavior
-- Icons that only communicate the alert intent should use aria-hidden="true"
-- Dismiss buttons MUST have an accessible name
-- Use the existing .pu-btn component for alert actions and dismiss buttons
-- Alert itself should not receive focus unless there is a specific interaction reason
-
-USAGE:
-
-<div
-  class="pu-alert md"
-  data-intent="error"
-  role="alert"
->
-  <div class="alert-icon" aria-hidden="true">
-    ...
-  </div>
-
-  <div class="alert-content">
-    <h3 class="alert-title">Something went wrong</h3>
-    <p class="alert-message">
-      We could not save your changes.
-    </p>
-  </div>
-
-  <div class="alert-actions">
-    <button
-      class="pu-btn ghost sm"
-      type="button"
-      aria-label="Dismiss alert"
-    >
-      ...
-    </button>
-  </div>
-</div>
-
-
-STATUS USAGE:
-
-<div
-  class="pu-alert md"
-  data-intent="success"
-  role="status"
->
-  <div class="alert-content">
-    <p class="alert-message">
-      Your changes have been saved.
-    </p>
-  </div>
-</div>
-
-
-INTENT:
-- data-intent="info" (default)
-- data-intent="success"
-- data-intent="warning"
-- data-intent="error"
-
-STYLE:
-- soft (default)
-- outline
-- filled
-
-SIZE:
-- sm
-- md
-- lg
-
-SHAPE:
-- sharp
-- smooth
-- rounded
-
-THEME:
-- Colors automatically adapt through light-dark()
-- The application should provide the active color-scheme
-*/
-
 .pu-alert {
   --alert-accent: var(--color-info);
-  --alert-surface: light-dark(var(--color-neutral-100), var(--color-neutral-900));
-  --alert-text: light-dark(var(--color-neutral-900), var(--color-neutral-100));
-  --alert-muted: light-dark(var(--color-neutral-600), var(--color-neutral-300));
+  --alert-accent-foreground: var(--color-info-foreground);
+  --alert-surface: var(--color-surface-sunken);
+  --alert-text: var(--color-text);
+  --alert-muted: var(--color-text-muted);
   --alert-bg: color-mix(in oklab, var(--alert-accent) 12%, var(--alert-surface));
   --alert-border: color-mix(in oklab, var(--alert-accent) 48%, var(--alert-surface));
   --alert-radius: var(--radius-md);
@@ -181,7 +99,18 @@ THEME:
     min-width: 0;
   }
 
-  .alert-title {
+  /*
+   * Not a heading. An alert is a live region — role="alert" or role="status"
+   * announces the whole box, so the title adds nothing to it and costs a
+   * phantom entry in the document outline that screen reader users land on
+   * with the H key. The :where() keeps the key at 0-1-0 and refuses to style
+   * h1-h6, which is the only enforcement CSS has. Same position badge.css and
+   * pill.css already take.
+   *
+   * The exception is a page-level error summary, which is a real section and
+   * does want a heading. That is a different component from a notice.
+   */
+  .alert-title:where(:not(h1, h2, h3, h4, h5, h6)) {
     margin: 0;
 
     color: inherit;
@@ -218,15 +147,15 @@ THEME:
 
   /* SIZE */
 
-  &.sm {
+  &.alert-sm {
     font-size: var(--font-size-sm);
   }
 
-  &.md {
+  &.alert-md {
     font-size: var(--font-size-md);
   }
 
-  &.lg {
+  &.alert-lg {
     font-size: var(--font-size-lg);
   }
 
@@ -234,6 +163,7 @@ THEME:
 
   &[data-intent="info"] {
     --alert-accent: var(--color-info);
+  --alert-accent-foreground: var(--color-info-foreground);
   }
 
   &[data-intent="success"] {
@@ -248,17 +178,17 @@ THEME:
     --alert-accent: var(--color-error);
   }
 
-  &.outline {
+  &.alert-outline {
     background-color: transparent;
 
     border-color: var(--alert-accent);
   }
 
-  &.filled {
+  &.alert-filled {
     background-color: var(--alert-accent);
     border-color: var(--alert-accent);
 
-    color: var(--color-neutral-900);
+    color: var(--alert-accent-foreground);
     color: contrast-color(var(--alert-accent));
 
     --alert-text: currentColor;
@@ -269,15 +199,15 @@ THEME:
     }
   }
 
-  &.sharp {
+  &.alert-sharp {
     --alert-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.alert-smooth {
     --alert-radius: var(--radius-md);
   }
 
-  &.rounded {
+  &.alert-rounded {
     --alert-radius: var(--radius-lg);
   }
 

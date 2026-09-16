@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Layout — Elements</title>
+    <meta
+      name="pc-description"
+      content="Collective horizontal or vertical placement for the direct children of a Box. Name the outcome in the markup; Flex or Grid remains an implementation detail."
+    />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/button.css" />
+    <link rel="stylesheet" href="/pureui/styles/Form/input/input.css" />
+    <link rel="stylesheet" href="/pureui/styles/Menu/menu.css" />
+    <link rel="stylesheet" href="/pureui/styles/card.css" />
+    <link rel="stylesheet" href="/pureui/styles/avatar.css" />
+    <link rel="stylesheet" href="/pureui/styles/badge.css" />
+    <link rel="stylesheet" href="/pureui/styles/Layout/box.css" />
+    <link rel="stylesheet" href="/pureui/styles/Layout/layout.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Layout">
+    <section class="pc-doc" id="api" data-title="API">
+      <h2>API</h2>
+      <table class="pc-doc-table">
+        <thead>
+          <tr><th>Key</th><th>Type</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>data-direction="horizontal"</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Places direct children in a row. This is the default when direction is omitted.</td>
+          </tr>
+          <tr>
+            <td><code>data-direction="vertical"</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Places direct children in a column.</td>
+          </tr>
+          <tr>
+            <td><code>data-layout="&lt;top|center|bottom&gt;-&lt;start|center|between|around|end|split&gt;"</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Horizontal: vertical alignment first, horizontal distribution second.</td>
+          </tr>
+          <tr>
+            <td><code>data-layout="&lt;start|center|end&gt;-&lt;top|center|between|around|bottom|split&gt;"</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Vertical: horizontal alignment first, vertical distribution second.</td>
+          </tr>
+          <tr>
+            <td><code>*-split</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Exactly three direct children at the flow start, true geometric centre and flow end.</td>
+          </tr>
+          <tr><td><code>data-gap="none"</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>No space between direct children.</td></tr>
+          <tr><td><code>data-gap="xs"</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>Extra-small space between direct children.</td></tr>
+          <tr><td><code>data-gap="sm"</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>Small space between direct children.</td></tr>
+          <tr><td><code>data-gap="md"</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>Medium space between direct children.</td></tr>
+          <tr><td><code>data-gap="lg"</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>Large space between direct children.</td></tr>
+          <tr><td><code>data-gap="xl"</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>Extra-large space between direct children.</td></tr>
+          <tr><td><code>--layout-gap</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>A custom gap when the named scale is not enough.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="pc-demo" id="default" data-title="Default">
+      <p class="pc-note">
+        Omitting <code>data-direction</code> creates a horizontal row. Layout works directly on semantic elements;
+        add <code>pu-box</code> only when the same element also needs Box padding or radius.
+      </p>
+      <template>
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-start" data-gap="sm">
+          <span class="pu-badge badge-sm">Default →</span>
+          <button class="pu-btn btn-sm" type="button">One</button>
+          <button class="pu-btn btn-sm" type="button">Two</button>
+          <button class="pu-btn btn-sm" type="button">Three</button>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-doc" id="other" data-title="Other">
+      <h2>Other</h2>
+      <p>Read direction first, then read the two words in <code>data-layout</code> against that direction.</p>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="horizontal-direction"
+      data-title="Horizontal Direction"
+      data-stage-style="display: grid; grid-auto-rows: 7rem;"
+    >
+      <p class="pc-note">
+        <code>horizontal</code> makes inline the main axis: children flow from start to end in a row. It is also the
+        default when the attribute is omitted.
+      </p>
+      <template>
+        <div
+          class="pu-card card-sm pu-box box-sm"
+          data-direction="horizontal"
+          data-layout="center-start"
+          data-gap="sm"
+        >
+          <span class="pu-badge badge-sm">horizontal →</span>
+          <button class="pu-btn btn-sm" type="button">One</button>
+          <button class="pu-btn btn-sm" type="button">Two</button>
+          <button class="pu-btn btn-sm" type="button">Three</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="vertical-direction"
+      data-title="Vertical Direction"
+      data-stage-style="display: grid; grid-auto-rows: 11rem;"
+    >
+      <p class="pc-note">
+        <code>vertical</code> makes block the main axis: children flow from top to bottom in a column.
+      </p>
+      <template>
+        <div
+          class="pu-card card-sm pu-box box-sm"
+          data-direction="vertical"
+          data-layout="start-top"
+          data-gap="sm"
+        >
+          <span class="pu-badge badge-sm">vertical ↓</span>
+          <button class="pu-btn btn-sm" type="button">One</button>
+          <button class="pu-btn btn-sm" type="button">Two</button>
+          <button class="pu-btn btn-sm" type="button">Three</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="horizontal-cross-axis"
+      data-title="Horizontal: First Word"
+      data-stage-style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr)); grid-auto-rows: 9rem; gap: 1rem;"
+    >
+      <p class="pc-note">
+        In a horizontal row, the first word controls the vertical cross axis. Compare <code>top</code>,
+        <code>center</code> and <code>bottom</code>; the second word stays <code>start</code>.
+      </p>
+      <template>
+        <div class="pu-card card-sm pu-box box-sm" data-layout="top-start" data-gap="xs">
+          <span class="pu-badge badge-sm">top-start</span>
+          <button class="pu-btn btn-sm" type="button">A</button>
+          <button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-start" data-gap="xs">
+          <span class="pu-badge badge-sm">center-start</span>
+          <button class="pu-btn btn-sm" type="button">A</button>
+          <button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="bottom-start" data-gap="xs">
+          <span class="pu-badge badge-sm">bottom-start</span>
+          <button class="pu-btn btn-sm" type="button">A</button>
+          <button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="horizontal-main-axis"
+      data-title="Horizontal: Second Word"
+      data-stage-style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr)); grid-auto-rows: 7rem; gap: 1rem;"
+    >
+      <p class="pc-note">
+        In a horizontal row, the second word distributes children along the horizontal main axis. The first word
+        stays <code>center</code> in every comparison.
+      </p>
+      <template>
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-start" data-gap="xs">
+          <span class="pu-badge badge-sm">center-start</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-center" data-gap="xs">
+          <span class="pu-badge badge-sm">center-center</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-between" data-gap="xs">
+          <span class="pu-badge badge-sm">center-between</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-around" data-gap="xs">
+          <span class="pu-badge badge-sm">center-around</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-end" data-gap="xs">
+          <span class="pu-badge badge-sm">center-end</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="vertical-cross-axis"
+      data-title="Vertical: First Word"
+      data-stage-style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr)); grid-auto-rows: 10rem; gap: 1rem;"
+    >
+      <p class="pc-note">
+        In a vertical column, the first word controls the horizontal cross axis. Compare <code>start</code>,
+        <code>center</code> and <code>end</code>; the second word stays <code>top</code>.
+      </p>
+      <template>
+        <div class="pu-card card-sm pu-box box-sm" data-direction="vertical" data-layout="start-top" data-gap="xs">
+          <span class="pu-badge badge-sm">start-top</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-direction="vertical" data-layout="center-top" data-gap="xs">
+          <span class="pu-badge badge-sm">center-top</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-direction="vertical" data-layout="end-top" data-gap="xs">
+          <span class="pu-badge badge-sm">end-top</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="vertical-main-axis"
+      data-title="Vertical: Second Word"
+      data-stage-style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr)); grid-auto-rows: 14rem; gap: 1rem;"
+    >
+      <p class="pc-note">
+        In a vertical column, the second word distributes children along the vertical main axis. The first word stays
+        <code>center</code> in every comparison.
+      </p>
+      <template>
+        <div class="pu-card card-sm pu-box box-sm" data-direction="vertical" data-layout="center-top" data-gap="xs">
+          <span class="pu-badge badge-sm">center-top</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-direction="vertical" data-layout="center-center" data-gap="xs">
+          <span class="pu-badge badge-sm">center-center</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-direction="vertical" data-layout="center-between" data-gap="xs">
+          <span class="pu-badge badge-sm">center-between</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-direction="vertical" data-layout="center-around" data-gap="xs">
+          <span class="pu-badge badge-sm">center-around</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-direction="vertical" data-layout="center-bottom" data-gap="xs">
+          <span class="pu-badge badge-sm">center-bottom</span>
+          <button class="pu-btn btn-sm" type="button">A</button><button class="pu-btn btn-sm" type="button">B</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="horizontal-split"
+      data-title="Horizontal Split"
+      data-stage-style="display: grid; grid-auto-rows: 8rem;"
+    >
+      <p class="pc-note">
+        <code>split</code> requires exactly three direct children. In a horizontal Layout they occupy start, true
+        geometric centre and end—even when the outer children have different widths.
+      </p>
+      <template>
+        <div
+          class="pu-card card-sm pu-box box-sm"
+          data-direction="horizontal"
+          data-layout="center-split"
+          data-gap="xs"
+        >
+          <button class="pu-btn btn-sm" type="button">Start</button>
+          <span class="pu-badge badge-md">True centre</span>
+          <button class="pu-btn btn-sm" type="button">Much wider end</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="vertical-split"
+      data-title="Vertical Split"
+      data-stage-style="display: grid; grid-auto-rows: 16rem;"
+    >
+      <p class="pc-note">
+        The same three regions rotate with <code>vertical</code>. The second child remains geometrically centred from
+        top to bottom.
+      </p>
+      <template>
+        <div
+          class="pu-card card-sm pu-box box-sm"
+          data-direction="vertical"
+          data-layout="center-split"
+          data-gap="xs"
+        >
+          <div class="pu-box box-none" data-direction="vertical" data-layout="center-top" data-gap="xs">
+            <span class="pu-badge badge-sm">Taller start</span>
+            <span class="pu-badge badge-sm">region</span>
+          </div>
+          <span class="pu-badge badge-md">True centre</span>
+          <button class="pu-btn btn-sm" type="button">End</button>
+        </div>
+      </template>
+    </section>
+
+    <section
+      class="pc-demo"
+      id="gap-scale"
+      data-title="Gap Scale"
+      data-stage-style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr)); gap: 1rem;"
+    >
+      <p class="pc-note">
+        Gap controls only the space between direct children. Box padding remains independent around the group.
+      </p>
+      <template>
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-start" data-gap="none">
+          <span class="pu-badge badge-sm">none</span><span class="pu-badge badge-sm">A</span><span class="pu-badge badge-sm">B</span>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-start" data-gap="xs">
+          <span class="pu-badge badge-sm">xs</span><span class="pu-badge badge-sm">A</span><span class="pu-badge badge-sm">B</span>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-start" data-gap="sm">
+          <span class="pu-badge badge-sm">sm</span><span class="pu-badge badge-sm">A</span><span class="pu-badge badge-sm">B</span>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-start" data-gap="md">
+          <span class="pu-badge badge-sm">md</span><span class="pu-badge badge-sm">A</span><span class="pu-badge badge-sm">B</span>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-start" data-gap="lg">
+          <span class="pu-badge badge-sm">lg</span><span class="pu-badge badge-sm">A</span><span class="pu-badge badge-sm">B</span>
+        </div>
+
+        <div class="pu-card card-sm pu-box box-sm" data-layout="center-start" data-gap="xl">
+          <span class="pu-badge badge-sm">xl</span><span class="pu-badge badge-sm">A</span><span class="pu-badge badge-sm">B</span>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="custom-override" data-title="Custom Gap">
+      <p class="pc-note">
+        Use <code>--layout-gap</code> only when none of the six shared gap values fits the composition.
+      </p>
+      <template>
+        <div
+          class="pu-card card-sm pu-box box-sm"
+          data-layout="center-start"
+          style="--layout-gap: 2.25rem"
+        >
+          <span class="pu-badge badge-md">Design</span>
+          <span class="pu-badge badge-md">Build</span>
+          <span class="pu-badge badge-md">Ship</span>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-doc" id="compositions" data-title="Compositions">
+      <p>Complete interface parts built only from existing PureUI components.</p>
+    </section>
+
+    <section class="pc-demo" id="navbar" data-title="Navbar">
+      <p class="pc-note">
+        <code>center-split</code> gives the horizontal navbar three regions. The search stays geometrically centred
+        even when the groups on either side differ in width.
+      </p>
+      <template>
+        <header class="pu-card card-sm">
+          <div class="card-body">
+            <nav
+              class="pu-box box-none"
+              data-direction="horizontal"
+              data-layout="center-split"
+              data-gap="xs"
+              aria-label="Product navigation"
+            >
+              <div class="pu-box box-none" data-layout="center-start" data-gap="xs">
+                <a class="pu-btn btn-md btn-ghost" href="#home" aria-label="Pure home">Pure</a>
+
+                <div class="pu-menu menu-md">
+                  <button
+                    class="pu-btn btn-md btn-ghost menu-trigger"
+                    type="button"
+                    popovertarget="layout-product-menu"
+                    aria-label="Open product menu"
+                    data-icon-only="true"
+                  >
+                    <span class="menu-marker" aria-hidden="true">⋮</span>
+                  </button>
+
+                  <ul
+                    id="layout-product-menu"
+                    class="menu-content"
+                    popover="auto"
+                    role="list"
+                    aria-label="Products"
+                  >
+                    <li class="menu-title">Products</li>
+                    <li class="menu-item"><a class="pu-btn btn-md btn-ghost menu-control" href="#ui">PureUI</a></li>
+                    <li class="menu-item"><a class="pu-btn btn-md btn-ghost menu-control" href="#components">PureComponents</a></li>
+                    <li class="menu-item"><a class="pu-btn btn-md btn-ghost menu-control" href="#framework">PureFramework</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <input class="pu-input input-md" type="search" aria-label="Search" placeholder="Search" />
+
+              <div class="pu-box box-none" data-layout="center-end" data-gap="xs">
+                <button class="pu-btn btn-md btn-ghost" type="button" aria-label="Notifications, 3 unread">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                    <path d="M13.7 21a2 2 0 0 1-3.4 0"></path>
+                  </svg>
+                  <span class="pu-badge badge-sm badge-rounded" aria-hidden="true">3</span>
+                </button>
+                <a class="pu-avatar avatar-sm avatar-rounded" href="#account" aria-label="Open Oscar's account">OT</a>
+              </div>
+            </nav>
+          </div>
+        </header>
+      </template>
+    </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

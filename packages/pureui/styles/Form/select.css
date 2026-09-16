@@ -2,18 +2,18 @@
   /* 1. VARIABLES */
   --select-font-size: var(--form-font-size, var(--font-size-md));
   --select-line-height: var(--line-height-base);
-  --select-color: var(--form-color, var(--color-neutral-900));
-  --select-surface: var(--form-surface, var(--color-neutral-100));
+  --select-color: var(--form-color, var(--color-text));
+  --select-surface: var(--form-surface, var(--color-surface-sunken));
 
   --select-padding-block: var(--form-padding-block, 0.5em);
   --select-padding-inline: var(--form-padding-inline, 0.75em);
 
   --select-border-width: var(--form-border-width, 1px);
-  --select-border-color: var(--form-border-color, var(--color-neutral-500));
+  --select-border-color: var(--form-border-color, var(--color-border-strong));
   --select-radius: var(--form-radius, var(--radius-smooth));
 
   --select-icon-size: 1em;
-  --select-icon-color: var(--color-neutral-500);
+  --select-icon-color: var(--color-text-subtle);
   --select-icon-inset: var(--select-padding-inline);
   --select-icon-gap: 0.5em;
 
@@ -42,7 +42,7 @@
 
   /* Menu. Declared here because ::picker(select) inherits from this element. */
   --select-menu-surface: var(--select-surface);
-  --select-menu-border-color: var(--color-neutral-300);
+  --select-menu-border-color: var(--color-border);
   --select-menu-radius: min(var(--select-radius), var(--select-menu-radius-max));
   --select-menu-radius-max: var(--radius-lg);
   --select-menu-padding: var(--spacing-25);
@@ -54,7 +54,7 @@
   --select-option-padding-block: var(--select-padding-block);
   --select-option-padding-inline: var(--select-padding-inline);
   --select-option-radius: var(--radius-sm);
-  --select-option-highlight: var(--color-neutral-200);
+  --select-option-highlight: var(--color-surface-muted);
 
   /* 2. BASE */
   appearance: none;
@@ -87,26 +87,26 @@
   }
 
   /* 3. SIZE */
-  &.sm {
+  &.select-sm {
     --select-font-size: var(--font-size-sm);
   }
-  &.md {
+  &.select-md {
     /* base is already md */
   }
-  &.lg {
+  &.select-lg {
     --select-font-size: var(--font-size-base);
   }
 
   /* 4. SHAPE — the mark's corners follow the box's. */
-  &.sharp {
+  &.select-sharp {
     --select-radius: var(--radius-sharp);
     --select-icon-image: var(--select-icon-image-sharp);
   }
-  &.smooth {
+  &.select-smooth {
     --select-radius: var(--radius-smooth);
     --select-icon-image: var(--select-icon-image-smooth);
   }
-  &.rounded {
+  &.select-rounded {
     --select-radius: var(--radius-rounded);
     --select-icon-image: var(--select-icon-image-rounded);
     --select-icon-inset: calc(var(--select-padding-inline) * 1.5);
@@ -117,7 +117,7 @@
   /* No :read-only branch: readonly does nothing to a <select>. Locking a
      choice is `disabled` plus a hidden input, or a single option. */
   &:hover:not(:disabled) {
-    --select-border-color: var(--color-neutral-700);
+    --select-border-color: color-mix(in oklab, var(--color-border-strong), var(--shade-hover));
   }
 
   /* :user-invalid is native constraint validation and only fires once the
@@ -128,10 +128,10 @@
   }
 
   &:disabled {
-    --select-surface: var(--color-neutral-200);
-    --select-border-color: var(--color-neutral-400);
-    --select-color: var(--color-neutral-500);
-    --select-icon-color: var(--color-neutral-400);
+    --select-surface: var(--color-surface-muted);
+    --select-border-color: var(--color-border);
+    --select-color: var(--color-text-subtle);
+    --select-icon-color: var(--color-text-subtle);
     cursor: not-allowed;
   }
 
@@ -161,7 +161,7 @@
 
 /* A greyed-out field with a full-strength icon reads as the one part still working. */
 .pu-input-group:has(> .pu-select:disabled) > .input-icon {
-  color: var(--color-neutral-400);
+  color: var(--color-text-subtle);
   cursor: not-allowed;
 }
 
@@ -230,14 +230,14 @@ is what renders and the platform keeps its own picker.
         }
 
         &:disabled {
-          color: var(--color-neutral-500);
+          color: var(--color-text-subtle);
           cursor: not-allowed;
         }
       }
 
       /* A group name labels the options under it, so it is .pu-label's colour. */
       & optgroup {
-        color: var(--form-label-color, var(--color-neutral-900));
+        color: var(--form-label-color, var(--color-text));
         font-weight: 600;
         padding-block: var(--select-option-padding-block);
         padding-inline: var(--select-option-padding-inline);

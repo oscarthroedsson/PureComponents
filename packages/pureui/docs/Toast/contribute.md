@@ -1,260 +1,181 @@
-# Toast Component - Contribution Guide
+# Toast — contributing
 
-## Code Structure
+## Files
 
-### File Location
-
-- **CSS File**: `src/Styles/toast.css`
-- **Documentation**: `src/Documentation/Toast/`
-
-### CSS Architecture
-
-The toast component uses a layered architecture:
-
-1. **Base Toast** - Core toast styles (`.toast`)
-2. **Variants** - Success, error, warning, info
-3. **Size Variants** - Small, medium, large
-4. **Sub-components** - Content, close button, container
-5. **Animations** - Slide-in and slide-out animations
-
-### Class Naming Conventions
-
-- Base class: `.toast`
-- Variants: `.toast.{variant}` (e.g., `.toast.success`)
-- Size variants: `.toast.{size}` (e.g., `.toast.sm`)
-- Sub-components: `.toast-{component}` (e.g., `.toast-content`)
-
-### Selector Patterns
-
-```css
-/* Base class */
-.toast { ... }
-
-/* Variant classes */
-.toast.success { ... }
-.toast.error { ... }
-
-/* Size variants */
-.toast.sm { ... }
-.toast.md { ... }
-
-/* Sub-components */
-.toast-content { ... }
-.toast-close { ... }
+```
+packages/pureui/styles/toast.css   placement, stacking, motion, swipe
+apps/dev-shell/js/toast/           the behaviour layer (dev shell only)
+  index.ts       the public surface and window.Toast
+  toast.ts       append, remove, removeAll, timers
+  createToast.ts builds the markup
+  placement.ts   swipe direction from the container's placement
+  types.ts       the attribute and instance types
 ```
 
-## Implementation Details
+Only the stylesheet ships. The behaviour layer drives the dev-shell demo and
+moves to PureComponents when that package starts. The split is strict:
+anything about **where a toast sits or how it moves** belongs in the CSS;
+anything about **when it appears or disappears** belongs in the TS.
 
-### How the Component Works
+## Toast is a wrapper around Alert
 
-1. **Base Layout**: Uses flexbox for horizontal layout (content + close button)
-2. **Positioning**: Fixed positioning for screen-edge placement
-3. **Variants**: Background color changes based on variant class
-4. **Animations**: CSS keyframe animations for slide-in/out
-5. **Container**: Wrapper for stacking multiple toasts
+A toast is a `.toast` box holding a `.pu-alert`. Nothing about the notice —
+intents, icons, title, message, actions — is repeated here. `createToast.ts`
+builds exactly the markup the two stylesheets expect:
 
-### CSS Techniques Used
+```html
+<div class="toast" data-toast-id="…">
+  <div class="pu-alert alert-md" data-intent="success" role="status">
+    <div class="alert-icon">…</div>
+    <div class="alert-content">
+      <p class="alert-title">…</p>
+      <p class="alert-message">…</p>
+    </div>
+    <div class="alert-actions">…</div>
+  </div>
+</div>
+```
 
-- **Flexbox**: Horizontal layout with content and close button
-- **Fixed Positioning**: Screen-edge placement
-- **CSS Animations**: Slide-in and slide-out keyframes
-- **CSS Custom Properties**: All colors and spacing use variables
-- **Media Queries**: Responsive positioning on mobile
+A change to how a notice looks goes in `alert.css`, not here.
 
-### Design Decisions and Rationale
+## The container spans the viewport
 
-1. **Fixed Positioning**: Ensures toasts don't affect page layout
-2. **Flexbox Layout**: Simplifies content + close button alignment
-3. **Animation**: Provides smooth, non-jarring appearance
-4. **Container Pattern**: Allows stacking multiple toasts
-5. **Pointer Events**: Container uses `pointer-events: none` to allow clicks through gaps
-
-### Dependencies
-
-- **Design Tokens**: Requires CSS variables from `main.css`
-  - `--color-success`, `--color-error`, `--color-warning`, `--color-info`
-  - `--color-neutral-900`, `--color-neutral-100`
-  - `--spacing-*` values
-  - `--radius-*` values
-  - `--font-size-*` values
-  - `--shadow-lg` for elevation
-  - `--z-index-toast` for layering
-- **No JavaScript**: Pure CSS (auto-dismiss requires JS)
-
-## Accessibility Implementation
-
-### How A11y is Achieved
-
-1. **ARIA Live Regions**: `aria-live` announces toast content
-2. **Role Attributes**: `role="status"` or `role="alert"` for appropriate announcement
-3. **Atomic Updates**: `aria-atomic="true"` ensures complete message is read
-4. **Focus Management**: Close button is focusable
-5. **Keyboard Support**: Close button supports Enter/Space
-
-### ARIA Attribute Handling
-
-- **`role="status"`**: For polite, non-urgent messages
-- **`role="alert"`**: For urgent, important messages
-- **`aria-live="polite"`**: Announces when screen reader is idle
-- **`aria-live="assertive"`**: Interrupts screen reader immediately
-- **`aria-atomic="true"`**: Ensures complete message is announced
-- **`aria-label`**: Required on close button
-
-### Focus Management
-
-- Close button receives focus when toast appears (requires JS)
-- Focus returns to trigger element when closed (requires JS)
-- Focus indicator uses `:focus-visible` for keyboard-only focus
-
-### Screen Reader Considerations
-
-- Toast content is announced based on `aria-live` setting
-- `aria-atomic="true"` ensures complete message is read, not partial updates
-- Close button is announced with its label
-- Toast position doesn't affect announcement timing
-
-### Keyboard Navigation Implementation
-
-- Tab key moves focus to close button
-- Enter/Space activates close button
-- Escape key should close toast (requires JavaScript)
-- Focus management requires JavaScript for proper behavior
-
-## Design Tokens Used
-
-### CSS Variables Referenced
-
-**Colors:**
-- `--color-success` - Success toast background
-- `--color-error` - Error toast background
-- `--color-warning` - Warning toast background
-- `--color-info` - Info toast background
-- `--color-neutral-900` - Default toast background
-- `--color-neutral-100` - Toast text color
-
-**Spacing:**
-- `--spacing-50` - Small padding, gap between elements
-- `--spacing-75` - Medium padding
-- `--spacing-100` - Large padding, container positioning
-- `--spacing-125` - Extra large padding
-
-**Typography:**
-- `--font-size-sm` - Small toast font size
-- `--font-size-md` - Medium toast font size
-- `--font-size-lg` - Large toast font size, title size
-- `--font-size-xl` - Close button font size
-
-**Border Radius:**
-- `--radius-none` - Sharp variant (0px)
-- `--radius-sm` - Smooth variant
-- `--radius-md` - Default border radius
-- `--radius-lg` - Rounded variant
-
-**Shadows:**
-- `--shadow-lg` - Toast elevation shadow
-
-**Z-index:**
-- `--z-index-toast` - Toast layering (1100)
-
-## Testing Requirements
-
-### Manual Testing Steps
-
-1. **Visual Testing**
-   - [ ] All variants render with correct colors
-   - [ ] All size variants have appropriate dimensions
-   - [ ] Animations play smoothly
-   - [ ] Close button is visible and styled
-   - [ ] Multiple toasts stack correctly
-
-2. **Keyboard Navigation**
-   - [ ] Tab key focuses close button
-   - [ ] Enter key closes toast
-   - [ ] Space key closes toast
-   - [ ] Focus indicator is visible
-   - [ ] Escape key closes toast (with JS)
-
-3. **Screen Reader Testing**
-   - [ ] Status toasts announce politely
-   - [ ] Alert toasts interrupt immediately
-   - [ ] Complete message is announced (aria-atomic)
-   - [ ] Close button is announced correctly
-   - [ ] Toast position doesn't affect announcement
-
-4. **Browser Compatibility**
-   - [ ] Chrome (latest)
-   - [ ] Firefox (latest)
-   - [ ] Safari (latest)
-   - [ ] Edge (latest)
-
-5. **Responsive Testing**
-   - [ ] Mobile positioning is correct
-   - [ ] Toast width adapts on mobile
-   - [ ] Stacking works on all screen sizes
-
-### Visual Regression Considerations
-
-- Toast dimensions should remain consistent
-- Animation timing should be smooth
-- Color contrast should meet WCAG standards
-- Close button alignment should be consistent
-
-## Extending the Component
-
-### How to Add New Variants
-
-1. **Add Color Variant**:
 ```css
-.toast.custom {
-  background-color: var(--color-custom);
-  color: var(--color-neutral-100);
+position: fixed;
+inset: 0;
+pointer-events: none;
+```
+
+Rather than hugging one corner. A toast can then be dragged as far as the hand
+takes it without being clipped, and placement becomes nothing more than where
+inside that area the toasts are aligned — `justify-content` and `align-items`,
+set by `data-placement`.
+
+Covering the viewport is only safe because the container is invisible to the
+pointer. Only the toasts take input, through `pointer-events: auto` on
+`.toast`.
+
+`:hover` still reaches the container from a toast inside it, which is what
+lets the stacked layout expand on hover.
+
+## The gap belongs to the toast
+
+```css
+& + .toast { padding-block-start: var(--toast-gap, 0.5rem); }
+```
+
+Padding on the toast, not `gap` on the container, so the boxes keep touching.
+Moving the pointer from one toast to the next then never crosses a dead zone —
+which is what an expanded stack depends on, now that the container itself
+ignores the pointer.
+
+## The stack is overlap, not scale
+
+All toasts stay exactly the same size. Stacking comes only from a negative
+margin, the way a group of avatars overlaps:
+
+```css
+& > .toast + .toast {
+  margin-block-start: calc(0px - var(--toast-gap, 0.5rem) - var(--toast-stack-overlap, 2.75rem));
 }
 ```
 
-2. **Add Size Variant**:
+The negative margin has to swallow the gap as well, or the overlap comes out
+that much shorter than asked for.
+
+Expanding is one declaration:
+
 ```css
-.toast.xl {
-  padding: var(--spacing-125) var(--spacing-150);
-  font-size: var(--font-size-xl);
-  min-width: 400px;
-  max-width: 700px;
+&:hover, &:focus-within {
+  & > .toast + .toast { margin-block-start: 0; }
 }
 ```
 
-### How to Modify Styles
+Dropping the negative margin is enough — the gap is already part of every
+toast box.
 
-- **Change Colors**: Update CSS variables in `main.css`
-- **Change Position**: Modify `top` and `right` in `.toast-container`
-- **Change Animation**: Update `@keyframes` definitions
-- **Change Timing**: Modify animation duration values
+## The stack descends from the anchored edge
 
-### Common Customization Patterns
+Flex items paint in DOM order, so with no `z-index` the **oldest** toast would
+paint on top of every newer one. The stack has to descend from the toast
+nearest the edge the container is anchored to: the first child for top
+placements, the last child for bottom ones. Hence two enumerations,
+`:nth-child` and `:nth-last-child`.
 
-1. **Custom Positioning**: Override `.toast-container` positioning
-2. **Custom Animations**: Replace keyframe animations
-3. **Custom Variants**: Add new color/style variants
-4. **Custom Sizes**: Add new size classes
+Enumerated rather than computed, like `avatar.css`. A stack deeper than eight
+is unreadable anyway, and the toasts past the cap are fully covered.
 
-### Breaking Change Considerations
+## Entry, exit and swipe, in that order
 
-- **Class Name Changes**: Would break existing implementations
-- **Animation Changes**: Could affect user experience
-- **Position Changes**: Could break layout assumptions
-- **Removing Variants**: Would break components using those variants
+`@starting-style` on `.toast` gives the entry something to animate from.
+`[data-state="closing"]` is the exit, with its own faster easing.
 
-## Related Files
+The swipe rules come **after** the closing state on purpose: a toast thrown out
+by hand leaves the way it was thrown, not the way it came in.
 
-### Dependencies
+```css
+&[data-swipeable] { touch-action: pan-y; }
+```
 
-- `src/Styles/main.css` - Design tokens (CSS variables)
+Horizontal swipes let the page keep scrolling vertically. Centred containers
+take a vertical flick too, so there the toast has to claim the whole gesture.
 
-### Files That Use This Component
+## The alert inside opts out of motion
 
-- Form components (for success/error messages)
-- API integration code (for status updates)
-- User action handlers (for confirmations)
+```css
+& > .pu-alert {
+  transition: none;
+  @starting-style { opacity: 1; translate: 0; scale: 1; }
+}
+```
 
-### Related Utility Files
+`alert.css` animates its own entry. Inside a toast the wrapper is what moves,
+so the alert's animation is neutralised or the two would compound.
 
-- JavaScript files for toast management (not in CSS library)
-- Animation utilities (if any)
+## Durations are written out
+
+Not `--transition-*`. Those tokens pair a duration and an easing in one
+shorthand, so combining one with an easing of our own puts two timing
+functions in the same declaration and the whole thing is thrown away.
+`avatar.css` does the same.
+
+## Variables
+
+Declared on the container:
+
+| Variable | Default |
+|---|---|
+| `--toast-enter-x` | `1.5rem` |
+| `--toast-enter-y` | `0` |
+| `--toast-exit-x` | `1.5rem` |
+| `--toast-exit-y` | `0` |
+
+Used through `var(name, fallback)` without being declared:
+`--toast-offset` (`1rem`), `--toast-gap` (`0.5rem`), `--toast-max-width`
+(`28rem`), `--toast-stack-overlap` (`2.75rem`), `--toast-swipe-x`,
+`--toast-swipe-y`. They work as a tuning surface but do not appear in the
+block's variable list.
+
+Each `data-placement` block sets the four enter and exit offsets, so a
+left-hand container flies in from the left without being told.
+
+## `.toast` is unprefixed
+
+Every other part in the library is namespaced to its component —
+`card-body`, `alert-title`, `menu-item`. This one is a bare `.toast`, so it
+can collide with a consumer's own CSS.
+
+## The behaviour layer
+
+`toast.ts` owns the timers, including `pause()` and `resume()` so a toast under
+the pointer or under focus does not disappear mid-read.
+
+`createToast.ts` derives `role` from the intent when the caller does not pass
+one — `error` and `warning` become `alert`, the rest `status`.
+
+`placement.ts` reads the container's `data-placement` and decides which
+directions a swipe may travel.
+
+`window.Toast` exists because inline handlers are resolved against the global
+scope, not against the module that imported them, so plain HTML needs a name
+to call.

@@ -1,0 +1,40 @@
+/* Email composition registry. PureUI styles and composition markup are loaded
+   lazily by the shared composition viewer. */
+
+window.PC_EMAIL_EXAMPLES = [
+  {
+    id: "visual-inbox",
+    title: "Visual inbox",
+    description: "A semantic four-column grid with native dialogs, menus and a data-driven message reader.",
+    html: "./Email/examples/inbox-pure.html",
+    styles: [
+      "/pureui/styles/main.css",
+      "/pureui/styles/a-tag.css",
+      "/pureui/styles/button.css",
+      "/pureui/styles/avatar.css",
+      "/pureui/styles/tooltip.css",
+      "/pureui/styles/dialog.css",
+      "/pureui/styles/collapsible.css",
+      "/pureui/styles/Menu/menu.css",
+      "/pureui/styles/Form/form.css",
+      "/pureui/styles/Form/field.css",
+      "/pureui/styles/Form/label.css",
+      "/pureui/styles/Form/fieldset.css",
+      "/pureui/styles/Form/input/input.css",
+      "/pureui/styles/Form/select.css",
+      "/pureui/styles/Form/textarea.css",
+      "/pureui/styles/alert.css",
+      "/pureui/styles/card.css",
+      "/pureui/styles/list.css",
+      "/pureui/styles/badge.css",
+      "/pureui/styles/pill.css",
+      "/pureui/styles/progress.css",
+      "/pureui/styles/Layout/box.css",
+      "/pureui/styles/Layout/layout.css",
+      "/pureui/styles/Layout/behavior.css",
+      "/pureui/styles/overflow.css",
+      "./Email/email.css",
+    ],
+    height: 1120,
+  },
+];

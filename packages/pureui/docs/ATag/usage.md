@@ -1,39 +1,71 @@
-# A-tag (Link) Component
+# Link
 
-## Component Overview
+A text link whose underline grows from the start edge on hover instead of
+fading in.
 
-The A-tag component provides styled anchor/link elements with hover effects and proper link semantics.
-
-### When to Use
-
-- Navigation links
-- External links
-- Internal page links
-- Download links
-
-### When NOT to Use
-
-- Buttons (use Button component)
-- Non-navigational actions (use Button)
-- JavaScript-only actions (use Button)
-
-## Quick Start
+## Quick start
 
 ```html
-<a href="/page" class="pu-link">Link Text</a>
+<a href="/pricing" class="pu-link">Pricing</a>
 ```
 
-## Accessibility Requirements
+## Classes
 
-- **Semantic HTML** - Use `<a>` element
-- **Descriptive text** - Link text should be descriptive
-- **External links** - Use `target="_blank"` with `rel="noopener noreferrer"`
+| Class | Does |
+|---|---|
+| `.pu-link` | The key. Requires `<a>`. |
 
-## API Reference
+No sizes, no shapes. The link takes the type size of whatever it sits in.
 
-- `.pu-link` - Base anchor class
-- Hover effect: Animated underline via `::before` pseudo-element
+## Variables
+
+| Variable | Default | Controls |
+|---|---|---|
+| `--link-color` | `var(--color-text)` | Resting colour. |
+| `--link-hover-color` | `var(--color-primary)` | Colour on hover. |
+| `--link-underline-color` | `var(--link-hover-color)` | Underline colour. |
+| `--link-underline-size` | `1px` | Underline thickness. |
+| `--link-underline-rest-size` | `0px` | Underline width at rest. Set to `100%` for a link that is always underlined. |
+| `--link-underline-offset` | `2px` | Distance below the text. |
+| `--link-transition-duration` | `300ms` | Colour and underline timing. |
+
+```html
+<a href="/docs" class="pu-link" style="--link-underline-rest-size: 100%">Docs</a>
+```
+
+## Accessibility
+
+- The link text says where it goes. "Read the pricing page", not "click here".
+- Colour is not the only signal — the underline appears on hover and focus.
+- An external link should carry `rel="noopener noreferrer"` alongside
+  `target="_blank"`.
+- Transitions are removed under `prefers-reduced-motion`.
 
 ## Examples
 
-See component CSS file for detailed examples.
+### In running text
+
+```html
+<p>See the <a href="/pricing" class="pu-link">pricing page</a> for details.</p>
+```
+
+### External
+
+```html
+<a href="https://example.com" class="pu-link" target="_blank" rel="noopener noreferrer">
+  example.com
+</a>
+```
+
+### Mail and telephone
+
+```html
+<a href="mailto:contact@example.com" class="pu-link">contact@example.com</a>
+<a href="tel:+1234567890" class="pu-link">+1 (234) 567-890</a>
+```
+
+### Always underlined
+
+```html
+<a href="/terms" class="pu-link" style="--link-underline-rest-size: 100%">Terms</a>
+```

@@ -1,76 +1,135 @@
-# Select — how it is built
+# Select — contributing
 
-## Two layers, and the second is additive
+## File
 
-Sections 2–5 are the control every browser gets. Section 6 is what a browser
-with `appearance: base-select` **and** a fine pointer gets on top. A browser
-that does not know the value drops the whole block; a touch device never
-enters it. Either way the control above renders and the select behaves
-identically.
+`packages/pureui/styles/Form/select.css`
 
-Both sides have to opt in — the select **and** `::picker(select)`. Opting in
-only the select leaves the button styled and the menu still native, which
-looks broken rather than half-done.
+## Key
 
-## The mark is a background, and that is not a preference
+```css
+.pu-select:where(select)
+```
 
-`appearance: none` takes the browser's arrow with it, so the library has to
-put one back. It cannot be a pseudo-element: a `<select>` is a replaced
-element and `::before` does not paint on it.
+The native control is keyboard accessible, type-ahead searchable and works
+with every assistive technology. Nothing built from a `<div>` matches it.
 
-The artwork is Lucide's chevron with the viewBox cropped to the path's own
-bounds. Lucide's 24×24 is mostly air — the path only spans x 6→18, y 9→15 — so
-an uncropped box sizes the padding instead of the mark, and the end padding,
-which is derived from `--select-icon-size`, comes out wrong.
+## Every variable reads the channel with a fallback
 
-### Why the shapes differ in the path, not in stroke-linejoin
+So a bare `.pu-select` works with no `.pu-form` around it. Never declare a
+`--form-*` variable here — that would shadow the group's value.
 
-A chevron has one join. At that angle `miter` and `round` are
-indistinguishable, and `sharp` and `smooth` came out identical — this shipped
-once and was caught in review. The tip is curved explicitly instead: a
-quadratic Bézier whose control point is the original corner, starting 0.8
-units back for `smooth` and 1.1 for `rounded`, which also takes round caps.
+## Three chevrons, one per shape
 
-Kept small on purpose. Past about 1.5 the tip stops reading as a chevron and
+The mark's corners follow the box's, so a sharp select gets a mitred chevron
+and a rounded one gets a curved tip.
+
+The `viewBox` is cropped to the path's own bounds. Lucide's 24×24 is mostly
+air, and an uncropped box sizes the padding, not the mark.
+
+The shapes differ in the **path**, not in `stroke-linejoin`. A chevron has one
+join, and at this angle miter and round are indistinguishable — sharp and
+smooth came out identical. So the tip is curved explicitly instead: a quadratic
+Bezier whose control point is the original corner, starting 0.8 units back for
+smooth and 1.1 for rounded, which also takes round caps.
+
+Kept small on purpose — past about 1.5 the tip stops reading as a chevron and
 starts reading as a U.
 
-### The one hardcoded colour in the family
+The stroke colour inside the SVG is only read in the fallback, where a
+background image cannot see a token. As a mask only the alpha matters and
+`--select-icon-color` paints it.
 
-The stroke in the fallback SVG is `%2364748b`, not a token. Four techniques
-were tested and none work:
+`select-rounded` also pushes `--select-icon-inset` out by half again, because a
+999px corner eats into where the mark would otherwise sit.
 
-| | result |
-|---|---|
-| `var()` inside the data URI | the image does not parse at all |
-| `currentColor` inside it | renders black; an SVG-as-image is its own document |
-| `background-blend-mode` with a token-coloured layer | correct on a light surface, **breaks on a dark one** — the whole layer shows as a rectangle |
-| `mask` + `background-color` | correct colour, but the mask erases the whole box on a `<select>` |
+## `padding-inline-end` is derived
 
-So the fallback stroke is baked in. It is contained: the entire `url()` is the
-variable `--select-icon-image-sharp` / `-smooth` / `-rounded`, so the dark-mode
-pass in `main.css` swaps three lines. Section 6 needs nothing — there the same
-artwork is a mask and takes `--select-icon-color`.
+```css
+--select-padding-inline-end: calc(
+  var(--select-icon-inset) + var(--select-icon-size) + var(--select-icon-gap)
+);
+```
 
-## Section 6 details
+Clear of the edge, past the mark, and a gap after it. Change the icon size and
+the text stops in the right place without another edit.
 
-- The picker is anchored to the button **implicitly**. No `anchor-name`, no
-  `position-anchor`.
-- `--select-menu-radius` is capped by `--select-menu-radius-max`. A menu is
-  tall, and the control's 999px at `rounded` would turn it into a stadium —
-  the same problem `textarea.css` caps for itself.
-- `::picker-icon` needs `align-self: center`, or it baseline-aligns and rides
-  above the centre line.
-- The animation lives inside `@media (prefers-reduced-motion: no-preference)`
-  rather than being written and then undone. With no transition at all the
-  popover simply appears, which is what reduced motion asks for.
-  `allow-discrete` covers `display` and `overlay`; `@starting-style` gives the
-  entry somewhere to come from, without which only the close would animate.
-- `option` and `optgroup` are reached through the key, never as bare elements.
-  `optgroup` takes `.label`'s colour and weight from the same channel — a
-  group name labels the options under it. It cannot carry the key itself,
-  because `<optgroup>` is the consumer's element.
+## The one physical value in the file
 
-## Design tokens
+```css
+background-position: right var(--select-icon-inset) center;
 
-`--font-size-*`, `--line-height-base`, `--radius-*`, `--spacing-25`,
-`--shadow-md`, `--color-neutral-*`, `--color-error`, `--transition-fast`.
+&:dir(rtl) { background-position: left var(--select-icon-inset) center; }
+```
+
+A background has no logical side.
+
+## The menu is additive
+
+```css
+@media (hover: hover) and (pointer: fine) {
+  @supports (appearance: base-select) { … }
+}
+```
+
+Two guards, both necessary. Without base-select support, or on a touch screen,
+the control above is what renders and the platform keeps its own picker. A
+touch device's native picker is better than anything this file could draw.
+
+Inside the block the painted mark comes off — `::picker-icon` is laid out, so
+the end padding becomes the gap between the element and the edge — and the mark
+is redrawn as a mask on the pseudo-element, which is what lets it take a token
+colour.
+
+`align-self: center` on `::picker-icon` is required: without it the icon
+baseline-aligns and rides above the centre line.
+
+## The menu variables are declared on the control
+
+`::picker(select)` inherits from the element, so `--select-menu-*` and
+`--select-option-*` are declared in the key block rather than anywhere else.
+
+`--select-menu-radius` is capped at `--radius-lg`, so a `select-rounded`
+control does not produce a 999px menu.
+
+## No `:read-only` branch
+
+`readonly` does nothing to a `<select>`. Locking a choice is `disabled` plus a
+hidden input, or a single option.
+
+## List boxes opt out
+
+```css
+&:is([multiple], [size]:not([size="1"])) {
+  background-image: none;
+  min-block-size: 0;
+  padding-inline-end: var(--select-padding-inline);
+  cursor: default;
+}
+```
+
+A list box does not open, so no mark and no one-line floor.
+
+The same condition is negated on the menu block, so a list box never gets
+base-select applied to it either.
+
+## The group rules are outside the key
+
+```css
+.pu-input-group:has(> .input-icon[data-placement="start"]) > .pu-select { … }
+.pu-input-group:has(> .pu-select:disabled) > .input-icon { … }
+```
+
+Only the **start** slot, because the chevron owns the end. They live at top
+level because they are about the group, not about the select.
+
+## Order inside the block
+
+1. Variables, including the three icons and the menu set
+2. Base, and the RTL background position
+3. Size
+4. Shape
+5. States
+6. List-box opt-out
+7. Reduced motion
+
+Then the two group rules, then the menu block.

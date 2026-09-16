@@ -1,101 +1,181 @@
 # Select
 
-Choosing one of a set you already know.
+A dropdown. It styles the native `<select>`, and where the browser supports it
+the open menu is styled too — otherwise the platform keeps its own picker.
+
+## Quick start
 
 ```html
-<select class="select">
+<select class="pu-select" name="country">
   <option value="">Choose a country</option>
   <option value="se">Sweden</option>
+  <option value="no">Norway</option>
 </select>
 ```
 
-The box comes from the `--form-*` channel, same as `.input`, so a select and
-an input in one form are the same field. See [Form](../Form/usage.md).
+## Classes
 
-## The empty option
+| Class | Does |
+|---|---|
+| `.pu-select` | The key. Requires `<select>`. |
+| `select-sm` | 12px. |
+| `select-md` | 14px. The default. |
+| `select-lg` | 16px. |
+| `select-sharp` | Square corners, and a sharp chevron. |
+| `select-smooth` | The default corner and chevron. |
+| `select-rounded` | Fully round, and a rounded chevron. |
 
-The first option carries `value=""` so the field has no answer until someone
-gives it one, and `required` can catch the case where they did not. A
-placeholder option with a real value is a silent default the user never chose.
+The chevron's corners follow the box's — a sharp select gets a mitred mark, a
+rounded one gets a curved tip.
 
-A placeholder option is **not** a label. The `<label>` still has to be there.
+## The open menu
 
-## The menu
+On a device with a pointer, and where the browser supports it, the open list is
+styled to match the control: same surface, same corner, its own padding and
+highlight.
 
-With `appearance: none` the menu is not in the page at all — the browser hands
-it to the operating system, which draws it in its own layer. That is why a
-select on macOS opens *over* itself: Apple's convention for a pop-up button
-puts the current value under the pointer. No CSS reaches that menu.
+Everywhere else — a touch screen, or a browser without support — the control
+above is what renders and the platform keeps its own picker. Nothing breaks;
+the dropdown simply looks native when it opens.
 
-Where the browser supports `appearance: base-select`, the library takes the
-menu over: it becomes an element in the page, anchored under the button, with
-our fill, corner, shadow and options, and it animates open and closed.
-
-That layer is behind `@media (hover: hover) and (pointer: fine)` on purpose. A
-menu drawn in the page replaces the platform's own, and on a touch screen the
-iOS wheel and the Android list are the better controls — they are the ones
-people already know how to operate. A mouse gets the styled menu; a finger
-keeps the native picker. Same select, same value, same markup either way.
-
-### Optional markup for that layer
+## Multiple and list boxes
 
 ```html
-<select class="select">
-  <button><selectedcontent></selectedcontent></button>
-  <option value="">Choose</option>
-</select>
+<select class="pu-select" name="tags" multiple size="5">…</select>
 ```
 
-`<selectedcontent>` holds a live clone of the chosen option, so an option
-carrying an icon can show that icon in the closed control. Without it the
-browser generates its own button and everything still works.
-
-A browser without base appearance ignores a `<button>` inside a `<select>`
-entirely and strips an `<option>` to its text, so the same markup is safe to
-ship everywhere. The library ships no HTML — this is yours to write.
-
-## Not a dropdown
-
-`multiple`, and `size` with anything but `1`, is an open list box. It does not
-open, so it carries no mark and no one-line height floor — the rows decide the
-height. Base appearance does not support either attribute yet, so those
-controls always use the native path.
-
-Multi-select is hard to operate: it needs a modifier key on a mouse and is
-easy to break on a touch screen. A group of checkboxes is usually better.
+A list box does not open, so it gets no chevron and no one-line floor.
 
 ## Icons
 
-Use `.input-group`, the same as [Input](../Input/usage.md). The chevron owns
-the end of the box, so an icon goes in the start slot.
+Use `.pu-input-group` for a leading icon. The chevron still owns the trailing
+edge.
 
-## Accessibility
-
-- **Must** be named by a `<label for>`.
-- An `<optgroup>` label is not selectable and is announced as a group name.
-  Never use one as a placeholder row.
-- No focusable element may go inside a base-appearance `<select>`.
-- `appearance: none` removes the control from Windows High Contrast Mode.
-- `::picker-icon` and `::checkmark` are **not** in the accessibility tree.
-
-## Size, shape
-
-`sm` · `md` (default) · `lg` — a **leaf**.
-
-`sharp` · `smooth` (default) · `rounded` — the shape class also cuts the
-chevron's own corners, and `rounded` moves it further in from the edge.
+```html
+<div class="pu-input-group">
+  <svg class="input-icon" data-placement="start" aria-hidden="true" viewBox="0 0 24 24">…</svg>
+  <select class="pu-select" name="country">…</select>
+</div>
+```
 
 ## Variables
 
-| Variable | Controls |
-|---|---|
-| `--select-icon-size` · `-color` · `-inset` · `-gap` | the chevron |
-| `--select-icon-image` | its shape. Swap it for artwork of your own. |
-| `--select-menu-surface` · `-border-color` · `-radius` · `-radius-max` | the menu |
-| `--select-menu-padding` · `-shadow` · `-offset` | |
-| `--select-menu-duration` · `-travel` | the open and the close |
-| `--select-option-padding-block` · `-padding-inline` · `-radius` | |
-| `--select-option-highlight` | hovered, and the one already chosen |
+| Variable | Default | Controls |
+|---|---|---|
+| `--select-font-size` | the form's scale | Type size. |
+| `--select-line-height` | `var(--line-height-base)` | Leading. |
+| `--select-color` | the form's text colour | Text. |
+| `--select-surface` | the form's surface | Fill. |
+| `--select-padding-block` | the form's padding | Vertical padding. |
+| `--select-padding-inline` | the form's padding | Horizontal padding. |
+| `--select-border-width` | the form's border width | Border. |
+| `--select-border-color` | the form's border colour | Border. |
+| `--select-radius` | the form's radius | Corner. |
+| `--select-icon-size` | `1em` | The chevron. |
+| `--select-icon-color` | `var(--color-text-subtle)` | The chevron. |
+| `--select-icon-inset` | the inline padding | Distance from the edge. |
+| `--select-icon-gap` | `0.5em` | Space between the text and the chevron. |
+| `--select-icon-image` | the smooth chevron | The mark itself. Replace it with your own. |
 
-Menu variables are read only where the styled menu applies; elsewhere they are
-ignored.
+For the menu, where it is styled:
+
+| Variable | Default | Controls |
+|---|---|---|
+| `--select-menu-surface` | `--select-surface` | Menu fill. |
+| `--select-menu-border-color` | `var(--color-border)` | Menu border. |
+| `--select-menu-radius` | the control's, capped | Menu corner. |
+| `--select-menu-padding` | `var(--spacing-25)` | Padding around the options. |
+| `--select-menu-shadow` | `var(--shadow-md)` | Menu shadow. |
+| `--select-menu-offset` | `var(--spacing-25)` | Gap from the control. |
+| `--select-menu-duration` | `var(--transition-fast)` | Open timing. |
+| `--select-menu-travel` | `-0.25rem` | How far it slides in. |
+| `--select-option-padding-block` | the control's | Option padding. |
+| `--select-option-padding-inline` | the control's | Option padding. |
+| `--select-option-radius` | `var(--radius-sm)` | Option corner. |
+| `--select-option-highlight` | `var(--color-surface-muted)` | Highlighted option. |
+
+```html
+<select class="pu-select" style="--select-icon-color: var(--color-primary)">…</select>
+```
+
+## States
+
+| State | Look |
+|---|---|
+| `:hover` | Border darkens. |
+| `:user-invalid` or `aria-invalid="true"` | Border turns to the error colour. |
+| `:disabled` | Muted fill, muted text and chevron, not-allowed cursor. |
+
+There is no read-only state. `readonly` does nothing to a `<select>`. Locking a
+choice is `disabled` plus a hidden input, or a single option.
+
+## Accessibility
+
+- Every select needs a label. See the Label docs.
+- The first option should say what the field is for when nothing is chosen —
+  `<option value="">Choose a country</option>` — and it should have an empty
+  value so `required` works.
+- Use `<optgroup>` for a long list. It is announced.
+- Bind hints and errors with `aria-describedby`, and set `aria-invalid="true"`
+  when your own validation fails.
+- Do not replace a select with a scripted menu unless you need something a
+  select cannot do. The native control is keyboard accessible, type-ahead
+  searchable and works with every assistive technology.
+- The focus ring comes from the library.
+
+## Examples
+
+### Sizes
+
+```html
+<select class="pu-select select-sm">…</select>
+<select class="pu-select select-md">…</select>
+<select class="pu-select select-lg">…</select>
+```
+
+### Shape
+
+```html
+<select class="pu-select select-sharp">…</select>
+<select class="pu-select select-smooth">…</select>
+<select class="pu-select select-rounded">…</select>
+```
+
+### In a field, required
+
+```html
+<div class="pu-field">
+  <label class="pu-label" for="country">Country</label>
+  <select class="pu-select" id="country" name="country" required>
+    <option value="">Choose a country</option>
+    <option value="se">Sweden</option>
+    <option value="no">Norway</option>
+  </select>
+  <p class="pu-field-error">Choose a country.</p>
+</div>
+```
+
+### Grouped options
+
+```html
+<select class="pu-select" name="city">
+  <option value="">Choose a city</option>
+  <optgroup label="Sweden">
+    <option value="sto">Stockholm</option>
+    <option value="got">Gothenburg</option>
+  </optgroup>
+  <optgroup label="Norway">
+    <option value="osl">Oslo</option>
+  </optgroup>
+</select>
+```
+
+### A list box
+
+```html
+<select class="pu-select" name="tags" multiple size="5">
+  <option value="css">CSS</option>
+  <option value="html">HTML</option>
+  <option value="js">JavaScript</option>
+</select>
+```

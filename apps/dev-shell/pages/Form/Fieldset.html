@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fieldset — PureComponents</title>
+    <title>Fieldset — Elements</title>
     <meta name="pc-description" content="Several fields that answer one question, held together." />
 
     <link rel="stylesheet" href="/pureui/styles/main.css" />
@@ -127,7 +127,7 @@
     <section class="pc-demo" id="panel" data-title="Panel" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">A whole surface, not a hairline — otherwise the fields inside just look narrower than their neighbours.</p>
       <template>
-        <fieldset class="pu-fieldset panel">
+        <fieldset class="pu-fieldset fieldset-panel">
           <legend>Billing address</legend>
           <div class="pu-field">
             <label for="p-street">Street</label>
@@ -149,14 +149,14 @@
             <label for="h-email">Email</label>
             <input class="pu-input" type="email" id="h-email" value="anna@example.se" />
           </div>
-          <fieldset class="pu-fieldset" style="border: 1px solid var(--color-neutral-400); padding: 1rem">
+          <fieldset class="pu-fieldset" style="border: 1px solid var(--color-border-strong); padding: 1rem">
             <legend>A bare border</legend>
             <div class="pu-field">
               <label for="h-street">Street</label>
               <input class="pu-input" type="text" id="h-street" value="Storgatan 14" />
             </div>
           </fieldset>
-          <fieldset class="pu-fieldset panel">
+          <fieldset class="pu-fieldset fieldset-panel">
             <legend>A panel</legend>
             <div class="pu-field">
               <label for="h2-street">Street</label>
@@ -170,7 +170,7 @@
     <section class="pc-demo" id="disabled" data-title="Native Disabled" data-stage-style="display:block; max-width:24rem;">
       <p class="pc-note">&lt;fieldset disabled&gt; disables the subtree for real. This file writes nothing for it.</p>
       <template>
-        <fieldset class="pu-fieldset panel" disabled>
+        <fieldset class="pu-fieldset fieldset-panel" disabled>
           <legend>Card details</legend>
           <div class="pu-field">
             <label for="d-card">Card number</label>
@@ -211,21 +211,21 @@
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; grid-template-columns: repeat(3, 1fr); gap:2rem; align-items:start;">
       <p class="pc-note">Size on the group; every field in it follows.</p>
       <template>
-        <fieldset class="pu-fieldset sm">
+        <fieldset class="pu-fieldset fieldset-sm">
           <legend>Small</legend>
           <div class="pu-field">
             <label for="zz-sm">Street</label>
             <input class="pu-input" type="text" id="zz-sm" value="Storgatan 14" />
           </div>
         </fieldset>
-        <fieldset class="pu-fieldset md">
+        <fieldset class="pu-fieldset fieldset-md">
           <legend>Medium</legend>
           <div class="pu-field">
             <label for="zz-md">Street</label>
             <input class="pu-input" type="text" id="zz-md" value="Storgatan 14" />
           </div>
         </fieldset>
-        <fieldset class="pu-fieldset lg">
+        <fieldset class="pu-fieldset fieldset-lg">
           <legend>Large</legend>
           <div class="pu-field">
             <label for="zz-lg">Street</label>

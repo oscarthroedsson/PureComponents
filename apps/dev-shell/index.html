@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PureComponents</title>
+    <title>Pure</title>
 
     <!-- Dev shell only. The start page deliberately loads no library CSS,
          so a broken stylesheet can never take the navigation down with it. -->
@@ -12,12 +12,14 @@
   <body data-page="home">
     <noscript>
       <p style="padding: 2rem; font-family: system-ui">
-        The component index is built from <code>pages/components.js</code> and needs JavaScript.
-        The component pages themselves are in <code>pages/</code>.
+        The library index needs JavaScript. Elements, compositions and demos can also be opened
+        directly from <code>pages/</code>.
       </p>
     </noscript>
 
     <script src="./pages/components.js"></script>
+    <script src="./pages/Compositions/compositions.js"></script>
+    <script src="./pages/Demos/demos.js"></script>
     <script src="./pages/docs.js"></script>
   </body>
 </html>

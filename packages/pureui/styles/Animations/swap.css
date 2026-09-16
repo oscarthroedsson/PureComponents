@@ -1,43 +1,3 @@
-/*
-Swap — two icons in one slot, crossing over when a state flips.
-
-USAGE:
-  <summary>
-    Question
-    <span class="pu-swap" aria-hidden="true">
-      <svg class="closed">…plus…</svg>
-      <svg class="open">…minus…</svg>
-    </span>
-  </summary>
-
-Nothing animates inside an icon, so any pair of shapes works — a plus and a
-minus, a chevron and a cross, whatever you draw.
-
-WHAT FLIPS IT
-  a parent with [open]                 <details>, <dialog>
-  a parent with aria-expanded="true"   a scripted disclosure
-  [data-swap="on"] on the slot itself  anything else
-
-The slot shows .closed by default and .open when one of those matches.
-
-MOTION: data-motion="scale | rotate | fade | none"  (scale is the default)
-  Only the exit state moves; the rules below already say what to do with it,
-  so a variant reassigns two variables and never rewrites a rule.
-
-ACCESSIBILITY REQUIREMENTS:
-- The pair is decoration. It repeats a state the control already reports, so
-  the slot MUST carry aria-hidden="true".
-- Never the only signal for a state — something else has to say it too.
-- Both icons are in the layout at all times; visibility is opacity, so nothing
-  reflows as they cross.
-- Silenced under prefers-reduced-motion.
-
-VARIABLES
-  --swap-exit-scale · --swap-exit-rotation
-  --swap-exit-duration · --swap-enter-duration
-  --swap-enter-delay · --swap-enter-easing
-*/
-
 @import url("./motion.css");
 
 .pu-swap {
@@ -55,7 +15,7 @@ VARIABLES
   > * {
     grid-area: 1 / 1;
 
-    /* Declared as defence: `.closed { display: none }` is one of the commonest
+    /* Declared as defence: `.swap-closed { display: none }` is one of the commonest
        utility rules in other people's stylesheets. */
     display: block;
 
@@ -99,9 +59,9 @@ specificity and source order never enters into it.
 */
 
 /* The icon for the state we are not in. */
-.pu-swap > .open,
-:is([open], [aria-expanded="true"]) .pu-swap > .closed,
-.pu-swap[data-swap="on"] > .closed {
+.pu-swap > .swap-open,
+:is([open], [aria-expanded="true"]) .pu-swap > .swap-closed,
+.pu-swap[data-swap="on"] > .swap-closed {
   opacity: 0;
   scale: var(--swap-exit-scale);
   rotate: var(--swap-exit-rotation);
@@ -113,9 +73,9 @@ specificity and source order never enters into it.
 }
 
 /* The icon for the state we are in. It arrives a beat after the other leaves. */
-.pu-swap > .closed,
-:is([open], [aria-expanded="true"]) .pu-swap > .open,
-.pu-swap[data-swap="on"] > .open {
+.pu-swap > .swap-closed,
+:is([open], [aria-expanded="true"]) .pu-swap > .swap-open,
+.pu-swap[data-swap="on"] > .swap-open {
   opacity: 1;
   scale: 1;
   rotate: 0deg;

@@ -1,0 +1,38 @@
+.pu-motion {
+  /* VARIANTS */
+
+  &[data-motion="scale-in"] {
+    --motion-properties: scale;
+    --motion-scale:
+      calc(
+        var(--motion-scale-from) +
+        (1 - var(--motion-scale-from)) * var(--motion-progress)
+      );
+  }
+
+  &[data-motion="press"] {
+    --motion-properties: scale;
+    --motion-scale:
+      calc(
+        1 -
+        (1 - var(--motion-press-scale)) * var(--motion-progress)
+      );
+  }
+
+  &:where(
+    [data-motion="scale-in"],
+    [data-motion="press"]
+  ):where(
+    :not([data-motion-scope]),
+    [data-motion-scope="self"]
+  ) {
+    scale: var(--motion-scale);
+  }
+
+  &:where(
+    [data-motion="scale-in"],
+    [data-motion="press"]
+  )[data-motion-scope="children"] > * {
+    scale: var(--motion-scale);
+  }
+}

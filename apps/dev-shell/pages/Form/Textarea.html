@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Textarea — PureComponents</title>
+    <title>Textarea — Elements</title>
     <meta name="pc-description" content="The box when the text runs to more than one line." />
 
     <link rel="stylesheet" href="/pureui/styles/main.css" />
@@ -18,7 +18,7 @@
   <body data-component="Form/Textarea">
     <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
-        The key alone is already <code>md</code>. Width comes from the parent; height comes from
+        The key alone is already <code>textarea-md</code>. Width comes from the parent; height comes from
         <code>rows</code>, and nothing here overrides it. Without <code>rows</code> the box falls back
         to two lines, so a bare textarea is visibly not an input.
       </p>
@@ -36,21 +36,21 @@
 
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
-        <code>sm</code> · <code>md</code> · <code>lg</code> — 12 / 14 / 16px. Only the font size is
+        <code>textarea-sm</code> · <code>textarea-md</code> · <code>textarea-lg</code> — 12 / 14 / 16px. Only the font size is
         set; the padding and the height floor are in <code>em</code> and follow it.
       </p>
       <template>
         <div class="pu-field">
           <label class="pu-label" for="ta-sm">Small</label>
-          <textarea id="ta-sm" class="pu-textarea sm" rows="3">Small</textarea>
+          <textarea id="ta-sm" class="pu-textarea textarea-sm" rows="3">Small</textarea>
         </div>
         <div class="pu-field">
           <label class="pu-label" for="ta-md">Medium</label>
-          <textarea id="ta-md" class="pu-textarea md" rows="3">Medium</textarea>
+          <textarea id="ta-md" class="pu-textarea textarea-md" rows="3">Medium</textarea>
         </div>
         <div class="pu-field">
           <label class="pu-label" for="ta-lg">Large</label>
-          <textarea id="ta-lg" class="pu-textarea lg" rows="3">Large</textarea>
+          <textarea id="ta-lg" class="pu-textarea textarea-lg" rows="3">Large</textarea>
         </div>
       </template>
     </section>
@@ -60,15 +60,15 @@
       <template>
         <div class="pu-field">
           <label class="pu-label" for="ta-sharp">Sharp</label>
-          <textarea id="ta-sharp" class="pu-textarea sharp" rows="2">sharp</textarea>
+          <textarea id="ta-sharp" class="pu-textarea textarea-sharp" rows="2">sharp</textarea>
         </div>
         <div class="pu-field">
           <label class="pu-label" for="ta-smooth">Smooth</label>
-          <textarea id="ta-smooth" class="pu-textarea smooth" rows="2">smooth</textarea>
+          <textarea id="ta-smooth" class="pu-textarea textarea-smooth" rows="2">smooth</textarea>
         </div>
         <div class="pu-field">
           <label class="pu-label" for="ta-rounded">Rounded</label>
-          <textarea id="ta-rounded" class="pu-textarea rounded" rows="2">rounded</textarea>
+          <textarea id="ta-rounded" class="pu-textarea textarea-rounded" rows="2">rounded</textarea>
         </div>
       </template>
     </section>
@@ -143,7 +143,7 @@
         </div>
         <div class="pu-field">
           <label class="pu-label" for="ta-ghost">Ghost</label>
-          <textarea id="ta-ghost" class="pu-textarea ghost" rows="2">No fill, no border, same measurements.</textarea>
+          <textarea id="ta-ghost" class="pu-textarea textarea-ghost" rows="2">No fill, no border, same measurements.</textarea>
         </div>
       </template>
     </section>
@@ -197,7 +197,7 @@
         controls, and they stay the same field with a different number of lines.
       </p>
       <template>
-        <form class="pu-form lg rounded">
+        <form class="pu-form form-lg form-rounded">
           <div class="pu-field">
             <label class="pu-label" for="ta-subject">Subject</label>
             <input id="ta-subject" class="pu-input" type="text" value="Same box" />

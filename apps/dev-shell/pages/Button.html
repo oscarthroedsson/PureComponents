@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Button — PureComponents</title>
-    <meta name="pc-description" content="The Button component provides accessible, styled buttons for user interactions. All buttons must use the btn class with a size variant." />
+    <title>Button — Elements</title>
+    <meta
+      name="pc-description"
+      content="An action the reader can take. .pu-btn is a look, not an element: it goes on whichever native element carries the meaning, and the base neutralises the four so the same class gives the same box on all of them."
+    />
 
     <!-- Library CSS under test -->
     <link rel="stylesheet" href="/pureui/styles/main.css" />
@@ -20,164 +23,227 @@
       <table>
         <thead><tr><th>Key</th><th>Type</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td><code>.pu-btn</code></td><td><span class="pc-cat pc-cat-part"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 14v4.4a.6.6 0 0 0 .6.6H10m9-5v4.4a.6.6 0 0 1-.6.6H14m0-14h4.4a.6.6 0 0 1 .6.6V10M4 10V5.6a.6.6 0 0 1 .6-.6H10m4 14v1a2 2 0 1 1-4 0v-1m-6-9h1a2 2 0 1 1 0 4H4m15-4h1a2 2 0 1 1 0 4h-1m-5-9V4a2 2 0 1 0-4 0v1"/></svg>Part</span></td><td>The key. Nothing below applies without it — the whole component hangs off this one class, so a consumer's own CSS is never touched by merely linking the stylesheet. Goes on <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>.</td></tr>
-          <tr><td><code>sm</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>Mindre typsnitt och radie.</td></tr>
-          <tr><td><code>md</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>Standard. Basen ger redan detta.</td></tr>
-          <tr><td><code>lg</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>Större typsnitt och radie.</td></tr>
-          <tr><td><code>sharp</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>Ingen radie.</td></tr>
-          <tr><td><code>smooth</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>Samma radie som <code>md</code>.</td></tr>
-          <tr><td><code>rounded</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>Helt rund kortsida.</td></tr>
-          <tr><td><span class="pc-doc-dim">(ingen)</span></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>Fylld primärknapp. Standard.</td></tr>
-          <tr><td><code>emphasised</code></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>Sekundärfärgen som fyllning.</td></tr>
-          <tr><td><code>secondary</code></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>Sekundärfärgen, med egen hover.</td></tr>
-          <tr><td><code>tertiary</code></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>Ingen fyllning. Understruken text vid hover.</td></tr>
-          <tr><td><code>ghost</code></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>Ingen fyllning. Neutral botten vid hover.</td></tr>
-          <tr><td><code>data-intent="destructive"</code></td><td><span class="pc-cat pc-cat-intent"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.576 1.424a.6.6 0 0 1 .848 0l10.152 10.152a.6.6 0 0 1 0 .848L12.424 22.576a.6.6 0 0 1-.848 0L1.424 12.424a.6.6 0 0 1 0-.848zM12 7l4 4m-4-4l-4 4.167M12 7v9"/></svg>Intent</span></td><td>Destruktiv handling.</td></tr>
-          <tr><td><code>data-icon-only="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Kvadratisk. Kräver <code>aria-label</code>.</td></tr>
-          <tr><td><code>aria-pressed="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Nedtryckt växelknapp.</td></tr>
-          <tr><td><code>disabled</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Grå och utan pekarhändelser. Bara på <code>&lt;button&gt;</code>.</td></tr>
-          <tr><td><code>aria-disabled="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Samma utseende på <code>&lt;a&gt;</code>, som aldrig kan vara <code>:disabled</code>.</td></tr>
-          <tr><td><code>:hover</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>10&nbsp;% mörkare fyllning.</td></tr>
-          <tr><td><code>:active</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Krymper till 95&nbsp;%.</td></tr>
+          <tr><td><code>.pu-btn</code></td><td><span class="pc-cat pc-cat-key"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 14v4.4a.6.6 0 0 0 .6.6H10m9-5v4.4a.6.6 0 0 1-.6.6H14m0-14h4.4a.6.6 0 0 1 .6.6V10M4 10V5.6a.6.6 0 0 1 .6-.6H10m4 14v1a2 2 0 1 1-4 0v-1m-6-9h1a2 2 0 1 1 0 4H4m15-4h1a2 2 0 1 1 0 4h-1m-5-9V4a2 2 0 1 0-4 0v1"/></svg>Key</span></td><td>The key. Nothing below applies without it — the whole component hangs off this one class, so a consumer's own CSS is never touched by merely linking the stylesheet. Goes on <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>.</td></tr>
+          <tr><td><code>btn-sm</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>Smaller type and radius.</td></tr>
+          <tr><td><code>btn-md</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>The default. The base already gives this.</td></tr>
+          <tr><td><code>btn-lg</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>Larger type and radius.</td></tr>
+          <tr><td><code>btn-sharp</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>No radius.</td></tr>
+          <tr><td><code>btn-smooth</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>The same radius as <code>btn-md</code>.</td></tr>
+          <tr><td><code>btn-rounded</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>Fully round on the short side.</td></tr>
+          <tr><td><span class="pc-doc-dim">(none)</span></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>Filled, in the primary colour. The default.</td></tr>
+          <tr><td><code>btn-emphasised</code></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>The secondary colour as the fill.</td></tr>
+          <tr><td><code>btn-secondary</code></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>The secondary colour, with a hover of its own.</td></tr>
+          <tr><td><code>btn-outline</code></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>No fill. The border and the label carry the primary colour.</td></tr>
+          <tr><td><code>btn-tertiary</code></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>No fill. The label underlines on hover.</td></tr>
+          <tr><td><code>btn-ghost</code></td><td><span class="pc-cat pc-cat-emphasis"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 16a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/><path d="M21 7.353v9.294a.6.6 0 0 1-.309.525l-8.4 4.666a.6.6 0 0 1-.582 0l-8.4-4.666A.6.6 0 0 1 3 16.647V7.353a.6.6 0 0 1 .309-.524l8.4-4.667a.6.6 0 0 1 .582 0l8.4 4.667a.6.6 0 0 1 .309.524M3.528 7.294L8.4 10m12.1-2.722L15.6 10M12 21v-5"/></g></svg>Emphasis</span></td><td>No fill. A neutral ground on hover.</td></tr>
+          <tr><td><code>data-intent="destructive"</code></td><td><span class="pc-cat pc-cat-intent"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.576 1.424a.6.6 0 0 1 .848 0l10.152 10.152a.6.6 0 0 1 0 .848L12.424 22.576a.6.6 0 0 1-.848 0L1.424 12.424a.6.6 0 0 1 0-.848zM12 7l4 4m-4-4l-4 4.167M12 7v9"/></svg>Intent</span></td><td>A destructive action.</td></tr>
+          <tr><td><code>data-icon-only="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Square. Requires <code>aria-label</code>.</td></tr>
+          <tr><td><code>aria-pressed="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>A toggle button in its pressed state.</td></tr>
+          <tr><td><code>disabled</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Dimmed, and takes no pointer events. Only on <code>&lt;button&gt;</code>.</td></tr>
+          <tr><td><code>aria-disabled="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>The same look on <code>&lt;a&gt;</code>, which can never be <code>:disabled</code>.</td></tr>
+          <tr><td><code>:hover</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>The fill goes 10&nbsp;% darker.</td></tr>
+          <tr><td><code>:active</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Shrinks to 95&nbsp;%.</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="pc-doc-dim">This file declares no <code>--btn-*</code> variables, so the <strong>Variables</strong> row is empty — the component reads <code>--color-primary</code> and friends straight from <code>main.css</code>. The only <strong>Part</strong> is the key itself — a button has no named children. No <strong>Layout</strong> or <strong>Animations</strong> either; it is one box that does not move.</p>
+    <p class="pc-doc-dim">This file declares no <code>--btn-*</code> variables, so the <strong>Variables</strong> row is empty — the component reads <code>--color-primary</code> and friends straight from <code>main.css</code>. The only <strong>Key</strong> is the key itself — a button has no named children. No <strong>Layout</strong> or <strong>Animations</strong> either; it is one box that does not move.</p>
   </section>
 
-  <section class="pc-demo" id="basic-usage" data-title="Basic Usage">
+  <section class="pc-demo" id="default" data-title="Default">
+    <p class="pc-note">The key and a size. Nothing else is needed, and <code>btn-md</code> is what the base already gives.</p>
     <template>
-      <button class="pu-btn md">Primary Button</button>
-      <button class="pu-btn md secondary">Secondary Button</button>
-      <button class="pu-btn md tertiary">Tertiary Button</button>
+      <button class="pu-btn btn-md">Save changes</button>
+      <a class="pu-btn btn-md" href="#default">A destination</a>
     </template>
   </section>
 
-  <section class="pc-demo" id="size-variants" data-title="Size Variants">
-    <p class="pc-note">Buttons come in three sizes: small (sm), medium (md), and large (lg). Medium is the default size.</p>
+  <section class="pc-demo" id="sizes" data-title="Sizes">
+    <p class="pc-note">Three sizes. They move type and radius together, so a small button is not just a short one.</p>
     <template>
-      <button class="pu-btn sm">Small Button</button>
-      <button class="pu-btn md">Medium Button</button>
-      <button class="pu-btn lg">Large Button</button>
+      <button class="pu-btn btn-sm">Small</button>
+      <button class="pu-btn btn-md">Medium</button>
+      <button class="pu-btn btn-lg">Large</button>
     </template>
   </section>
 
-  <section class="pc-demo" id="style-variants" data-title="Style Variants">
-    <p class="pc-note">Buttons support different visual styles: primary (default), secondary, and tertiary.</p>
+  <section class="pc-demo" id="forms" data-title="Forms">
+    <p class="pc-note">
+      <code>type</code> is what separates these, not the class. A <code>&lt;button&gt;</code> inside a form submits unless
+      told otherwise, so the cancel button needs <code>type="button"</code> or it will submit too.
+    </p>
     <template>
-      <button class="pu-btn md">Primary</button>
-      <button class="pu-btn md secondary">Secondary</button>
-      <button class="pu-btn md tertiary">Tertiary</button>
+      <form style="display: flex; gap: 0.5rem">
+        <button type="submit" class="pu-btn btn-md">Submit</button>
+        <button type="reset" class="pu-btn btn-md btn-secondary">Reset</button>
+        <button type="button" class="pu-btn btn-md btn-tertiary">Cancel</button>
+      </form>
     </template>
+  </section>
+
+  <section class="pc-demo" id="variants" data-title="Variants">
+    <p class="pc-note">Shape. <code>btn-smooth</code> is the middle one and matches what <code>btn-md</code> already gives.</p>
+    <template>
+      <button class="pu-btn btn-md btn-sharp">Sharp</button>
+      <button class="pu-btn btn-md btn-smooth">Smooth</button>
+      <button class="pu-btn btn-md btn-rounded">Rounded</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="emphasis" data-title="Emphasis">
+    <p class="pc-note">
+      How loudly the button asks. One filled primary per view is the rule of thumb — everything beside it steps down.
+      <code>data-intent="destructive"</code> is not an emphasis level but a meaning, and can sit on any of them.
+    </p>
+    <template>
+      <button class="pu-btn btn-md">Primary</button>
+      <button class="pu-btn btn-md btn-emphasised">Emphasised</button>
+      <button class="pu-btn btn-md btn-secondary">Secondary</button>
+      <button class="pu-btn btn-md btn-outline">Outline</button>
+      <button class="pu-btn btn-md btn-tertiary">Tertiary</button>
+      <button class="pu-btn btn-md btn-ghost">Ghost</button>
+      <button class="pu-btn btn-md" data-intent="destructive">Delete account</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="border" data-title="The border">
+    <p class="pc-note">
+      Every button carries a border, always. A filled one paints it in its own surface colour, so it is
+      invisible but occupies space — which is why a filled and an <code>btn-outline</code> button placed side by
+      side are exactly the same height and width. Without it, adding an outline to a row would shift
+      everything beside it by two pixels.
+    </p>
+    <template>
+      <button class="pu-btn btn-md">Filled</button>
+      <button class="pu-btn btn-md btn-outline">Outline</button>
+      <button class="pu-btn btn-md btn-secondary">Secondary</button>
+      <button class="pu-btn btn-md btn-ghost">Ghost</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="states" data-title="States">
+    <p class="pc-note">
+      Hover and active answer the pointer on their own. Disabled is the one that needs care:
+      <code>disabled</code> is native and only a <code>&lt;button&gt;</code> can carry it, so an
+      <code>&lt;a&gt;</code> uses <code>aria-disabled="true"</code> to reach the same look. Keyboard focus comes from
+      <code>main.css</code> and this file never draws its own.
+    </p>
+    <template>
+      <button class="pu-btn btn-md">Hover me</button>
+      <button class="pu-btn btn-md" disabled>Disabled</button>
+      <button class="pu-btn btn-md btn-secondary" disabled>Disabled secondary</button>
+      <a class="pu-btn btn-md" aria-disabled="true" href="#states">Disabled link</a>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="behavior" data-title="Behavior">
+    <p class="pc-note">
+      A toggle reports itself through <code>aria-pressed</code>, which a screen reader announces as pressed or not
+      pressed. The library ships no JavaScript, so flipping the attribute is the consumer's job — the button in this
+      pane's header does it here, rather than putting an <code>onclick</code> in markup nobody should copy.
+    </p>
+    <div class="pc-demo-actions" hidden>
+      <button type="button" data-pc-action="toggle-pressed">Toggle pressed</button>
+    </div>
+    <template>
+      <button class="pu-btn btn-md" aria-pressed="false">Mute</button>
+      <button class="pu-btn btn-md" aria-pressed="true">Notifications</button>
+      <button class="pu-btn btn-md btn-secondary" aria-pressed="false">Grid view</button>
+    </template>
+  </section>
+
+  <section class="pc-demo" id="custom-override" data-title="Custom/Override">
+    <p class="pc-note">
+      This file declares no <code>--btn-*</code> variables of its own, so there is no per-component tuning surface to
+      set. What it reads instead are the shared tokens, and those can be set on the element or on any ancestor. Edit
+      the values in the pane and watch both buttons follow.
+    </p>
+    <template>
+      <div style="--color-primary: #6d28d9; --radius-md: 2px; display: flex; gap: 0.5rem">
+        <button class="pu-btn btn-md">Inherits the scope</button>
+        <button class="pu-btn btn-md" style="--color-primary: #b45309">Set on the element</button>
+      </div>
+    </template>
+  </section>
+
+  <section class="pc-doc" id="other" data-title="Other">
+    <p>
+      What follows is Button's own, and belongs to no shared category. A page is free to name these sections whatever
+      describes them — the fixed vocabulary above ends here.
+    </p>
   </section>
 
   <section class="pc-demo" id="with-icons" data-title="With Icons">
-    <p class="pc-note">Buttons can contain icons alongside text. Icons should have <code>aria-hidden="true"</code> to hide them from screen readers.</p>
+    <p class="pc-note">
+      An icon beside a label is decoration and takes <code>aria-hidden="true"</code>; the label is what is announced.
+      The base sets the gap, so nothing needs spacing by hand.
+    </p>
     <template>
-      <button class="pu-btn md">
+      <button class="pu-btn btn-md">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <path d="M8 0L10.5 5.5L16 8L10.5 10.5L8 16L5.5 10.5L0 8L5.5 5.5L8 0Z" />
         </svg>
         Save
       </button>
-      <button class="pu-btn md secondary">
+      <button class="pu-btn btn-md btn-secondary">
+        Download
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <path d="M8 0L10.5 5.5L16 8L10.5 10.5L8 16L5.5 10.5L0 8L5.5 5.5L8 0Z" />
         </svg>
-        Download
       </button>
     </template>
   </section>
 
-  <section class="pc-demo" id="icon-only-buttons" data-title="Icon-Only Buttons">
-    <p class="pc-note">Icon-only buttons <strong>MUST</strong> have an <code>aria-label</code> attribute for screen reader accessibility.</p>
+  <section class="pc-demo" id="icon-only" data-title="Icon-Only">
+    <p class="pc-note">
+      <code>data-icon-only="true"</code> squares the box. There is no label left to announce, so
+      <code>aria-label</code> stops being good practice and becomes the only thing making the button usable.
+    </p>
     <template>
-      <button class="pu-btn sm" aria-label="Close dialog">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M8 8L2 2M8 8L14 2M8 8L2 14M8 8L14 14" stroke="currentColor" stroke-width="2" />
+      <button class="pu-btn btn-sm" data-icon-only="true" aria-label="Close dialog">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
+          <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="2" fill="none" />
         </svg>
       </button>
-      <button class="pu-btn md" aria-label="Edit item">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M2 14L14 2M2 2L14 14" stroke="currentColor" stroke-width="2" />
+      <button class="pu-btn btn-md" data-icon-only="true" aria-label="Edit item">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
+          <path d="M2 14L14 2M2 2L14 14" stroke="currentColor" stroke-width="2" fill="none" />
         </svg>
       </button>
-    </template>
-  </section>
-
-  <section class="pc-demo" id="toggle-buttons" data-title="Toggle Buttons">
-    <p class="pc-note">Toggle buttons use <code>aria-pressed</code> to indicate their state. Use <code>aria-pressed="true"</code> for pressed state and <code>aria-pressed="false"</code> for unpressed state.</p>
-    <template>
-      <button
-        class="pu-btn md"
-        aria-pressed="false"
-        onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')"
-      >
-        Toggle
+      <button class="pu-btn btn-lg" data-icon-only="true" aria-label="Delete item" data-intent="destructive">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
+          <path d="M3 4h10M6 4V2h4v2M5 4l1 10h4l1-10" stroke="currentColor" stroke-width="1.5" fill="none" />
+        </svg>
       </button>
-      <button
-        class="pu-btn md"
-        aria-pressed="true"
-        onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')"
-      >
-        Toggle (Pressed)
-      </button>
-    </template>
-  </section>
-
-  <section class="pc-demo" id="disabled-state" data-title="Disabled State">
-    <p class="pc-note">Disabled buttons use the native <code>disabled</code> attribute (not <code>[disabled]</code>). Disabled buttons are not interactive and have reduced opacity.</p>
-    <template>
-      <button class="pu-btn md" disabled>Disabled Primary</button>
-      <button class="pu-btn md secondary" disabled>Disabled Secondary</button>
-      <button class="pu-btn md tertiary" disabled>Disabled Tertiary</button>
-    </template>
-  </section>
-
-  <section class="pc-demo" id="border-radius-variants" data-title="Border Radius Variants">
-    <p class="pc-note">Buttons support different border radius styles: sharp (no radius), smooth (small radius), and rounded (large radius).</p>
-    <template>
-      <button class="pu-btn md sharp icon">Sharp</button>
-      <button class="pu-btn md smooth">Smooth</button>
-      <button class="pu-btn md rounded">Rounded</button>
-    </template>
-  </section>
-
-  <section class="pc-demo" id="in-forms" data-title="In Forms">
-    <p class="pc-note">Buttons are commonly used in forms for submit and cancel actions.</p>
-    <template>
-      <form style="display: flex; gap: 0.5rem">
-        <button type="submit" class="pu-btn md">Submit</button>
-        <button type="button" class="pu-btn md tertiary">Cancel</button>
-      </form>
     </template>
   </section>
 
   <section class="pc-demo" id="action-groups" data-title="Action Groups">
-    <p class="pc-note">Multiple buttons can be grouped together for related actions.</p>
+    <p class="pc-note">
+      Several buttons for one decision. The emphasis order carries which one is the expected answer, and the
+      destructive one is set apart by meaning rather than by being loudest.
+    </p>
     <template>
       <div style="display: flex; gap: 0.5rem; flex-wrap: wrap">
-        <button class="pu-btn md">Save</button>
-        <button class="pu-btn md secondary">Cancel</button>
-        <button class="pu-btn md tertiary">Delete</button>
+        <button class="pu-btn btn-md">Save</button>
+        <button class="pu-btn btn-md btn-secondary">Save as draft</button>
+        <button class="pu-btn btn-md btn-tertiary">Cancel</button>
+        <button class="pu-btn btn-md btn-ghost" data-intent="destructive">Discard</button>
       </div>
     </template>
   </section>
 
-  <section class="pc-demo" id="accessibility-examples" data-title="Accessibility Examples">
-    <p class="pc-note">All buttons must be keyboard accessible and properly labeled for screen readers.</p>
-    <template>
-      <button class="pu-btn md">Standard Button (accessible by default)</button>
-      <button class="pu-btn md" aria-label="Close dialog">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M8 8L2 2M8 8L14 2M8 8L2 14M8 8L14 14" stroke="currentColor" stroke-width="2" />
-        </svg>
-      </button>
-      <button class="pu-btn md" aria-pressed="false" aria-label="Toggle mute">Mute</button>
-    </template>
-  </section>
-
-
+    <script>
+      /* Handlers a demo's header actions can call. Each is given the live
+         preview root, which is replaced whenever the code pane is edited —
+         so a handler reads the DOM it is handed and keeps nothing. */
+      window.PC_ACTIONS = {
+        "toggle-pressed": function (stage) {
+          Array.prototype.forEach.call(stage.querySelectorAll("[aria-pressed]"), function (btn) {
+            btn.setAttribute("aria-pressed", btn.getAttribute("aria-pressed") === "true" ? "false" : "true");
+          });
+        },
+      };
+    </script>
     <script src="./components.js"></script>
     <script src="./docs.js"></script>
   </body>

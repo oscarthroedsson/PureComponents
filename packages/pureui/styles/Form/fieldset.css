@@ -1,97 +1,3 @@
-/*
-Fieldset — several fields that answer one question, held together.
-
-  <fieldset class="pu-fieldset">
-    <legend>Delivery address</legend>
-    <div class="pu-field">…</div>
-    <div class="pu-field">…</div>
-  </fieldset>
-
-Native <fieldset>, not a div with role="group". The deciding argument is not
-semantics, it is that <fieldset disabled> disables the whole subtree for
-real: the controls match :disabled, leave the tab order, and are left out of
-the submitted data. No div and no CSS can do that, and this library ships no
-JavaScript. The grouping semantics — the legend read before each option in a
-radio group — come along on top.
-
-
-NO BORDER BY DEFAULT
-
-A fieldset is a semantic frame, not a drawn box. GOV.UK, shadcn and DaisyUI
-all leave it borderless in their base, and the reason is worth stating: a
-hairline border sits flush with the rest of the form while the fields inside
-are pushed in by the padding, so the grouped fields look narrower than their
-neighbours for no visible reason. It reads as a mistake.
-
-.panel is the answer when a box is genuinely wanted. It draws a whole
-surface — background, border, radius, padding — so the inset reads as "these
-fields are inside something" instead of as misalignment. That is also what
-DaisyUI's own bordered example does: it adds a background along with the
-border, never the border alone.
-
-Two things about the native rendering, both inherited from the UA sheet and
-both load-bearing:
-
-  min-inline-size: 0   A fieldset has min-width: min-content built in. Left
-                       alone it refuses to shrink below its widest child and
-                       bursts out of any grid or flex parent. It only shows
-                       at narrow viewports, which is why it is usually found
-                       late.
-  <legend>             is rendered in the fieldset's block-start border, not
-                       as an ordinary child. It does not take part in the
-                       grid, so `gap` puts no space under it — that space has
-                       to come from the legend's own margin.
-
-The legend is deliberately left in that native position. `float: left` plus
-`width: 100%` would drop it out of the border and make it an ordinary block —
-Drupal's Claro does exactly that — but Safari ignores a legend's float once
-the fieldset is flex or grid, and ours is grid. Two engines would lay the
-group out differently. The spacing under the legend is solved with its own
-margin and line-height instead, which every engine agrees on.
-
-
-ACCESSIBILITY REQUIREMENTS:
-- A fieldset MUST have a <legend>, and it must be the first child. It is the
-  group's accessible name, and it is read before each control inside — which
-  is the entire point for a radio group.
-- Keep the legend short. It is repeated to a screen reader user on every
-  option in the group.
-- A legend needed only for assistive tech is hidden with a visually-hidden
-  utility, never with display: none or visibility: hidden — both take the
-  name away.
-- Do not nest a fieldset inside a fieldset to get indentation. Nest it only
-  when the questions really are nested; every level is announced.
-- A message for the whole group is a .pu-field-error placed as a direct child of
-  the fieldset, and the fieldset carries aria-invalid="true" while it applies.
-  That is the correct ARIA for a group-level error, and it is also the only
-  trigger there is: :user-invalid fires on a control, never on the group
-  around it, so a group error cannot be reached without JavaScript.
-- <fieldset disabled> is a real disabled state, so :disabled styling in every
-  control file applies with nothing extra written here. Controls inside the
-  FIRST legend stay enabled — that is native, and it is how a "turn this
-  section on" checkbox is built.
-- The focus ring comes from main.css. This file draws none, and nothing here
-  clips overflow.
-
-SIZE:  sm · md (default) · lg   — rewrites the channel for the whole group.
-SHAPE: sharp · smooth (default) · rounded
-
-VARIANT:
-  (none)   a semantic frame. No border, no padding, no fill.
-  panel    a whole surface: fill, border, radius and padding.
-
-VARIABLES
-  --fieldset-gap                between the options in the group. 8px, half of
-                                --form-gap — see the note in the block below.
-  --fieldset-legend-gap         under the legend; a margin, not the grid gap
-  --fieldset-legend-color
-  --fieldset-legend-weight
-  --fieldset-padding-block      .panel only
-  --fieldset-padding-inline     .panel only
-  --fieldset-surface            .panel only
-  --fieldset-border-color       .panel only
-*/
-
 .pu-fieldset:where(fieldset) {
   /* 1. VARIABLES */
   /* Half of --form-gap on purpose, and not read from it.
@@ -126,8 +32,8 @@ VARIABLES
      other way: small, semibold, muted, quiet enough to scan past. DaisyUI
      does not scale its legend up either — it is weight 600 at the group's
      own size, and that is what makes it look considered.
-     Floored at --font-size-sm so it stays legible at .sm. */
-  --fieldset-legend-color: var(--color-neutral-600);
+     Floored at --font-size-sm so it stays legible at .fieldset-sm. */
+  --fieldset-legend-color: var(--color-text-muted);
   --fieldset-legend-weight: 600;
   --fieldset-legend-font-size: max(0.85em, var(--font-size-sm));
   --fieldset-legend-line-height: 1.2;
@@ -140,9 +46,9 @@ VARIABLES
      surface to give them: --color-neutral-100 is the lightest token in
      main.css, and --color-neutral-50 is referenced across the library but
      never declared. Reported, not worked around here. */
-  --fieldset-surface: var(--color-neutral-200);
+  --fieldset-surface: var(--color-surface-muted);
   --fieldset-border-width: var(--form-border-width, 1px);
-  --fieldset-border-color: var(--color-neutral-300);
+  --fieldset-border-color: var(--color-border);
   --fieldset-radius: var(--form-radius, var(--radius-md));
 
   /* 2. BASE — the UA sheet is undone here, in one place. */
@@ -190,28 +96,28 @@ VARIABLES
   }
 
   /* 3. SIZE */
-  &.sm {
+  &.fieldset-sm {
     --form-font-size: var(--font-size-sm);
   }
-  &.md {
+  &.fieldset-md {
     /* base is already md */
   }
-  &.lg {
+  &.fieldset-lg {
     --form-font-size: var(--font-size-base);
   }
 
   /* 4. SHAPE / VARIANTS */
-  &.sharp {
+  &.fieldset-sharp {
     --form-radius: var(--radius-sharp);
   }
-  &.smooth {
+  &.fieldset-smooth {
     --form-radius: var(--radius-md);
   }
-  &.rounded {
+  &.fieldset-rounded {
     --form-radius: var(--radius-rounded);
   }
 
-  &.panel {
+  &.fieldset-panel {
     padding-block: var(--fieldset-padding-block);
     padding-inline: var(--fieldset-padding-inline);
     border: var(--fieldset-border-width) solid var(--fieldset-border-color);

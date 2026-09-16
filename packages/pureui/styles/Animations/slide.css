@@ -1,0 +1,57 @@
+.pu-motion {
+  /* VARIABLES */
+
+  --motion-slide-rest:
+    calc(
+      var(--motion-slide-distance) *
+      (1 - var(--motion-progress))
+    );
+
+  /* VARIANTS */
+
+  &:where(
+    [data-motion="slide-left"],
+    [data-motion="slide-right"],
+    [data-motion="slide-up"],
+    [data-motion="slide-down"]
+  ) {
+    --motion-properties: translate;
+  }
+
+  &[data-motion="slide-left"] {
+    --motion-translate: var(--motion-slide-rest) 0;
+  }
+
+  &[data-motion="slide-right"] {
+    --motion-translate: calc(-1 * var(--motion-slide-rest)) 0;
+  }
+
+  &[data-motion="slide-up"] {
+    --motion-translate: 0 var(--motion-slide-rest);
+  }
+
+  &[data-motion="slide-down"] {
+    --motion-translate: 0 calc(-1 * var(--motion-slide-rest));
+  }
+
+  &:where(
+    [data-motion="slide-left"],
+    [data-motion="slide-right"],
+    [data-motion="slide-up"],
+    [data-motion="slide-down"]
+  ):where(
+    :not([data-motion-scope]),
+    [data-motion-scope="self"]
+  ) {
+    translate: var(--motion-translate);
+  }
+
+  &:where(
+    [data-motion="slide-left"],
+    [data-motion="slide-right"],
+    [data-motion="slide-up"],
+    [data-motion="slide-down"]
+  )[data-motion-scope="children"] > * {
+    translate: var(--motion-translate);
+  }
+}

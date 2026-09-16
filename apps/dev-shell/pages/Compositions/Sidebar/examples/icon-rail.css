@@ -1,0 +1,117 @@
+.sidebar {
+  --sidebar-rail-size: 4.75rem;
+  --sidebar-panel-size: 19rem;
+  --sidebar-panel-inset: var(--spacing-50);
+  --motion-properties: inline-size;
+
+  flex-direction: row;
+
+  inline-size: var(--sidebar-rail-size);
+  block-size: 43rem;
+}
+
+.sidebar:has(.sidebar-panel:popover-open) {
+  inline-size: calc(var(--sidebar-rail-size) + var(--sidebar-panel-size));
+}
+
+.sidebar-rail {
+  position: relative;
+  z-index: 1;
+  anchor-name: --sidebar-rail;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-100);
+  inline-size: var(--sidebar-rail-size);
+  min-block-size: 100%;
+}
+
+.sidebar-home-menu {
+  flex: none;
+}
+
+.sidebar-rail > nav {
+  inline-size: 100%;
+  min-block-size: 0;
+}
+
+.sidebar-menu-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-50);
+  inline-size: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-menu-item {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-menu-break {
+  flex: none;
+  block-size: var(--spacing-100);
+  list-style: none;
+}
+
+.sidebar-menu-footer {
+  margin-block-start: auto;
+}
+
+.sidebar-menu > .menu-content.sidebar-panel[popover] {
+  position-anchor: --sidebar-rail;
+  position-area: inline-end span-block-end;
+
+  display: none;
+
+  inline-size: calc(var(--sidebar-panel-size) - (var(--sidebar-panel-inset) * 2));
+  min-inline-size: 0;
+  block-size: calc(anchor-size(block) - (var(--sidebar-panel-inset) * 2));
+  max-block-size: none;
+
+  margin-block: var(--sidebar-panel-inset);
+  margin-inline-start: var(--sidebar-panel-inset);
+}
+
+.sidebar-menu > .menu-content.sidebar-panel[popover]:popover-open {
+  display: flex;
+}
+
+.sidebar-panel-nav,
+.sidebar-panel-nav > li,
+.sidebar-panel-nav > li > a {
+  inline-size: 100%;
+}
+
+.sidebar-panel-nav > li > a {
+  gap: var(--spacing-50);
+}
+
+.sidebar-panel-nav .pu-badge {
+  margin-inline-start: auto;
+}
+
+@media (max-width: 48rem) {
+  .sidebar-panel .sidebar-panel-nav {
+    position: static;
+
+    display: flex;
+
+    inset: auto;
+    padding: 0;
+  }
+}
+
+@media (max-width: 34rem) {
+  .sidebar {
+    --sidebar-panel-size: calc(100vw - var(--sidebar-rail-size) - 2rem);
+
+    max-inline-size: calc(100vw - 2rem);
+  }
+}

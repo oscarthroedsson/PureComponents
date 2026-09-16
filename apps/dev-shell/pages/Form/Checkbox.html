@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkbox — PureComponents</title>
+    <title>Checkbox — Elements</title>
     <meta name="pc-description" content="A box that is on, off, or neither." />
 
     <link rel="stylesheet" href="/pureui/styles/main.css" />
@@ -68,21 +68,21 @@
       </p>
       <template>
         <label class="pu-label" style="font-size:var(--font-size-sm)">
-          <input class="pu-checkbox sm" type="checkbox" checked /> Small
+          <input class="pu-checkbox checkbox-sm" type="checkbox" checked /> Small
         </label>
         <label class="pu-label">
-          <input class="pu-checkbox md" type="checkbox" checked /> Medium
+          <input class="pu-checkbox checkbox-md" type="checkbox" checked /> Medium
         </label>
         <label class="pu-label" style="font-size:var(--font-size-base)">
-          <input class="pu-checkbox lg" type="checkbox" checked /> Large
+          <input class="pu-checkbox checkbox-lg" type="checkbox" checked /> Large
         </label>
       </template>
     </section>
 
     <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:0.75rem; max-width:26rem;">
       <p class="pc-note">
-        <code>sharp</code> and <code>smooth</code>, and that is the whole list. There is no
-        <code>rounded</code>: round means "pick one" and square means "pick as many as you like", and
+        <code>checkbox-sharp</code> and <code>checkbox-smooth</code>, and that is the whole list. There is no
+        <code>checkbox-rounded</code>: round means "pick one" and square means "pick as many as you like", and
         that is the only thing telling a checkbox from a radio before anyone has read the label. Leaving
         the class out is not what enforces it — the radius is capped at a quarter of the box, so a
         checkbox stays square whatever arrives on the channel. <code>radio.css</code> refuses the
@@ -90,10 +90,10 @@
       </p>
       <template>
         <label class="pu-label">
-          <input class="pu-checkbox sharp" type="checkbox" checked /> Sharp
+          <input class="pu-checkbox checkbox-sharp" type="checkbox" checked /> Sharp
         </label>
         <label class="pu-label">
-          <input class="pu-checkbox smooth" type="checkbox" checked /> Smooth — the default
+          <input class="pu-checkbox checkbox-smooth" type="checkbox" checked /> Smooth — the default
         </label>
       </template>
     </section>

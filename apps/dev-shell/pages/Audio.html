@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Audio — PureComponents</title>
+    <title>Audio — Elements</title>
     <meta
       name="pc-description"
       content="A native audio player with a restrained PureUI frame and progressive Chromium control styling. Playback, seeking, volume and keyboard behaviour stay with the browser."
@@ -48,32 +48,32 @@
               <td>Goes on the native <code>&lt;audio&gt;</code> element.</td>
             </tr>
             <tr>
-              <td><code>sm</code></td>
+              <td><code>audio-sm</code></td>
               <td class="pc-doc-dim">Size</td>
               <td>Tighter spacing between controls in Chromium.</td>
             </tr>
             <tr>
-              <td><code>md</code></td>
+              <td><code>audio-md</code></td>
               <td class="pc-doc-dim">Size</td>
               <td>Default control spacing.</td>
             </tr>
             <tr>
-              <td><code>lg</code></td>
+              <td><code>audio-lg</code></td>
               <td class="pc-doc-dim">Size</td>
               <td>More spacing between controls in Chromium.</td>
             </tr>
             <tr>
-              <td><code>sharp</code></td>
+              <td><code>audio-sharp</code></td>
               <td class="pc-doc-dim">Shape</td>
               <td>Square frame and Chromium control enclosure.</td>
             </tr>
             <tr>
-              <td><code>smooth</code></td>
+              <td><code>audio-smooth</code></td>
               <td class="pc-doc-dim">Shape</td>
               <td>Default medium corner.</td>
             </tr>
             <tr>
-              <td><code>rounded</code></td>
+              <td><code>audio-rounded</code></td>
               <td class="pc-doc-dim">Shape</td>
               <td>Pill-shaped frame.</td>
             </tr>
@@ -164,47 +164,22 @@
             </tr>
             <tr>
               <td><code>--audio-surface</code></td>
-              <td><code>var(--color-neutral-100)</code></td>
+              <td><code>var(--color-surface-sunken)</code></td>
               <td>Element background and Chromium controls panel.</td>
             </tr>
             <tr>
               <td><code>--audio-color</code></td>
-              <td><code>var(--color-neutral-900)</code></td>
+              <td><code>var(--color-text)</code></td>
               <td>Current and remaining time in Chromium.</td>
             </tr>
             <tr>
-              <td><code>--audio-menu-surface</code></td>
-              <td><code>var(--color-neutral-100)</code></td>
-              <td>Overflow menu surface in Chromium.</td>
-            </tr>
-            <tr>
-              <td><code>--audio-menu-color</code></td>
-              <td><code>var(--color-neutral-900)</code></td>
-              <td>Overflow menu text in Chromium.</td>
-            </tr>
-            <tr>
-              <td><code>--audio-menu-focus-surface</code></td>
-              <td><code>var(--color-neutral-200)</code></td>
-              <td>Focused overflow menu item in Chromium.</td>
-            </tr>
-            <tr>
-              <td><code>--audio-menu-radius</code></td>
-              <td><code>var(--radius-md)</code></td>
-              <td>Overflow menu corner in Chromium.</td>
-            </tr>
-            <tr>
-              <td><code>--audio-menu-shadow</code></td>
-              <td><code>var(--shadow-md)</code></td>
-              <td>Overflow menu elevation in Chromium.</td>
-            </tr>
-            <tr>
               <td><code>--audio-border-width</code></td>
-              <td><code>var(--spacing-0)</code></td>
+              <td><code>1px</code></td>
               <td>Optional outer frame.</td>
             </tr>
             <tr>
               <td><code>--audio-border-color</code></td>
-              <td><code>var(--color-neutral-300)</code></td>
+              <td><code>var(--color-border)</code></td>
               <td>Outer frame colour.</td>
             </tr>
             <tr>
@@ -264,7 +239,7 @@
         <figure>
           <figcaption id="basic-audio-title">Tyrannosaurus rex roar</figcaption>
           <audio
-            class="pu-audio md smooth"
+            class="pu-audio audio-md audio-smooth"
             controls
             preload="metadata"
             aria-describedby="basic-audio-title"
@@ -307,7 +282,7 @@
 
         <figure>
           <figcaption><strong>After — PureUI</strong></figcaption>
-          <audio class="pu-audio md smooth" controls preload="none">
+          <audio class="pu-audio audio-md audio-smooth" controls preload="none">
             <source
               src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"
               type="audio/mpeg"
@@ -326,14 +301,14 @@
       data-stage-style="display: flex; flex-direction: column; align-items: flex-start; gap: 1.25rem;"
     >
       <p class="pc-note">
-        <code>sm</code>, <code>md</code> (default) and <code>lg</code> change the spacing between controls in Chromium.
+        <code>audio-sm</code>, <code>audio-md</code> (default) and <code>audio-lg</code> change the spacing between controls in Chromium.
         Native control dimensions and touch targets stay under browser control.
       </p>
 
       <template>
         <div>
           <p>Small — tighter spacing</p>
-          <audio class="pu-audio sm" controls preload="none">
+          <audio class="pu-audio audio-sm" controls preload="none">
             <source
               src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"
               type="audio/mpeg"
@@ -343,7 +318,7 @@
 
         <div>
           <p>Medium — default spacing</p>
-          <audio class="pu-audio md" controls preload="none">
+          <audio class="pu-audio audio-md" controls preload="none">
             <source
               src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"
               type="audio/mpeg"
@@ -353,7 +328,7 @@
 
         <div>
           <p>Large — more spacing</p>
-          <audio class="pu-audio lg" controls preload="none">
+          <audio class="pu-audio audio-lg" controls preload="none">
             <source
               src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"
               type="audio/mpeg"
@@ -372,14 +347,14 @@
       data-stage-style="display: flex; flex-direction: column; align-items: flex-start; gap: 1.25rem;"
     >
       <p class="pc-note">
-        <code>sharp</code>, <code>smooth</code> (default) and <code>rounded</code> set both the element frame and the
+        <code>audio-sharp</code>, <code>audio-smooth</code> (default) and <code>audio-rounded</code> set both the element frame and the
         Chromium control enclosure. Other engines keep their native internal corner.
       </p>
 
       <template>
         <div>
           <p>Sharp</p>
-          <audio class="pu-audio md sharp" controls preload="none">
+          <audio class="pu-audio audio-md audio-sharp" controls preload="none">
             <source
               src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"
               type="audio/mpeg"
@@ -389,7 +364,7 @@
 
         <div>
           <p>Smooth</p>
-          <audio class="pu-audio md smooth" controls preload="none">
+          <audio class="pu-audio audio-md audio-smooth" controls preload="none">
             <source
               src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"
               type="audio/mpeg"
@@ -399,7 +374,7 @@
 
         <div>
           <p>Rounded</p>
-          <audio class="pu-audio md rounded" controls preload="none">
+          <audio class="pu-audio audio-md audio-rounded" controls preload="none">
             <source
               src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"
               type="audio/mpeg"
@@ -426,10 +401,10 @@
         <div>
           <p>Neutral surface, menu and a visible frame</p>
           <audio
-            class="pu-audio md smooth"
+            class="pu-audio audio-md audio-smooth"
             controls
             preload="none"
-            style="--audio-surface: var(--color-neutral-200); --audio-menu-surface: var(--color-neutral-100); --audio-border-width: 1px"
+            style="--audio-surface: var(--color-surface-muted); --audio-border-width: 2px"
           >
             <source
               src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"
@@ -441,7 +416,7 @@
         <div>
           <p>Custom width and shadow</p>
           <audio
-            class="pu-audio smooth"
+            class="pu-audio audio-smooth"
             controls
             preload="none"
             style="--audio-inline-size: 27rem; --audio-shadow: var(--shadow-md)"
@@ -499,7 +474,7 @@
           </figcaption>
 
           <audio
-            class="pu-audio md smooth"
+            class="pu-audio audio-md audio-smooth"
             controls
             preload="metadata"
             aria-describedby="spoken-audio-title"

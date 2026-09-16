@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A cloud storage desktop composed from PureUI components." />
+    <title>Storage — PureUI Demo</title>
+
+    <link rel="stylesheet" href="/pureui/index.css" />
+    <link rel="stylesheet" href="./Storage.css" />
+  </head>
+
+  <body class="storage-demo">
+    <div class="storage-app">
+      <aside class="storage-sidebar" aria-label="Storage navigation">
+        <div class="storage-brand">
+          <span class="storage-brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="m12 3 7.5 4.5L12 12 4.5 7.5 12 3Z" />
+              <path d="m4.5 12 7.5 4.5 7.5-4.5M4.5 16.5 12 21l7.5-4.5" />
+            </svg>
+          </span>
+          <span>
+            <strong>Pure Storage</strong>
+            <small>Personal workspace</small>
+          </span>
+        </div>
+
+        <div class="storage-sidebar-main">
+          <nav aria-label="Files">
+            <div class="pu-menu menu-md menu-inline menu-indent-none">
+              <ul class="menu-content" role="list">
+                <li class="menu-title">Workspace</li>
+                <li class="menu-item">
+                  <a class="pu-btn btn-md btn-ghost menu-control" href="#recent-files">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M4 10.5 12 4l8 6.5V20H4v-9.5ZM9 20v-6h6v6" />
+                    </svg>
+                    Home
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a class="pu-btn btn-md btn-ghost menu-control" href="#recent-files">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path
+                        d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-10Z"
+                      />
+                    </svg>
+                    All files
+                    <span class="menu-shortcut">128</span>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a class="pu-btn btn-md btn-ghost menu-control" href="#video-file">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <rect x="3" y="5" width="14" height="14" rx="2" />
+                      <path d="m17 10 4-2v8l-4-2" />
+                    </svg>
+                    Videos
+                    <span class="menu-shortcut">8</span>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a class="pu-btn btn-md btn-ghost menu-control" href="#image-file">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <rect x="3" y="4" width="18" height="16" rx="2" />
+                      <circle cx="8" cy="9" r="2" />
+                      <path d="m4 17 5-5 4 4 2-2 5 4" />
+                    </svg>
+                    Photos
+                    <span class="menu-shortcut">42</span>
+                  </a>
+                </li>
+                <li class="menu-separator" aria-hidden="true"></li>
+                <li class="menu-item">
+                  <a class="pu-btn btn-md btn-ghost menu-control" href="#recent-files" aria-current="page">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 7v5l3 2" />
+                    </svg>
+                    Recent
+                    <span class="menu-shortcut"><span class="pu-badge badge-sm badge-rounded">9</span></span>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a class="pu-btn btn-md btn-ghost menu-control" href="#starred-file">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z" />
+                    </svg>
+                    Starred
+                    <span class="menu-shortcut">3</span>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a class="pu-btn btn-md btn-ghost menu-control" href="#shared-file">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <circle cx="9" cy="8" r="3" />
+                      <circle cx="17" cy="10" r="2" />
+                      <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 15c2.8 0 5 2.2 5 5" />
+                    </svg>
+                    Shared
+                    <span class="menu-shortcut">4</span>
+                  </a>
+                </li>
+                <li class="menu-separator" aria-hidden="true"></li>
+                <li class="menu-item">
+                  <a class="pu-btn btn-md btn-ghost menu-control" href="./index.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M5 12h14m-9-5-5 5 5 5" />
+                    </svg>
+                    All demos
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+
+        <div class="storage-sidebar-footer">
+          <div class="storage-usage">
+            <div class="pu-meter-wrapper">
+              <label class="meter-label" for="storage-usage">8.2 GB of 15 GB</label>
+              <span class="meter-value">55%</span>
+              <meter
+                id="storage-usage"
+                class="pu-meter meter-sm"
+                value="55"
+                min="0"
+                max="100"
+                low="70"
+                high="90"
+                optimum="30"
+              ></meter>
+            </div>
+          </div>
+          <div class="storage-account">
+            <span class="pu-avatar avatar-sm avatar-rounded" aria-hidden="true">OT</span>
+            <span>
+              <strong>Oscar Throedsson</strong>
+              <small>Free plan</small>
+            </span>
+          </div>
+        </div>
+      </aside>
+
+      <header class="storage-toolbar">
+        <h1 class="storage-toolbar-title">STORAGE</h1>
+        <div class="storage-search">
+          <span class="pu-input-group">
+            <svg
+              class="input-icon"
+              data-placement="start"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="m16 16 4 4" />
+            </svg>
+            <input
+              class="pu-input input-sm input-rounded"
+              type="search"
+              aria-label="Search files"
+              placeholder="Search files"
+            />
+          </span>
+        </div>
+        <div class="storage-toolbar-actions" aria-label="Workspace actions">
+          <button
+            class="pu-btn btn-sm btn-outline"
+            type="button"
+            data-icon-only="true"
+            command="show-modal"
+            commandfor="create-document"
+            aria-label="Create document"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="storage-content">
+        <section id="recent-files" aria-labelledby="recent-files-title">
+          <header class="storage-section-head">
+            <div class="storage-filter">
+              <span class="pu-input-group">
+                <svg class="input-icon" data-placement="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-10Z" />
+                </svg>
+                <select id="storage-filter" class="pu-select select-sm select-smooth" aria-label="Filter storage items">
+                  <option value="all">Show all</option>
+                  <option value="files">Show files</option>
+                  <option value="folders">Show folders only</option>
+                </select>
+              </span>
+              <h2 id="recent-files-title">Recent files</h2>
+            </div>
+
+            <fieldset class="pu-fieldset" data-layout="center-start" data-gap="xs" aria-label="Display format">
+              <label class="pu-pill">
+                <input id="storage-view-list" type="radio" name="storage-view" value="list" aria-label="List format" />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+                </svg>
+              </label>
+              <label class="pu-pill">
+                <input id="storage-view-grid" type="radio" name="storage-view" value="grid" aria-label="Grid format" checked />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" />
+                </svg>
+              </label>
+            </fieldset>
+          </header>
+
+          <div class="storage-file-grid">
+            <div class="storage-file-cell" data-kind="file">
+              <article id="shared-file" class="pu-card card-sm card-smooth" data-interactive>
+                <header class="card-header storage-card-header">
+                  <label
+                    class="pu-btn btn-sm btn-ghost storage-favorite"
+                    data-icon-only="true"
+                  >
+                    <input
+                      class="storage-favorite-input"
+                      type="checkbox"
+                      aria-label="Favorite PureUI accessibility audit.pdf"
+                    />
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M8.59 8.24 11.18 3a.91.91 0 0 1 1.64 0l2.59 5.24 5.81.84a.91.91 0 0 1 .5 1.54l-4.2 4.07.99 5.75a.91.91 0 0 1-1.32.95L12 18.68 6.81 21.4a.91.91 0 0 1-1.32-.95l.99-5.75-4.2-4.07a.91.91 0 0 1 .5-1.54l5.81-.84Z" />
+                    </svg>
+                  </label>
+                  <button
+                    class="pu-btn btn-sm btn-ghost"
+                    type="button"
+                    data-icon-only="true"
+                    popovertarget="shared-file-menu"
+                    aria-label="More actions for PureUI accessibility audit.pdf"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="5" r="1" />
+                      <circle cx="12" cy="12" r="1" />
+                      <circle cx="12" cy="19" r="1" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="card-body storage-card-body">
+                  <span class="storage-card-document" aria-hidden="true">
+                    <svg viewBox="0 0 64 76">
+                      <path class="storage-card-document-sheet" d="M6 1h39l18 18v51a5 5 0 0 1-5 5H6a5 5 0 0 1-5-5V6a5 5 0 0 1 5-5Z" />
+                      <path class="storage-card-document-fold" d="M45 1v18h18L45 1Z" />
+                    </svg>
+                    <span class="storage-card-document-type">PDF</span>
+                  </span>
+                  <h3 class="card-title storage-card-name">
+                    <button class="card-action" type="button" command="show-modal" commandfor="file-preview">
+                      PureUI accessibility audit.pdf
+                    </button>
+                  </h3>
+                </div>
+                <hr class="storage-card-separator" />
+                <footer class="card-footer storage-card-footer">
+                  <p class="storage-file-size">
+                    <span>File size</span>
+                    <strong>2.3 MB</strong>
+                  </p>
+                  <ul
+                    class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded"
+                    role="list"
+                    data-layout="stacked"
+                    data-motion="expand-left"
+                    data-motion-on="hover focus-within"
+                    data-motion-scope="children"
+                    aria-label="Shared with PureUI, PureComponents and PureFramework"
+                  >
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/pureui.png" alt="PureUI" /></span></li>
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/purecomponents.png" alt="PureComponents" /></span></li>
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/pureframework.png" alt="PureFramework" /></span></li>
+                  </ul>
+                </footer>
+              </article>
+              <div class="pu-menu menu-sm storage-card-menu">
+                <ul id="shared-file-menu" class="menu-content" popover="auto" role="list">
+                  <li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Share</button></li>
+                  <li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Edit</button></li>
+                  <li class="menu-separator" aria-hidden="true"></li>
+                  <li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-intent="destructive">Delete</button></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="storage-file-cell" data-kind="file">
+              <article id="starred-file" class="pu-card card-sm card-smooth" data-interactive>
+                <header class="card-header storage-card-header">
+                  <label
+                    class="pu-btn btn-sm btn-ghost storage-favorite"
+                    data-icon-only="true"
+                  >
+                    <input
+                      class="storage-favorite-input"
+                      type="checkbox"
+                      aria-label="Favorite Storage dashboard.fig"
+                      checked
+                    />
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M8.59 8.24 11.18 3a.91.91 0 0 1 1.64 0l2.59 5.24 5.81.84a.91.91 0 0 1 .5 1.54l-4.2 4.07.99 5.75a.91.91 0 0 1-1.32.95L12 18.68 6.81 21.4a.91.91 0 0 1-1.32-.95l.99-5.75-4.2-4.07a.91.91 0 0 1 .5-1.54l5.81-.84Z" />
+                    </svg>
+                  </label>
+                  <button
+                    class="pu-btn btn-sm btn-ghost"
+                    type="button"
+                    data-icon-only="true"
+                    popovertarget="dashboard-file-menu"
+                    aria-label="More actions for Storage dashboard.fig"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <circle cx="12" cy="5" r="1" />
+                      <circle cx="12" cy="12" r="1" />
+                      <circle cx="12" cy="19" r="1" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="card-body storage-card-body">
+                  <span class="storage-card-document" aria-hidden="true">
+                    <svg viewBox="0 0 64 76">
+                      <path class="storage-card-document-sheet" d="M6 1h39l18 18v51a5 5 0 0 1-5 5H6a5 5 0 0 1-5-5V6a5 5 0 0 1 5-5Z" />
+                      <path class="storage-card-document-fold" d="M45 1v18h18L45 1Z" />
+                    </svg>
+                    <span class="storage-card-document-type">FIG</span>
+                  </span>
+                  <h3 class="card-title storage-card-name">
+                    <button class="card-action" type="button" command="show-modal" commandfor="file-preview">
+                      Storage dashboard.fig
+                    </button>
+                  </h3>
+                </div>
+                <hr class="storage-card-separator" />
+                <footer class="card-footer storage-card-footer">
+                  <p class="storage-file-size"><span>File size</span><strong>18.6 MB</strong></p>
+                  <ul
+                    class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded"
+                    role="list"
+                    data-layout="stacked"
+                    data-motion="expand-left"
+                    data-motion-on="hover focus-within"
+                    data-motion-scope="children"
+                    aria-label="Shared with PureComponents, PureFramework and PureUI"
+                  >
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/purecomponents.png" alt="PureComponents" /></span></li>
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/pureframework.png" alt="PureFramework" /></span></li>
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/pureui.png" alt="PureUI" /></span></li>
+                  </ul>
+                </footer>
+              </article>
+              <div class="pu-menu menu-sm storage-card-menu">
+                <ul id="dashboard-file-menu" class="menu-content" popover="auto" role="list">
+                  <li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Share</button></li>
+                  <li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Edit</button></li>
+                  <li class="menu-separator" aria-hidden="true"></li>
+                  <li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-intent="destructive">Delete</button></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="storage-file-cell" id="video-file" data-kind="file">
+              <article class="pu-card card-sm card-smooth" data-interactive>
+                <header class="card-header storage-card-header">
+                  <label class="pu-btn btn-sm btn-ghost storage-favorite" data-icon-only="true">
+                    <input class="storage-favorite-input" type="checkbox" aria-label="Favorite Component walkthrough.mp4" />
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M8.59 8.24 11.18 3a.91.91 0 0 1 1.64 0l2.59 5.24 5.81.84a.91.91 0 0 1 .5 1.54l-4.2 4.07.99 5.75a.91.91 0 0 1-1.32.95L12 18.68 6.81 21.4a.91.91 0 0 1-1.32-.95l.99-5.75-4.2-4.07a.91.91 0 0 1 .5-1.54l5.81-.84Z" />
+                    </svg>
+                  </label>
+                  <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" popovertarget="video-file-menu" aria-label="More actions for Component walkthrough.mp4">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="card-body storage-card-body">
+                  <span class="storage-card-document" aria-hidden="true">
+                    <svg viewBox="0 0 64 76">
+                      <path class="storage-card-document-sheet" d="M6 1h39l18 18v51a5 5 0 0 1-5 5H6a5 5 0 0 1 5-5Z" />
+                      <path class="storage-card-document-fold" d="M45 1v18h18L45 1Z" />
+                    </svg>
+                    <span class="storage-card-document-type">MP4</span>
+                  </span>
+                  <h3 class="card-title storage-card-name">
+                    <button class="card-action" type="button" command="show-modal" commandfor="file-preview">
+                      Component walkthrough.mp4
+                    </button>
+                  </h3>
+                </div>
+                <hr class="storage-card-separator" />
+                <footer class="card-footer storage-card-footer">
+                  <p class="storage-file-size"><span>File size</span><strong>446.4 MB</strong></p>
+                  <ul class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded" role="list" data-layout="stacked" data-motion="expand-left" data-motion-on="hover focus-within" data-motion-scope="children" aria-label="Shared with PureComponents">
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/purecomponents.png" alt="PureComponents" /></span></li>
+                  </ul>
+                </footer>
+              </article>
+              <div class="pu-menu menu-sm storage-card-menu">
+                <ul id="video-file-menu" class="menu-content" popover="auto" role="list">
+                  <li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Share</button></li><li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Edit</button></li><li class="menu-separator" aria-hidden="true"></li><li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-intent="destructive">Delete</button></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="storage-file-cell" data-kind="file">
+              <article class="pu-card card-sm card-smooth" data-interactive>
+                <header class="card-header storage-card-header">
+                  <label class="pu-btn btn-sm btn-ghost storage-favorite" data-icon-only="true">
+                    <input class="storage-favorite-input" type="checkbox" aria-label="Favorite PureUI component inventory.docx" />
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M8.59 8.24 11.18 3a.91.91 0 0 1 1.64 0l2.59 5.24 5.81.84a.91.91 0 0 1 .5 1.54l-4.2 4.07.99 5.75a.91.91 0 0 1-1.32.95L12 18.68 6.81 21.4a.91.91 0 0 1-1.32-.95l.99-5.75-4.2-4.07a.91.91 0 0 1 .5-1.54l5.81-.84Z" />
+                    </svg>
+                  </label>
+                  <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" popovertarget="inventory-file-menu" aria-label="More actions for PureUI component inventory.docx">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="card-body storage-card-body">
+                  <span class="storage-card-document" aria-hidden="true">
+                    <svg viewBox="0 0 64 76">
+                      <path class="storage-card-document-sheet" d="M6 1h39l18 18v51a5 5 0 0 1-5 5H6a5 5 0 0 1 5-5Z" />
+                      <path class="storage-card-document-fold" d="M45 1v18h18L45 1Z" />
+                    </svg>
+                    <span class="storage-card-document-type">DOCX</span>
+                  </span>
+                  <h3 class="card-title storage-card-name">
+                    <button class="card-action" type="button" command="show-modal" commandfor="file-preview">
+                      PureUI component inventory.docx
+                    </button>
+                  </h3>
+                </div>
+                <hr class="storage-card-separator" />
+                <footer class="card-footer storage-card-footer">
+                  <p class="storage-file-size"><span>File size</span><strong>5.7 MB</strong></p>
+                  <ul class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded" role="list" data-layout="stacked" data-motion="expand-left" data-motion-on="hover focus-within" data-motion-scope="children" aria-label="Shared with PureUI and PureComponents">
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/pureui.png" alt="PureUI" /></span></li>
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/purecomponents.png" alt="PureComponents" /></span></li>
+                  </ul>
+                </footer>
+              </article>
+              <div class="pu-menu menu-sm storage-card-menu">
+                <ul id="inventory-file-menu" class="menu-content" popover="auto" role="list">
+                  <li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Share</button></li><li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Edit</button></li><li class="menu-separator" aria-hidden="true"></li><li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-intent="destructive">Delete</button></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="storage-file-cell" data-kind="file">
+              <article class="pu-card card-sm card-smooth" data-interactive>
+                <header class="card-header storage-card-header">
+                  <label class="pu-btn btn-sm btn-ghost storage-favorite" data-icon-only="true">
+                    <input class="storage-favorite-input" type="checkbox" aria-label="Favorite Release checklist.xlsx" />
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M8.59 8.24 11.18 3a.91.91 0 0 1 1.64 0l2.59 5.24 5.81.84a.91.91 0 0 1 .5 1.54l-4.2 4.07.99 5.75a.91.91 0 0 1-1.32.95L12 18.68 6.81 21.4a.91.91 0 0 1-1.32-.95l.99-5.75-4.2-4.07a.91.91 0 0 1 .5-1.54l5.81-.84Z" />
+                    </svg>
+                  </label>
+                  <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" popovertarget="release-file-menu" aria-label="More actions for Release checklist.xlsx">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="card-body storage-card-body">
+                  <span class="storage-card-document" aria-hidden="true">
+                    <svg viewBox="0 0 64 76">
+                      <path class="storage-card-document-sheet" d="M6 1h39l18 18v51a5 5 0 0 1-5 5H6a5 5 0 0 1 5-5Z" />
+                      <path class="storage-card-document-fold" d="M45 1v18h18L45 1Z" />
+                    </svg>
+                    <span class="storage-card-document-type">XLSX</span>
+                  </span>
+                  <h3 class="card-title storage-card-name">
+                    <button class="card-action" type="button" command="show-modal" commandfor="file-preview">
+                      Release checklist.xlsx
+                    </button>
+                  </h3>
+                </div>
+                <hr class="storage-card-separator" />
+                <footer class="card-footer storage-card-footer">
+                  <p class="storage-file-size"><span>File size</span><strong>1.6 MB</strong></p>
+                  <ul class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded" role="list" data-layout="stacked" data-motion="expand-left" data-motion-on="hover focus-within" data-motion-scope="children" aria-label="Shared with PureComponents and PureFramework">
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/purecomponents.png" alt="PureComponents" /></span></li>
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/pureframework.png" alt="PureFramework" /></span></li>
+                  </ul>
+                </footer>
+              </article>
+              <div class="pu-menu menu-sm storage-card-menu">
+                <ul id="release-file-menu" class="menu-content" popover="auto" role="list">
+                  <li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Share</button></li><li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Edit</button></li><li class="menu-separator" aria-hidden="true"></li><li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-intent="destructive">Delete</button></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="storage-file-cell" id="image-file" data-kind="folder">
+              <article class="pu-card card-sm card-smooth" data-interactive>
+                <header class="card-header storage-card-header">
+                  <label class="pu-btn btn-sm btn-ghost storage-favorite" data-icon-only="true">
+                    <input class="storage-favorite-input" type="checkbox" aria-label="Favorite Mascot assets" checked />
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M8.59 8.24 11.18 3a.91.91 0 0 1 1.64 0l2.59 5.24 5.81.84a.91.91 0 0 1 .5 1.54l-4.2 4.07.99 5.75a.91.91 0 0 1-1.32.95L12 18.68 6.81 21.4a.91.91 0 0 1-1.32-.95l.99-5.75-4.2-4.07a.91.91 0 0 1 .5-1.54l5.81-.84Z" />
+                    </svg>
+                  </label>
+                  <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" popovertarget="mascot-file-menu" aria-label="More actions for Mascot assets">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <circle cx="12" cy="5" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="12" cy="19" r="1" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="card-body storage-card-body">
+                  <span class="storage-card-document storage-card-folder" aria-hidden="true">
+                    <svg viewBox="0 0 64 76" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round">
+                      <path d="M4 21a6 6 0 0 1 6-6h16l7 8h21a6 6 0 0 1 6 6v31a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V21Z" />
+                    </svg>
+                    <span class="storage-card-document-type">Folder</span>
+                  </span>
+                  <h3 class="card-title storage-card-name">
+                    <button class="card-action" type="button" command="show-modal" commandfor="file-preview">
+                      Mascot assets
+                    </button>
+                  </h3>
+                </div>
+                <hr class="storage-card-separator" />
+                <footer class="card-footer storage-card-footer">
+                  <p class="storage-file-size"><span>Contents</span><strong>18 items</strong></p>
+                  <ul class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded" role="list" data-layout="stacked" data-motion="expand-left" data-motion-on="hover focus-within" data-motion-scope="children" aria-label="Shared with PureUI, PureComponents and PureFramework">
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/pureui.png" alt="PureUI" /></span></li>
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/purecomponents.png" alt="PureComponents" /></span></li>
+                    <li><span class="pu-avatar"><img src="./assets/storage/avatars/pureframework.png" alt="PureFramework" /></span></li>
+                  </ul>
+                </footer>
+              </article>
+              <div class="pu-menu menu-sm storage-card-menu">
+                <ul id="mascot-file-menu" class="menu-content" popover="auto" role="list">
+                  <li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Share</button></li><li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button">Edit</button></li><li class="menu-separator" aria-hidden="true"></li><li class="menu-item"><button class="pu-btn btn-sm btn-ghost menu-control" type="button" data-intent="destructive">Delete</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <dialog
+        id="create-document"
+        class="pu-dialog dialog-md storage-create-dialog"
+        aria-labelledby="create-document-title"
+        aria-describedby="create-document-description"
+      >
+        <form class="pu-form form-md storage-create-form" method="dialog">
+          <header class="dialog-header">
+            <h2 id="create-document-title">Create document</h2>
+            <button
+              class="pu-btn btn-sm btn-ghost"
+              type="button"
+              data-icon-only="true"
+              command="close"
+              commandfor="create-document"
+              aria-label="Close create document"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="m6 6 12 12M18 6 6 18" />
+              </svg>
+            </button>
+          </header>
+
+          <div class="dialog-body">
+            <p id="create-document-description" class="storage-create-description">
+              Add the details for a document you want to test in Storage.
+            </p>
+
+            <div class="pu-field">
+              <label class="pu-label" for="document-name">Document name</label>
+              <input
+                id="document-name"
+                class="pu-input input-md input-smooth"
+                name="document-name"
+                type="text"
+                placeholder="Project brief"
+                required
+              />
+            </div>
+
+            <div class="pu-field">
+              <label class="pu-label" for="document-type">Document type</label>
+              <select id="document-type" class="pu-select select-md select-smooth" name="document-type">
+                <option value="document">Document</option>
+                <option value="spreadsheet">Spreadsheet</option>
+                <option value="presentation">Presentation</option>
+                <option value="folder">Folder</option>
+              </select>
+            </div>
+
+            <div class="pu-field">
+              <label class="pu-label" for="document-file">Upload file</label>
+              <input
+                id="document-file"
+                class="pu-file file-md file-smooth"
+                name="document-file"
+                type="file"
+                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,image/*"
+                aria-describedby="document-file-hint"
+              />
+              <p id="document-file-hint" class="pu-field-hint">
+                PDF, Office, ZIP or image files up to 25 MB.
+              </p>
+            </div>
+
+            <div class="pu-field">
+              <label class="pu-label" for="document-description">Description</label>
+              <textarea
+                id="document-description"
+                class="pu-textarea textarea-md textarea-smooth"
+                name="document-description"
+                rows="4"
+                placeholder="What is this document for?"
+              ></textarea>
+            </div>
+          </div>
+
+          <footer class="dialog-footer">
+            <button class="pu-btn btn-md btn-ghost" type="button" command="close" commandfor="create-document">
+              Cancel
+            </button>
+            <button class="pu-btn btn-md" type="submit" value="create">Create document</button>
+          </footer>
+        </form>
+      </dialog>
+
+      <dialog
+        id="file-preview"
+        class="pu-dialog dialog-md storage-preview"
+        data-placement="right"
+        aria-labelledby="file-preview-title"
+      >
+        <header class="dialog-header storage-preview-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M6 2h8l4 4v16H6V2ZM14 2v5h4M9 15h6M9 18h4" />
+          </svg>
+          <h2 id="file-preview-title">File Preview</h2>
+          <button
+            class="pu-btn btn-sm btn-ghost"
+            type="button"
+            data-icon-only="true"
+            command="close"
+            commandfor="file-preview"
+            aria-label="Close file preview"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </header>
+        <div class="dialog-body storage-preview-body">
+          <div class="storage-preview-media" aria-hidden="true">
+            <span class="storage-preview-document">
+              <svg viewBox="0 0 112 132">
+                <path class="storage-preview-document-sheet" stroke-width="1" d="M10 1h67l25 25v95a10 10 0 0 1-10 10H10a10 10 0 0 1-10-10V11A10 10 0 0 1 10 1Z" />
+                <path class="storage-preview-document-fold" stroke-width="1" d="M77 1v25h25L77 1Z" />
+                <path class="storage-preview-document-mark" stroke-width="4" d="M31 96c16-17 28-40 32-62 2 17 10 36 23 50-19-3-40 1-55 12Zm0 0c-8 6-12 13-7 15 5 2 11-5 17-16m45-11c8 2 14 7 12 11-3 5-12 0-22-11" />
+              </svg>
+            </span>
+          </div>
+
+          <hr class="storage-preview-separator" />
+
+          <section class="storage-preview-details" aria-labelledby="preview-file-name">
+            <h3 id="preview-file-name">PureUI accessibility audit.pdf</h3>
+            <p class="storage-preview-meta">2.3 MB · Updated today at 09:42</p>
+            <div class="storage-preview-description">
+              <h4>File Description</h4>
+              <p>Review notes and the remaining WCAG checks for the component library.</p>
+            </div>
+          </section>
+
+          <hr class="storage-preview-separator" />
+
+          <section class="storage-preview-shared" aria-labelledby="preview-shared-title">
+            <h3 id="preview-shared-title">File Shared With:</h3>
+            <div class="storage-preview-person">
+              <span class="pu-avatar avatar-sm avatar-smooth" aria-hidden="true">O</span>
+              <span>Oscar Throedsson (You)</span>
+            </div>
+          </section>
+
+          <footer class="storage-preview-actions" aria-label="File actions">
+            <button class="pu-btn btn-sm btn-ghost storage-preview-action" type="button">
+              <span class="storage-preview-action-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="18" cy="5" r="3" />
+                  <circle cx="6" cy="12" r="3" />
+                  <circle cx="18" cy="19" r="3" />
+                  <path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4" />
+                </svg>
+              </span>
+              <span class="storage-preview-action-label">Share</span>
+            </button>
+            <button class="pu-btn btn-sm btn-ghost storage-preview-action" type="button">
+              <span class="storage-preview-action-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4 20h4L19 9l-4-4L4 16v4Zm9-13 4 4" />
+                </svg>
+              </span>
+              <span class="storage-preview-action-label">Edit</span>
+            </button>
+            <button class="pu-btn btn-sm btn-ghost storage-preview-action" type="button" data-intent="destructive">
+              <span class="storage-preview-action-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4 7h16M9 7V4h6v3m-9 0 1 14h10l1-14M10 11v6m4-6v6" />
+                </svg>
+              </span>
+              <span class="storage-preview-action-label">Delete</span>
+            </button>
+          </footer>
+        </div>
+      </dialog>
+    </div>
+  </body>
+</html>

@@ -1,48 +1,72 @@
-# Skip Links Component
+# Skip link
 
-## Component Overview
+A link that stays off screen until it takes focus, then drops into the top
+corner. It gives keyboard users a way past a long header straight to the
+content.
 
-The Skip Links component provides keyboard-accessible links that allow users to skip repetitive content and jump to main sections of the page.
-
-### When to Use
-
-- Every page with navigation
-- Pages with repetitive header content
-- Long pages with multiple sections
-- Complex layouts
-
-### When NOT to Use
-
-- Single-page applications without navigation
-- Very short pages
-- Pages without repetitive content
-
-## Quick Start
+## Quick start
 
 ```html
-<body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-  <a href="#navigation" class="skip-link">Skip to navigation</a>
-  
-  <nav id="navigation">...</nav>
-  <main id="main-content">...</main>
-</body>
+<a href="#main-content" class="pu-skip-link skip-link-md">Skip to main content</a>
 ```
 
-## Accessibility Requirements
+Put it first in the document — before the header, before anything else
+focusable. It is only useful if it is the first stop on Tab.
 
-- **First focusable elements** - Must be first in tab order
-- **Hidden by default** - Positioned off-screen
-- **Visible on focus** - Appears when focused
-- **High contrast** - Meets WCAG contrast requirements
-- **Target IDs** - Target elements must have id attributes
+## Classes
 
-## API Reference
+| Class | Does |
+|---|---|
+| `.pu-skip-link` | The key. Requires `<a href>`. |
+| `skip-link-sm` | Smaller text and padding. |
+| `skip-link-md` | The default. |
+| `skip-link-lg` | Larger text and padding. |
+| `.pu-skip-links` | Wrapper for two or more links, stacking them. |
 
-- `.skip-link` - Skip link class
-- Size variants: `.sm`, `.md`, `.lg`
-- Container: `.skip-links` for multiple links
+The key requires `a[href]`. On anything else nothing applies — a skip link
+that does not navigate is not a skip link.
+
+## Several links
+
+```html
+<div class="pu-skip-links">
+  <a href="#navigation" class="pu-skip-link skip-link-md">Skip to navigation</a>
+  <a href="#main-content" class="pu-skip-link skip-link-md">Skip to main content</a>
+  <a href="#footer" class="pu-skip-link skip-link-md">Skip to footer</a>
+</div>
+```
+
+Inside the wrapper the links stack and stay in flow when focused, so the
+second does not cover the first.
+
+## Accessibility
+
+- The `href` must point at an `id` that exists on the page.
+- The target should be a landmark or a heading — `<main id="main-content">`
+  rather than a random `<div>`.
+- Never hide it with `display: none` or `visibility: hidden`. Both remove it
+  from the tab order, which defeats the point. It is moved off screen with
+  `top`, so it stays focusable.
+- The text says where it goes. "Skip to main content", not "Skip".
+- `:target` is given `scroll-margin-top`, so the destination is not left
+  under a sticky header.
 
 ## Examples
 
-See component CSS file for detailed examples.
+### One link
+
+```html
+<body>
+  <a href="#main" class="pu-skip-link skip-link-md">Skip to main content</a>
+  <header>…</header>
+  <main id="main">…</main>
+</body>
+```
+
+### Sizes
+
+```html
+<a href="#main" class="pu-skip-link skip-link-sm">Skip to main content</a>
+<a href="#main" class="pu-skip-link skip-link-md">Skip to main content</a>
+<a href="#main" class="pu-skip-link skip-link-lg">Skip to main content</a>
+```

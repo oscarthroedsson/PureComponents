@@ -1,74 +1,135 @@
 # Radio
 
-One choice from a set, where the set is short enough to show at once.
+One choice from a set. It replaces the browser's own control so it can follow
+the form's colours and scale, and it keeps the native element underneath.
+
+## Quick start
 
 ```html
-<fieldset class="fieldset">
-  <legend>Delivery</legend>
-  <div class="field">
-    <label class="label">
-      <input class="radio" type="radio" name="delivery" value="std">
-      Standard — 3–5 days
-    </label>
-  </div>
-  <div class="field">
-    <label class="label">
-      <input class="radio" type="radio" name="delivery" value="exp">
-      Express — next day
-    </label>
-  </div>
+<fieldset class="pu-fieldset">
+  <legend>Plan</legend>
+  <label class="pu-label">
+    <input class="pu-radio" type="radio" name="plan" value="free" />
+    Free
+  </label>
+  <label class="pu-label">
+    <input class="pu-radio" type="radio" name="plan" value="pro" />
+    Pro
+  </label>
 </fieldset>
 ```
 
-## The name attribute is what makes it a group
+Radios that belong together share a `name`. That is what makes them one group
+and what makes the browser allow only one.
 
-Every radio in a set **must** share the same `name`. That is what makes them
-exclusive, what makes arrow keys move between them, and what makes the group a
-single stop in the tab order. Drop it and you have several unrelated radios
-that can all be selected at once.
+## Classes
 
-## When to use it
+| Class | Does |
+|---|---|
+| `.pu-radio` | The key. Requires `<input type="radio">`. |
+| `radio-sm` | Smaller button and dot. |
+| `radio-md` | The default. |
+| `radio-lg` | Larger button and dot. |
 
-- One choice from 2–5 visible options
-- When seeing all the options at once matters
+There are no shape classes. A radio is a circle — that is the only thing
+telling it apart from a checkbox — and the corner does not come from the form's
+shape either.
 
-For a longer list use [Select](../Select/usage.md). For any number of
-independent options use [Checkbox](../Checkbox/usage.md). For a yes/no that
-defaults to no, a single checkbox is usually better than two radios.
+## States
 
-A radio group cannot be un-answered once a choice is made. If "none of these"
-is a valid answer, give it its own option — do not expect the user to undo.
+| State | Look |
+|---|---|
+| `:checked` | Fills, and the dot scales in. |
+| `:hover` | Border darkens. |
+| `:user-invalid` or `aria-invalid="true"` | Border turns to the error colour. |
+| `:disabled` | Muted fill, not-allowed cursor. |
 
-## Accessibility
-
-- The group **must** sit in a `<fieldset>` with a `<legend>`. The legend is
-  the question; without it a screen reader user hears the options with no idea
-  what they answer.
-- Every radio **must** have a label. Nesting the input inside the label binds
-  them without an id.
-- Arrow keys move within the group and Tab leaves it. That is native, and
-  nothing here interferes with it.
-- A group-level message is a `.field-error` as a direct child of the fieldset,
-  with `aria-invalid="true"` on the fieldset — see
-  [Fieldset](../Fieldset/usage.md). `:user-invalid` fires on a control, never
-  on the group.
-- `appearance: none` removes the control from Windows High Contrast Mode.
-- The dot never reaches the accessibility tree. The state is carried by the
-  native `:checked`.
-
-## Size
-
-`sm` · `md` (default) · `lg` — a **leaf**. Sized in `em`, so it also follows
-the text beside it.
-
-No shape classes. A radio is round, and that roundness is what distinguishes
-it from a checkbox at a glance.
+A required group with nothing picked turns **every** button in it. The
+constraint belongs to the group, and the question is unanswered, not one
+option.
 
 ## Variables
 
-| Variable | Controls |
-|---|---|
-| `--radio-size` | the circle, in `em` |
-| `--radio-border-width` · `-border-color` · `-surface` | resting |
-| `--radio-checked-surface` · `-checked-border-color` | selected |
-| `--radio-dot-color` · `--radio-dot-size` | the dot |
+| Variable | Default | Controls |
+|---|---|---|
+| `--radio-size` | `1.15em` | Button size. |
+| `--radio-border-width` | the form's border width | Border. |
+| `--radio-border-color` | the form's border colour | Border. |
+| `--radio-surface` | the form's surface | Fill when unchecked. |
+| `--radio-checked-surface` | `var(--color-primary)` | Fill when checked. |
+| `--radio-checked-border-color` | `var(--color-primary)` | Border when checked. |
+| `--radio-dot-color` | `var(--color-primary-foreground)` | The dot. |
+| `--radio-dot-size` | `0.42em` | The dot. |
+
+```html
+<input class="pu-radio" type="radio" name="plan"
+       style="--radio-checked-surface: var(--color-success)" />
+```
+
+## Accessibility
+
+- A radio group **must** be in a `<fieldset>` with a `<legend>`. The legend is
+  what tells a screen reader what the options answer. Without it the group has
+  no name.
+- Every radio needs its own label. A wrapping `<label class="pu-label">` is the
+  natural form.
+- All radios in a group share one `name`. Different names means several
+  one-option groups, and the browser will let more than one be picked.
+- Put `required` on one radio in the group and the whole group is required.
+- Give the group a sensible default where there is one. Where there is not,
+  leave them all unchecked rather than guessing.
+- Do not use radios for something that can be switched off. That is a
+  checkbox — a radio cannot be unpicked once picked.
+- The focus ring comes from the library. Arrow keys move between the buttons
+  in a group natively.
+- The control works in forced-colours mode: system colours replace the token
+  palette so a checked radio is still visibly checked.
+- Motion is removed under `prefers-reduced-motion`. The dot still appears — it
+  simply does not scale in.
+
+## Examples
+
+### Sizes
+
+```html
+<label class="pu-label"><input class="pu-radio radio-sm" type="radio" name="s" /> Small</label>
+<label class="pu-label"><input class="pu-radio radio-md" type="radio" name="s" /> Medium</label>
+<label class="pu-label"><input class="pu-radio radio-lg" type="radio" name="s" /> Large</label>
+```
+
+### A required group with an error
+
+```html
+<fieldset class="pu-fieldset" aria-invalid="true">
+  <legend>Delivery</legend>
+  <label class="pu-label">
+    <input class="pu-radio" type="radio" name="ship" value="standard" required />
+    Standard
+  </label>
+  <label class="pu-label">
+    <input class="pu-radio" type="radio" name="ship" value="express" required />
+    Express
+  </label>
+  <p class="pu-field-error">Choose a delivery option.</p>
+</fieldset>
+```
+
+### With a default
+
+```html
+<fieldset class="pu-fieldset">
+  <legend>Theme</legend>
+  <label class="pu-label"><input class="pu-radio" type="radio" name="t" value="system" checked /> System</label>
+  <label class="pu-label"><input class="pu-radio" type="radio" name="t" value="light" /> Light</label>
+  <label class="pu-label"><input class="pu-radio" type="radio" name="t" value="dark" /> Dark</label>
+</fieldset>
+```
+
+### A disabled option
+
+```html
+<label class="pu-label">
+  <input class="pu-radio" type="radio" name="plan" value="enterprise" disabled />
+  Enterprise (contact sales)
+</label>
+```

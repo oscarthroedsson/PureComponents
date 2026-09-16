@@ -1,126 +1,122 @@
 # Accordion
 
-Several [Collapsible](../Collapsible/usage.md) panels reading as one block.
+A group of collapsible panels sharing one frame. It is a wrapper around
+`.pu-collapsible` — the group owns the border and the corner, the panels
+become rows inside it.
+
+## Quick start
 
 ```html
-<div class="accordion md">
-  <details class="collapsible" name="faq">
-    <summary>How do I create an account?</summary>
-    <p>Click the "Sign up" button in the top right corner.</p>
+<div class="pu-accordion accordion-md">
+  <details class="pu-collapsible">
+    <summary>What is included?</summary>
+    <p>Everything in the standard plan.</p>
   </details>
-  <details class="collapsible" name="faq">
-    <summary>I forgot my password.</summary>
-    <p>Use "Forgot password" on the sign-in page.</p>
+  <details class="pu-collapsible">
+    <summary>How do I cancel?</summary>
+    <p>From the billing page, any time.</p>
   </details>
 </div>
 ```
 
-You need both stylesheets: `collapsible.css` first, then `accordion.css`.
+The size goes on the **group**, not on each panel. It is handed down to every
+row, so it is written once in the markup instead of once per panel.
 
-## The exclusive behaviour is not in this class
+## Classes
 
-Give the panels the same native `name` and opening one closes the rest. Leave
-`name` off and several stand open at once.
+| Class | Does |
+|---|---|
+| `.pu-accordion` | The key. |
+| `accordion-sm` | Tighter rows, smaller type and radius. |
+| `accordion-md` | The default. |
+| `accordion-lg` | Roomier rows, larger type and radius. |
+| `accordion-sharp` | Square corners. |
+| `accordion-smooth` | The same radius `accordion-md` already gives. |
+| `accordion-rounded` | Larger radius. |
+| `accordion-separate` | Each panel keeps its own border and corner, with a gap between them. |
 
-```html
-<details class="collapsible" name="faq">   <!-- one open at a time -->
-<details class="collapsible">              <!-- several may be open -->
-```
+## One panel open at a time
 
-The look is identical either way. That is why there is one wrapper class and
-not two: the CSS is the same, the difference belongs to the markup, and a class
-that claimed to control it would be lying — you could set it and still get the
-other behaviour.
-
-No JavaScript is involved in either case.
-
-## When to use it
-
-- A FAQ.
-- Settings grouped into sections.
-- A long page of reference material where most sections stay closed.
-
-## When not to use it
-
-- Switching between alternatives. That is a tab set. An accordion stacks its
-  panels and may have several open; do not put `role="tablist"` on this.
-- A single panel. That is [Collapsible](../Collapsible/usage.md), and it needs
-  no wrapper — `<details>` already carries its own frame.
-- Navigation. Use `nav.css`.
-
-## Size
-
-`sm` · `md` · `lg`, on the group. It is handed down to every panel, so it is
-written once instead of once per row. `md` is the default.
-
-## Shape
-
-`sharp` · `smooth` · `rounded`, on the group. The corner belongs to the block;
-the panels inside are square and let the group clip them.
-
-## Variants
-
-`separate` drops the shared frame and spaces the panels out, so each becomes
-its own card. The right look when the questions are unrelated.
+Give every `<details>` the same `name`. The browser closes the others, and no
+script is involved.
 
 ```html
-<div class="accordion md separate">…</div>
+<div class="pu-accordion accordion-md">
+  <details class="pu-collapsible" name="faq"><summary>First</summary><p>…</p></details>
+  <details class="pu-collapsible" name="faq"><summary>Second</summary><p>…</p></details>
+  <details class="pu-collapsible" name="faq" open><summary>Third</summary><p>…</p></details>
+</div>
 ```
 
-## Everything a panel can do still works
+In a named group only one panel may carry `open`.
 
-The group never restyles its panels — it sets their variables. So markers,
-colours and icons are tuned exactly as they are on a lone Collapsible.
+Leave `name` off and any number can be open at once.
 
-**Where you set them matters.** A component declares its variables on itself,
-and a declaration on the element beats an inherited one. So an inline style on
-the wrapper is ignored:
+## Separate
 
 ```html
-<!-- Does nothing. .collapsible declares this variable on itself. -->
-<div class="accordion md" style="--collapsible-marker-color: var(--color-primary)">
+<div class="pu-accordion accordion-md accordion-separate">
+  <details class="pu-collapsible"><summary>Shipping</summary><p>…</p></details>
+  <details class="pu-collapsible"><summary>Returns</summary><p>…</p></details>
+</div>
 ```
 
-Set it on each panel, or — better for a whole group — write one rule of your
-own. A selector beats a declaration:
-
-```css
-.accordion > .collapsible {
-  --collapsible-marker-color: var(--color-primary);
-}
-```
-
-That is exactly how `accordion.css` hands the size down to its rows.
-
-## Headings
-
-On a long page, put a heading in each `<summary>`. The spec allows one heading
-element there, and it lets screen reader users move between the questions by
-heading instead of tabbing through every one of them:
-
-```html
-<summary><h3>Do you ship outside Sweden?</h3></summary>
-```
-
-This is the one thing worth borrowing from the ARIA APG's accordion pattern.
-
-## Do not add ARIA to it
-
-- No `aria-expanded` on a `<summary>`. The browser already reports it; an
-  explicit one would lie. See [Collapsible](../Collapsible/usage.md).
-- No `role="tablist"` / `role="tabpanel"`. Those promise arrow-key navigation
-  between headers, which does not exist here.
-
-The keyboard contract the APG asks of an accordion — Enter and Space on the
-trigger, normal Tab order — is what `<summary>` already gives you.
+The group stops being a frame and becomes spacing. Each panel takes its own
+border and corner back — the look a FAQ usually wants when the questions are
+unrelated.
 
 ## Variables
 
-| Variable | Default |
-|---|---|
-| `--accordion-radius` | `var(--radius-md)` |
-| `--accordion-border-width` | `1px` |
-| `--accordion-border-color` | `var(--color-neutral-300)` |
-| `--accordion-gap` | `var(--spacing-50)` — only `separate` uses it |
+| Variable | Default | Controls |
+|---|---|---|
+| `--accordion-radius` | `var(--radius-md)` | The group's corner, and each panel's corner when separate. |
+| `--accordion-border-width` | `1px` | Frame and dividers. |
+| `--accordion-border-color` | `var(--color-border)` | Frame and dividers. |
+| `--accordion-gap` | `var(--spacing-50)` | Space between panels when separate. |
 
-Everything else is tuned through the panels' own variables.
+Every `--collapsible-*` variable still works, set on an individual panel:
+
+```html
+<details class="pu-collapsible" style="--collapsible-background: transparent">
+```
+
+## Accessibility
+
+- `<details>` reports open and closed. Do not add `role` or `aria-expanded`.
+- A heading inside `<summary>` gives the group a real outline. Pick the level
+  that fits where the accordion sits on the page.
+- An accordion is not navigation. Do not wrap it in `<nav>`.
+- Everything in the Collapsible docs about markers and focus applies to each
+  panel unchanged.
+
+## Examples
+
+### Sizes
+
+```html
+<div class="pu-accordion accordion-sm">…</div>
+<div class="pu-accordion accordion-md">…</div>
+<div class="pu-accordion accordion-lg">…</div>
+```
+
+### Shape
+
+```html
+<div class="pu-accordion accordion-md accordion-sharp">…</div>
+<div class="pu-accordion accordion-md accordion-rounded">…</div>
+```
+
+### An exclusive FAQ
+
+```html
+<div class="pu-accordion accordion-md">
+  <details class="pu-collapsible" name="faq">
+    <summary><h3>Shipping</h3></summary>
+    <p>Orders ship within two working days.</p>
+  </details>
+  <details class="pu-collapsible" name="faq">
+    <summary><h3>Returns</h3></summary>
+    <p>Thirty days, unused.</p>
+  </details>
+</div>
+```

@@ -1,24 +1,3 @@
-/*
-ACCESSIBILITY REQUIREMENTS:
-- Prefer the native <progress> element. It already exposes its value
-  and max to assistive technology, so aria-valuenow, aria-valuemin
-  and aria-valuemax must NOT be added — they only go stale.
-- Progress MUST be labelled: <label for> or aria-label.
-- Keep the number out of the label. "Upload progress" stays true,
-  "Upload progress: 45%" is a lie the moment the value moves. Put
-  the number in visible text beside the bar instead.
-- Indeterminate progress is a <progress> with no value attribute.
-- A non-native bar (.pu-progress-bar) is the one case that needs
-  role="progressbar" with aria-valuenow/valuemin/valuemax, kept in
-  sync by whatever moves the bar.
-
-RADIUS:
-- sharp | smooth | rounded (default)
-
-STATE:
-- :indeterminate — no value attribute
-*/
-
 :is(.pu-progress, .pu-progress-bar) {
   --progress-base: var(--color-primary);
   --progress-fill: var(--progress-color, var(--progress-base));
@@ -49,43 +28,43 @@ STATE:
 
   /* Kept as aliases so existing markup goes on working. */
 
-  &.success {
+  &.progress-success {
     --progress-base: var(--color-success);
   }
 
-  &.error {
+  &.progress-error {
     --progress-base: var(--color-error);
   }
 
-  &.warning {
+  &.progress-warning {
     --progress-base: var(--color-warning);
   }
 
   /* SIZE */
 
-  &.sm {
+  &.progress-sm {
     --progress-size: 0.5rem;
   }
 
-  &.md {
+  &.progress-md {
     --progress-size: 1rem;
   }
 
-  &.lg {
+  &.progress-lg {
     --progress-size: 1.5rem;
   }
 
   /* RADIUS */
 
-  &.sharp {
+  &.progress-sharp {
     --progress-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.progress-smooth {
     --progress-radius: var(--radius-sm);
   }
 
-  &.rounded {
+  &.progress-rounded {
     --progress-radius: var(--radius-full);
   }
 }
@@ -269,13 +248,13 @@ inside the bar. It carries the ARIA the native element gets for free.
     font-size: var(--font-size-sm);
     font-weight: 500;
 
-    color: var(--color-neutral-700);
+    color: var(--color-text-muted);
   }
 
   & > .progress-value {
     font-size: var(--font-size-sm);
 
-    color: var(--color-neutral-600);
+    color: var(--color-text-muted);
 
     text-align: end;
 

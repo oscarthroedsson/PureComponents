@@ -1,203 +1,196 @@
-# Avatar — how it is built and why
+# Avatar — contributing
 
-**File:** `src/Styles/avatar.css` · **Page:** `pages/Avatar.html`
+## File
 
-Two keys in one file: `.avatar` and `.avatar-group`.
+`packages/pureui/styles/avatar.css`
 
-## The square is the whole design
+Two keys: `.pu-avatar` and `.pu-avatar-group`.
 
-An avatar is a square of a known size. Everything follows from
-`--avatar-size`:
+## `.pu-avatar`
+
+### One block serves both markups
+
+The key sits on a container holding an `<img>`, and it sits on the `<img>`
+directly. `object-fit: cover` and `object-position: center` are declared in
+the base for that reason — inert on a container, exactly what is needed on an
+image.
+
+### `border-radius: inherit` on the content
 
 ```css
-inline-size: var(--avatar-size);
-aspect-ratio: 1;
+& :where(img, svg, video) { border-radius: inherit; }
+```
+
+This is what keeps the picture inside the shape. Without it a smooth avatar has
+square picture corners inside a rounded box.
+
+`overflow` is deliberately not used. Clipping the container would take the
+group's ring with it.
+
+### `& > picture { display: contents }`
+
+Lets the `<img>` inside be the grid item, so it centres like any other child.
+
+### Initials scale with the box
+
+```css
 font-size: calc(var(--avatar-size) * var(--avatar-font-scale));
 ```
 
-The version before this one built the size out of `padding` and `font-size`
-instead, and every defect in that file came from it: a text avatar and a
-picture avatar could never be the same size (which is what the `!important`
-block marked `/* DOES NOT WORK */` was fighting), `JD` and `M` came out
-different widths, the vertical centring was a hand-tuned `padding-top`, and
-the key alone rendered a 10rem picture while `.md` rendered 5rem — so the key
-alone was wrong, against §4.5.
+A fraction of the box rather than a table of named font sizes. That is what
+lets a consumer write `style="--avatar-size: 8rem"` and get text that still
+fits.
 
-Deriving the font size instead of tabulating it is what makes
-`style="--avatar-size: 8rem"` produce readable initials at a size the library
-never named. That is the argument for the fraction, and it is why
-`--avatar-font-scale` is public.
+### XS is the dense step
 
-## Why nothing is clipped
+`avatar-xs` and `avatar-group-xs` are both `1.5rem`. The group hands that
+measurement to every child through the same variables as the other sizes, so
+the overlap and initials continue to scale from one source. Its group gap is
+also reduced to `--spacing-25`, keeping list spacing and the expanded stack
+proportional to the smaller avatar.
 
-There is no `overflow: hidden`. The picture is kept inside the shape with
-`border-radius: inherit` on the child instead.
+### Shape vocabulary
 
-That is a decision, not an oversight: the corner mark — presence dot, unread
-count — is a separate component that will hang off the edge of this one, and a
-clipping container would cut it off. `border-radius: inherit` also fixes a real
-bug in the old file, which only rounded the picture under `.rounded`, so a
-`soft` avatar had square picture corners inside a rounded box.
+This file uses `avatar-smooth` for the middle shape. Twenty-three other
+stylesheets use `smooth` for the same position in the vocabulary.
 
-`object-fit: cover` sits in the base block rather than only on the child. It is
-inert on a container and exactly right when the key sits on an `<img>`
-directly, so one block serves both markups.
+## `.pu-avatar-group`
 
-## The group writes its children's variables
+### Size and shape are handed down
 
 ```css
-& .avatar {
+& .pu-avatar {
   --avatar-size: var(--avatar-group-size);
   --avatar-radius: var(--avatar-group-radius);
 }
 ```
 
-This is the same pattern `accordion.css` uses against `.collapsible`, and for
-the same unavoidable reason: a custom property declared **on** an element
-cannot be reached by inheriting from the parent, so handing a value down has to
-be a rule.
+Written as a rule rather than left to inheritance, because a custom property
+declared on an element cannot be reached by inheriting from the parent — the
+avatar's own `--avatar-size` would win.
 
-It replaces roughly 120 lines in the old file, which detected a uniform child
-size with selectors like
-`&:not(:has(> :where(:not(.avatar.sm)))) > .avatar.sm:not(:first-child)` and
-then repeated the whole table three times over for the three overlap presets.
-
-The cascade lands the right way round, and it is worth knowing why: the rule
-above and `.avatar.sm` have the same specificity, so source order decides — and
-`.avatar-group` is written after `.avatar`. A consumer's inline
-`--avatar-size` still beats both.
-
-## One distance, four sides
-
-Every layout reassigns a single value:
+### One variable decides every distance
 
 ```css
---avatar-group-space: var(--avatar-group-gap);              /* list */
---avatar-group-space: calc(-1 * var(--avatar-group-overlap)); /* stacked */
+--avatar-group-space: var(--avatar-group-gap);
 ```
 
-and direction decides only which side it lands on. Opening a stack is then one
-declaration, not a rewritten rule set.
+The gap in a list and a negative overlap in a stack. This is resting layout;
+motion never rewrites it.
 
-**The reverse directions use the end margin, not the start.** In `row-reverse`
-a negative `margin-inline-start` lands past the neighbour it was meant to slide
-under, and the first two avatars never overlap while the rest do. Measured in
-the browser: with end margins every adjacent pair is −16px in all four
-directions.
-
-Both hover behaviours fall out on either axis with no rule of their own, and
-that is the payoff of routing everything through one distance. `expand` only
-reassigns `--avatar-group-space`; the direction block has already decided which
-side reads it. `lift` only changes `z-index` and `scale`, neither of which knows
-what an axis is. Verified in row, column and column-reverse.
-
-### Two traps in the transition
-
-Both were caught by measuring, not by reading:
-
-1. `--transition-medium` is `0.3s ease` — duration **and** easing in one token.
-   Pairing it with an easing of our own puts two timing functions in the same
-   declaration, and the whole `transition` shorthand is thrown away, silently,
-   leaving `all 0s`. The duration is written out here, as `toast.css` already
-   does.
-
-2. The `margin` shorthand stands for the four **physical** sides and does not
-   carry `margin-inline-start`, which is the property that actually moves. The
-   logical longhands are named one by one.
-
-The margin is driven by a custom property, and that does still transition — the
-child's computed margin changes, so the transition runs on it. Verified:
-`getAnimations()` reports `margin-left`, `running`.
-
-## Stacking order
-
-Enumerated eight deep, first on top, exactly as `toast.css` does it.
-
-First-on-top is not only taste. A rounded avatar still has a square box, so in
-the overlap the corner of the avatar behind sits over the visible circle of the
-one in front — and whoever paints on top takes the pointer. Descending from the
-first avatar is what makes the pointer land where the eye says it should.
-
-`sibling-index()` would collapse the enumeration into one `calc()`. It is
-Chromium-only and not Baseline, so it stays a comment.
-
-## lift has to outrank the enumeration, and `:where()` cannot
-
-The first version of `lift` scaled the hovered avatar but never brought it
-forward, and the cause was specificity, not logic.
-
-The stacking enumeration is
-`.avatar-group[data-layout="stacked"] > *:nth-child(3)` — **(0,3,0)**, because
-`:nth-child` counts. The lift rule was
-`.avatar-group[data-hover="lift"] > *:where(:hover, …)` — **(0,2,0)**, because
-`:where()` deliberately counts as nothing. The enumeration won every time. The
-avatar grew where it stood, which is the one thing lift is not supposed to do.
-
-So the z-index lives in its own rule inside the stacked block, qualified with
-**both** attributes:
+Which side it lands on is four more variables:
 
 ```css
-&[data-layout="stacked"] {
-  /* …the enumeration… */
-  &[data-hover="lift"] > *:is(:hover, :focus-visible, :has(:focus-visible)) {
-    z-index: var(--avatar-group-lift-z);
-  }
+--avatar-group-space-inline-start: var(--avatar-group-space);
+--avatar-group-space-inline-end: 0px;
+--avatar-group-space-block-start: 0px;
+--avatar-group-space-block-end: 0px;
+```
+
+Reverse directions have to use the **end** margin. In `row-reverse` a negative
+start margin lands past the neighbour it was meant to slide under, and the
+first two avatars never overlap.
+
+### Expand maps onto the motion contract
+
+```css
+--motion-duration: var(--avatar-group-duration);
+--motion-easing: var(--avatar-group-easing);
+--motion-expand-step:
+  calc(var(--avatar-group-overlap) + var(--avatar-group-gap));
+```
+
+The generic `pu-motion` key owns triggers, the transition, and the choice
+between overlay and reflow. Avatar only supplies the distance that changes a
+compact stack into an open one. `Animations/index.css` implements the six
+`expand-*` effects.
+
+Overlay changes `translate` on direct children and keeps surrounding geometry
+fixed. Reflow animates an additional row or column gap on the group, whose
+resting negative margins still create the stack. The extra gap is zero at
+motion progress `0`, so no expanded space is reserved.
+
+### `--avatar-group-duration` is a bare duration
+
+Not `--transition-medium`. That token combines duration and easing, while the
+motion engine accepts them as separate variables. `toast.css` writes its
+durations out for the same reason.
+
+### Rules target `& > *`, not `.pu-avatar`
+
+So an avatar wrapped in an `<li>`, in a link, or in an indicator is carried by
+the same rules. Flex items answer to `z-index` without being positioned, which
+is what makes the stacking work without `position: relative` anywhere.
+
+Non-avatar wrappers are flex boxes with `line-height: 0`. Without that reset,
+an `<li>` creates an inline line box whose descender makes the wrapper taller
+than the avatar itself. Layout would then centre the wrapper correctly while
+the visible avatar sat slightly above adjacent text and controls. A direct
+`.pu-avatar` keeps its own `inline-grid` display.
+
+### The stack descends from the first
+
+Flex items paint in DOM order, so with no `z-index` the **last** avatar would
+cover every one before it. The stacking level is derived instead:
+
+```css
+z-index: calc(sibling-count() - sibling-index() + 1);
+```
+
+The first child therefore receives the highest value and the last receives
+`1`, regardless of how many children the group contains.
+
+It is also what makes the pointer land where the eye says it should: a round
+avatar still has square corners, and in the overlap the corner of the avatar
+behind sits over the circle of the one in front. Whoever paints on top takes
+the pointer too.
+
+`sibling-index()` and `sibling-count()` are Baseline 2026. They remove the old
+eight-child ceiling and the specificity added by eight `:nth-child()` rules.
+
+`data-stack-order="last"` uses `sibling-index()` directly, so its levels rise
+in DOM order instead.
+
+### Lift always clears the stack
+
+```css
+&[data-hover="lift"] > *:is(:hover, :focus-visible, :has(:focus-visible)) {
+  z-index: max(var(--avatar-group-lift-z), calc(sibling-count() + 1));
+  scale: …;
+  --avatar-group-ring-color: …;
+  filter: drop-shadow(…);
 }
 ```
 
-That is (0,4,0). It beats the enumeration and `data-stack-order="last"` alike,
-and it does so by specificity rather than by source order, so reordering the
-file cannot silently break it again. `:is()` rather than `:where()` here for
-the same reason: its specificity has to count.
+The sibling count guarantees a value above every generated stacking level.
+`--avatar-group-lift-z` remains a configurable minimum rather than imposing a
+maximum supported group length. `:is()` makes the state rule outrank both
+stack-order rules without repeating either layout attribute.
 
-The rest of the effect — scale, ring, shadow — stays in the low-specificity
-`:where()` block. It carries no z-index, which is exactly why it can afford to.
+The avatar keeps its place in the row. It is not nudged out of line — it comes
+forward, grows, and changes its ring, and the row it belongs to stays a row.
 
-**The avatar does not move.** An earlier version nudged it up by
-`--avatar-group-lift-offset`; that has been removed. It comes forward and grows
-where it stands, and the row stays a row.
+The ring colour is handed down as a custom property rather than restyled, so
+it reaches the `.pu-avatar` whether the avatar is the child itself or sits
+somewhere inside it.
 
-## The ring is box-shadow
+### The stack is isolated
 
-Not `border`, which would change the size of the square. Not `outline`, which
-is spoken for by the focus indicator — an avatar in a group can be a link.
+`isolation: isolate` creates a stacking context on the group. Its generated
+z-index values therefore order avatars inside the group without competing with
+surrounding page content.
 
-Its colour has to be the surface behind the group, which the library cannot
-know, so it is a variable with a documented instruction rather than a guess.
-The old file hardcoded `white`, which was also the file's only breach of §4.4.
+`drop-shadow` and not `box-shadow`, which the ring is already using — and it
+follows the silhouette, so a rounded avatar casts a round shadow.
 
-`lift` hands its ring colour down as a custom property rather than restyling
-the avatar directly. Custom properties inherit, so it reaches the `.avatar`
-whether the avatar is the hovered child itself or sits inside a wrapper — an
-`<li>`, a link, or the coming indicator. Its shadow is `drop-shadow()` rather
-than `box-shadow`, which the ring is already using, and it follows the
-silhouette so a round avatar casts a round shadow.
+### The ring is a `box-shadow`
 
-## Selectors are written against `> *`, not `> .avatar`
+Not a border, which would change the size of the square, and not an outline,
+which is spoken for by the focus indicator.
 
-So an avatar wrapped in an `<li>`, in a link, or in the indicator component is
-carried by the same rules. `:where()` around the hover states keeps the
-specificity at the group class, so a consumer can still override with one plain
-class of their own.
+## Reduced motion
 
-## Tokens used
-
-Colours `--color-neutral-100/200/700`, `--color-primary` · radius
-`--radius-none/md/full` · `--spacing-50` · `--shadow-md` ·
-`--font-weight-subheading`. No hardcoded colours; verified against the parsed
-stylesheet.
-
-`main.css` still declares `--size-avatar-sm/md/lg`, which point at
-`--size-32/48/64` and have never been declared. They are unused by this file —
-the measurements live here, in the component.
-
-## Verified in the browser
-
-Exact squares at 32/48/64 with text and picture identical; font size 0.4× the
-box; picture radius tracking the box radius at 0/8/999; −16px between every
-adjacent pair in all four directions; z-index 9→6 descending and `auto` under
-`data-stack-order="last"`; the hovered avatar reaching z-index 20 from any
-resting depth, including the backmost one and under
-`data-stack-order="last"`, with `translate: none` and `scale: 1.12`; expand and
-lift both reached by pointer **and** by Tab; group size beating a child's size class while a consumer's inline value
-beats both.
+The travel goes, the behaviour stays. Motion sets its duration, delay, and
+stagger to `0ms`; Avatar separately zeroes the component-owned lift transition.
+An expanded stack reaches its end state instantly and a lifted avatar remains
+ringed.

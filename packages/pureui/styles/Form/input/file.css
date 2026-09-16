@@ -1,202 +1,8 @@
-/*
-File — the one control in the family where the browser writes half of what
-you see.
-
-USAGE:
-  <input class="pu-file" type="file">
-  <input class="pu-file lg rounded" type="file" accept="image/*" multiple>
-  <input class="pu-file ghost" type="file">
-
-The box comes from the --form-* channel, same as .pu-input and .pu-select, so a
-file field standing in a form is the same field with different contents.
-See form.css for how the channel works.
-
-
-WHAT THIS FILE OWNS, AND WHAT IT DOES NOT
-
-A file input is two things drawn in one box: a button, reachable as
-::file-selector-button, and a line of text beside it that the browser writes
-and re-writes on its own.
-
-  Ours     the box — border, surface, radius, padding, size, states
-           the button — everything about it, through the pseudo-element
-           the text's SIZE and COLOUR, because it inherits both from the input
-           while the button does not. That is the whole of our control over it.
-
-  Theirs   the wording. "Choose file", "Browse…", "Välj fil" — set by the
-           browser and the operating system's language. `content` does not
-           apply to ::file-selector-button, so it cannot be changed, and the
-           plural for `multiple` is switched by the browser too.
-           The "no file chosen" text, which is not separately selectable.
-           The file name once one is picked, including its truncation — the
-           browser ellipsises the middle so the extension survives.
-
-THE FILE NAME IS NOT A PLACEHOLDER
-
-It looks like one when the field is empty, and it is tempting to treat it as
-one, but "no file chosen" and the chosen file's name are the SAME text node —
-the browser rewrites it in place. There is no ::placeholder here and no
-selector that separates empty from filled, so anything set on that text is set
-on both.
-
-It is therefore drawn smaller and quieter than the button — 0.9 of the field's
-size, and --color-neutral-600 — because in both readings it is the secondary
-half of the control: the button is what you operate, the name is what it
-reports back. And it is quieted only to 600, not to the --color-neutral-500
-that .pu-input gives its placeholder, because a placeholder is decoration a
-consumer is told not to rely on while a file name is content. 500 measures
-4.34:1 on --color-neutral-100 and fails 1.4.3; 600 measures 6.92:1.
-
-The size is written as a fraction of --file-font-size rather than an em: an em
-would resolve against the PARENT's font size, so a field inside a .pu-field with
-a size of its own would get a name scaled from the wrong number.
-
-Which leaves one thing to protect. The line box has to keep the height it
-would have had at full size, or the field shrinks below .pu-input and the family
-stops lining up. So --file-line-height is resolved against --file-font-size
-explicitly instead of being left as a ratio: 1lh stays 21px at md however
-small the name is drawn, --file-min-block-size is unaffected, and the button —
-which is set back to the full size — sits in the same line box it always did.
-
-Nothing here reads how many files were chosen or what they are called. That
-needs JavaScript, and the library ships none. What a consumer gets instead is
-`required`: an empty required file field is :invalid and a filled one is
-:valid, which is the only route in CSS to "has a file been chosen". This file
-does not paint that state — there is no green anywhere else in the library and
-a file field is not the place to invent one — but the hook is native and a
-consumer can reach for it.
-
-
-THE BUTTON CARRIES THE HEIGHT, AND THAT IS WHY IT REACHES THE EDGES
-
-The field declares no block padding at all. The button declares it instead, so
-the button fills the box's inner height exactly and the field comes out at the
-button's height plus its own border — the same number .pu-input resolves to. A
-file field and a text field in one .pu-field are the same height, and neither was
-told what that height is. Measured: 32 / 37 / 42px at sm / md / lg, against
-.pu-input's 32 / 37 / 42.
-
-Not a percentage height on the button. The pseudo-element resolves percentages
-against a box it does not own, and every engine has its own idea of what that
-means.
-
-There is a second reason the padding sits on the button rather than the field,
-and it is the one that would be easy to undo by accident. The channel supplies
---form-padding-block as 0.5em, and em resolves against the font size of the
-element that uses it. The field's font size is the file name's — reduced. The
-button's is the full one. So the same 0.5em is 6.3px on the field and 7px on
-the button at md, and only the button's is the number the rest of the family
-is built on. Moving that padding back onto the field costs 0.9px of height and
-breaks the parity above.
-
-The same shift is left standing in the inline direction, where it does no
-harm: the field's padding-inline-end measures 9.45px at md against the
-button's 10.5px. They sit on opposite edges of the box and are never compared,
-and the alternative — re-basing the value by the ratio — would be correct for
-an em and wrong for the px a consumer might set instead.
-
-
-ACCESSIBILITY REQUIREMENTS:
-- MUST be named by a <label for>. The button's own text is the browser's, it
-  says nothing about what is being uploaded, and it cannot be translated by
-  the page — so every word the user needs has to be in the label and the hint.
-  This is stronger than the usual rule, not the same one: for other controls a
-  missing label is a failure of the consumer's markup; here even a perfect
-  visual design has no room to put the words.
-- accept is a filter on the file dialog, not validation. It is a convenience,
-  it is trivially bypassed, and the server has to check the file regardless.
-- The whole field is one tab stop. The button is not separately focusable and
-  must never be given the appearance of a second control that could be
-  reached on its own.
-- The focus ring comes from main.css. This file draws none, and it sets no
-  overflow: an outline is not clipped by overflow on the same element, but a
-  future edit that adds one would be a step towards clipping the ring.
-- The border carries 1.4.11 on its own at 3:1. --color-neutral-500 measures
-  4.76:1 on white.
-- The file name is content, not a placeholder, so it owes 1.4.3 the full
-  4.5:1 — and at 0.9 of the field's size it is nowhere near the 18.66px that
-  would let it off at 3:1. --color-neutral-600 measures 6.92:1 on
-  --color-neutral-100. --color-neutral-500, which .pu-input uses for its
-  placeholder, measures 4.34:1 there and is not available to this text.
-- The divider between button and text is the border's colour, not the surface
-  difference. --color-neutral-200 on --color-neutral-100 measures well under
-  3:1 and cannot be what tells a low-vision user where the button ends.
-- KNOWN, MEASURED FAILURE, inherited from input.css: --color-error is
-  #f87171, 2.77:1 on white, under the 3:1 of 1.4.11 as an invalid border.
-  Used anyway by decision, pending a darker error token. The state is never
-  carried by that colour alone — the message appears and aria-invalid is set.
-- readonly does not apply. A file input matches :read-only whether or not the
-  attribute is present, because it is never editable in the sense the
-  pseudo-class means — so :read-only is useless as a condition here and, worse,
-  a copy of .pu-input's `:hover:not(:disabled, :read-only)` would silently
-  cancel hover altogether. Locking a chosen file is `disabled`.
-- capture="environment" opens the camera instead of the file browser on a
-  phone. It changes what the control is, not how it looks, and belongs to the
-  consumer's markup.
-
-STATES: :hover · :active · :disabled
-        :user-invalid / [aria-invalid="true"] · :focus-visible
-  No :read-only branch — see above.
-
-SIZE:  sm · md (default) · lg
-  A leaf, so a size class rewrites only this control. To resize a whole form
-  or group, put the class on .pu-form, .pu-fieldset or .pu-field.
-
-SHAPE: sharp · smooth (default) · rounded
-  The button's leading corners follow the box's inner radius, so a rounded
-  field ends in a half-circle that meets the border exactly.
-
-VARIANT: ghost — transparent surface and border, as on .pu-input. The button
-  keeps its own, because ghost removes the FIELD's box, not the control
-  inside it; it rounds all four of the button's corners, since there is no
-  longer an edge for the flat ones to sit against.
-
-VARIABLES
-  --file-font-size · --file-line-height · --file-surface
-  --file-name-font-size     the file name, drawn smaller than the button
-  --file-name-color         and quieter. A plain token, not the --form-color
-                            channel: a leaf's fallback is only reached when no
-                            .pu-form is above it, so reading the channel here
-                            would give one colour inside a form and another
-                            outside it
-  --file-padding-block · --file-padding-inline
-  --file-padding-inline-end the end edge on its own, so .pu-input-group can grow
-                            it for an icon. No start counterpart — the button
-                            occupies that edge
-  --file-radius · --file-border-width · --file-border-color
-  --file-min-block-size     a floor, not the height; the button sets the
-                            height. See the section above
-  --file-button-surface · --file-button-color · --file-button-border-color
-  --file-button-radius      the box's inner radius, floored at 0
-  --file-button-radius-end  0, so the button sits flat against the text.
-                            ghost raises it to --file-button-radius
-  --file-button-gap         between the button and the file name
-
-ICONS: .pu-input-group, end slot only — the rules are at the foot of this file,
-  with the reason the start slot cannot work here.
-
-NOT HERE:
-Drag and drop. A file input is already a drop target — files can be dropped
-on it today, natively — but CSS has no selector for "a file is hovering over
-me", so the state cannot be drawn. Progress, previews, a list of chosen names
-and removing one are all JavaScript, and belong to the component layer, not
-to PureUI.
-
-An icon inside the button. It is the natural place for one — a paperclip
-before "Choose file" — and it half works: a background-image on the
-pseudo-element renders correctly. It was left out because the colour has to be
-baked into the image. mask + background-color, which would let the mark take a
-token, erases the button's whole surface here exactly as select.css records it
-doing on a <select>; measured, not assumed. A baked colour means the mark
-stays at full strength while the field is disabled, and the end slot below has
-no such problem — the icon there is a real element drawing in currentColor.
-*/
-
 .pu-file:where(input[type="file"]) {
   /* 1. VARIABLES */
   --file-font-size: var(--form-font-size, var(--font-size-md));
   --file-line-height: var(--line-height-base);
-  --file-surface: var(--form-surface, var(--color-neutral-100));
+  --file-surface: var(--form-surface, var(--color-surface-sunken));
 
   /* The file name. A fraction of --file-font-size, not an em: an em resolves
      against the parent's size, so a field in a .pu-field carrying a size of its
@@ -207,7 +13,7 @@ no such problem — the icon there is a real element drawing in currentColor.
      --form-color, so a leaf's fallback is only ever reached when no .pu-form is
      above it — reading the channel here would give a quiet name outside a
      form and a full-strength one inside it. See the header. */
-  --file-name-color: var(--color-neutral-600);
+  --file-name-color: var(--color-text-muted);
 
   --file-padding-block: var(--form-padding-block, 0.5em);
   --file-padding-inline: var(--form-padding-inline, 0.75em);
@@ -219,7 +25,7 @@ no such problem — the icon there is a real element drawing in currentColor.
 
   --file-radius: var(--form-radius, var(--radius-smooth));
   --file-border-width: var(--form-border-width, 1px);
-  --file-border-color: var(--form-border-color, var(--color-neutral-500));
+  --file-border-color: var(--form-border-color, var(--color-border-strong));
 
   /* A floor, not the height. The button sets the height — see the header — and
      this only catches the case where a consumer has taken the button's padding
@@ -228,8 +34,8 @@ no such problem — the icon there is a real element drawing in currentColor.
     1lh + (var(--file-padding-block) * 2) + (var(--file-border-width) * 2)
   );
 
-  --file-button-surface: var(--color-neutral-200);
-  --file-button-color: var(--color-neutral-900);
+  --file-button-surface: var(--color-surface-muted);
+  --file-button-color: var(--color-text);
 
   /* Follows the field's border by default, so ghost takes the divider with
      it in one declaration instead of two. */
@@ -326,29 +132,29 @@ no such problem — the icon there is a real element drawing in currentColor.
   }
 
   /* 3. SIZE */
-  &.sm {
+  &.file-sm {
     --file-font-size: var(--font-size-sm);
   }
-  &.md {
+  &.file-md {
     /* base is already md */
   }
-  &.lg {
+  &.file-lg {
     --file-font-size: var(--font-size-base);
   }
 
   /* 4. SHAPE */
-  &.sharp {
+  &.file-sharp {
     --file-radius: var(--radius-sharp);
   }
-  &.smooth {
+  &.file-smooth {
     --file-radius: var(--radius-smooth);
   }
-  &.rounded {
+  &.file-rounded {
     --file-radius: var(--radius-rounded);
   }
 
   /* 4b. VARIANT */
-  &.ghost {
+  &.file-ghost {
     --file-surface: transparent;
     --file-border-color: transparent;
 
@@ -366,14 +172,14 @@ no such problem — the icon there is a real element drawing in currentColor.
      file input matches :read-only at all times, so copying .pu-input's guard
      would mean this rule never fired. See the header. */
   &:hover:not(:disabled) {
-    --file-border-color: var(--color-neutral-700);
-    --file-button-surface: var(--color-neutral-300);
+    --file-border-color: color-mix(in oklab, var(--color-border-strong), var(--shade-hover));
+    --file-button-surface: color-mix(in oklab, var(--color-surface-muted), var(--shade-hover));
   }
 
   /* The field is the button as far as clicking goes, so the press reads on
      the button wherever in the box it started. */
   &:active:not(:disabled) {
-    --file-button-surface: var(--color-neutral-400);
+    --file-button-surface: color-mix(in oklab, var(--color-surface-muted), var(--shade-active));
   }
 
   &:is(:user-invalid, [aria-invalid="true"]) {
@@ -381,11 +187,11 @@ no such problem — the icon there is a real element drawing in currentColor.
   }
 
   &:disabled {
-    --file-surface: var(--color-neutral-200);
-    --file-border-color: var(--color-neutral-400);
-    --file-name-color: var(--color-neutral-500);
-    --file-button-surface: var(--color-neutral-200);
-    --file-button-color: var(--color-neutral-500);
+    --file-surface: var(--color-surface-muted);
+    --file-border-color: var(--color-border);
+    --file-name-color: var(--color-text-subtle);
+    --file-button-surface: var(--color-surface-muted);
+    --file-button-color: var(--color-text-subtle);
     cursor: not-allowed;
 
     &::file-selector-button {
@@ -462,6 +268,6 @@ px of surplus padding, always in the safe direction, never a collision.
 /* A greyed-out field with a full-strength icon reads as the one part still
    working. The same rule .pu-input and .pu-select each carry for themselves. */
 .pu-input-group:has(> .pu-file:disabled) > .input-icon {
-  color: var(--color-neutral-400);
+  color: var(--color-text-subtle);
   cursor: not-allowed;
 }

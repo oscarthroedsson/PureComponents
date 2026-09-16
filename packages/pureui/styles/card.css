@@ -3,12 +3,12 @@
 
   --card-max-width: none;
 
-  --card-surface: var(--color-neutral-100);
-  --card-color: var(--color-neutral-800);
-  --card-title-color: var(--color-neutral-900);
-  --card-subtitle-color: var(--color-neutral-600);
+  --card-surface: var(--color-surface-raised);
+  --card-color: var(--color-text);
+  --card-title-color: var(--color-text);
+  --card-subtitle-color: var(--color-text-muted);
 
-  --card-border-color: var(--color-neutral-200);
+  --card-border-color: var(--color-border);
   --card-border-width: 1px;
   --card-radius: var(--radius-md);
   --card-shadow: var(--shadow-md);
@@ -65,7 +65,7 @@
 
     overflow: hidden;
 
-    background-color: var(--color-neutral-200);
+    background-color: var(--color-surface-muted);
 
     & > :is(img, video, picture, svg, canvas) {
       display: block;
@@ -82,9 +82,7 @@
 
     & > figcaption {
       padding: var(--card-padding-block) var(--card-padding-inline);
-
       color: var(--card-subtitle-color);
-
       font-size: 0.9em;
     }
   }
@@ -93,16 +91,7 @@
     padding: var(--card-padding-block) var(--card-padding-inline);
   }
 
-  /* Two padded parts in a row would stack two paddings into the seam and
-     make it twice the size of the card's own edge padding. Drop the
-     upper one and the seam measures exactly one padding, same as every
-     edge. .card-media is deliberately absent from the list, so a part
-     that follows the media keeps its full top padding. */
-  & > :is(.card-header, .card-body, .card-footer) + :is(.card-header, .card-body, .card-footer) {
-    padding-block-start: 0;
-  }
-
-  & > .card-header {
+  & > :where(.card-header) {
     display: flex;
     flex-direction: column;
 
@@ -123,14 +112,13 @@
 
   .card-subtitle {
     margin: 0;
-
     color: var(--card-subtitle-color);
 
     font-size: 0.9em;
     line-height: 1.4;
   }
 
-  & > .card-body {
+  & > :where(.card-body) {
     /* Takes the slack when the card is taller than its content, so the
        footer has something to be pushed away from. */
     flex: 1 1 auto;
@@ -146,7 +134,7 @@
     }
   }
 
-  & > .card-footer {
+  & > :where(.card-footer) {
     /* Bottom of the card whatever the body did. This is the whole reason
        a row of cards with unequal text still lines up. */
     margin-block-start: auto;
@@ -164,7 +152,7 @@
 
   /* SIZE */
 
-  &.sm {
+  &.card-sm {
     --card-padding-block: var(--spacing-75);
     --card-padding-inline: var(--spacing-75);
 
@@ -172,7 +160,7 @@
     --card-title-size: var(--font-size-base);
   }
 
-  &.md {
+  &.card-md {
     --card-padding-block: var(--spacing-100);
     --card-padding-inline: var(--spacing-100);
 
@@ -180,7 +168,7 @@
     --card-title-size: var(--font-size-h6);
   }
 
-  &.lg {
+  &.card-lg {
     --card-padding-block: var(--spacing-150);
     --card-padding-inline: var(--spacing-150);
 
@@ -190,7 +178,7 @@
 
   /* ORIENTATION */
 
-  &.horizontal {
+  &.card-horizontal {
     /* Row direction alone would put the parts beside each other instead
        of beside the media. Grid areas keep the media in one column and
        let the parts go on stacking in the other. */
@@ -239,31 +227,31 @@
 
   /* SHAPE */
 
-  &.sharp {
+  &.card-sharp {
     --card-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.card-smooth {
     --card-radius: var(--radius-md);
   }
 
-  &.rounded {
+  &.card-rounded {
     --card-radius: var(--radius-lg);
   }
 
   /* EMPHASIS */
 
-  &.outline {
+  &.card-outline {
     --card-surface: transparent;
-    --card-border-color: var(--color-neutral-300);
+    --card-border-color: var(--color-border);
   }
 
-  &.ghost {
+  &.card-ghost {
     --card-surface: transparent;
     --card-border-width: 0;
   }
 
-  &.elevated {
+  &.card-elevated {
     box-shadow: var(--card-shadow);
   }
 
@@ -279,9 +267,9 @@
       border-color var(--transition-fast),
       box-shadow var(--transition-fast);
 
-    /* One link, the whole card as its hit area. The link keeps the
-       accessible name and stays the only thing in the tab order. */
-    .card-link::after {
+    /* One primary action, the whole card as its hit area. The link or button
+       keeps the accessible name and stays the only primary tab stop. */
+    .card-action::after {
       content: "";
 
       position: absolute;
@@ -292,21 +280,31 @@
 
     /* Anything else clickable has to sit above that overlay to stay
        reachable with a mouse. */
-    & :is(a:not(.card-link), button, input, select, textarea, label, summary) {
+    & :is(a, button):not(.card-action),
+    & :is(input, select, textarea, label, summary) {
       position: relative;
-
       z-index: 1;
     }
 
     &:hover {
-      --card-border-color: var(--color-neutral-400);
+      --card-border-color: var(--color-border-strong);
 
       box-shadow: var(--card-shadow);
     }
 
-    .card-link {
+    .card-action {
       color: inherit;
       text-decoration: none;
+    }
+
+    button.card-action {
+      padding: 0;
+      border: 0;
+
+      background: none;
+
+      font: inherit;
+      text-align: inherit;
     }
   }
 
@@ -316,7 +314,7 @@
 
   @media (prefers-contrast: more) {
     --card-border-width: 2px;
-    --card-border-color: var(--color-neutral-600);
+    --card-border-color: var(--color-border-strong);
   }
 
   @media (forced-colors: active) {

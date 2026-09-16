@@ -1,13 +1,3 @@
-/*
-ACCESSIBILITY
-- The native element already exposes value, min and max. Do NOT add
-  aria-valuenow/valuemin/valuemax — they only go stale.
-- Label it: <label for> or aria-label. Keep the number out of the
-  label; put it in visible text beside the gauge.
-- The range state is carried by colour alone, so it needs a second
-  channel: a readout, or wording in the label.
-*/
-
 .pu-meter:where(meter) {
   /* FRAME */
   --meter-block-size: 1rem;
@@ -23,7 +13,7 @@ ACCESSIBILITY
   --meter-color: var(--color-primary);
   --meter-suboptimum-color: var(--color-warning);
   --meter-poor-color: var(--color-error);
-  --meter-track-color: var(--color-neutral-200);
+  --meter-track-color: var(--color-surface-muted);
 
   /* Expands the meter element, to controll its width, controll the wrappers width*/
   inline-size: 100%;
@@ -67,26 +57,26 @@ ACCESSIBILITY
   }
 
   /* SIZE */
-  &.sm {
+  &.meter-sm {
     --meter-block-size: 0.5rem;
   }
-  &.md {
+  &.meter-md {
     --meter-block-size: 1rem;
   }
-  &.lg {
+  &.meter-lg {
     --meter-block-size: 1.5rem;
   }
 
   /* RADIUS */
-  &.sharp {
+  &.meter-sharp {
     --meter-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.meter-smooth {
     --meter-radius: var(--radius-sm);
   }
 
-  &.rounded {
+  &.meter-rounded {
     --meter-radius: var(--radius-full);
   }
 
@@ -188,12 +178,12 @@ ACCESSIBILITY
   & > .meter-label {
     font-size: var(--font-size-sm);
     font-weight: 500;
-    color: var(--color-neutral-700);
+    color: var(--color-text-muted);
   }
 
   & > .meter-value {
     font-size: var(--font-size-sm);
-    color: var(--color-neutral-600);
+    color: var(--color-text-muted);
     text-align: end;
     font-variant-numeric: tabular-nums;
   }

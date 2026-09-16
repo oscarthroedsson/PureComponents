@@ -1,0 +1,18 @@
+.pu-motion {
+  /* VARIANT */
+
+  &[data-motion="fade-in"] {
+    --motion-properties: opacity;
+
+    &:where(
+      :not([data-motion-scope]),
+      [data-motion-scope="self"]
+    ) {
+      opacity: var(--motion-progress);
+    }
+
+    &[data-motion-scope="children"] > * {
+      opacity: var(--motion-progress);
+    }
+  }
+}

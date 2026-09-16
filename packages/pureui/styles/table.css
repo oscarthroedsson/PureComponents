@@ -1,73 +1,12 @@
-/*
-Table — spacing and alignment for native table markup.
-
-The class goes on the <table>. Everything inside is reached from
-there, so the whole table stays one unit.
-
-  <table class="pu-table md">
-    <thead>…</thead>
-    <tbody>…</tbody>
-  </table>
-
-SIZE
-  sm | md (default) | lg      cell padding and type size
-
-ALIGNMENT
-  start (default) | center | end
-
-  The class works at any level, because text-align inherits: on the
-  table it sets the baseline, on thead/tbody/tfoot it overrides the
-  table, on a tr it overrides the section, on a cell it overrides the
-  row. The nearest ancestor that sets a value wins — no rule per
-  level is needed, and an inherited value always yields to one set
-  directly on the element.
-
-  <table class="pu-table md">                    everything starts at start
-    <tbody>
-      <tr>
-        <td>Ada</td>
-        <td class="end">1284</td>              just this cell
-      </tr>
-    </tbody>
-  </table>
-
-  The baseline is start rather than the browser default, which gives
-  td start and th center — a header centred over left-aligned data,
-  which reads as a mistake. Reaching th takes text-align: inherit on
-  the cells: the browser sets center on th directly, and a value on
-  the element always beats an inherited one.
-
-STYLING
-
-Restrained on purpose: hairlines between rows, a slightly firmer one
-under the header, and header text stepped back so the data reads
-first. No zebra, no vertical rules, no outer frame — those are
-decisions for the page, not defaults for every table.
-
-The lines sit between rows rather than around them: the last row has
-none, so the table ends on data instead of a stray rule.
-
-VARIABLES
-  --table-padding-block
-  --table-padding-inline
-  --table-font-size
-
-  --table-color              body text
-  --table-head-color         header text, stepped back
-  --table-border-color       the hairline between rows
-  --table-head-border-color  under the header, one step firmer
-  --table-border-width
-*/
-
 .pu-table:where(table) {
   --table-padding-block: var(--spacing-75);
   --table-padding-inline: var(--spacing-100);
   --table-font-size: var(--font-size-md);
 
-  --table-color: var(--color-neutral-800);
-  --table-head-color: var(--color-neutral-600);
-  --table-border-color: var(--color-neutral-200);
-  --table-head-border-color: var(--color-neutral-300);
+  --table-color: var(--color-text);
+  --table-head-color: var(--color-text-muted);
+  --table-border-color: var(--color-border);
+  --table-head-border-color: var(--color-border);
   --table-border-width: 1px;
 
   inline-size: 100%;
@@ -127,19 +66,19 @@ VARIABLES
 
   /* SIZE */
 
-  &.sm {
+  &.table-sm {
     --table-padding-block: var(--spacing-50);
     --table-padding-inline: var(--spacing-75);
     --table-font-size: var(--font-size-sm);
   }
 
-  &.md {
+  &.table-md {
     --table-padding-block: var(--spacing-75);
     --table-padding-inline: var(--spacing-100);
     --table-font-size: var(--font-size-md);
   }
 
-  &.lg {
+  &.table-lg {
     --table-padding-block: var(--spacing-100);
     --table-padding-inline: var(--spacing-125);
     --table-font-size: var(--font-size-base);
@@ -147,18 +86,18 @@ VARIABLES
 
   /* ALIGNMENT */
 
-  &.start,
-  & .start {
+  &.table-start,
+  & .table-start {
     text-align: start;
   }
 
-  &.center,
-  & .center {
+  &.table-center,
+  & .table-center {
     text-align: center;
   }
 
-  &.end,
-  & .end {
+  &.table-end,
+  & .table-end {
     text-align: end;
   }
 }

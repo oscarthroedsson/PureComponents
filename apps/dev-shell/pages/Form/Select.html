@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Select — PureComponents</title>
+    <title>Select — Elements</title>
     <meta name="pc-description" content="Choose one of a known set of values." />
 
     <link rel="stylesheet" href="/pureui/styles/main.css" />
@@ -61,29 +61,29 @@
 
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
-        <code>sm</code> · <code>md</code> · <code>lg</code>. The key alone is already
-        <code>md</code>. A select is a leaf, so a size class on it retunes only that control — to
+        <code>select-sm</code> · <code>select-md</code> · <code>select-lg</code>. The key alone is already
+        <code>select-md</code>. A select is a leaf, so a size class on it retunes only that control — to
         resize a whole group, put the class on <code>.pu-form</code>, <code>.pu-fieldset</code> or
         <code>.pu-field</code>.
       </p>
       <template>
         <div class="pu-field">
           <label class="pu-label" for="sel-sm">Small</label>
-          <select id="sel-sm" class="pu-select sm">
+          <select id="sel-sm" class="pu-select select-sm">
             <option>Small</option>
             <option>Another option</option>
           </select>
         </div>
         <div class="pu-field">
           <label class="pu-label" for="sel-md">Medium</label>
-          <select id="sel-md" class="pu-select md">
+          <select id="sel-md" class="pu-select select-md">
             <option>Medium</option>
             <option>Another option</option>
           </select>
         </div>
         <div class="pu-field">
           <label class="pu-label" for="sel-lg">Large</label>
-          <select id="sel-lg" class="pu-select lg">
+          <select id="sel-lg" class="pu-select select-lg">
             <option>Large</option>
             <option>Another option</option>
           </select>
@@ -93,25 +93,25 @@
 
     <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
       <p class="pc-note">
-        <code>sharp</code> · <code>smooth</code> (default) · <code>rounded</code> — the same three
+        <code>select-sharp</code> · <code>select-smooth</code> (default) · <code>select-rounded</code> — the same three
         shapes as the rest of the family, off the same channel.
       </p>
       <template>
         <div class="pu-field">
           <label class="pu-label" for="sel-sharp">Sharp</label>
-          <select id="sel-sharp" class="pu-select sharp">
+          <select id="sel-sharp" class="pu-select select-sharp">
             <option>sharp</option>
           </select>
         </div>
         <div class="pu-field">
           <label class="pu-label" for="sel-smooth">Smooth</label>
-          <select id="sel-smooth" class="pu-select smooth">
+          <select id="sel-smooth" class="pu-select select-smooth">
             <option>smooth</option>
           </select>
         </div>
         <div class="pu-field">
           <label class="pu-label" for="sel-rounded">Rounded</label>
-          <select id="sel-rounded" class="pu-select rounded">
+          <select id="sel-rounded" class="pu-select select-rounded">
             <option>rounded</option>
           </select>
         </div>
@@ -193,7 +193,7 @@
         </div>
         <div class="pu-field">
           <label class="pu-label" for="sel-picker-tuned">Tuned through the variables</label>
-          <select id="sel-picker-tuned" class="pu-select rounded"
+          <select id="sel-picker-tuned" class="pu-select select-rounded"
                   style="--select-menu-offset: 0.5rem; --select-option-radius: 999px; --select-menu-duration: 0.3s">
             <option>Alpha</option>
             <option selected>Bravo</option>

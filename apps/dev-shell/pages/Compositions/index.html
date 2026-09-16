@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compositions — Pure</title>
+
+    <!-- The library's tokens, so the cards below theme with everything else -->
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-page="compositions">
+    <script src="../components.js"></script>
+    <script src="./compositions.js"></script>
+    <script src="../docs.js"></script>
+    <script>
+      /* The index for this folder. An element page shows one class doing
+         one thing; a composition page shows a whole interface part built
+         out of several, which is the only way to find out whether the
+         vocabulary holds together at that size. */
+      (function () {
+        var el = window.PCDocs.el;
+
+        var list = el("ul", { class: "pc-composition-list" });
+
+        (window.PC_COMPOSITIONS || []).forEach(function (c) {
+          var name = c.file.split("/").pop();
+
+          var card = el("li", {}, [
+            el("a", { class: "pc-composition", href: "./" + name }, [
+              el("span", { class: "pc-composition-title", text: c.title }),
+              el("span", { class: "pc-composition-blurb", text: c.blurb || "" }),
+              el(
+                "span",
+                { class: "pc-composition-meta" },
+                (c.css || []).map(function (f) {
+                  return el("span", { class: "pc-chip", text: f });
+                })
+              ),
+            ]),
+          ]);
+
+          list.appendChild(card);
+        });
+
+        var intro = el("div", { class: "pc-doc-body" });
+        intro.innerHTML =
+          "<p>A <strong>composition</strong> is a whole interface part assembled out of PureUI and " +
+          "nothing else — a sidebar, a shell, a settings pane. It is not a component: it ships no " +
+          "CSS into the library and introduces no class of its own into the vocabulary.</p>" +
+          "<p>Element pages answer <em>does this class work</em>. These pages answer the harder " +
+          "question: <em>does the library hold together when something real is built out of it</em>. " +
+          "Every page here ends with what it found — what carried the weight, and what was missing.</p>";
+
+        window.PCDocs.buildPage({
+          title: "Compositions",
+          lede: "Whole interface parts built out of PureUI, and what building them found.",
+          homeHref: "../../index.html",
+          sections: [
+            { id: "about", title: "What these are", node: intro },
+            { id: "pages", title: "Pages", node: list },
+          ],
+        });
+      })();
+    </script>
+
+    <style>
+      /* Dev shell page chrome. */
+      .pc-composition-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0.75rem;
+      }
+      .pc-composition {
+        display: grid;
+        gap: 0.35rem;
+        padding: 1rem 1.1rem;
+        border: 1px solid var(--pc-border);
+        border-radius: var(--pc-radius);
+        background: var(--pc-bg-raised);
+        color: inherit;
+        text-decoration: none;
+      }
+      .pc-composition:hover {
+        border-color: var(--pc-border-strong);
+      }
+      .pc-composition-title {
+        font-weight: 600;
+        font-size: 1.05rem;
+      }
+      .pc-composition-blurb {
+        color: var(--pc-text-dim);
+        font-size: 0.9rem;
+      }
+      .pc-composition-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-top: 0.35rem;
+      }
+    </style>
+  </body>
+</html>

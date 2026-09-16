@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Badge — PureComponents</title>
+    <title>Badge — Elements</title>
     <meta name="pc-description" content="The Badge component provides labels, counts, and status indicators." />
 
     <!-- Library CSS under test -->
@@ -17,7 +17,7 @@
   </head>
   <body data-component="Badge">
     <section class="pc-demo" id="basic-usage" data-title="Basic Usage" data-stage-style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
-      <p class="pc-note">The key alone is already <code>md</code>. A label, a word, a count.</p>
+      <p class="pc-note">The key alone is already <code>badge-md</code>. A label, a word, a count.</p>
       <template>
         <span class="pu-badge">Badge</span>
         <span class="pu-badge">New</span>
@@ -42,15 +42,15 @@
 
     <section class="pc-demo" id="size-variants" data-title="Size Variants" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
       <p class="pc-note">
-        Three sizes: <code>sm</code>, <code>md</code>, <code>lg</code>. The scale stays inside
-        badge territory on purpose — <code>lg</code> is a badge you can read across a table, not
+        Three sizes: <code>badge-sm</code>, <code>badge-md</code>, <code>badge-lg</code>. The scale stays inside
+        badge territory on purpose — <code>badge-lg</code> is a badge you can read across a table, not
         a heading. One variable, <code>--badge-font-size</code>, and the padding follows it in
         <code>em</code>.
       </p>
       <template>
-        <span class="pu-badge sm">Small</span>
-        <span class="pu-badge md">Medium</span>
-        <span class="pu-badge lg">Large</span>
+        <span class="pu-badge badge-sm">Small</span>
+        <span class="pu-badge badge-md">Medium</span>
+        <span class="pu-badge badge-lg">Large</span>
       </template>
     </section>
 
@@ -71,30 +71,30 @@
 
     <section class="pc-demo" id="style-variants" data-title="Style Variants" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
       <p class="pc-note">
-        <code>outline</code> drops the tint and keeps the border. <code>ghost</code> drops both,
+        <code>badge-outline</code> drops the tint and keeps the border. <code>badge-ghost</code> drops both,
         for a dense list where the boxes would fight each other — the same meaning
-        <code>ghost</code> has on <code>.pu-btn</code>.
+        <code>badge-ghost</code> has on <code>.pu-btn</code>.
       </p>
       <template>
         <span class="pu-badge">Default</span>
-        <span class="pu-badge outline">Outline</span>
-        <span class="pu-badge ghost">Ghost</span>
-        <span class="pu-badge outline" data-intent="error">Outline error</span>
-        <span class="pu-badge ghost" data-intent="success">Ghost success</span>
+        <span class="pu-badge badge-outline">Outline</span>
+        <span class="pu-badge badge-ghost">Ghost</span>
+        <span class="pu-badge badge-outline" data-intent="error">Outline error</span>
+        <span class="pu-badge badge-ghost" data-intent="success">Ghost success</span>
       </template>
     </section>
 
     <section class="pc-demo" id="border-radius-variants" data-title="Shape" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
       <p class="pc-note">
-        <code>sharp</code>, <code>smooth</code>, <code>rounded</code>. <code>smooth</code> is the
+        <code>badge-sharp</code>, <code>badge-smooth</code>, <code>badge-rounded</code>. <code>badge-smooth</code> is the
         default, as everywhere else in the library. Size and shape are independent.
       </p>
       <template>
-        <span class="pu-badge sharp">Sharp</span>
-        <span class="pu-badge smooth">Smooth</span>
-        <span class="pu-badge rounded">Rounded</span>
-        <span class="pu-badge sm rounded">3</span>
-        <span class="pu-badge lg sharp">Draft</span>
+        <span class="pu-badge badge-sharp">Sharp</span>
+        <span class="pu-badge badge-smooth">Smooth</span>
+        <span class="pu-badge badge-rounded">Rounded</span>
+        <span class="pu-badge badge-sm badge-rounded">3</span>
+        <span class="pu-badge badge-lg badge-sharp">Draft</span>
       </template>
     </section>
 
@@ -109,7 +109,7 @@
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 12.5 2 8l1.4-1.4 3.1 3.1 6.1-6.1L14 5z"/></svg>
           Verified
         </span>
-        <span class="pu-badge lg" data-intent="error">
+        <span class="pu-badge badge-lg" data-intent="error">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1 15 14H1zm0 5v4h1V6zm0 5v1.5h1V11z"/></svg>
           Failed
         </span>
@@ -124,21 +124,21 @@
       </p>
       <template>
         <a class="pu-badge" href="#as-a-link">css</a>
-        <a class="pu-badge outline" href="#as-a-link">accessibility</a>
-        <a class="pu-badge ghost" href="#as-a-link">tokens</a>
+        <a class="pu-badge badge-outline" href="#as-a-link">accessibility</a>
+        <a class="pu-badge badge-ghost" href="#as-a-link">tokens</a>
       </template>
     </section>
 
     <section class="pc-demo" id="common-patterns" data-title="Common Patterns" data-stage-style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
       <p class="pc-note">Counts on a control, and status beside a name.</p>
       <template>
-        <button class="pu-btn md">
+        <button class="pu-btn btn-md">
           Notifications
-          <span class="pu-badge sm rounded">3</span>
+          <span class="pu-badge badge-sm badge-rounded">3</span>
         </button>
-        <button class="pu-btn md ghost">
+        <button class="pu-btn btn-md btn-ghost">
           Inbox
-          <span class="pu-badge sm rounded" data-intent="error">12</span>
+          <span class="pu-badge badge-sm badge-rounded" data-intent="error">12</span>
         </button>
       </template>
     </section>
@@ -150,9 +150,9 @@
         work — a bare <code>&lt;span&gt;</code> has no role for a name to attach to.
       </p>
       <template>
-        <button class="pu-btn md" aria-label="Notifications, 3 unread">
+        <button class="pu-btn btn-md" aria-label="Notifications, 3 unread">
           Notifications
-          <span class="pu-badge sm rounded" aria-hidden="true">3</span>
+          <span class="pu-badge badge-sm badge-rounded" aria-hidden="true">3</span>
         </button>
       </template>
     </section>
@@ -164,7 +164,7 @@
       </p>
       <template>
         <p role="status">
-          Unread messages: <span class="pu-badge rounded" data-intent="info">7</span>
+          Unread messages: <span class="pu-badge badge-rounded" data-intent="info">7</span>
         </p>
       </template>
     </section>

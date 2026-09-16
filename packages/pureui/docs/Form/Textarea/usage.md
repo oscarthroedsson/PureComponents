@@ -1,78 +1,152 @@
 # Textarea
 
-The box when the text runs to more than one line.
+A multi-line text field. It matches `.pu-input` in colour, border and scale, so
+the two sit on the same grid in a form.
+
+## Quick start
 
 ```html
-<textarea class="textarea" rows="4"></textarea>
-<textarea class="textarea lg rounded" rows="6"></textarea>
-<textarea class="textarea" data-sizing="content"></textarea>
+<textarea class="pu-textarea" name="message" rows="4"></textarea>
 ```
 
-The same box as `.input`, from the same `--form-*` channel, so a textarea and
-an input in one form are the same field with a different number of lines. Only
-what having more than one line changes is written here.
+## Classes
 
-## Height — three ways, and they do not fight
-
-| | |
+| Class | Does |
 |---|---|
-| `rows="4"` | the platform's answer, and the default. Nothing here overrides it. |
-| `--textarea-min-block-size` | a floor in case `rows` is missing. Two lines, so a bare textarea is visibly not an input. |
-| `data-sizing="content"` | the box follows what is typed, growing and shrinking as lines are added. No JavaScript, no scroll-height measuring, no hidden mirror element. |
+| `.pu-textarea` | The key. Requires `<textarea>`. |
+| `textarea-sm` | 12px. |
+| `textarea-md` | 14px. The default. |
+| `textarea-lg` | 16px. |
+| `textarea-sharp` | Square corners. |
+| `textarea-smooth` | The default corner. |
+| `textarea-rounded` | Rounder, capped so the box still reads as a field. |
+| `textarea-ghost` | No fill, no border, until it is hovered or focused. |
 
-`field-sizing: content` is recent. Where it is unsupported the declaration is
-ignored and the box stays the size `rows` gave it — the field still works, it
-just does not grow. That is why it is opt-in and why `rows` stays on the
-element.
+`textarea-rounded` is capped at half the height of a single-line control at
+the same scale — the same corner the `.pu-input` beside it resolves its pill
+to. A rounded textarea and a rounded input then carry the same corner, and the
+form reads as one set of controls instead of two.
 
-## Resize
+## Height
 
-`resize` is an accessibility feature, not decoration. Someone at 200% zoom
-needs to be able to make the box bigger, and 1.4.4 does not let us take that
-away. This component never sets `resize: none` on its own — it restricts the
-axis to `block`, which is a layout decision, and the useful direction stays.
+`rows` decides the height. Without it the box is two lines, so a bare textarea
+is visibly not an input.
 
-`data-resize="none"` and `data-resize="both"` are there when you need them.
-Use `none` only when `data-sizing="content"` makes resizing unnecessary.
+### Growing with the content
 
-## Accessibility
+```html
+<textarea class="pu-textarea" data-sizing="content"
+          style="--textarea-max-block-size: 20rem"></textarea>
+```
 
-- **Must** be named by a `<label for>`. In a box this large a disappearing
-  placeholder is worse than in an input: there is nothing left to say what the
-  paragraph being typed is for.
-- A read-only textarea is not disabled: it is focusable, selectable and
-  submitted. Only the cursor separates them.
-- KNOWN, MEASURED FAILURE: `--color-error` is `#f87171`, 2.77:1 on white,
-  under the 3:1 of 1.4.11 as an invalid border. Used anyway by decision,
-  pending a darker error token. The invalid state is never carried by that
-  colour alone.
+The box follows what is typed. `rows` is ignored while this is on, two lines is
+the empty height, and `--textarea-max-block-size` is where it stops. Set a
+maximum or it keeps growing.
 
-## Size, shape, variant
+Browsers without support keep the `rows` height.
 
-`sm` · `md` (default) · `lg` — a **leaf**.
+## Resizing
 
-`sharp` · `smooth` (default) · `rounded`. `rounded` is **capped**: a textarea
-is tall, and an uncapped 999px turns it into a stadium. The cap is the radius
-a one-line control at the same scale resolves to, so a rounded textarea and a
-rounded input carry the same corner.
+Vertical only by default. The browser allows both, and dragging a textarea
+wider than the form pushes the layout apart.
 
-`ghost` — transparent surface and border, states still show.
+| Attribute | Does |
+|---|---|
+| `data-resize="none"` | Not resizable. |
+| `data-resize="both"` | Both directions. |
 
-## Not here
-
-- **Icons.** `.input-group` centres what it holds against a box one line tall;
-  against six lines it would float in the middle of the text. A mark on a
-  textarea belongs above or below it, which is `.field`'s business.
-- **A character counter.** It is content, not styling — and it has to be
-  announced politely, which is `aria-live` and markup, not CSS.
+A disabled textarea cannot be resized.
 
 ## Variables
 
-| Variable | Controls |
+| Variable | Default | Controls |
+|---|---|---|
+| `--textarea-font-size` | the form's scale | Type size. |
+| `--textarea-padding-block` | the form's padding | Vertical padding. |
+| `--textarea-padding-inline` | the form's padding | Horizontal padding. |
+| `--textarea-radius` | the form's radius | Corner, capped. |
+| `--textarea-radius-max` | derived | The cap itself. Raise it if a shape wants more. |
+| `--textarea-border-width` | the form's border width | Border. |
+| `--textarea-border-color` | the form's border colour | Border. |
+| `--textarea-surface` | the form's surface | Fill. |
+| `--textarea-color` | the form's text colour | Text. |
+| `--textarea-placeholder-color` | `var(--color-text-subtle)` | Placeholder. |
+| `--textarea-line-height` | `var(--line-height-base)` | Leading. Raise it for prose. |
+| `--textarea-min-block-size` | two lines | The empty height. |
+| `--textarea-max-block-size` | `none` | Cap when growing with content. |
+
+```html
+<textarea class="pu-textarea" style="--textarea-line-height: 1.7"></textarea>
+```
+
+## States
+
+| State | Look |
 |---|---|
-| `--textarea-min-block-size` | the floor when `rows` is missing |
-| `--textarea-max-block-size` | where `data-sizing="content"` stops growing |
-| `--textarea-radius` · `--textarea-radius-max` | the corner, and its cap |
-| `--textarea-font-size` · `-line-height` · `-color` · `-surface` | |
-| `--textarea-padding-block` · `-padding-inline` | |
-| `--textarea-border-width` · `-border-color` · `-placeholder-color` | |
+| `:hover` | Border darkens. Not while disabled or read-only. |
+| `:user-invalid` or `aria-invalid="true"` | Border turns to the error colour. |
+| `:read-only` | Normal field, default cursor. Not greyed. |
+| `:disabled` | Muted fill, muted text, not resizable. |
+
+A ghost field still shows that it is hovered, wrong or disabled. Only its
+resting state is invisible.
+
+## Accessibility
+
+- Every textarea needs a label. See the Label docs.
+- A placeholder is not a label.
+- Bind hints and errors with `aria-describedby`, and set `aria-invalid="true"`
+  when your own validation fails.
+- Keep the resize handle available. Being able to make a text box bigger is
+  what 1.4.4 is about; the vertical direction is the useful one and it is kept
+  by default.
+- If you show a character count, put it in a live region so it is announced.
+- The focus ring comes from the library.
+
+## Examples
+
+### Sizes
+
+```html
+<textarea class="pu-textarea textarea-sm" rows="3"></textarea>
+<textarea class="pu-textarea textarea-md" rows="3"></textarea>
+<textarea class="pu-textarea textarea-lg" rows="3"></textarea>
+```
+
+### In a field
+
+```html
+<div class="pu-field">
+  <label class="pu-label" for="msg">Message</label>
+  <textarea class="pu-textarea" id="msg" name="message" rows="5"
+            aria-describedby="msg-hint"></textarea>
+  <p class="pu-field-hint" id="msg-hint">Tell us what happened.</p>
+</div>
+```
+
+### Growing with the content
+
+```html
+<textarea class="pu-textarea" data-sizing="content" name="note"
+          style="--textarea-max-block-size: 24rem"></textarea>
+```
+
+### Fixed size
+
+```html
+<textarea class="pu-textarea" data-resize="none" rows="6"></textarea>
+```
+
+### Shape and variant
+
+```html
+<textarea class="pu-textarea textarea-sharp" rows="3"></textarea>
+<textarea class="pu-textarea textarea-rounded" rows="3"></textarea>
+<textarea class="pu-textarea textarea-ghost" rows="3"></textarea>
+```
+
+### For prose
+
+```html
+<textarea class="pu-textarea" rows="10" style="--textarea-line-height: 1.7"></textarea>
+```

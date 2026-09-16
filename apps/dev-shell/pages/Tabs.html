@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabs — Elements</title>
+    <meta
+      name="pc-description"
+      content="A row of choices in a shared box, and an optional set of panels that follow the choice. The same look works as radios without JavaScript and as ARIA tabs driven by a script."
+    />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/tabs.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Tabs">
+    <section class="pc-doc" id="api" data-title="API">
+      <p>
+        Every key the component answers to. <code>.pu-tabs</code> has two markups with one look. On a
+        <code>&lt;fieldset&gt;</code>, each tab is a <code>&lt;label&gt;</code> around a radio: the browser owns
+        selection and arrow keys, and CSS shows the panel in the same position as the checked tab. On a
+        <code>&lt;div&gt;</code>, each tab is a <code>&lt;button role="tab"&gt;</code>: a script owns
+        <code>aria-selected</code>, the keyboard and each panel's <code>hidden</code>, and PureUI only paints it.
+      </p>
+      <p>
+        <code>tabs-content</code> is optional. A header on its own is a view switcher — the choice changes
+        something elsewhere on the page. Screen readers announce the radio form as radio buttons, not tabs; use
+        the script-driven form where real tab semantics are needed.
+      </p>
+      <div class="pc-doc-table">
+        <table>
+          <thead><tr><th>Key</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+          <tr><td><code>.pu-tabs</code></td><td><span class="pc-cat pc-cat-key"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 14v4.4a.6.6 0 0 0 .6.6H10m9-5v4.4a.6.6 0 0 1-.6.6H14m0-14h4.4a.6.6 0 0 1 .6.6V10M4 10V5.6a.6.6 0 0 1 .6-.6H10m4 14v1a2 2 0 1 1-4 0v-1m-6-9h1a2 2 0 1 1 0 4H4m15-4h1a2 2 0 1 1 0 4h-1m-5-9V4a2 2 0 1 0-4 0v1"/></svg>Key</span></td><td>The key. Goes on <code>&lt;fieldset&gt;</code> for the radio form and on <code>&lt;div&gt;</code> for script-driven tabs.</td></tr>
+          <tr><td><code>tabs-legend</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>The radio group's name. Read by assistive technology, not painted.</td></tr>
+          <tr><td><code>tabs-header</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>The box the tabs sit in. As wide as its tabs.</td></tr>
+          <tr><td><code>tabs-tab</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>One tab. A <code>&lt;label&gt;</code> around a radio, or a <code>&lt;button role="tab"&gt;</code>.</td></tr>
+          <tr><td><code>tabs-input</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>The native radio inside a label tab. Owns selection, focus and arrow keys.</td></tr>
+          <tr><td><code>tabs-content</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>Optional. Holds the panels. Leave it out to use the header as a view switcher.</td></tr>
+          <tr><td><code>tabs-panel</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>One panel. Without JavaScript, panel <em>n</em> shows when tab <em>n</em> is checked, up to ten.</td></tr>
+          <tr><td><code>tabs-sm</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>Smaller type, padding and radius.</td></tr>
+          <tr><td><code>tabs-md</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>The default. The base already gives this.</td></tr>
+          <tr><td><code>tabs-lg</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>Larger type, padding and radius.</td></tr>
+          <tr><td><code>tabs-sharp</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>No radius.</td></tr>
+          <tr><td><code>tabs-smooth</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>The default corner.</td></tr>
+          <tr><td><code>tabs-rounded</code></td><td><span class="pc-cat pc-cat-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M22 16c0-5.523-4.477-10-10-10S2 10.477 2 16"/><path fill="currentColor" d="M2 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2m20 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></g></svg>Shape</span></td><td>Pill-shaped header and tabs. Panels keep the large corner.</td></tr>
+          <tr><td><code>:checked</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>On the radio. Its tab gets the raised selected look.</td></tr>
+          <tr><td><code>aria-selected="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>The same look on a <code>role="tab"</code> button.</td></tr>
+          <tr><td><code>disabled</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>On the radio or the button. Muted and not selectable.</td></tr>
+          <tr><td><code>aria-disabled="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>The same look where <code>disabled</code> cannot be used.</td></tr>
+          <tr><td><code>hidden</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>On a panel in the script-driven form. The script sets it.</td></tr>
+          <tr><td><code>data-icon-only="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>A square tab. The radio or button needs <code>aria-label</code>.</td></tr>
+          <tr><td><code>:hover</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>An unselected tab gets a faint ground.</td></tr>
+          <tr><td><code>--tabs-radius</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>The header corner. Tabs and panels follow it.</td></tr>
+          <tr><td><code>--tabs-gap</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Space between the header and the panels.</td></tr>
+          <tr><td><code>--tabs-header-background</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>The header box surface.</td></tr>
+          <tr><td><code>--tabs-header-padding</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Space between the header edge and the tabs.</td></tr>
+          <tr><td><code>--tabs-tab-selected-background</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>The selected tab surface.</td></tr>
+          <tr><td><code>--tabs-tab-selected-shadow</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>The selected tab lift.</td></tr>
+          <tr><td><code>--tabs-panel-background</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>The panel surface.</td></tr>
+          <tr><td><code>--tabs-panel-radius</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>The panel corner, when it should differ from the header.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="pc-demo" id="default" data-title="Default" data-stage-style="display:block; max-width:42rem;">
+      <p class="pc-note">Tab into the group, then use the arrow keys. The browser checks the radios; CSS shows the panel in the same position.</p>
+      <template>
+        <fieldset class="pu-tabs tabs-md">
+          <legend class="tabs-legend">Account settings</legend>
+          <div class="tabs-header">
+            <label class="tabs-tab" id="default-profile-tab">
+              <input class="tabs-input" type="radio" name="default" value="profile" aria-controls="default-profile-panel" checked />
+              <span>Profile</span>
+            </label>
+            <label class="tabs-tab" id="default-security-tab">
+              <input class="tabs-input" type="radio" name="default" value="security" aria-controls="default-security-panel" />
+              <span>Security</span>
+            </label>
+            <label class="tabs-tab" id="default-notifications-tab">
+              <input class="tabs-input" type="radio" name="default" value="notifications" aria-controls="default-notifications-panel" />
+              <span>Notifications</span>
+            </label>
+          </div>
+          <div class="tabs-content">
+            <div class="tabs-panel" id="default-profile-panel" role="region" aria-labelledby="default-profile-tab" tabindex="0">
+              <h3>Profile</h3><p>Update your name, email address and profile picture.</p>
+            </div>
+            <div class="tabs-panel" id="default-security-panel" role="region" aria-labelledby="default-security-tab" tabindex="0">
+              <h3>Security</h3><p>Manage your password and two-factor authentication.</p>
+            </div>
+            <div class="tabs-panel" id="default-notifications-panel" role="region" aria-labelledby="default-notifications-tab" tabindex="0">
+              <h3>Notifications</h3><p>Choose which notifications you want to receive.</p>
+            </div>
+          </div>
+        </fieldset>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:1.5rem; max-width:42rem;">
+      <p class="pc-note">Size moves type, padding and radius for the header, tabs and panels together. Medium is the default.</p>
+      <template>
+        <fieldset class="pu-tabs tabs-sm">
+          <legend class="tabs-legend">Small example</legend>
+          <div class="tabs-header">
+            <label class="tabs-tab" id="size-sm-first-tab">
+              <input class="tabs-input" type="radio" name="size-sm" value="first" aria-controls="size-sm-first-panel" checked />
+              <span>First</span>
+            </label>
+            <label class="tabs-tab" id="size-sm-second-tab">
+              <input class="tabs-input" type="radio" name="size-sm" value="second" aria-controls="size-sm-second-panel" />
+              <span>Second</span>
+            </label>
+          </div>
+          <div class="tabs-content">
+            <div class="tabs-panel" id="size-sm-first-panel" role="region" aria-labelledby="size-sm-first-tab" tabindex="0">
+              <p>Small tabs and a compact panel.</p>
+            </div>
+            <div class="tabs-panel" id="size-sm-second-panel" role="region" aria-labelledby="size-sm-second-tab" tabindex="0">
+              <p>The second small panel.</p>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="pu-tabs tabs-md">
+          <legend class="tabs-legend">Medium example</legend>
+          <div class="tabs-header">
+            <label class="tabs-tab" id="size-md-first-tab">
+              <input class="tabs-input" type="radio" name="size-md" value="first" aria-controls="size-md-first-panel" checked />
+              <span>First</span>
+            </label>
+            <label class="tabs-tab" id="size-md-second-tab">
+              <input class="tabs-input" type="radio" name="size-md" value="second" aria-controls="size-md-second-panel" />
+              <span>Second</span>
+            </label>
+          </div>
+          <div class="tabs-content">
+            <div class="tabs-panel" id="size-md-first-panel" role="region" aria-labelledby="size-md-first-tab" tabindex="0">
+              <p>Medium is the default density.</p>
+            </div>
+            <div class="tabs-panel" id="size-md-second-panel" role="region" aria-labelledby="size-md-second-tab" tabindex="0">
+              <p>The second medium panel.</p>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="pu-tabs tabs-lg">
+          <legend class="tabs-legend">Large example</legend>
+          <div class="tabs-header">
+            <label class="tabs-tab" id="size-lg-first-tab">
+              <input class="tabs-input" type="radio" name="size-lg" value="first" aria-controls="size-lg-first-panel" checked />
+              <span>First</span>
+            </label>
+            <label class="tabs-tab" id="size-lg-second-tab">
+              <input class="tabs-input" type="radio" name="size-lg" value="second" aria-controls="size-lg-second-panel" />
+              <span>Second</span>
+            </label>
+          </div>
+          <div class="tabs-content">
+            <div class="tabs-panel" id="size-lg-first-panel" role="region" aria-labelledby="size-lg-first-tab" tabindex="0">
+              <p>Large tabs and a roomier panel.</p>
+            </div>
+            <div class="tabs-panel" id="size-lg-second-panel" role="region" aria-labelledby="size-lg-second-tab" tabindex="0">
+              <p>The second large panel.</p>
+            </div>
+          </div>
+        </fieldset>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="variants" data-title="Variants" data-stage-style="display:grid; gap:1.5rem; max-width:42rem;">
+      <p class="pc-note">Shape sets the header corner. Tabs follow it from inside the padding; a rounded panel keeps the large corner.</p>
+      <template>
+        <fieldset class="pu-tabs tabs-md tabs-sharp">
+          <legend class="tabs-legend">Sharp example</legend>
+          <div class="tabs-header">
+            <label class="tabs-tab" id="shape-sharp-first-tab">
+              <input class="tabs-input" type="radio" name="shape-sharp" value="first" aria-controls="shape-sharp-first-panel" checked />
+              <span>First</span>
+            </label>
+            <label class="tabs-tab" id="shape-sharp-second-tab">
+              <input class="tabs-input" type="radio" name="shape-sharp" value="second" aria-controls="shape-sharp-second-panel" />
+              <span>Second</span>
+            </label>
+          </div>
+          <div class="tabs-content">
+            <div class="tabs-panel" id="shape-sharp-first-panel" role="region" aria-labelledby="shape-sharp-first-tab" tabindex="0">
+              <p>Square corners.</p>
+            </div>
+            <div class="tabs-panel" id="shape-sharp-second-panel" role="region" aria-labelledby="shape-sharp-second-tab" tabindex="0">
+              <p>The second sharp panel.</p>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="pu-tabs tabs-md tabs-smooth">
+          <legend class="tabs-legend">Smooth example</legend>
+          <div class="tabs-header">
+            <label class="tabs-tab" id="shape-smooth-first-tab">
+              <input class="tabs-input" type="radio" name="shape-smooth" value="first" aria-controls="shape-smooth-first-panel" checked />
+              <span>First</span>
+            </label>
+            <label class="tabs-tab" id="shape-smooth-second-tab">
+              <input class="tabs-input" type="radio" name="shape-smooth" value="second" aria-controls="shape-smooth-second-panel" />
+              <span>Second</span>
+            </label>
+          </div>
+          <div class="tabs-content">
+            <div class="tabs-panel" id="shape-smooth-first-panel" role="region" aria-labelledby="shape-smooth-first-tab" tabindex="0">
+              <p>The default corner.</p>
+            </div>
+            <div class="tabs-panel" id="shape-smooth-second-panel" role="region" aria-labelledby="shape-smooth-second-tab" tabindex="0">
+              <p>The second smooth panel.</p>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="pu-tabs tabs-md tabs-rounded">
+          <legend class="tabs-legend">Rounded example</legend>
+          <div class="tabs-header">
+            <label class="tabs-tab" id="shape-rounded-first-tab">
+              <input class="tabs-input" type="radio" name="shape-rounded" value="first" aria-controls="shape-rounded-first-panel" checked />
+              <span>First</span>
+            </label>
+            <label class="tabs-tab" id="shape-rounded-second-tab">
+              <input class="tabs-input" type="radio" name="shape-rounded" value="second" aria-controls="shape-rounded-second-panel" />
+              <span>Second</span>
+            </label>
+          </div>
+          <div class="tabs-content">
+            <div class="tabs-panel" id="shape-rounded-first-panel" role="region" aria-labelledby="shape-rounded-first-tab" tabindex="0">
+              <p>Pill-shaped header and tabs.</p>
+            </div>
+            <div class="tabs-panel" id="shape-rounded-second-panel" role="region" aria-labelledby="shape-rounded-second-tab" tabindex="0">
+              <p>The second rounded panel.</p>
+            </div>
+          </div>
+        </fieldset>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="states" data-title="States" data-stage-style="display:block; max-width:42rem;">
+      <p class="pc-note">Selected comes from <code>:checked</code>. Disabled is native on the radio, and the arrow keys skip it.</p>
+      <template>
+        <fieldset class="pu-tabs tabs-md">
+          <legend class="tabs-legend">Availability</legend>
+          <div class="tabs-header">
+            <label class="tabs-tab" id="state-ready-tab">
+              <input class="tabs-input" type="radio" name="state" value="ready" aria-controls="state-ready-panel" checked />
+              <span>Ready</span>
+            </label>
+            <label class="tabs-tab" id="state-preview-tab">
+              <input class="tabs-input" type="radio" name="state" value="preview" aria-controls="state-preview-panel" />
+              <span>Preview</span>
+            </label>
+            <label class="tabs-tab" id="state-later-tab">
+              <input class="tabs-input" type="radio" name="state" value="later" aria-controls="state-later-panel" disabled />
+              <span>Coming later</span>
+            </label>
+          </div>
+          <div class="tabs-content">
+            <div class="tabs-panel" id="state-ready-panel" role="region" aria-labelledby="state-ready-tab" tabindex="0">
+              <p>This view is ready.</p>
+            </div>
+            <div class="tabs-panel" id="state-preview-panel" role="region" aria-labelledby="state-preview-tab" tabindex="0">
+              <p>This view is available as a preview.</p>
+            </div>
+            <div class="tabs-panel" id="state-later-panel" role="region" aria-labelledby="state-later-tab" tabindex="0">
+              <p>This panel cannot be selected.</p>
+            </div>
+          </div>
+        </fieldset>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="behavior" data-title="Behavior" data-stage-style="display:block; max-width:42rem;">
+      <div class="pc-demo-actions" hidden>
+        <button type="button" data-pc-action="next-tab">Select next tab</button>
+      </div>
+      <p class="pc-note">The script-driven form. The button above the preview stands in for the script: it moves <code>aria-selected</code>, <code>tabindex</code> and <code>hidden</code>. PureUI ships no script; the look is the same as the radio form.</p>
+      <template>
+        <div class="pu-tabs tabs-md">
+          <div class="tabs-header" role="tablist" aria-label="Project">
+            <button class="tabs-tab" type="button" role="tab" id="aria-overview-tab" aria-controls="aria-overview-panel" aria-selected="true">Overview</button>
+            <button class="tabs-tab" type="button" role="tab" id="aria-activity-tab" aria-controls="aria-activity-panel" aria-selected="false" tabindex="-1">Activity</button>
+            <button class="tabs-tab" type="button" role="tab" id="aria-settings-tab" aria-controls="aria-settings-panel" aria-selected="false" tabindex="-1">Settings</button>
+          </div>
+          <div class="tabs-content">
+            <div class="tabs-panel" id="aria-overview-panel" role="tabpanel" aria-labelledby="aria-overview-tab" tabindex="0"><p>The project at a glance.</p></div>
+            <div class="tabs-panel" id="aria-activity-panel" role="tabpanel" aria-labelledby="aria-activity-tab" tabindex="0" hidden><p>Everything that happened this week.</p></div>
+            <div class="tabs-panel" id="aria-settings-panel" role="tabpanel" aria-labelledby="aria-settings-tab" tabindex="0" hidden><p>Name, members and permissions.</p></div>
+          </div>
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-doc" id="other" data-title="Other">
+      <p>Everything below is outside the fixed section vocabulary.</p>
+    </section>
+
+    <section class="pc-demo" id="header-only" data-title="Header Only" data-stage-style="display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap;">
+      <p class="pc-note">No <code>tabs-content</code>. The header is a view switcher, and the page decides what the checked value changes. Icon-only tabs need <code>aria-label</code> on the radio.</p>
+      <template>
+        <fieldset class="pu-tabs tabs-sm">
+          <legend class="tabs-legend">Display format</legend>
+          <div class="tabs-header">
+            <label class="tabs-tab" data-icon-only="true">
+              <input class="tabs-input" type="radio" name="view" value="list" aria-label="List format" checked />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" /></svg>
+            </label>
+            <label class="tabs-tab" data-icon-only="true">
+              <input class="tabs-input" type="radio" name="view" value="grid" aria-label="Grid format" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></svg>
+            </label>
+          </div>
+        </fieldset>
+        <fieldset class="pu-tabs tabs-md">
+          <legend class="tabs-legend">Period</legend>
+          <div class="tabs-header">
+            <label class="tabs-tab">
+              <input class="tabs-input" type="radio" name="period" value="day" checked />
+              <span>Day</span>
+            </label>
+            <label class="tabs-tab">
+              <input class="tabs-input" type="radio" name="period" value="week" />
+              <span>Week</span>
+            </label>
+            <label class="tabs-tab">
+              <input class="tabs-input" type="radio" name="period" value="month" />
+              <span>Month</span>
+            </label>
+          </div>
+        </fieldset>
+      </template>
+    </section>
+
+    <script>
+      window.PC_ACTIONS = {
+        "next-tab": function (stage) {
+          var tabs = Array.prototype.slice.call(stage.querySelectorAll('[role="tab"]'));
+          var current = tabs.findIndex(function (tab) { return tab.getAttribute("aria-selected") === "true"; });
+          var next = (current + 1) % tabs.length;
+          tabs.forEach(function (tab, index) {
+            var selected = index === next;
+            tab.setAttribute("aria-selected", String(selected));
+            tab.tabIndex = selected ? 0 : -1;
+            var panel = stage.querySelector("#" + tab.getAttribute("aria-controls"));
+            if (panel) panel.hidden = !selected;
+          });
+        },
+      };
+    </script>
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

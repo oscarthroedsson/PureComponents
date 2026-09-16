@@ -1,33 +1,81 @@
-/*
-Motion — the shared timing every animation in the library reads.
-
-Not an animation itself. It declares the durations and easings on :root so a
-consumer retunes the whole library's motion in one place instead of hunting
-through twelve component files.
-
-A component still owns its own --<name>-duration; it just defaults to one of
-these instead of inventing a number.
-
-USAGE:
-  @import url("./motion.css");        - from another Animations file
-  <link rel="stylesheet" href="…/Animations/index.css">
-
-ACCESSIBILITY REQUIREMENTS:
-- These are durations, not a policy. Every file that animates still has to
-  answer prefers-reduced-motion itself — a token cannot do it, because what
-  "reduced" means differs per component (drop the travel, keep the fade).
-*/
-
 :root {
-  --motion-duration-instant: 90ms;
-  --motion-duration-fast: 120ms;
-  --motion-duration-medium: 220ms;
-  --motion-duration-slow: 320ms;
+  /* Compatibility aliases for the existing swap primitive. The library has
+   * one duration and easing scale; motion does not maintain a second one. */
+  --motion-duration-instant: var(--duration-instant);
+  --motion-duration-fast: var(--duration-fast);
+  --motion-duration-medium: var(--duration-medium);
+  --motion-duration-slow: var(--duration-slow);
 
-  --motion-ease-out: ease-out;
-  --motion-ease-in: ease-in;
-  --motion-ease-in-out: ease-in-out;
+  --motion-ease-out: var(--ease-out);
+  --motion-ease-in: var(--ease-in);
+  --motion-ease-in-out: var(--ease-standard);
 
   /* Overshoots slightly at the end. What makes an icon land rather than stop. */
   --motion-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pu-motion {
+  /* VARIABLES */
+
+  --motion-progress: 0;
+  --motion-properties: none;
+
+  --motion-duration: var(--duration-medium);
+  --motion-easing: var(--ease-standard);
+  --motion-delay: 0ms;
+  --motion-stagger: 0ms;
+
+  --motion-distance: 1rem;
+  --motion-slide-distance: var(--motion-distance);
+  --motion-expand-step: var(--motion-distance);
+  --motion-expand-reflow: 0;
+  --motion-expand-rest-column-gap: 0px;
+  --motion-expand-rest-row-gap: 0px;
+  --motion-scale-from: 0.85;
+  --motion-press-scale: 0.95;
+
+  /* BASE — the host is the default target. */
+
+  &[data-motion]:where(
+    :not([data-motion-scope]),
+    [data-motion-scope="self"]
+  ) {
+    transition-property: var(--motion-properties);
+    transition-duration: var(--motion-duration);
+    transition-timing-function: var(--motion-easing);
+    transition-delay: var(--motion-delay);
+  }
+
+  /* Direct children inherit --motion-progress and the timing variables. */
+  &[data-motion-scope="children"] > * {
+    transition-property: var(--motion-properties);
+    transition-duration: var(--motion-duration);
+    transition-timing-function: var(--motion-easing);
+    transition-delay:
+      calc(
+        var(--motion-delay) +
+        (sibling-index() - 1) * var(--motion-stagger)
+      );
+  }
+
+  /* TRIGGERS — each only changes the shared progress value. */
+
+  &[data-motion-on~="hover"]:hover,
+  &[data-motion-on~="focus"]:focus-visible,
+  &[data-motion-on~="focus-within"]:focus-within,
+  &[data-motion-on~="active"]:active,
+  &[data-motion-on~="pressed"][aria-pressed="true"],
+  &[data-motion-on~="expanded"]:is([open], [aria-expanded="true"]),
+  &[data-motion-on~="checked"]:is(:checked, :has(:checked)),
+  &[data-motion-on~="state"][data-motion-state="active"] {
+    --motion-progress: 1;
+  }
+
+  /* REDUCED MOTION — the state still changes, without travel. */
+
+  @media (prefers-reduced-motion: reduce) {
+    --motion-duration: 0ms;
+    --motion-delay: 0ms;
+    --motion-stagger: 0ms;
+  }
 }

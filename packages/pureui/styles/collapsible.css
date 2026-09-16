@@ -1,98 +1,24 @@
 @import url("./Animations/swap.css");
 
-/* -----------------Content Board----------------------- */
-/*
-ACCESSIBILITY REQUIREMENTS:
-- The key goes on <details>, and its first child MUST be <summary>. That pair
-  is the disclosure: the browser reports the expanded state, takes focus, and
-  answers Enter and Space without a line of script. A <div> rebuild carries
-  none of it.
-
-- Do NOT put aria-expanded on the <summary>. The browser already reports
-  expanded and collapsed from the [open] attribute, and an explicit
-  aria-expanded overrides that report. The library ships no JavaScript, so
-  such an attribute could never be updated — it would announce "collapsed"
-  while the panel stands open. role="button" is wrong for the same reason:
-  <summary> has its own role already.
-
-- <summary> is focusable and operated by Enter and Space natively. That is the
-  whole keyboard contract the ARIA APG asks of a disclosure. Nothing to add.
-
-- A heading may go inside <summary> — the HTML spec allows one heading element
-  there — and screen reader users navigate a long page by heading. On a page
-  built out of these it earns the markup. The styling below stops the heading
-  from bringing its own scale with it.
-
-- The marker is decoration. Ours is drawn on ::after with no content and never
-  reaches the accessibility tree. One you bring yourself needs
-  aria-hidden="true".
-
-- State is never carried by colour alone: the marker rotates, and the panel
-  itself appears.
-
-- The open and close motion is silenced under prefers-reduced-motion.
-
-USAGE:
-<details class="pu-collapsible md">
-  <summary>How do I create an account?</summary>
-  <p>Click the "Sign up" button in the top right corner.</p>
-</details>
-
-ATTRIBUTES:
-- open                → native. The panel starts open.
-- name="group"        → native. Joins several panels into one exclusive set,
-                        where opening one closes the rest. No JavaScript.
-- data-marker="start" → the marker leads the row instead of closing it
-- data-marker="none"  → we draw no marker at all
-  (The two-icon swap and its motion now come from Animations/swap.css, which
-   this file imports. Put data-motion on the .pu-swap slot, not here.)
-
-SIZE:  sm · md · lg   (md is the default; the key alone is already md)
-SHAPE: sharp · smooth · rounded
-
-PARTS:
-- .collapsible-marker → your own icon, inside the <summary>. Ours stands down
-  on sight, and yours inherits the size, placement, rotation and timing.
-- Add .pu-swap for two icons, one per state. That slot and its motion are
-  Animations/swap.css — see that file. [open] on the <details> is what flips
-  it, with no wiring needed here.
-
-<details class="pu-collapsible md">
-  <summary>
-    A plus that becomes a minus
-    <span class="collapsible-marker pu-swap" aria-hidden="true">
-      <svg class="closed">…plus…</svg>
-      <svg class="open">…minus…</svg>
-    </span>
-  </summary>
-  <p>…</p>
-</details>
-
-NOT HERE:
-Grouping. Several panels reading as one block is Accordion, in accordion.css.
-This file is one panel and knows nothing about its neighbours.
-*/
-/* ----------------------------------------------------- */
-
 .pu-collapsible:where(details) {
   /* VARIABLES */
 
   --collapsible-font-size: var(--font-size-md);
   --collapsible-radius: var(--radius-md);
 
-  --collapsible-background: var(--color-neutral-100);
+  --collapsible-background: var(--color-surface-sunken);
   --collapsible-border-width: 1px;
-  --collapsible-border-color: var(--color-neutral-300);
+  --collapsible-border-color: var(--color-border);
 
   --collapsible-padding-inline: var(--spacing-100);
   --collapsible-padding-block: var(--spacing-75);
   --collapsible-gap: var(--spacing-75);
 
-  --collapsible-summary-color: var(--color-neutral-900);
+  --collapsible-summary-color: var(--color-text);
   --collapsible-summary-weight: 600;
-  --collapsible-summary-hover-background: color-mix(in hsl, transparent, var(--color-neutral-900) 6%);
+  --collapsible-summary-hover-background: color-mix(in oklab, transparent, var(--color-shade) 6%);
 
-  --collapsible-content-color: var(--color-neutral-700);
+  --collapsible-content-color: var(--color-text-muted);
 
   --collapsible-duration: var(--transition-medium);
 
@@ -105,7 +31,7 @@ This file is one panel and knows nothing about its neighbours.
    */
   --collapsible-marker-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   --collapsible-marker-size: 1em;
-  --collapsible-marker-color: var(--color-neutral-500);
+  --collapsible-marker-color: var(--color-text-subtle);
   --collapsible-marker-rotation-open: 180deg;
   --collapsible-marker-duration: var(--collapsible-duration);
 
@@ -246,7 +172,7 @@ This file is one panel and knows nothing about its neighbours.
 
   /* SIZE */
 
-  &.sm {
+  &.collapsible-sm {
     --collapsible-font-size: var(--font-size-sm);
     --collapsible-radius: var(--radius-sm);
     --collapsible-padding-inline: var(--spacing-75);
@@ -254,7 +180,7 @@ This file is one panel and knows nothing about its neighbours.
     --collapsible-gap: var(--spacing-50);
   }
 
-  &.md {
+  &.collapsible-md {
     --collapsible-font-size: var(--font-size-md);
     --collapsible-radius: var(--radius-md);
     --collapsible-padding-inline: var(--spacing-100);
@@ -262,7 +188,7 @@ This file is one panel and knows nothing about its neighbours.
     --collapsible-gap: var(--spacing-75);
   }
 
-  &.lg {
+  &.collapsible-lg {
     --collapsible-font-size: var(--font-size-base);
     --collapsible-radius: var(--radius-lg);
     --collapsible-padding-inline: var(--spacing-125);
@@ -272,15 +198,15 @@ This file is one panel and knows nothing about its neighbours.
 
   /* SHAPE */
 
-  &.sharp {
+  &.collapsible-sharp {
     --collapsible-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.collapsible-smooth {
     --collapsible-radius: var(--radius-md);
   }
 
-  &.rounded {
+  &.collapsible-rounded {
     --collapsible-radius: var(--radius-lg);
   }
 

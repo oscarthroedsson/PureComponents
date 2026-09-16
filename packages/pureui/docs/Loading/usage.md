@@ -1,54 +1,81 @@
-# Loading Component
+# Loading
 
-## Component Overview
+A sweep of light across an element that is waiting. It goes on top of whatever
+component is loading and paints nothing of its own layout, so it works on a
+button, a list, a card, or a plain box.
 
-What a component looks like while it waits. Nothing is painted over: the
-element steps back and a soft diagonal glow travels across it, so the
-reader can still see what is loading.
-
-### When to Use
-
-- A control that is working — a button mid-save, a row of page controls
-  fetching the next page
-- A surface whose content is being refreshed in place
-
-### When NOT to Use
-
-- Content that is not there yet (that is a skeleton, a different thing)
-- A known duration or percentage (use Progress)
-- Blocking the whole page (use Dialog)
-
-## Quick Start
-
-Two things: the class opts in, `aria-busy="true"` is the state.
+## Quick start
 
 ```html
-<button class="btn md loading" aria-busy="true" disabled>Saving…</button>
-
-<ul class="pagination md loading" aria-busy="true">
-  …
-</ul>
+<button class="pu-btn btn-md pu-loading" aria-busy="true" disabled>Saving…</button>
 ```
 
-## Accessibility Requirements
+## The class alone does nothing
 
-- **`aria-busy="true"`** - Required. Turns the effect on and is what
-  assistive technology reads.
-- **`aria-live="polite"`** - On the region whose content will be replaced,
-  so the update is announced when it lands.
-- **`disabled` / `aria-disabled="true"`** - Not loading's to add. CSS
-  cannot stop input; if the control must not be used while it waits, say
-  so on the control itself.
-- **Reduced motion** - The glow holds still. The dim carries the state.
+`.pu-loading` paints only while `aria-busy="true"` is on the same element.
+The attribute is the state; the class is what draws it. Remove the attribute
+when the work finishes and the element returns to normal — no class change
+needed.
 
-## API Reference
+## Classes
 
-- `.loading` - The opt-in. Paints nothing on its own.
-- `[aria-busy="true"]` - The state that turns it on.
-- Variables: `--loading-opacity`, `--loading-glow`, `--loading-angle`,
-  `--loading-duration`
-- Animation: `@keyframes loading-sweep`
+| Class | Does |
+|---|---|
+| `.pu-loading` | The key. Active only alongside `aria-busy="true"`. |
+
+No sizes. The sweep follows the element it is put on.
+
+## Attributes
+
+| Attribute | Does |
+|---|---|
+| `aria-busy="true"` | Turns the effect on and announces the wait. |
+
+## Variables
+
+Set these on the element that carries the class.
+
+| Variable | Default | Controls |
+|---|---|---|
+| `--loading-opacity` | `0.55` | How far the host fades while it waits. |
+| `--loading-glow` | `rgb(255 255 255 / 0.6)` | Colour of the moving band. |
+| `--loading-angle` | `100deg` | Angle the band travels at. |
+| `--loading-duration` | `1.4s` | One pass. |
+
+```html
+<div class="pu-loading" aria-busy="true" style="--loading-duration: 2s">
+```
+
+## Accessibility
+
+- `aria-busy="true"` tells assistive technology the region is updating.
+- Disable controls that must not be pressed while waiting. `aria-busy` alone
+  does not stop a click.
+- Under `prefers-reduced-motion` the band stops moving and holds as a still
+  sheen. The element still reads as busy.
+- The sweep is decoration. `aria-busy` carries the meaning.
 
 ## Examples
 
-See `pages/Loading.html`, or the component CSS file.
+### On a button
+
+```html
+<button class="pu-btn btn-md pu-loading" aria-busy="true" disabled>Saving…</button>
+```
+
+### On a component that has parts
+
+```html
+<ul class="pu-pagination pagination-md pu-loading" aria-busy="true">
+  <li><a href="#1" class="pu-btn btn-ghost">1</a></li>
+  <li><a href="#2" class="pu-btn" aria-current="page">2</a></li>
+</ul>
+```
+
+### On a plain box
+
+```html
+<div class="pu-loading" aria-busy="true">
+  <p>Quarterly report</p>
+</div>
+```

@@ -1,36 +1,87 @@
-# Label — how it is built
+# Label — contributing
 
-## Why it has a key at all
+## File
 
-This styling used to live in `field.css` as `.field > label`, which reached a
-bare element carrying no key of ours. That is the one thing AGENTS.md §4.1
-exists to prevent: a consumer who links our stylesheet and already has
-`<label>` in their markup would find it restyled without asking.
+`packages/pureui/styles/Form/label.css`
 
-The consequence is that `.label` has to be written out in the markup. A
-`<label>` inside a `.field` with no class on it gets nothing — and that is
-correct.
+## Key
 
-## It sets no font-size
+```css
+.pu-label:where(label, p)
+```
 
-Nothing here declares one. The label inherits it, which is what lets a
-`.form.lg` or a `.field.sm` retune the whole group without this file knowing
-that either of them exists. Adding a size class here would break that.
+`<label>` binds a name to a form control. `<p>` supplies visible label text for
+a non-form content group whose accessible name is connected with
+`aria-labelledby`. The class styles both; the markup supplies the relationship.
 
-## The disabled state is not here
+## The two shapes come from `:has()`
 
-A label cannot see the control it names — they are siblings. So the disabled
-case is written by whoever owns both, which is `.field`. See `field.css`.
-`--label-disabled-color` is declared here so `.field` has something to set,
-and so a consumer can change it in one place.
+```css
+&:has(> input:is([type="checkbox"], [type="radio"])) {
+  display: flex;
+  gap: var(--label-option-gap);
+  font-weight: var(--label-option-weight);
+  cursor: pointer;
+}
+```
 
-## It brings no layout
+No class distinguishes a standalone label from one wrapping an option. The
+stylesheet looks at what is inside, so the markup stays honest and there is
+nothing to remember.
 
-No margin, no display, no alignment. The container decides where it sits,
-which is why one file can serve a field, a fieldset, a checkbox row and a
-table cell.
+`> input` and not a descendant, so a label containing a nested field somewhere
+deeper does not flip into option mode.
 
-## Design tokens
+## `align-items: start`
 
-`--color-neutral-900`, `--color-neutral-500`, and `--form-label-color` from
-the channel.
+Not `center`. A long option label keeps its box against the first line rather
+than centring it against the whole wrapped paragraph.
+
+## The option variables are declared inside the `:has()` block
+
+```css
+&:has(> input:is([type="checkbox"], [type="radio"])) {
+  --label-option-gap: 0.6em;
+  --label-option-weight: 400;
+  …
+}
+```
+
+They exist only in the shape that uses them. A consumer overriding them inline
+on the element still wins, because inline beats a block declaration either
+way.
+
+`--label-color`, `--label-weight` and `--label-disabled-color` are at the top
+of the key block, where the contract puts them.
+
+## The disabled colour is declared here, applied elsewhere
+
+`--label-disabled-color` is declared in this file. The rule that uses it lives
+in `field.css`:
+
+```css
+&:has(:disabled) > .pu-label { color: var(--label-disabled-color, …); }
+```
+
+A label cannot see whether its control is disabled when the two are siblings,
+so the field has to do it. The variable stays here because it belongs to the
+label's tuning surface.
+
+## No size section
+
+The label takes its scale by inheritance from the field or the form around it.
+Giving it a size vocabulary of its own would let a label and its control fall
+out of step, which is the one thing the family's cascade exists to prevent.
+
+## Variables
+
+| Variable | Default |
+|---|---|
+| `--label-color` | `var(--form-label-color, var(--color-text))` |
+| `--label-weight` | `600` |
+| `--label-disabled-color` | `var(--color-text-subtle)` |
+| `--label-option-gap` | `0.6em` |
+| `--label-option-weight` | `400` |
+
+`--label-color` reads the channel with a fallback, so a label works outside a
+`<form>`.

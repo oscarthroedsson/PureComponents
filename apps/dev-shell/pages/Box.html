@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Box — Elements</title>
+    <meta name="pc-description" content="Padding and a corner, and nothing else. It sets no display, no width and no colour, so whatever you put it on keeps the layout it already had." />
+
+    <!-- Library CSS under test -->
+    <link rel="stylesheet" href="/pureui/styles/main.css" />
+    <link rel="stylesheet" href="/pureui/styles/Layout/box.css" />
+
+    <!-- Dev shell (not part of the library) -->
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+  <body data-component="Box">
+    <section class="pc-doc" id="api" data-title="API">
+      <h2>API</h2>
+      <table class="pc-doc-table">
+        <thead>
+          <tr><th>Key</th><th>Type</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>.pu-box</code></td>
+            <td><span class="pc-cat pc-cat-key">Key</span></td>
+            <td>The key. Padding on all four sides and a corner. It sets no display, no width, no background and no border.</td>
+          </tr>
+
+          <tr>
+            <td><code>box-none</code></td>
+            <td><span class="pc-cat pc-cat-size">Size</span></td>
+            <td>No padding. Keeps the corner.</td>
+          </tr>
+          <tr>
+            <td><code>box-xs</code></td>
+            <td><span class="pc-cat pc-cat-size">Size</span></td>
+            <td>Extra-tight padding.</td>
+          </tr>
+          <tr>
+            <td><code>box-sm</code></td>
+            <td><span class="pc-cat pc-cat-size">Size</span></td>
+            <td>Tighter padding.</td>
+          </tr>
+          <tr>
+            <td><code>box-md</code></td>
+            <td><span class="pc-cat pc-cat-size">Size</span></td>
+            <td>The default. The base already gives this.</td>
+          </tr>
+          <tr>
+            <td><code>box-lg</code></td>
+            <td><span class="pc-cat pc-cat-size">Size</span></td>
+            <td>Roomier padding.</td>
+          </tr>
+          <tr>
+            <td><code>box-xl</code></td>
+            <td><span class="pc-cat pc-cat-size">Size</span></td>
+            <td>Extra-roomy padding.</td>
+          </tr>
+
+          <tr>
+            <td><code>box-sharp</code></td>
+            <td><span class="pc-cat pc-cat-shape">Shape</span></td>
+            <td>Square corners.</td>
+          </tr>
+          <tr>
+            <td><code>box-smooth</code></td>
+            <td><span class="pc-cat pc-cat-shape">Shape</span></td>
+            <td>The same corner <code>box-md</code> already gives.</td>
+          </tr>
+          <tr>
+            <td><code>box-rounded</code></td>
+            <td><span class="pc-cat pc-cat-shape">Shape</span></td>
+            <td>Larger corner.</td>
+          </tr>
+
+          <tr>
+            <td><code>box-x</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Padding on the inline sides only.</td>
+          </tr>
+          <tr>
+            <td><code>box-y</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Padding on the block sides only.</td>
+          </tr>
+          <tr>
+            <td><code>box-top</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Padding at the top only.</td>
+          </tr>
+          <tr>
+            <td><code>box-bottom</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Padding at the bottom only.</td>
+          </tr>
+          <tr>
+            <td><code>box-start</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Padding at the leading edge only. Left in a left-to-right page.</td>
+          </tr>
+          <tr>
+            <td><code>box-end</code></td>
+            <td><span class="pc-cat pc-cat-layout">Layout</span></td>
+            <td>Padding at the trailing edge only.</td>
+          </tr>
+
+          <tr>
+            <td><code>--box-padding</code></td>
+            <td><span class="pc-cat pc-cat-variables">Variables</span></td>
+            <td>How much padding. Any length, not only the named sizes.</td>
+          </tr>
+          <tr>
+            <td><code>--box-radius</code></td>
+            <td><span class="pc-cat pc-cat-variables">Variables</span></td>
+            <td>The corner.</td>
+          </tr>
+          <tr>
+            <td><code>--box-padding-block-start</code></td>
+            <td><span class="pc-cat pc-cat-variables">Variables</span></td>
+            <td>One side on its own. Same for <code>-block-end</code>, <code>-inline-start</code> and <code>-inline-end</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="pc-demo" id="default" data-title="Default">
+      <p class="pc-note">
+        The key alone is <code>box-md</code> on all four sides. The background here is inline, not the
+        component — a box paints nothing, so give it a surface when you want its corner to show.
+      </p>
+      <template>
+        <div class="pu-box" style="background-color: var(--color-surface-sunken)">
+          Padding on every side.
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display: grid; gap: 0.75rem; justify-content: start;">
+      <p class="pc-note">Six, because <code>box-none</code> is a real answer: no padding, corner kept.</p>
+      <template>
+        <div class="pu-box box-none" style="background-color: var(--color-surface-sunken)">box-none</div>
+        <div class="pu-box box-xs" style="background-color: var(--color-surface-sunken)">box-xs</div>
+        <div class="pu-box box-sm" style="background-color: var(--color-surface-sunken)">box-sm</div>
+        <div class="pu-box box-md" style="background-color: var(--color-surface-sunken)">box-md</div>
+        <div class="pu-box box-lg" style="background-color: var(--color-surface-sunken)">box-lg</div>
+        <div class="pu-box box-xl" style="background-color: var(--color-surface-sunken)">box-xl</div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="variants" data-title="Variants" data-stage-style="display: grid; gap: 0.75rem; justify-content: start;">
+      <p class="pc-note">The corner only shows against a surface, a border, or clipped content.</p>
+      <template>
+        <div class="pu-box box-md box-sharp" style="background-color: var(--color-surface-sunken)">box-sharp</div>
+        <div class="pu-box box-md box-smooth" style="background-color: var(--color-surface-sunken)">box-smooth</div>
+        <div class="pu-box box-md box-rounded" style="background-color: var(--color-surface-sunken)">box-rounded</div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="custom-override" data-title="Custom/Override" data-stage-style="display: grid; gap: 0.75rem; justify-content: start;">
+      <p class="pc-note">
+        The sizes are four points on a scale, not the whole scale. <code>--box-padding</code> takes any
+        length, and the side classes go on working against whatever it is set to.
+      </p>
+      <template>
+        <div class="pu-box" style="--box-padding: 3rem; background-color: var(--color-surface-sunken)">
+          --box-padding: 3rem
+        </div>
+        <div class="pu-box" style="--box-padding: 2rem; --box-radius: 1.5rem; background-color: var(--color-surface-sunken)">
+          --box-padding: 2rem, --box-radius: 1.5rem
+        </div>
+        <div class="pu-box box-x" style="--box-padding: 3rem; background-color: var(--color-surface-sunken)">
+          box-x against --box-padding: 3rem
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-doc" id="other" data-title="Other">
+      <h2>Other</h2>
+      <p>The fixed section vocabulary ends here. What follows is specific to this component.</p>
+    </section>
+
+    <section class="pc-doc" id="related-layout" data-title="Related Layout">
+      <h2>Related layout</h2>
+      <p>
+        A Box can carry the attributes documented by <a href="./Layout.html">Layout</a>, and its direct children can
+        carry the attributes documented by <a href="./Behavior.html">Behavior</a>. Those separate modules own those
+        APIs.
+      </p>
+    </section>
+
+    <section class="pc-demo" id="sides" data-title="Sides" data-stage-style="display: grid; gap: 0.75rem; justify-content: start;">
+      <p class="pc-note">
+        A side class narrows the padding to the sides it names. <code>start</code> and <code>end</code>
+        rather than left and right, so a box means the same thing in a right-to-left page.
+      </p>
+      <template>
+        <div class="pu-box box-lg box-x" style="background-color: var(--color-surface-sunken)">box-x</div>
+        <div class="pu-box box-lg box-y" style="background-color: var(--color-surface-sunken)">box-y</div>
+        <div class="pu-box box-lg box-top" style="background-color: var(--color-surface-sunken)">box-top</div>
+        <div class="pu-box box-lg box-bottom" style="background-color: var(--color-surface-sunken)">box-bottom</div>
+        <div class="pu-box box-lg box-start" style="background-color: var(--color-surface-sunken)">box-start</div>
+        <div class="pu-box box-lg box-end" style="background-color: var(--color-surface-sunken)">box-end</div>
+      </template>
+    </section>
+
+    <section class="pc-demo" id="combining-sides" data-title="Combining Sides" data-stage-style="display: grid; gap: 0.75rem; justify-content: start;">
+      <p class="pc-note">
+        Side classes add up. Two of them give you both, so <code>box-top box-bottom</code> is the same
+        box as <code>box-y</code>, and <code>box-x box-y</code> is the same as neither.
+      </p>
+      <template>
+        <div class="pu-box box-lg box-top box-bottom" style="background-color: var(--color-surface-sunken)">box-top box-bottom</div>
+        <div class="pu-box box-lg box-y" style="background-color: var(--color-surface-sunken)">box-y</div>
+        <div class="pu-box box-lg box-top box-start" style="background-color: var(--color-surface-sunken)">box-top box-start</div>
+        <div class="pu-box box-lg box-x box-y" style="background-color: var(--color-surface-sunken)">box-x box-y</div>
+      </template>
+    </section>
+
+    <section class="pc-doc" id="one-key-per-element" data-title="One Key Per Element">
+      <h2>One key per element</h2>
+      <p>
+        A box goes on its own element. It writes <code>padding</code> and <code>border-radius</code>,
+        and so does almost every component in the library — put both on one element and the two fight
+        over the same properties, with file order deciding the winner.
+      </p>
+      <p>Wrap instead:</p>
+      <pre><code>&lt;div class="pu-box box-lg"&gt;
+  &lt;article class="pu-card card-md"&gt;…&lt;/article&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <script src="./components.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

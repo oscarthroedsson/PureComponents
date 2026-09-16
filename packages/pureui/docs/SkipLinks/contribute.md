@@ -1,30 +1,42 @@
-# Skip Links Component - Contribution Guide
+# Skip link — contributing
 
-## Code Structure
+## File
 
-- **CSS File**: `src/Styles/skip-links.css`
+`packages/pureui/styles/skip-links.css`
 
-## Implementation Details
+## Structure
 
-- Absolute positioning off-screen (`top: -100px`)
-- Visible on focus (`:focus` pseudo-class)
-- High contrast styling
-- Smooth appearance on focus
-- Scroll margin for target elements
+Two keys and one bare rule.
 
-## Design Tokens Used
+`.pu-skip-link:where(a[href])` is the link itself — base, `:focus`, `:hover`,
+and three sizes. The element requirement is real: the whole component is a
+jump to an anchor, so an element that cannot navigate is measurably worse.
 
-- Colors: `--color-primary`, `--color-neutral-100`, `--color-neutral-900`
-- Spacing: `--spacing-25`, `--spacing-50`, `--spacing-75`, `--spacing-100`, `--spacing-125`
-- Typography: `--font-size-sm`, `--font-size-md`, `--font-size-lg`
-- Border radius: `--radius-md`
-- Shadows: `--shadow-md`
-- Z-index: `10000` (hard-coded)
+`.pu-skip-links` is the wrapper for more than one link. It re-styles the
+focused state to `position: relative`, so focused links stay in flow and
+stack instead of landing on top of each other at `top: 0`.
 
-## Accessibility Implementation
+`:target { scroll-margin-top: 2rem }` sits at top level. It applies to the
+destination, not to the link, which is why it cannot live inside either key.
 
-- Hidden until focused
-- High contrast colors
-- Proper focus indicators
-- Semantic link elements
-- Target scroll behavior
+## Hiding without leaving the tab order
+
+The link is moved to `top: -100px` rather than hidden. `display: none` and
+`visibility: hidden` both take an element out of the tab order, which would
+remove the only thing this component exists to provide. `:focus` — not
+`:focus-visible` — brings it back to `top: 0`, because it must appear for
+every keyboard route to it.
+
+## Sizes
+
+Each size sets `font-size` and `padding` directly rather than moving a
+variable. There are no component variables in this file.
+
+## Constraints
+
+- `z-index: 10000` is a raw value, above `--z-index-tooltip`. The link has to
+  clear a sticky header it knows nothing about.
+- `border-radius: 0 0 var(--radius-md) 0` rounds only the corner that is
+  visible when the link sits in the top-left of the viewport.
+- Colours are `--color-primary` and `--color-primary-foreground`, with
+  `--color-primary-hover` on hover.

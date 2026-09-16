@@ -1,48 +1,22 @@
-/* -----------------Content Board----------------------- */
-/* 
-ACCESSIBILITY REQUIREMENTS:
-- Icon-only buttons MUST have aria-label attribute for screen readers
-- Toggle buttons should use aria-pressed="true/false" to indicate state
-- All buttons must be keyboard accessible (native button element)
-- Focus indicators come from main.css. Never draw an outline in this file.
-
-ATTRIBUTES:
-- data-icon-only → If we only want to show an icon (requires aria-label)
-- disabled → Disabled state on a <button>
-- aria-disabled="true" → Disabled state on an <a>, which can never be :disabled
-- aria-pressed → For toggle buttons ("true" | "false")
-- aria-label → Required for icon-only buttons
-- data-intent="destructive" → Destructive action
-
-ELEMENTS:
-.pu-btn is a look, not a single element, but it is not elementless
-either. It goes on a <button> for an action, an <a> for a destination —
-pagination needs both — a <label> for the file-input pattern, and a
-<summary> for a disclosure trigger. On anything else, including a
-<div>, the key does nothing at all: none of those can be focused or
-activated from a keyboard, so a button built from one is broken in a
-way styling would only hide.
-
-The four arrive with different browser defaults, so the base neutralises
-them in one place and everything below describes only the look.
-
-NOT HERE:
-Loading and skeleton are put on top, from loading.css, and are not
-rebuilt per component.
-*/
-/* ----------------------------------------------------- */
-
 .pu-btn:where(button, a, label, summary) {
+  --btn-surface-base: var(--color-primary);
+  --btn-surface: var(--btn-surface-base);
+  --btn-border-color: var(--btn-surface);
+  --btn-color: var(--color-primary-foreground);
+
+  --btn-underline-color: var(--color-primary);
+  --btn-underline-size: 1px;
+  --btn-underline-offset: 0.35em;
+
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: fit-content;
 
-  border: none;
-
-  background-color: var(--color-primary);
-  color: var(--color-neutral-100);
+  background-color: var(--btn-surface);
+  color: var(--btn-color);
+  border: 1px solid var(--btn-border-color);
 
   padding-block: 0.5em;
   padding-inline: 0.75em;
@@ -51,13 +25,6 @@ rebuilt per component.
   white-space: nowrap;
   cursor: pointer;
 
-  /*
-   * The same class has to give the same box whichever element carries
-   * it. A <button> does not inherit type — it arrives with the system
-   * font, so the row would be Arial 13px beside Poppins 14px. An <a>
-   * arrives underlined and in the browser's link colour. Neither is a
-   * decision this component made, so both are cleared here.
-   */
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
@@ -67,6 +34,7 @@ rebuilt per component.
 
   transition:
     background-color 0.5s,
+    border-color 0.5s,
     color 0.2s,
     transform 0.15s ease-in;
 
@@ -78,86 +46,74 @@ rebuilt per component.
     flex-shrink: 0;
   }
 
-  /* SIZE */
+  &.btn-xs {
+    font-size: var(--font-size-xs);
+    border-radius: var(--radius-xs);
+  }
 
-  &.sm {
+  /* SIZE */
+  &.btn-sm {
     font-size: var(--font-size-sm);
     border-radius: var(--radius-sm);
   }
 
-  &.md {
+  &.btn-md {
     font-size: var(--font-size-md);
     border-radius: var(--radius-md);
   }
 
-  &.lg {
+  &.btn-lg {
     font-size: var(--font-size-base);
     border-radius: var(--radius-lg);
   }
 
   /* SHAPE */
 
-  &.sharp {
+  &.btn-sharp {
     border-radius: var(--radius-sharp);
   }
 
-  &.smooth {
+  &.btn-smooth {
     border-radius: var(--radius-md);
   }
 
-  &.rounded {
+  &.btn-rounded {
     border-radius: var(--radius-full);
   }
 
-  /* VARIANTS — each one owns what it changes about the states below */
-
-  &.emphasised {
-    background-color: var(--color-secondary);
-    color: var(--color-neutral-100);
+  &.btn-emphasised {
+    --btn-surface-base: var(--color-secondary);
+    --btn-color: var(--color-secondary-foreground);
   }
 
-  &.secondary {
-    background-color: var(--color-secondary);
-
-    &:hover {
-      background-color: color-mix(in hsl, var(--color-secondary) 100%, var(--color-neutral-900) 1%);
-    }
-
+  &.btn-secondary {
+    --btn-surface-base: var(--color-secondary);
+    --btn-color: var(--color-secondary-foreground);
   }
 
-  &.tertiary {
-    background-color: transparent;
-    color: var(--color-neutral-900);
-
-    &:hover {
-      background-color: transparent;
-      color: var(--color-primary);
-      text-decoration: underline;
-      text-underline-offset: 0.3em;
-    }
-
-
-    /* Nothing to grey out when there was no fill to begin with. */
-    &:is(:disabled, [aria-disabled="true"]) {
-      background-color: transparent;
-    }
+  &.btn-outline {
+    --btn-surface-base: transparent;
+    --btn-border-color: var(--color-primary);
+    --btn-color: var(--color-primary);
   }
 
-  &.ghost {
-    background-color: transparent;
-    color: var(--color-neutral-900);
+  &.btn-tertiary {
+    --btn-surface-base: transparent;
+    --btn-color: var(--color-text);
 
-    &:hover {
-      background-color: var(--color-neutral-100);
-    }
+    text-decoration: underline;
+    text-decoration-color: var(--btn-underline-color);
+    text-decoration-thickness: var(--btn-underline-size);
+    text-underline-offset: var(--btn-underline-offset);
+  }
 
-    &:is(:disabled, [aria-disabled="true"]) {
-      background-color: transparent;
-    }
+  &.btn-ghost {
+    --btn-surface-base: transparent;
+    --btn-color: var(--color-text);
   }
 
   &[data-intent="destructive"] {
-    background-color: var(--color-destructive);
+    --btn-surface-base: var(--color-destructive);
   }
 
   &[data-icon-only="true"] {
@@ -166,25 +122,23 @@ rebuilt per component.
   }
 
   /* ACTIONS — what the pointer and the keyboard do */
-
   &:hover {
-    background-color: color-mix(in hsl, var(--color-primary) 100%, var(--color-neutral-900) 10%);
+    --btn-surface: color-mix(in oklab, var(--btn-surface-base), var(--shade-hover));
+  }
+
+  &[aria-pressed="true"] {
+    --btn-surface: color-mix(in oklab, var(--btn-surface-base), var(--shade-active));
   }
 
   &:active {
     transform: scale(0.95);
   }
 
-
   /* STATE — last, so it settles what the actions above proposed */
 
-  &[aria-pressed="true"] {
-    background-color: color-mix(in hsl, var(--color-primary) 100%, var(--color-neutral-900) 20%);
-  }
-
   &:is(:disabled, [aria-disabled="true"]) {
-    background-color: var(--color-neutral-200);
-    color: var(--color-neutral-400);
+    --btn-surface: var(--color-surface-muted);
+    --btn-color: var(--color-text-subtle);
     cursor: not-allowed;
     pointer-events: none;
     opacity: 0.6;

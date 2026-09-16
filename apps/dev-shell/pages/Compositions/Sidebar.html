@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sidebar — Pure Composition</title>
+
+    <!-- Dev shell only. Composition CSS is loaded inside each lazy preview. -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-page="compositions">
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui">
+        Composition examples are loaded on demand and need JavaScript.
+      </p>
+    </noscript>
+
+    <script src="../components.js"></script>
+    <script src="./compositions.js"></script>
+    <script src="../docs.js"></script>
+    <script src="./Sidebar/examples.js"></script>
+    <script type="module">
+      import "./composition-viewer.js";
+
+      (function () {
+        "use strict";
+
+        var el = window.PCDocs.el;
+
+        var about = el("div", { class: "pc-doc-body" });
+        about.innerHTML =
+          "<p>Every sidebar below is a complete <strong>composition</strong> assembled from PureUI elements. " +
+          "Scroll through the page to compare them. Each example has its own <strong>Example</strong> and " +
+          "<strong>Code</strong> views instead of placing both beside each other.</p>" +
+          "<p>The page itself contains only the example registry. Markup and required stylesheets are loaded " +
+          "when a viewer approaches the viewport and are removed again when it moves far away.</p>";
+
+        var feed = el("div");
+        window.PCCompositionViewer.mount(feed, {
+          name: "Sidebar",
+          examples: window.PC_SIDEBAR_EXAMPLES || [],
+        });
+
+        var adding = el("div", { class: "pc-doc-body" });
+        adding.innerHTML =
+          "<ol>" +
+          "<li>Create an HTML file and its layout CSS in <code>Sidebar/examples/</code>.</li>" +
+          "<li>Add its title, HTML path, PureUI stylesheets and stable preview height to <code>Sidebar/examples.js</code>.</li>" +
+          "<li>Reload this page. The shared viewer supplies lazy loading, isolation, tabs and copying.</li>" +
+          "</ol>";
+
+        window.PCDocs.buildPage({
+          title: "Sidebar",
+          lede: "Scrollable sidebar compositions. Each example loads only when its viewer approaches the screen.",
+          homeHref: "../../index.html",
+          sections: [
+            { id: "about", title: "About", node: about },
+            { id: "examples", title: "Examples", node: feed },
+            { id: "adding-an-example", title: "Add an example", node: adding },
+          ],
+        });
+      })();
+    </script>
+  </body>
+</html>

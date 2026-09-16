@@ -1,33 +1,3 @@
-/* 
-ACCESSIBILITY REQUIREMENTS:
-- Navigation MUST use <nav> element
-- Navigation MUST have aria-label or aria-labelledby
-- Current page link MUST have aria-current="page"
-- Focus indicators come from main.css. Never draw an outline in this file.
-- Keyboard navigation must be supported
-
-USAGE:
-  <nav aria-label="Main navigation">
-    <ul class="pu-nav">
-      <li><a href="/" aria-current="page">Home</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  OR with nested navigation:
-  <nav aria-label="Main navigation">
-    <ul class="pu-nav">
-      <li>
-        <a href="/products" aria-expanded="false">Products</a>
-        <ul class="pu-nav-submenu">
-          <li><a href="/products/item1">Item 1</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-*/
-
 .pu-nav:where(ul, ol) {
   list-style: none;
   padding: 0;
@@ -36,13 +6,13 @@ USAGE:
   gap: var(--spacing-50);
 
   /* Horizontal navigation (default) */
-  &.horizontal {
+  &.nav-horizontal {
     flex-direction: row;
     align-items: center;
   }
 
   /* Vertical navigation */
-  &.vertical {
+  &.nav-vertical {
     flex-direction: column;
     align-items: stretch;
   }
@@ -59,7 +29,7 @@ USAGE:
     display: flex;
     align-items: center;
     padding: var(--spacing-50) var(--spacing-75);
-    color: var(--color-neutral-900);
+    color: var(--color-text);
     text-decoration: none;
     border-radius: var(--radius-sm);
     transition: all 0.2s ease;
@@ -68,14 +38,14 @@ USAGE:
 
     /* Hover state */
     &:hover:not([aria-current="page"]) {
-      background-color: var(--color-neutral-100);
+      background-color: var(--color-surface-sunken);
       color: var(--color-primary);
     }
 
     /* Active/Current page */
     &[aria-current="page"] {
       background-color: var(--color-primary);
-      color: var(--color-neutral-100);
+      color: var(--color-primary-foreground);
       font-weight: 600;
     }
 
@@ -88,7 +58,7 @@ USAGE:
   }
 
   /* Size variants */
-  &.sm {
+  &.nav-sm {
     gap: var(--spacing-25);
 
     & > li > a {
@@ -97,7 +67,7 @@ USAGE:
     }
   }
 
-  &.md {
+  &.nav-md {
     gap: var(--spacing-50);
 
     & > li > a {
@@ -106,7 +76,7 @@ USAGE:
     }
   }
 
-  &.lg {
+  &.nav-lg {
     gap: var(--spacing-75);
 
     & > li > a {
@@ -116,15 +86,15 @@ USAGE:
   }
 
   /* Border radius variants */
-  &.sharp > li > a {
+  &.nav-sharp > li > a {
     border-radius: var(--radius-sharp);
   }
 
-  &.smooth > li > a {
+  &.nav-smooth > li > a {
     border-radius: var(--radius-sm);
   }
 
-  &.rounded > li > a {
+  &.nav-rounded > li > a {
     border-radius: var(--radius-md);
   }
 }
@@ -149,10 +119,10 @@ USAGE:
   & > li > a {
     padding: var(--spacing-25) var(--spacing-50);
     font-size: var(--font-size-sm);
-    color: var(--color-neutral-700);
+    color: var(--color-text-muted);
 
     &:hover {
-      background-color: var(--color-neutral-100);
+      background-color: var(--color-surface-sunken);
       color: var(--color-primary);
     }
   }
@@ -165,7 +135,7 @@ USAGE:
   border: none;
   padding: var(--spacing-50);
   cursor: pointer;
-  color: var(--color-neutral-900);
+  color: var(--color-text);
 
   &:focus-visible {
     border-radius: var(--radius-sm);
@@ -202,7 +172,7 @@ USAGE:
     top: 100%;
     left: 0;
     right: 0;
-    background-color: var(--color-neutral-50);
+    background-color: var(--color-surface);
     flex-direction: column;
     padding: var(--spacing-50);
     box-shadow: var(--shadow-md);

@@ -1,204 +1,168 @@
-# Button Component
+# Button
 
-## Component Overview
+A look, not an element. `.pu-btn` sits on a `<button>` for an action, on an
+`<a>` for a destination, and on a `<label>` or `<summary>` where those are
+what the job calls for. It renders the same box on all four.
 
-The Button component provides accessible, styled buttons for user interactions. It supports multiple variants, sizes, and states while maintaining WCAG 2.1 Level AA accessibility standards.
-
-### When to Use
-
-- Primary actions (submit forms, confirm actions)
-- Secondary actions (cancel, go back)
-- Navigation actions (links styled as buttons)
-- Icon-only actions (with proper aria-label)
-- Toggle actions (with aria-pressed)
-
-### When NOT to Use
-
-- Don't use buttons for navigation links (use `<a>` tags instead)
-- Don't use buttons for decorative purposes
-- Don't use buttons without proper labels (especially icon-only buttons)
-
-## Quick Start
+## Quick start
 
 ```html
-<button class="btn md">Click me</button>
+<button class="pu-btn btn-md">Save</button>
 ```
 
-### Required HTML Structure
+## Choosing the element
+
+| Element | Use for |
+|---|---|
+| `<button>` | Something happens on this page. |
+| `<a href>` | Somewhere else to go. |
+| `<label>` | A control the click should reach. |
+| `<summary>` | The toggle of a `<details>`. |
+
+On anything else nothing applies. Picking the wrong one costs keyboard
+behaviour and the right announcement, which is why the key requires them.
+
+## Classes
+
+| Class | Does |
+|---|---|
+| `.pu-btn` | The key. Nothing below applies without it. |
+| `btn-sm` | Smaller type and radius. |
+| `btn-md` | The default. |
+| `btn-lg` | Larger type and radius. |
+| `btn-sharp` | Square corners. |
+| `btn-smooth` | The same radius `btn-md` already gives. |
+| `btn-rounded` | Fully round ends. |
+| `btn-secondary` | The secondary colour, with its own hover. |
+| `btn-emphasised` | The secondary colour, without a hover of its own. |
+| `btn-outline` | Border and label in the primary colour, no fill. |
+| `btn-tertiary` | No fill, no border. Underlines on hover. |
+| `btn-ghost` | No fill. Takes a muted surface on hover. |
+
+One filled primary button per view is the rule of thumb. Everything else on
+the screen is secondary, outline, tertiary or ghost.
+
+## Attributes
+
+| Attribute | Does |
+|---|---|
+| `data-intent="destructive"` | Paints the button in the destructive colour. |
+| `data-icon-only="true"` | Square box for a button with no visible label. |
+| `aria-pressed="true"` \| `"false"` | Toggle state. |
+| `disabled` | Native, on `<button>`. |
+| `aria-disabled="true"` | For an `<a>`, which can never be `:disabled`. |
+
+## Variables
+
+| Variable | Default | Controls |
+|---|---|---|
+| `--btn-surface` | `var(--color-primary)` | Fill. The border follows it unless a variant says otherwise. |
+| `--btn-border-color` | `var(--btn-surface)` | Border. |
+| `--btn-color` | `var(--color-primary-foreground)` | Label. |
 
 ```html
-<!-- Basic button -->
-<button class="btn md">Button Text</button>
-
-<!-- Icon-only button (REQUIRES aria-label) -->
-<button class="btn md" aria-label="Close dialog">×</button>
-
-<!-- Toggle button -->
-<button class="btn md" aria-pressed="false">Toggle</button>
+<button class="pu-btn btn-md" style="--btn-surface: var(--color-accent)">Custom</button>
 ```
 
-## Accessibility Requirements
+## Icons
 
-### Required Attributes
-
-- **Icon-only buttons**: MUST have `aria-label` attribute
-- **Toggle buttons**: MUST use `aria-pressed="true"` or `aria-pressed="false"`
-- **Disabled buttons**: Use native `disabled` attribute (not `[disabled]`)
-
-### Keyboard Navigation
-
-- **Tab**: Focus the button
-- **Enter/Space**: Activate the button
-- **Focus indicator**: Visible outline with 3:1 contrast ratio
-
-### Screen Reader Support
-
-- Buttons are announced with their text content
-- Icon-only buttons are announced via `aria-label`
-- Toggle buttons announce their pressed state
-- Disabled buttons are announced as disabled
-
-## API Reference
-
-### Base Class
-
-- `.btn` - Base button class (required)
-
-### Size Variants
-
-- `.sm` - Small button (12px font, compact padding)
-- `.md` - Medium button (14px font, standard padding) - **Default**
-- `.lg` - Large button (16px font, larger padding)
-
-### Style Variants
-
-- `.secondary` - Secondary button style (uses secondary color)
-- `.tertiary` - Tertiary button style (transparent background, underlined on hover)
-- `.emphasised` - Emphasized button style
-
-### Border Radius Variants
-
-- `.sharp` - No border radius (0px)
-- `.smooth` - Small border radius (default)
-- `.rounded` - Large border radius (inherited from size)
-
-### State Classes
-
-- `:disabled` - Disabled state (use native `disabled` attribute)
-- `[aria-pressed="true"]` - Toggle button pressed state
-- `[iconOnly]` - Icon-only button variant
-
-## Examples
-
-### Basic Usage
+An `svg`, `img` or `i` that is a direct child is sized to `1em` and will not
+shrink. It scales with the button.
 
 ```html
-<button class="btn md">Primary Action</button>
-<button class="btn md secondary">Secondary Action</button>
-<button class="btn md tertiary">Tertiary Action</button>
-```
-
-### Size Variants
-
-```html
-<button class="btn sm">Small Button</button>
-<button class="btn md">Medium Button</button>
-<button class="btn lg">Large Button</button>
-```
-
-### With Icons
-
-```html
-<button class="btn md">
-  <svg aria-hidden="true" width="16" height="16">...</svg>
+<button class="pu-btn btn-md">
+  <svg aria-hidden="true" viewBox="0 0 24 24">…</svg>
   Save
 </button>
 ```
 
-### Icon-Only Button
+Mark a decorative icon `aria-hidden="true"` so it is not announced twice.
+
+## Accessibility
+
+- A button with no visible label **must** have `aria-label`. Add
+  `data-icon-only="true"` for the square box.
+- A toggle carries `aria-pressed="true"` or `"false"` — not a class.
+- Use native `disabled` on `<button>`. On `<a>` use `aria-disabled="true"`;
+  an anchor cannot be `:disabled`, and both are styled.
+- Focus comes from the library's shared indicator. Do not remove it.
+- `:active` scales the button slightly. Nothing else depends on that motion.
+
+## Examples
+
+### Sizes
 
 ```html
-<button class="btn md" aria-label="Close dialog">
-  <svg aria-hidden="true" width="16" height="16">...</svg>
+<button class="pu-btn btn-sm">Small</button>
+<button class="pu-btn btn-md">Medium</button>
+<button class="pu-btn btn-lg">Large</button>
+```
+
+### Emphasis
+
+```html
+<button class="pu-btn btn-md">Primary</button>
+<button class="pu-btn btn-md btn-secondary">Secondary</button>
+<button class="pu-btn btn-md btn-outline">Outline</button>
+<button class="pu-btn btn-md btn-tertiary">Tertiary</button>
+<button class="pu-btn btn-md btn-ghost">Ghost</button>
+```
+
+### Shape
+
+```html
+<button class="pu-btn btn-md btn-sharp">Sharp</button>
+<button class="pu-btn btn-md btn-smooth">Smooth</button>
+<button class="pu-btn btn-md btn-rounded">Rounded</button>
+```
+
+### Destructive
+
+```html
+<button class="pu-btn btn-md" data-intent="destructive">Delete</button>
+```
+
+### Icon only
+
+```html
+<button class="pu-btn btn-md" data-icon-only="true" aria-label="Close dialog">
+  <svg aria-hidden="true" viewBox="0 0 24 24">…</svg>
 </button>
 ```
 
-### Toggle Button
+### Toggle
 
 ```html
-<button class="btn md" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')">
-  Toggle
-</button>
+<button class="pu-btn btn-md" aria-pressed="false">Bold</button>
 ```
 
-### Disabled State
+### As a link
 
 ```html
-<button class="btn md" disabled>Disabled Button</button>
+<a href="/pricing" class="pu-btn btn-md">See pricing</a>
 ```
 
-### Border Radius Variants
+### Disabled
 
 ```html
-<button class="btn md sharp">Sharp</button>
-<button class="btn md smooth">Smooth</button>
-<button class="btn md rounded">Rounded</button>
+<button class="pu-btn btn-md" disabled>Save</button>
+<a class="pu-btn btn-md" aria-disabled="true">Save</a>
 ```
 
-## Browser Support
+### Loading
 
-### Required CSS Features
+Loading comes from `loading.css`. The button carries no loading styling of
+its own — `aria-busy` is the state, `.pu-loading` is what paints it.
 
-- CSS Custom Properties (CSS Variables)
-- `:focus-visible` pseudo-class
-- `:has()` selector (for icon detection)
-- `color-mix()` function (for hover states)
+```html
+<button class="pu-btn btn-md pu-loading" aria-busy="true" disabled>Saving…</button>
+```
 
-### Browser Compatibility
-
-- Chrome 105+
-- Firefox 121+
-- Safari 15.4+
-- Edge 105+
-
-### Known Issues
-
-- Older browsers without `:focus-visible` support will show focus on mouse clicks
-- `color-mix()` requires modern browser support (fallback uses solid colors)
-
-## Related Components
-
-- **Link** (`a-tag.css`) - For navigation links
-- **Icon Button** - Use Button with `aria-label` for icon-only actions
-- **Form Submit** - Use Button in forms for submit actions
-
-## Common Patterns
-
-### Form Submission
+### In a form
 
 ```html
 <form>
-  <button type="submit" class="btn md">Submit</button>
-  <button type="button" class="btn md tertiary">Cancel</button>
+  <button type="submit" class="pu-btn btn-md">Submit</button>
+  <button type="button" class="pu-btn btn-md btn-tertiary">Cancel</button>
 </form>
-```
-
-### Action Group
-
-```html
-<div style="display: flex; gap: 0.5rem;">
-  <button class="btn md">Save</button>
-  <button class="btn md secondary">Cancel</button>
-  <button class="btn md tertiary">Delete</button>
-</div>
-```
-
-### Loading State
-
-Loading is put on top, from `loading.css`. The button carries no
-loading styling of its own — `aria-busy` is the state, `.loading` is
-what paints it.
-
-```html
-<button class="btn md loading" aria-busy="true" disabled>Loading...</button>
 ```

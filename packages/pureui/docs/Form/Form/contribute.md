@@ -1,34 +1,93 @@
-# Form — how it is built
+# Form — contributing
 
-## The one rule that must not break
+## File
 
-**A leaf must never declare a `--form-*` variable in its base block.**
+`packages/pureui/styles/Form/form.css`
 
-Declared on the element, it shadows the group's value and the whole cascade
-stops working. A leaf reads the channel through `var()`'s second argument:
+## Key
 
 ```css
-.input { --input-font-size: var(--form-font-size, var(--font-size-md)); }
+.pu-form:where(form)
 ```
 
-That is why the `md` defaults appear twice — once in `form.css`, once as each
-leaf's fallback. The duplication is deliberate: it is what lets a bare control
-work with no ancestor.
+## The file is a channel
 
-## Why there are no descendant selectors
+Almost nothing here paints. The block declares thirteen variables and sets
+`display: grid` and a gap. Everything else in the Form family reads those
+variables through `var(--form-*, fallback)`.
 
-Because the channel is inherited, `form.css` never needs to reach into its
-children. It sets variables; they read them. That is also why adding a new
-control to the family costs nothing here — a new leaf reads the same channel
-and lines up for free.
+That is the whole design: **no file in the family uses a descendant selector
+to reach a control.** A form does not style its inputs. It declares the
+values, and each control reads them from wherever it happens to sit.
 
-## What belongs here and what does not
+The consequence is that the nearest declaration wins at any depth for free.
+A `<fieldset>` that rewrites `--form-font-size` retunes its subtree; a
+`.pu-field` that rewrites it retunes one field; an `.pu-input` that carries its
+own size class changes only itself.
 
-`.form` owns spacing between its children and the channel's defaults. It owns
-no box, no border, no focus ring. A field's internals are `field.css`; a
-group's are `fieldset.css`.
+Anything added to this family should follow the same pattern. Reaching a
+control with a descendant selector breaks the cascade and cannot be
+overridden by the markup below it.
 
-## Design tokens
+## The size scale is deliberately tight
 
-`--font-size-*`, `--spacing-*`, `--radius-*`, `--color-neutral-*`,
-`--color-error`. No hardcoded colours — see AGENTS.md §4.4.
+12 / 14 / 16px. A form control is read once and typed into, not read in
+paragraphs.
+
+`form-lg` tops out at `--font-size-base` rather than `--font-size-lg` — 20px
+inputs are a heading wearing a border.
+
+`&.form-md` is an empty block with a comment. The base already is `md`, and the
+block is kept so the size section reads as complete.
+
+## Padding is em
+
+`--form-padding-block: 0.5em` and `--form-padding-inline: 0.75em`, so one pair
+of values serves all three sizes. The same choice `button.css` makes.
+
+## Shape uses the shape tokens
+
+```css
+&.form-rounded { --form-radius: var(--radius-rounded); }
+```
+
+`--radius-rounded` rather than a raw `--radius-lg`, so the whole family follows
+`main.css` if the scale moves.
+
+## Variables
+
+| Variable | Default |
+|---|---|
+| `--form-font-size` | `var(--font-size-md)` |
+| `--form-gap` | `var(--spacing-100)` |
+| `--form-field-gap` | `var(--spacing-25)` |
+| `--form-padding-block` | `0.5em` |
+| `--form-padding-inline` | `0.75em` |
+| `--form-radius` | `var(--radius-md)` |
+| `--form-border-width` | `1px` |
+| `--form-border-color` | `var(--color-border-strong)` |
+| `--form-surface` | `var(--color-surface-sunken)` |
+| `--form-color` | `var(--color-text)` |
+| `--form-label-color` | `var(--color-text)` |
+| `--form-hint-color` | `var(--color-text-subtle)` |
+| `--form-error-color` | `var(--color-error)` |
+
+Every one is read by at least one other file in the family, always with a
+fallback so a control works outside a `<form>`.
+
+## Layout stops at the gap
+
+The form is a grid with one column. Columns, two-up rows and anything else are
+the consumer's own CSS on a wrapper. A layout system inside the form component
+would be a second, competing way to lay out a page.
+
+## The family
+
+```
+form.css      the channel
+fieldset.css  a group that can retune its subtree
+field.css     one control, its label, hint and error
+label.css     the label, and the option-label case
+input/        input.css, file.css
+select.css  textarea.css  checkbox.css  radio.css  range.css
+```

@@ -1,69 +1,152 @@
 # Field
 
-One control and everything that explains it.
+One control with its label, its hint and its error message. The field is what
+holds them together and what reserves room for an error so the page does not
+jump when one appears.
+
+## Quick start
 
 ```html
-<div class="field">
-  <label class="label" for="email">Email</label>
-  <p class="field-hint" id="email-hint">We only use it for receipts.</p>
-  <input class="input" type="email" id="email"
-         aria-describedby="email-hint email-error" aria-invalid="true">
-  <p class="field-error" id="email-error">Enter a valid email address.</p>
+<div class="pu-field">
+  <label class="pu-label" for="email">Email</label>
+  <input class="pu-input" type="email" id="email" name="email" />
+  <p class="pu-field-error">Enter a valid email address.</p>
 </div>
 ```
 
-Every part is optional. A `.field` with nothing but a label and a control has
-to look finished, and it does.
+## Classes
 
-## Order is yours
+| Class | Does |
+|---|---|
+| `.pu-field` | The key. |
+| `.pu-field-hint` | Helper text under the control. |
+| `.pu-field-error` | The error message. Hidden until the control is invalid. |
+| `field-sm` | 12px control. |
+| `field-md` | 14px control. The default. |
+| `field-lg` | 16px control. |
+| `field-sharp` | Square control. |
+| `field-smooth` | The default corner. |
+| `field-rounded` | Fully round control. |
 
-DOM order decides. `label → hint → control → message` is what the demos show,
-but hint-before-control and message-above-control are both defensible — GOV.UK
-puts both above, because a message below the field can sit off screen at high
-magnification. This file sets no `order`, so you choose.
+The size on the field retunes the whole field — the label grows with the
+control. Put the size on the control instead and only the control changes.
 
-## The reserved message row
+## Order matters
 
-`.field-error` always occupies one line, whether or not it is showing. That is
-what stops the page jumping when a message appears. It is hidden with
-`visibility`, never `display` or `opacity`:
+Two orders are supported:
 
-| | reserves the row | out of the a11y tree |
+```
+label → control → error
+label → control → hint → error
+```
+
+The error has to come immediately after the control, or after a hint that
+comes immediately after the control.
+
+## The error appears on its own
+
+`.pu-field-error` is in the layout but invisible until the control is
+actually invalid. Nothing needs toggling.
+
+```html
+<div class="pu-field">
+  <label class="pu-label" for="age">Age</label>
+  <input class="pu-input" type="number" id="age" min="18" required />
+  <p class="pu-field-error">You must be 18 or over.</p>
+</div>
+```
+
+It becomes visible on `:user-invalid` — after the user has interacted, not
+while they are still typing the first character — and on
+`aria-invalid="true"` when your own validation sets it.
+
+Because the message is always in the layout, the field does not change height
+when the error shows and nothing below it moves.
+
+## Reserving room without a message element
+
+For a field that has no `.pu-field-error` but should still not shift when one
+is added by script:
+
+```html
+<div class="pu-field" style="--field-error-reserve: 1.5rem">
+```
+
+A field that has a message element reserves the row through that element
+instead, so the two can never both apply.
+
+## Variables
+
+| Variable | Default | Controls |
 |---|---|---|
-| `display: none` | no | yes |
-| `opacity: 0` | yes | **no** — the error is announced while the field is valid |
-| `visibility: hidden` | yes | yes |
+| `--field-font-size` | the form's scale | Type size. |
+| `--field-gap` | the form's field gap | Space between label, control and message. |
+| `--field-hint-color` | the form's hint colour | Hint text. |
+| `--field-error-color` | the form's error colour | Error text. |
+| `--field-message-font-size` | `max(0.85em, var(--font-size-sm))` | Hint and error size. |
+| `--field-message-line-height` | `1.2` | Hint and error leading. |
+| `--field-error-reserve` | `0px` | Room held for an error when there is no message element. |
 
-The row is revealed by the control's own state, matched two ways:
-
-- `:user-invalid` — native constraint validation. Fires only after the user
-  has interacted, which is why it is used and `:invalid` is not; `:invalid`
-  paints every empty required field red on page load.
-- `[aria-invalid="true"]` — JS validation. Zod, Yup and React Hook Form set no
-  native constraints at all, so this is not a fallback, it is the main path.
+The message size has a readability floor: it never drops below 12px, but it
+still grows with the field at `field-lg`.
 
 ## Accessibility
 
-- The control **must** be named by a real `<label for>`.
-- Hint and message **must** be pointed at with `aria-describedby`, listing both
-  ids where both exist. CSS cannot do this — it is markup you own.
-- While `.field-error` is hidden it is not in the accessibility tree, and CSS
-  revealing it fires no announcement. The error reaches assistive tech through
-  `aria-invalid` on the control. If you need the message spoken, render it
-  into an already-visible `aria-live` region instead.
-- Colour is never the only signal: the message appearing is the signal, and
-  `aria-invalid` is the programmatic one.
+- The label's `for` must match the control's `id`. A wrapping label without
+  `for` works too, but the explicit binding is more robust.
+- Bind a hint to the control with `aria-describedby`:
 
-## Size, shape, variables
+  ```html
+  <input class="pu-input" id="pw" aria-describedby="pw-hint" />
+  <p class="pu-field-hint" id="pw-hint">At least 12 characters.</p>
+  ```
 
-`sm` · `md` (default) · `lg` and `sharp` · `smooth` · `rounded` — a field is a
-**group**, so a class here retunes the control, label, hint and message
-together.
+- Bind an error the same way, and add `aria-invalid="true"` when your own
+  validation fails. `:user-invalid` handles native validation on its own but
+  is not announced.
+- The error text says what to do, not only that something is wrong. "Enter a
+  valid email address", not "Invalid".
+- A disabled control dims its label automatically.
+- Colour is not the only signal — the message is text.
 
-| Variable | Controls |
-|---|---|
-| `--field-gap` | between label, control and message |
-| `--field-message-font-size` | hint and message; floored at `--font-size-sm` |
-| `--field-message-line-height` | tight — these are one-line labels |
-| `--field-error-row` | the height one message row occupies |
-| `--field-error-reserve` | `0` by default. Set it to `var(--field-error-row)` to give fields *without* a message the same height as fields with one. |
+## Examples
+
+### With a hint
+
+```html
+<div class="pu-field">
+  <label class="pu-label" for="pw">Password</label>
+  <input class="pu-input" type="password" id="pw" aria-describedby="pw-hint" />
+  <p class="pu-field-hint" id="pw-hint">At least 12 characters.</p>
+</div>
+```
+
+### Hint and error together
+
+```html
+<div class="pu-field">
+  <label class="pu-label" for="user">Username</label>
+  <input class="pu-input" id="user" required aria-describedby="user-hint" />
+  <p class="pu-field-hint" id="user-hint">Letters and numbers only.</p>
+  <p class="pu-field-error">Choose a username.</p>
+</div>
+```
+
+### Sizes
+
+```html
+<div class="pu-field field-sm">…</div>
+<div class="pu-field field-md">…</div>
+<div class="pu-field field-lg">…</div>
+```
+
+### A checkbox field
+
+```html
+<div class="pu-field">
+  <label class="pu-label">
+    <input class="pu-checkbox" type="checkbox" name="terms" />
+    I accept the terms
+  </label>
+</div>
+```

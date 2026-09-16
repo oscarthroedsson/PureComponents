@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Accordion — PureComponents</title>
+    <title>Accordion — Elements</title>
     <meta name="pc-description" content="Several collapsibles reading as one block. The group is presentation; &quot;one open at a time&quot; is the native name attribute, not a class and not JavaScript." />
 
     <!-- Library CSS under test -->
@@ -51,37 +51,37 @@
               <td>On each <code>&lt;details&gt;</code> inside. From <code>collapsible.css</code>.</td>
             </tr>
             <tr>
-              <td><code>sm</code></td>
+              <td><code>accordion-sm</code></td>
               <td class="pc-doc-dim">Size</td>
               <td>On the group. Handed down to every panel.</td>
             </tr>
             <tr>
-              <td><code>md</code></td>
+              <td><code>accordion-md</code></td>
               <td class="pc-doc-dim">Size</td>
               <td>Default.</td>
             </tr>
             <tr>
-              <td><code>lg</code></td>
+              <td><code>accordion-lg</code></td>
               <td class="pc-doc-dim">Size</td>
               <td></td>
             </tr>
             <tr>
-              <td><code>sharp</code></td>
+              <td><code>accordion-sharp</code></td>
               <td class="pc-doc-dim">Shape</td>
               <td>Square corners.</td>
             </tr>
             <tr>
-              <td><code>smooth</code></td>
+              <td><code>accordion-smooth</code></td>
               <td class="pc-doc-dim">Shape</td>
               <td>Default corner.</td>
             </tr>
             <tr>
-              <td><code>rounded</code></td>
+              <td><code>accordion-rounded</code></td>
               <td class="pc-doc-dim">Shape</td>
               <td>The widest corner.</td>
             </tr>
             <tr>
-              <td><code>separate</code></td>
+              <td><code>accordion-separate</code></td>
               <td class="pc-doc-dim">Variant</td>
               <td>The panels stay apart as individual cards instead of joining into one block.</td>
             </tr>
@@ -140,13 +140,13 @@
             </tr>
             <tr>
               <td><code>--accordion-border-color</code></td>
-              <td><code>var(--color-neutral-300)</code></td>
+              <td><code>var(--color-border)</code></td>
               <td>The same, in colour.</td>
             </tr>
             <tr>
               <td><code>--accordion-gap</code></td>
               <td><code>var(--spacing-50)</code></td>
-              <td>Space between panels. Only <code>separate</code> uses it.</td>
+              <td>Space between panels. Only <code>accordion-separate</code> uses it.</td>
             </tr>
           </tbody>
         </table>
@@ -166,7 +166,7 @@
         the browser, not us.
       </p>
       <template>
-        <div class="pu-accordion md">
+        <div class="pu-accordion accordion-md">
           <details class="pu-collapsible" name="faq" open>
             <summary>How do I create an account?</summary>
             <p>Click the "Sign up" button in the top right corner and follow the steps.</p>
@@ -189,7 +189,7 @@
         the difference — the exclusivity lives entirely in the markup.
       </p>
       <template>
-        <div class="pu-accordion md">
+        <div class="pu-accordion accordion-md">
           <details class="pu-collapsible" open>
             <summary>This one can stay open</summary>
             <p>And so can the others.</p>
@@ -208,11 +208,11 @@
 
     <section class="pc-demo" id="separate" data-title="Separate" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
       <p class="pc-note">
-        <code>separate</code> drops the shared frame and spaces the panels out, so each one is its
+        <code>accordion-separate</code> drops the shared frame and spaces the panels out, so each one is its
         own card. The right look when the questions have nothing to do with each other.
       </p>
       <template>
-        <div class="pu-accordion md separate">
+        <div class="pu-accordion accordion-md accordion-separate">
           <details class="pu-collapsible" name="separate-demo">
             <summary>Shipping</summary>
             <p>Three to five working days.</p>
@@ -232,10 +232,10 @@
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1.5rem;">
       <p class="pc-note">
         The size goes on the group and is handed to every panel, so it is written once instead of
-        once per row. <code>md</code> is the default.
+        once per row. <code>accordion-md</code> is the default.
       </p>
       <template>
-        <div class="pu-accordion sm">
+        <div class="pu-accordion accordion-sm">
           <details class="pu-collapsible" name="size-sm" open>
             <summary>Small</summary>
             <p>Tighter rows.</p>
@@ -245,7 +245,7 @@
             <p>Same size, no class of its own.</p>
           </details>
         </div>
-        <div class="pu-accordion md">
+        <div class="pu-accordion accordion-md">
           <details class="pu-collapsible" name="size-md" open>
             <summary>Medium</summary>
             <p>The default.</p>
@@ -255,7 +255,7 @@
             <p>Same size, no class of its own.</p>
           </details>
         </div>
-        <div class="pu-accordion lg">
+        <div class="pu-accordion accordion-lg">
           <details class="pu-collapsible" name="size-lg" open>
             <summary>Large</summary>
             <p>More room to breathe.</p>
@@ -270,11 +270,11 @@
 
     <section class="pc-demo" id="shape" data-title="Shape" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1.5rem;">
       <p class="pc-note">
-        <code>sharp</code>, <code>smooth</code>, <code>rounded</code>. The corner belongs to the
+        <code>accordion-sharp</code>, <code>accordion-smooth</code>, <code>accordion-rounded</code>. The corner belongs to the
         block; the panels inside are square and let the group clip them.
       </p>
       <template>
-        <div class="pu-accordion md sharp">
+        <div class="pu-accordion accordion-md accordion-sharp">
           <details class="pu-collapsible" name="shape-sharp" open>
             <summary>sharp</summary>
             <p>Square corners.</p>
@@ -284,7 +284,7 @@
             <p>&nbsp;</p>
           </details>
         </div>
-        <div class="pu-accordion md rounded">
+        <div class="pu-accordion accordion-md accordion-rounded">
           <details class="pu-collapsible" name="shape-rounded" open>
             <summary>rounded</summary>
             <p>The widest corner.</p>
@@ -311,7 +311,7 @@
         <code>accordion.css</code> hands down the size.
       </p>
       <template>
-        <div class="pu-accordion md">
+        <div class="pu-accordion accordion-md">
           <details class="pu-collapsible" name="tree" data-marker="start" style="--collapsible-marker-rotation-open: 90deg; --collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E&quot;)">
             <summary>src</summary>
             <p>Styles, Documentation, Utils.</p>
@@ -336,7 +336,7 @@
         APG's accordion pattern.
       </p>
       <template>
-        <div class="pu-accordion md">
+        <div class="pu-accordion accordion-md">
           <details class="pu-collapsible" name="headings" open>
             <summary><h3>Do you ship outside Sweden?</h3></summary>
             <p>Yes, to the EU and the UK.</p>
@@ -364,7 +364,7 @@
         which is the whole keyboard contract the APG asks for.
       </p>
       <template>
-        <div class="pu-accordion md">
+        <div class="pu-accordion accordion-md">
           <details class="pu-collapsible" name="a11y">
             <summary>Tab moves between rows</summary>
             <p>As it does between any two focusable things on the page.</p>

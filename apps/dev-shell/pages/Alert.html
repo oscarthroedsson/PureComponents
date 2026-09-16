@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Alert — PureComponents</title>
+    <title>Alert — Elements</title>
 
     <meta
       name="pc-description"
@@ -35,30 +35,30 @@
       </p>
 
       <template>
-        <div class="pu-alert md" data-intent="success" role="status">
+        <div class="pu-alert alert-md" data-intent="success" role="status">
           <div class="alert-content">
-            <h3 class="alert-title">Changes saved</h3>
+            <p class="alert-title">Changes saved</p>
             <p class="alert-message">Your changes have been saved successfully.</p>
           </div>
         </div>
 
-        <div class="pu-alert md" data-intent="error" role="alert">
+        <div class="pu-alert alert-md" data-intent="error" role="alert">
           <div class="alert-content">
-            <h3 class="alert-title">Something went wrong</h3>
+            <p class="alert-title">Something went wrong</p>
             <p class="alert-message">We could not save your changes. Please try again.</p>
           </div>
         </div>
 
-        <div class="pu-alert md" data-intent="warning" role="alert">
+        <div class="pu-alert alert-md" data-intent="warning" role="alert">
           <div class="alert-content">
-            <h3 class="alert-title">Review required</h3>
+            <p class="alert-title">Review required</p>
             <p class="alert-message">Please review your information before continuing.</p>
           </div>
         </div>
 
-        <div class="pu-alert md" data-intent="info" role="status">
+        <div class="pu-alert alert-md" data-intent="info" role="status">
           <div class="alert-content">
-            <h3 class="alert-title">New features available</h3>
+            <p class="alert-title">New features available</p>
             <p class="alert-message">Several new components have been added to the library.</p>
           </div>
         </div>
@@ -78,7 +78,7 @@
       </p>
 
       <template>
-        <div class="pu-alert md" data-intent="success" role="status">
+        <div class="pu-alert alert-md" data-intent="success" role="status">
           <div class="alert-icon" aria-hidden="true">
             <svg
               viewBox="0 0 24 24"
@@ -94,12 +94,12 @@
           </div>
 
           <div class="alert-content">
-            <h3 class="alert-title">Deployment complete</h3>
+            <p class="alert-title">Deployment complete</p>
             <p class="alert-message">Your application was deployed successfully.</p>
           </div>
         </div>
 
-        <div class="pu-alert md" data-intent="error" role="alert">
+        <div class="pu-alert alert-md" data-intent="error" role="alert">
           <div class="alert-icon" aria-hidden="true">
             <svg
               viewBox="0 0 24 24"
@@ -116,12 +116,12 @@
           </div>
 
           <div class="alert-content">
-            <h3 class="alert-title">Connection failed</h3>
+            <p class="alert-title">Connection failed</p>
             <p class="alert-message">The server could not be reached.</p>
           </div>
         </div>
 
-        <div class="pu-alert md" data-intent="warning" role="alert">
+        <div class="pu-alert alert-md" data-intent="warning" role="alert">
           <div class="alert-icon" aria-hidden="true">
             <svg
               viewBox="0 0 24 24"
@@ -138,12 +138,12 @@
           </div>
 
           <div class="alert-content">
-            <h3 class="alert-title">Unsaved changes</h3>
+            <p class="alert-title">Unsaved changes</p>
             <p class="alert-message">You have changes that have not been saved yet.</p>
           </div>
         </div>
 
-        <div class="pu-alert md" data-intent="info" role="status">
+        <div class="pu-alert alert-md" data-intent="info" role="status">
           <div class="alert-icon" aria-hidden="true">
             <svg
               viewBox="0 0 24 24"
@@ -160,7 +160,7 @@
           </div>
 
           <div class="alert-content">
-            <h3 class="alert-title">Information</h3>
+            <p class="alert-title">Information</p>
             <p class="alert-message">This feature is currently available as a preview.</p>
           </div>
         </div>
@@ -177,27 +177,27 @@
     >
       <p class="pc-note">
         Alerts support soft styling by default, plus
-        <code>outline</code> and <code>filled</code> variants.
+        <code>alert-outline</code> and <code>alert-filled</code> variants.
       </p>
 
       <template>
-        <div class="pu-alert md" data-intent="info" role="status">
+        <div class="pu-alert alert-md" data-intent="info" role="status">
           <div class="alert-content">
-            <h3 class="alert-title">Soft</h3>
+            <p class="alert-title">Soft</p>
             <p class="alert-message">The default alert uses a subtle intent-colored surface.</p>
           </div>
         </div>
 
-        <div class="pu-alert md outline" data-intent="info" role="status">
+        <div class="pu-alert alert-md alert-outline" data-intent="info" role="status">
           <div class="alert-content">
-            <h3 class="alert-title">Outline</h3>
+            <p class="alert-title">Outline</p>
             <p class="alert-message">The outline variant removes the tinted surface.</p>
           </div>
         </div>
 
-        <div class="pu-alert md filled" data-intent="info" role="status">
+        <div class="pu-alert alert-md alert-filled" data-intent="info" role="status">
           <div class="alert-content">
-            <h3 class="alert-title">Filled</h3>
+            <p class="alert-title">Filled</p>
             <p class="alert-message">The filled variant gives the alert stronger visual emphasis.</p>
           </div>
         </div>
@@ -215,7 +215,7 @@
       <p class="pc-note">Alert geometry scales from its typography using relative CSS units.</p>
 
       <template>
-        <div class="pu-alert sm" data-intent="success" role="status">
+        <div class="pu-alert alert-sm" data-intent="success" role="status">
           <div class="alert-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10" />
@@ -224,12 +224,12 @@
           </div>
 
           <div class="alert-content">
-            <h3 class="alert-title">Small alert</h3>
+            <p class="alert-title">Small alert</p>
             <p class="alert-message">Compact messaging for smaller interfaces.</p>
           </div>
         </div>
 
-        <div class="pu-alert md" data-intent="success" role="status">
+        <div class="pu-alert alert-md" data-intent="success" role="status">
           <div class="alert-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10" />
@@ -238,12 +238,12 @@
           </div>
 
           <div class="alert-content">
-            <h3 class="alert-title">Medium alert</h3>
+            <p class="alert-title">Medium alert</p>
             <p class="alert-message">The default size for most interfaces.</p>
           </div>
         </div>
 
-        <div class="pu-alert lg" data-intent="success" role="status">
+        <div class="pu-alert alert-lg" data-intent="success" role="status">
           <div class="alert-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10" />
@@ -252,7 +252,7 @@
           </div>
 
           <div class="alert-content">
-            <h3 class="alert-title">Large alert</h3>
+            <p class="alert-title">Large alert</p>
             <p class="alert-message">Larger typography automatically increases the alert geometry.</p>
           </div>
         </div>
@@ -268,23 +268,23 @@
       data-stage-style="display: flex; flex-direction: column; gap: 1rem;"
     >
       <template>
-        <div class="pu-alert md sharp" data-intent="info" role="status">
+        <div class="pu-alert alert-md alert-sharp" data-intent="info" role="status">
           <div class="alert-content">
-            <h3 class="alert-title">Sharp</h3>
+            <p class="alert-title">Sharp</p>
             <p class="alert-message">No border radius.</p>
           </div>
         </div>
 
-        <div class="pu-alert md smooth" data-intent="info" role="status">
+        <div class="pu-alert alert-md alert-smooth" data-intent="info" role="status">
           <div class="alert-content">
-            <h3 class="alert-title">Smooth</h3>
+            <p class="alert-title">Smooth</p>
             <p class="alert-message">Uses the default component radius.</p>
           </div>
         </div>
 
-        <div class="pu-alert md rounded" data-intent="info" role="status">
+        <div class="pu-alert alert-md alert-rounded" data-intent="info" role="status">
           <div class="alert-content">
-            <h3 class="alert-title">Rounded</h3>
+            <p class="alert-title">Rounded</p>
             <p class="alert-message">Uses a larger border radius.</p>
           </div>
         </div>
@@ -304,7 +304,7 @@
       </p>
 
       <template>
-        <div class="pu-alert md" data-intent="warning" role="alert">
+        <div class="pu-alert alert-md" data-intent="warning" role="alert">
           <div class="alert-icon" aria-hidden="true">
             <svg
               viewBox="0 0 24 24"
@@ -321,14 +321,14 @@
           </div>
 
           <div class="alert-content">
-            <h3 class="alert-title">Unsaved changes</h3>
+            <p class="alert-title">Unsaved changes</p>
             <p class="alert-message">Leaving this page will discard your changes.</p>
           </div>
 
           <div class="alert-actions">
-            <button class="pu-btn ghost sm" type="button">Stay</button>
+            <button class="pu-btn btn-ghost btn-sm" type="button">Stay</button>
 
-            <button class="pu-btn sm" type="button">Leave</button>
+            <button class="pu-btn btn-sm" type="button">Leave</button>
           </div>
         </div>
       </template>
@@ -348,7 +348,7 @@
       </p>
 
       <template>
-        <div class="pu-alert md" data-intent="success" role="status">
+        <div class="pu-alert alert-md" data-intent="success" role="status">
           <div class="alert-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10" />
@@ -357,12 +357,12 @@
           </div>
 
           <div class="alert-content">
-            <h3 class="alert-title">Deployment completed</h3>
+            <p class="alert-title">Deployment completed</p>
             <p class="alert-message">Version 2.4.0 is now live.</p>
           </div>
 
           <div class="alert-actions">
-            <button class="pu-btn ghost sm" type="button" data-icon-only="true" aria-label="Dismiss alert">
+            <button class="pu-btn btn-ghost btn-sm" type="button" data-icon-only="true" aria-label="Dismiss alert">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -391,13 +391,13 @@
       <p class="pc-note">Titles and icons are optional. Simple status messages can contain only alert content.</p>
 
       <template>
-        <div class="pu-alert md" data-intent="success" role="status">
+        <div class="pu-alert alert-md" data-intent="success" role="status">
           <div class="alert-content">
             <p class="alert-message">Your profile has been updated.</p>
           </div>
         </div>
 
-        <div class="pu-alert md" data-intent="info" role="status">
+        <div class="pu-alert alert-md" data-intent="info" role="status">
           <div class="alert-content">
             <p class="alert-message">Maintenance is scheduled for Sunday at 02:00.</p>
           </div>

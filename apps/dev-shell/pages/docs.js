@@ -7,7 +7,7 @@
 
      <section class="pc-demo" data-title="Sizes">
        <template>
-         <button class="pu-btn sm">Small</button>
+         <button class="pu-btn btn-sm">Small</button>
        </template>
      </section>
 
@@ -25,8 +25,7 @@
      --------------------------------------------------------- */
 
   var PREFS = {
-    theme: "auto", // auto | light | dark   — the docs chrome
-    stage: "light", // light | dark   — the preview background
+    mode: "auto", // auto | light | dark   — chrome, stage and library together
     width: "full", // full | 768 | 375      — the preview width
     outline: "off", // off | on             — outline every element
   };
@@ -49,11 +48,22 @@
     }
   }
 
+  /* One mode, not two. The chrome, the stage and the library all follow it, so
+     what the stage shows is what a real page would look like. "auto" resolves
+     against the OS here rather than being handed to the library, because the
+     library pins color-scheme and only reads data-scheme. */
+  function resolvedMode() {
+    if (PREFS.mode !== "auto") return PREFS.mode;
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
   function applyPrefs() {
     var root = document.documentElement;
-    if (PREFS.theme === "auto") root.removeAttribute("data-pc-theme");
-    else root.setAttribute("data-pc-theme", PREFS.theme);
-    root.setAttribute("data-pc-stage", PREFS.stage === "grid" ? "light" : PREFS.stage);
+    var mode = resolvedMode();
+    if (PREFS.mode === "auto") root.removeAttribute("data-pc-theme");
+    else root.setAttribute("data-pc-theme", PREFS.mode);
+    root.setAttribute("data-pc-stage", mode);
+    root.setAttribute("data-scheme", mode);
     root.setAttribute("data-pc-outline", PREFS.outline);
     root.style.setProperty("--pc-stage-width", PREFS.width === "full" ? "none" : PREFS.width + "px");
   }
@@ -107,6 +117,83 @@
   }
 
   /* ---------------------------------------------------------
+     The example sections a component page may have, in the only
+     order they may appear in. See AI/PureUI/doc-page.md.
+
+     Everything a component does that none of these names covers goes
+     under "Other", where the page is free to use its own headings.
+     This check only warns: it is a hint while authoring, never
+     something that stops a page from rendering.
+     --------------------------------------------------------- */
+
+  var SECTION_ORDER = [
+    "API",
+    "Default",
+    "Sizes",
+    "Forms",
+    "Variants",
+    "Emphasis",
+    "States",
+    "Behavior",
+    "Custom/Override",
+    "Other",
+    "Compositions",
+  ];
+
+  function checkSectionOrder(sections) {
+    var seen = [];
+    var afterOther = false;
+    var afterCompositions = false;
+    sections.forEach(function (s) {
+      var title = s.dataset.title || "";
+      if (afterCompositions) return; // Composition names are free below the divider
+      if (afterOther && title !== "Compositions") return; // Other owns its free-form region
+      var at = SECTION_ORDER.indexOf(title);
+      if (at === -1) {
+        console.warn(
+          "[dev-shell] section " +
+            JSON.stringify(title) +
+            " is not one of: " +
+            SECTION_ORDER.join(", ") +
+            ". Put it under Other.",
+        );
+        return;
+      }
+      if (title === "Other") afterOther = true;
+      if (title === "Compositions") afterCompositions = true;
+      if (seen.length && at < seen[seen.length - 1]) {
+        console.warn(
+          "[dev-shell] section " + JSON.stringify(title) + " comes before a section that should precede it.",
+        );
+      }
+      seen.push(at);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     One element pill: <button>, <input type="checkbox">, …
+     linking to that element's page on MDN.
+
+     A spec is either an element name ("button") or an element and its
+     type ("input/checkbox"), which is also how MDN paths are shaped.
+     --------------------------------------------------------- */
+
+  var MDN = "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/";
+
+  function elementPill(spec) {
+    var parts = String(spec).split("/");
+    var label = parts.length > 1 ? "<" + parts[0] + ' type="' + parts[1] + '">' : "<" + parts[0] + ">";
+    return el("a", {
+      class: "pc-cat pc-cat-info pc-element",
+      href: MDN + spec,
+      target: "_blank",
+      rel: "noreferrer",
+      title: label + " on MDN",
+      text: label,
+    });
+  }
+
+  /* ---------------------------------------------------------
      Top bar
      --------------------------------------------------------- */
 
@@ -135,11 +222,26 @@
   function buildTopbar(current, up, homeHref) {
     var bar = el("header", { class: "pc-topbar" });
     var inner = el("div", { class: "pc-topbar-inner" });
+    var root = homeHref.replace(/index\.html$/, "");
+    var currentPage = document.body.dataset.page || "";
+    if (current) currentPage = current.id.indexOf("Compositions/") === 0 ? "compositions" : "elements";
 
-    inner.appendChild(el("a", { class: "pc-home", href: homeHref, text: "◂ PureComponents" }));
+    inner.appendChild(el("a", { class: "pc-home", href: homeHref, text: "Pure" }));
+
+    var sectionNav = el("nav", { class: "pc-section-nav", "aria-label": "Library sections" });
+    [
+      { id: "elements", label: "Elements", href: root + "pages/Elements/index.html" },
+      { id: "compositions", label: "Compositions", href: root + "pages/Compositions/index.html" },
+      { id: "demos", label: "Demos", href: root + "pages/Demos/index.html" },
+    ].forEach(function (item) {
+      var attrs = { href: item.href, text: item.label };
+      if (currentPage === item.id) attrs["aria-current"] = "page";
+      sectionNav.appendChild(el("a", attrs));
+    });
+    inner.appendChild(sectionNav);
 
     if (current) {
-      var select = el("select", { class: "pc-select", "aria-label": "Go to component" });
+      var select = el("select", { class: "pc-select", "aria-label": "Go to library page" });
       var groups = {};
       allEntries().forEach(function (c) {
         (groups[c.group] = groups[c.group] || []).push(c);
@@ -161,14 +263,8 @@
 
     var controls = el("div", { class: "pc-controls" });
     controls.appendChild(
-      segmented("Theme", "theme", [
+      segmented("Mode", "mode", [
         { value: "auto", label: "Auto" },
-        { value: "light", label: "Light" },
-        { value: "dark", label: "Dark" },
-      ]),
-    );
-    controls.appendChild(
-      segmented("Stage", "stage", [
         { value: "light", label: "Light" },
         { value: "dark", label: "Dark" },
       ]),
@@ -196,7 +292,7 @@
      One demo: editable source on the left, live result on the right
      --------------------------------------------------------- */
 
-  function buildDemo(section, index) {
+  function buildDemo(section, index, isComposition) {
     var template = section.querySelector("template");
     if (!template) return null;
 
@@ -208,8 +304,15 @@
     var noteEl = section.querySelector("p.pc-note");
     var note = noteEl ? noteEl.innerHTML : section.dataset.note || "";
 
+    /* Actions belong to the shell, not to the example, so they are authored
+       outside the <template> and lifted into the Result head below. Keeping
+       them out of the template is what stops them leaking into the code pane:
+       the markup a reader copies stays the markup a consumer would write. */
+    var actionsEl = section.querySelector(".pc-demo-actions");
+
     section.textContent = "";
     section.classList.add("pc-demo");
+    if (isComposition) section.classList.add("pc-composition-demo");
 
     section.appendChild(el("h2", {}, [el("a", { class: "pc-anchor", href: "#" + id, text: title })]));
     if (note) {
@@ -219,6 +322,7 @@
     }
 
     var split = el("div", { class: "pc-split" });
+    if (isComposition) split.classList.add("pc-composition-switcher");
 
     /* --- code pane --- */
     var codePane = el("div", { class: "pc-pane pc-pane-code" });
@@ -245,7 +349,8 @@
 
     /* --- preview pane --- */
     var previewPane = el("div", { class: "pc-pane pc-pane-preview" });
-    previewPane.appendChild(el("div", { class: "pc-pane-head" }, ["Result"]));
+    var previewHead = el("div", { class: "pc-pane-head" }, ["Result"]);
+    previewPane.appendChild(previewHead);
     var stage = el("div", { class: "pc-stage" });
     var stageInner = el("div", { class: "pc-stage-inner" });
     /* Per-demo layout hint, e.g. a column stack or the min-height a
@@ -254,8 +359,82 @@
     stage.appendChild(stageInner);
     previewPane.appendChild(stage);
 
-    split.appendChild(codePane);
-    split.appendChild(previewPane);
+    /* Each action names a handler in the page's own PC_ACTIONS map and is
+       called with the live preview root. The stage is re-rendered on every
+       keystroke in the code pane, so the handler is given the element and
+       never holds on to what is inside it. */
+    if (actionsEl) {
+      actionsEl.hidden = false;
+      actionsEl.classList.add("pc-pane-actions");
+      Array.prototype.forEach.call(actionsEl.querySelectorAll("[data-pc-action]"), function (btn) {
+        var name = btn.getAttribute("data-pc-action");
+        btn.addEventListener("click", function () {
+          var fn = (window.PC_ACTIONS || {})[name];
+          if (typeof fn !== "function") {
+            console.warn("[dev-shell] no PC_ACTIONS handler named " + JSON.stringify(name));
+            return;
+          }
+          fn(stageInner, btn);
+        });
+      });
+      previewHead.appendChild(actionsEl);
+    }
+
+    if (isComposition) {
+      var uiPaneId = "pc-" + id + "-ui";
+      var htmlPaneId = "pc-" + id + "-html";
+      var uiTab = el("button", {
+        type: "button",
+        role: "tab",
+        id: uiPaneId + "-tab",
+        "aria-controls": uiPaneId,
+        "aria-selected": "true",
+        text: "UI",
+      });
+      var htmlTab = el("button", {
+        type: "button",
+        role: "tab",
+        id: htmlPaneId + "-tab",
+        "aria-controls": htmlPaneId,
+        "aria-selected": "false",
+        text: "HTML",
+      });
+      var tabs = el("div", { class: "pc-composition-tabs", role: "tablist", "aria-label": title + " views" }, [
+        uiTab,
+        htmlTab,
+      ]);
+
+      previewPane.id = uiPaneId;
+      previewPane.setAttribute("role", "tabpanel");
+      previewPane.setAttribute("aria-labelledby", uiTab.id);
+      codePane.id = htmlPaneId;
+      codePane.setAttribute("role", "tabpanel");
+      codePane.setAttribute("aria-labelledby", htmlTab.id);
+      codePane.hidden = true;
+
+      function showCompositionPane(view) {
+        var showUI = view === "ui";
+        previewPane.hidden = !showUI;
+        codePane.hidden = showUI;
+        uiTab.setAttribute("aria-selected", showUI ? "true" : "false");
+        htmlTab.setAttribute("aria-selected", showUI ? "false" : "true");
+        if (!showUI) requestAnimationFrame(autosize);
+      }
+
+      uiTab.addEventListener("click", function () {
+        showCompositionPane("ui");
+      });
+      htmlTab.addEventListener("click", function () {
+        showCompositionPane("html");
+      });
+
+      split.appendChild(tabs);
+      split.appendChild(previewPane);
+      split.appendChild(codePane);
+    } else {
+      split.appendChild(codePane);
+      split.appendChild(previewPane);
+    }
     section.appendChild(split);
 
     /* Grow to fit the source rather than setting a height outright: the panes
@@ -432,10 +611,20 @@
 
     var up = "../".repeat(entry.file.split("/").length - 1);
     var sections = Array.prototype.slice.call(document.querySelectorAll("section.pc-demo, section.pc-doc"));
+    checkSectionOrder(sections);
 
+    var inCompositions = false;
     var demos = sections
       .map(function (section, i) {
-        return section.classList.contains("pc-doc") ? buildDoc(section, i) : buildDemo(section, i);
+        if (section.classList.contains("pc-doc")) {
+          var doc = buildDoc(section, i);
+          if (section.dataset.title === "Compositions") {
+            inCompositions = true;
+            section.classList.add("pc-compositions-divider");
+          }
+          return doc;
+        }
+        return buildDemo(section, i, inCompositions);
       })
       .filter(function (d) {
         return d;
@@ -446,6 +635,18 @@
     head.appendChild(el("h1", { text: entry.title }));
     var lede = document.querySelector("meta[name='pc-description']");
     if (lede) head.appendChild(el("p", { class: "pc-lede", text: lede.content }));
+
+    /* The native elements the key is allowed to sit on. A component whose
+       key is elementless (a look, not an element) declares none, and the
+       row is left out rather than shown empty. */
+    if (entry.elements && entry.elements.length) {
+      var els = el("div", { class: "pc-elements" });
+      els.appendChild(el("span", { class: "pc-meta-label", text: "Elements" }));
+      entry.elements.forEach(function (spec) {
+        els.appendChild(elementPill(spec));
+      });
+      head.appendChild(els);
+    }
 
     if (entry.css && entry.css.length) {
       var meta = el("div", { class: "pc-meta" });
@@ -546,10 +747,10 @@
     restoreHash();
   }
 
-  function initHome() {
+  function buildElementIndex() {
     var groups = {};
     var order = [];
-    allEntries().forEach(function (c) {
+    (window.PC_COMPONENTS || []).forEach(function (c) {
       if (!groups[c.group]) {
         groups[c.group] = [];
         order.push(c.group);
@@ -557,20 +758,21 @@
       groups[c.group].push(c);
     });
 
-    var wrap = el("div", { class: "pc-home-layout" });
+    var wrap = el("main", { class: "pc-home-layout", id: "pc-content" });
     var hero = el("header", { class: "pc-hero" });
-    hero.appendChild(el("h1", { text: "PureComponents" }));
+    hero.appendChild(el("p", { class: "pc-eyebrow", text: "PureUI library" }));
+    hero.appendChild(el("h1", { text: "Elements" }));
     hero.appendChild(
       el("p", {
         text:
-          "CSS-only component library. Every page shows the component's variants and states " +
+          "CSS-only building blocks. Every page shows the element's variants and states " +
           "with an editable HTML pane next to a live preview.",
       }),
     );
     wrap.appendChild(hero);
 
     var filterWrap = el("div", { class: "pc-filter" });
-    var input = el("input", { type: "search", placeholder: "Filter components…", "aria-label": "Filter components" });
+    var input = el("input", { type: "search", placeholder: "Filter elements…", "aria-label": "Filter elements" });
     var count = el("span", { class: "pc-filter-count" });
     filterWrap.appendChild(input);
     filterWrap.appendChild(count);
@@ -582,7 +784,7 @@
       group.appendChild(el("h2", { text: name }));
       var ul = el("ul");
       groups[name].forEach(function (c) {
-        var li = el("li", {}, [el("a", { href: "pages/" + c.file }, [c.title, el("code", { text: c.id })])]);
+        var li = el("li", {}, [el("a", { href: "../" + c.file }, [c.title, el("code", { text: c.id })])]);
         ul.appendChild(li);
         items.push({ li: li, group: group, text: (c.title + " " + c.id).toLowerCase() });
       });
@@ -590,16 +792,16 @@
       wrap.appendChild(group);
     });
 
-    var empty = el("p", { class: "pc-empty", hidden: "", text: "No component matches that." });
+    var empty = el("p", { class: "pc-empty", hidden: "", text: "No element matches that." });
     wrap.appendChild(empty);
 
     wrap.appendChild(
       el("footer", { class: "pc-footer" }, [
         el("p", {}, [
           "Built for development, not for publishing. ",
-          el("a", { href: "../../../AI/accessibility.md", text: "Accessibility guidelines" }),
+          el("a", { href: "../../../../AI/accessibility.md", text: "Accessibility guidelines" }),
           " · ",
-          el("a", { href: "README.md", text: "README" }),
+          el("a", { href: "../README.md", text: "README" }),
         ]),
       ]),
     );
@@ -618,17 +820,90 @@
         });
       });
       empty.hidden = shown !== 0;
-      count.textContent = shown + " of " + items.length + " components";
+      count.textContent = shown + " of " + items.length + " elements";
     }
 
     input.addEventListener("input", applyFilter);
     applyFilter();
 
     document.body.textContent = "";
-    document.body.appendChild(buildTopbar(null, "", "index.html"));
+    document.body.appendChild(el("a", { class: "pc-skip", href: "#pc-content", text: "Skip to content" }));
+    document.body.appendChild(buildTopbar(null, "", "../../index.html"));
     document.body.appendChild(wrap);
     document.body.classList.add("pc-ready");
     input.focus();
+  }
+
+  function initHome() {
+    var elementCount = (window.PC_COMPONENTS || []).length;
+    var compositionCount = (window.PC_COMPOSITIONS || []).length;
+    var demoCount = (window.PC_DEMOS || []).length;
+
+    var wrap = el("main", { class: "pc-home-layout pc-library-home", id: "pc-content" });
+    var hero = el("header", { class: "pc-hero" });
+    hero.appendChild(el("p", { class: "pc-eyebrow", text: "Development library" }));
+    hero.appendChild(el("h1", { text: "Pure" }));
+    hero.appendChild(
+      el("p", {
+        text: "Explore the individual building blocks, see them assembled into interface parts, or open complete demos.",
+      }),
+    );
+    wrap.appendChild(hero);
+
+    var sections = el("ul", { class: "pc-section-grid" });
+    [
+      {
+        title: "Elements",
+        href: "pages/Elements/index.html",
+        count: elementCount,
+        noun: "element",
+        blurb: "The CSS-only building blocks, with every variant, state and editable example in one place.",
+      },
+      {
+        title: "Compositions",
+        href: "pages/Compositions/index.html",
+        count: compositionCount,
+        noun: "composition",
+        blurb: "Interface parts assembled from elements to test how the library holds together in real layouts.",
+      },
+      {
+        title: "Demos",
+        href: "pages/Demos/index.html",
+        count: demoCount,
+        noun: "demo",
+        blurb: "Complete experiences built to test PureUI and show what it can do beyond isolated examples.",
+      },
+    ].forEach(function (section) {
+      var label = section.count + " " + section.noun + (section.count === 1 ? "" : "s");
+      sections.appendChild(
+        el("li", {}, [
+          el("a", { class: "pc-section-card", href: section.href }, [
+            el("span", { class: "pc-section-card-count", text: label }),
+            el("span", { class: "pc-section-card-title", text: section.title }),
+            el("span", { class: "pc-section-card-blurb", text: section.blurb }),
+            el("span", { class: "pc-section-card-link", text: "Explore " + section.title + " →" }),
+          ]),
+        ]),
+      );
+    });
+    wrap.appendChild(sections);
+
+    wrap.appendChild(
+      el("footer", { class: "pc-footer" }, [
+        el("p", {}, [
+          "Built for development, not for publishing. ",
+          el("a", { href: "../../AI/accessibility.md", text: "Accessibility guidelines" }),
+          " · ",
+          el("a", { href: "pages/README.md", text: "README" }),
+        ]),
+      ]),
+    );
+
+    document.body.textContent = "";
+    document.body.appendChild(el("a", { class: "pc-skip", href: "#pc-content", text: "Skip to content" }));
+    document.body.appendChild(buildTopbar(null, "", "index.html"));
+    document.body.appendChild(wrap);
+    document.body.classList.add("pc-ready");
   }
 
   /* ---------------------------------------------------------
@@ -638,11 +913,18 @@
   function boot() {
     loadPrefs();
     if (document.body.dataset.page === "home") initHome();
+    else if (document.body.dataset.page === "elements") buildElementIndex();
     else if (document.body.dataset.component) initComponentPage();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
+
+  if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
+      if (PREFS.mode === "auto") applyPrefs();
+    });
+  }
 
   window.PCDocs = { el: el, slug: slug, dedent: dedent, buildPage: buildPage, prefs: PREFS };
 })();

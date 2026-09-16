@@ -1,0 +1,140 @@
+.pu-motion {
+  /* VARIANTS — collection effects; they require scope="children". */
+
+  &:where(
+    [data-motion="expand-left"],
+    [data-motion="expand-right"],
+    [data-motion="expand-horizontal-center"],
+    [data-motion="expand-up"],
+    [data-motion="expand-down"],
+    [data-motion="expand-vertical-center"]
+  ) {
+    --motion-properties: translate;
+  }
+
+  /*
+   * Overlay is the backwards-compatible default. Reflow replaces the child
+   * translation with an animated gap on the collection itself, so its real
+   * layout footprint grows from the same resting geometry. The numeric custom
+   * property is also a composition hook for CSS-driven view changes.
+   */
+  &[data-motion-layout="overlay"] {
+    --motion-expand-reflow: 0;
+  }
+
+  &[data-motion-layout="reflow"] {
+    --motion-expand-reflow: 1;
+  }
+
+  &:where(
+    [data-motion="expand-left"],
+    [data-motion="expand-right"],
+    [data-motion="expand-horizontal-center"]
+  )[data-motion-scope="children"] {
+    column-gap:
+      calc(
+        var(--motion-expand-rest-column-gap) +
+        var(--motion-expand-step) *
+        var(--motion-progress) *
+        var(--motion-expand-reflow)
+      );
+
+    transition-property: column-gap;
+    transition-duration: var(--motion-duration);
+    transition-timing-function: var(--motion-easing);
+    transition-delay: var(--motion-delay);
+  }
+
+  &:where(
+    [data-motion="expand-up"],
+    [data-motion="expand-down"],
+    [data-motion="expand-vertical-center"]
+  )[data-motion-scope="children"] {
+    row-gap:
+      calc(
+        var(--motion-expand-rest-row-gap) +
+        var(--motion-expand-step) *
+        var(--motion-progress) *
+        var(--motion-expand-reflow)
+      );
+
+    transition-property: row-gap;
+    transition-duration: var(--motion-duration);
+    transition-timing-function: var(--motion-easing);
+    transition-delay: var(--motion-delay);
+  }
+
+  &[data-motion="expand-right"][data-motion-scope="children"] > * {
+    translate:
+      calc(
+        (sibling-index() - 1) *
+        var(--motion-expand-step) *
+        var(--motion-progress) *
+        (1 - var(--motion-expand-reflow))
+      )
+      0;
+  }
+
+  &[data-motion="expand-left"][data-motion-scope="children"] > * {
+    translate:
+      calc(
+        (sibling-count() - sibling-index()) *
+        var(--motion-expand-step) *
+        var(--motion-progress) *
+        (1 - var(--motion-expand-reflow)) *
+        -1
+      )
+      0;
+  }
+
+  &[data-motion="expand-horizontal-center"][data-motion-scope="children"] > * {
+    translate:
+      calc(
+        (
+          sibling-index() -
+          ((sibling-count() + 1) / 2)
+        ) *
+        var(--motion-expand-step) *
+        var(--motion-progress) *
+        (1 - var(--motion-expand-reflow))
+      )
+      0;
+  }
+
+  &[data-motion="expand-down"][data-motion-scope="children"] > * {
+    translate:
+      0
+      calc(
+        (sibling-index() - 1) *
+        var(--motion-expand-step) *
+        var(--motion-progress) *
+        (1 - var(--motion-expand-reflow))
+      );
+  }
+
+  &[data-motion="expand-up"][data-motion-scope="children"] > * {
+    translate:
+      0
+      calc(
+        (sibling-count() - sibling-index()) *
+        var(--motion-expand-step) *
+        var(--motion-progress) *
+        (1 - var(--motion-expand-reflow)) *
+        -1
+      );
+  }
+
+  &[data-motion="expand-vertical-center"][data-motion-scope="children"] > * {
+    translate:
+      0
+      calc(
+        (
+          sibling-index() -
+          ((sibling-count() + 1) / 2)
+        ) *
+        var(--motion-expand-step) *
+        var(--motion-progress) *
+        (1 - var(--motion-expand-reflow))
+      );
+  }
+}

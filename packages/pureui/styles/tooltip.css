@@ -1,42 +1,3 @@
-/*
-ACCESSIBILITY REQUIREMENTS:
-- Tooltip element MUST have role="tooltip" and an id
-- Trigger MUST have aria-describedby pointing to the tooltip id
-- Tooltip MUST appear on hover and keyboard focus
-- Tooltip MUST NOT contain interactive content
-- Tooltip content should only provide supplemental information
-- Tooltip should remain visible while pointer is over the tooltip
-
-RECOMMENDED USAGE:
-
-<button
-  aria-describedby="save-tooltip"
-  interestfor="save-tooltip"
->
-  Save
-
-  <span
-    id="save-tooltip"
-    class="pu-tooltip"
-    role="tooltip"
-    popover="hint"
-  >
-    Save changes
-  </span>
-</button>
-
-PLACEMENT:
-- top (default)
-- right
-- bottom
-- left
-
-The browser automatically tries fallback positions if
-the preferred placement would overflow the viewport.
-*/
-
-/* TRIGGER */
-
 :where([aria-describedby]:has(> .pu-tooltip)) {
   anchor-scope: --tooltip-anchor;
   anchor-name: --tooltip-anchor;
@@ -63,8 +24,8 @@ the preferred placement would overflow the viewport.
   border: none;
   border-radius: 0.35em;
 
-  background-color: var(--color-neutral-900);
-  color: var(--color-neutral-100);
+  background-color: var(--color-surface-inverted);
+  color: var(--color-text-inverted);
 
   font-size: var(--font-size-sm);
   line-height: 1.4;
@@ -107,15 +68,15 @@ the preferred placement would overflow the viewport.
 
   /* SIZE */
 
-  &.sm {
+  &.tooltip-sm {
     font-size: var(--font-size-xs);
   }
 
-  &.md {
+  &.tooltip-md {
     font-size: var(--font-size-sm);
   }
 
-  &.lg {
+  &.tooltip-lg {
     font-size: var(--font-size-base);
   }
 

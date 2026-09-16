@@ -1,252 +1,187 @@
-# Toast Component
+# Toast
 
-## Component Overview
+A message that appears, says its piece and leaves. Something that stays on the
+page until it is dealt with is an alert.
 
-The Toast component displays temporary, non-blocking notifications to users. Toasts appear at the edge of the screen and automatically dismiss or can be manually closed. They are designed for non-critical messages that don't require immediate user action.
+A toast is an `.pu-alert` inside a placement and motion wrapper, so everything
+about the notice itself comes from the Alert docs.
 
-### When to Use
+## Two pieces
 
-- Success confirmations ("Changes saved")
-- Non-critical error messages
-- Information updates
-- Warning notifications
-- Status updates that don't block user workflow
-
-### When NOT to Use
-
-- Critical errors that require immediate attention (use Alert or Dialog)
-- Actions that require user confirmation (use Dialog)
-- Persistent messages (use Alert)
-- Form validation errors (use inline error messages)
-
-## Quick Start
+**The container** is markup you write once. It owns the placement.
 
 ```html
-<div class="toast success" role="status" aria-live="polite" aria-atomic="true">
-  <div class="toast-content">
-    <p>Your changes have been saved</p>
-  </div>
-  <button class="toast-close" aria-label="Close notification">×</button>
-</div>
+<div class="pu-toast-container" data-placement="top-right"></div>
 ```
 
-### Required HTML Structure
+**The behaviour layer** creates and removes toasts. PureUI does not ship it:
+the package is the styling and the motion. The layer described below lives in
+the dev shell, at `apps/dev-shell/js/toast/`, so the demo can create toasts,
+and it moves to PureComponents when that package starts. Until then, build
+the markup under "Toast is a wrapper around Alert" in `contribute.md` yourself.
 
 ```html
-<div class="toast {variant}" role="status|alert" aria-live="polite|assertive" aria-atomic="true">
-  <div class="toast-content">
-    <p>Toast message</p>
-  </div>
-  <button class="toast-close" aria-label="Close notification">×</button>
-</div>
+<script type="module" src="/js/toast/index.ts"></script>
 ```
 
-## Accessibility Requirements
+```html
+<button class="pu-btn btn-md" onclick="Toast.append({ title: 'Saved', intent: 'success' })">
+  Save
+</button>
+```
 
-### Required Attributes
+## The container
 
-- **`role="status"`** - For polite, non-urgent messages
-- **`role="alert"`** - For urgent, important messages
-- **`aria-live="polite"`** - For status role (announces when screen reader is idle)
-- **`aria-live="assertive"`** - For alert role (interrupts screen reader)
-- **`aria-atomic="true"`** - Ensures complete message is announced
-- **`aria-label`** - Required on close button
+| Attribute | Does |
+|---|---|
+| `data-placement="top-right"` | The default. |
+| `data-placement="top-left"` | |
+| `data-placement="top-center"` | |
+| `data-placement="bottom-left"` | |
+| `data-placement="bottom-center"` | |
+| `data-placement="bottom-right"` | |
+| `data-layout="stacked"` | Toasts pile up and fan out on hover. |
 
-### Keyboard Navigation
+The container covers the whole viewport and ignores the pointer, so it takes
+no space and blocks nothing. Only the toasts themselves take input.
 
-- **Tab**: Focus the close button
-- **Enter/Space**: Close the toast
-- **Escape**: Should close toast (requires JavaScript)
+More than one container is fine. Give each an `id` and pass it to `append`.
 
-### Screen Reader Support
+```html
+<div class="pu-toast-container" data-placement="top-right"></div>
+<div class="pu-toast-container" id="bottom-left" data-placement="bottom-left"></div>
+```
 
-- Toast messages are announced based on `aria-live` setting
-- `aria-atomic="true"` ensures complete message is read
-- Close button is announced with its label
-- Toast position doesn't affect screen reader announcement
+## The API
 
-## API Reference
+Three functions, on `window.Toast` so plain HTML can reach them.
 
-### Base Class
+```js
+Toast.append({ title: "Saved", intent: "success" });
+Toast.append({ message: "Undo?" }, "#bottom-left");
+Toast.remove(id);
+Toast.removeAll();
+```
 
-- `.toast` - Base toast class (required)
+Modules can import the same three:
 
-### Variants
+```js
+import { append, remove, removeAll, toastDefaults } from "/js/toast/index.ts";
+```
 
-- `.success` - Success message (green background)
-- `.error` - Error message (red background)
-- `.warning` - Warning message (yellow background)
-- `.info` - Information message (blue background)
-- Default - Neutral message (dark background)
+### `append(attributes, target?)`
 
-### Size Variants
+| Option | Type | Does |
+|---|---|---|
+| `title` | string | The bold first line. |
+| `message` | string | The body. |
+| `intent` | `info` \| `success` \| `warning` \| `error` | Colour and default role. |
+| `size` | `sm` \| `md` \| `lg` | Passed to the alert. |
+| `role` | `status` \| `alert` | `status` announces politely, `alert` interrupts. |
+| `duration` | number | Milliseconds until it removes itself. `0` keeps it. |
+| `dismissible` | boolean | Adds a close button. |
+| `icon` | boolean | The intent icon. |
+| `swipeable` | boolean | Can be dragged away. |
 
-- `.sm` - Small toast (250-400px width, smaller padding)
-- `.md` - Medium toast (300-500px width, standard padding) - **Default**
-- `.lg` - Large toast (350-600px width, larger padding)
+Anything left out is filled in from `Toast.defaults`.
 
-### Border Radius Variants
+Placement and layout are **not** options. They belong to the container the
+toast is appended to.
 
-- `.sharp` - No border radius (0px)
-- `.smooth` - Small border radius (default)
-- `.rounded` - Large border radius
+It returns an instance:
 
-### Sub-components
+```js
+const t = Toast.append({ message: "Uploading…", duration: 0 });
+t.pause();
+t.resume();
+t.remove();
+```
 
-- `.toast-content` - Content wrapper (required)
-- `.toast-title` - Optional title heading
-- `.toast-close` - Close button (optional)
-- `.toast-container` - Container for multiple toasts
+## Swiping
+
+A swipeable toast is dragged away in the direction its container sits: right
+for a right-hand container, left for a left-hand one. A centred container takes
+a vertical flick too — up from the top, down from the bottom — plus right.
+
+## Variables
+
+Set these on the container.
+
+| Variable | Default | Controls |
+|---|---|---|
+| `--toast-offset` | `1rem` | Distance from the viewport edge. |
+| `--toast-gap` | `0.5rem` | Space between toasts. |
+| `--toast-max-width` | `28rem` | Toast width cap. |
+| `--toast-enter-x` | `1.5rem` | Where a toast comes from, horizontally. |
+| `--toast-enter-y` | `0` | Where it comes from, vertically. |
+| `--toast-exit-x` | `1.5rem` | Where it goes. |
+| `--toast-exit-y` | `0` | Where it goes. |
+
+The enter and exit offsets are set per placement already — a left-hand
+container flies in from the left without being told.
+
+```html
+<div class="pu-toast-container" data-placement="top-right"
+     style="--toast-max-width: 22rem; --toast-offset: 2rem"></div>
+```
+
+## Accessibility
+
+- `role="status"` announces politely and waits for a pause. `role="alert"`
+  interrupts. The behaviour layer derives it from the intent when you do not
+  pass one — `error` and `warning` interrupt, the rest are polite.
+- Do not use `alert` for routine confirmations. An interruption for every
+  saved form is exhausting.
+- Give a toast that matters a long enough `duration`, or `0` so it stays. A
+  message that vanishes in two seconds is unreadable for many people.
+- A dismissible toast's close button carries an `aria-label`.
+- `pause()` and `resume()` are there so a toast under the pointer or under
+  focus does not disappear mid-read. The behaviour layer calls them for you.
+- Swiping is a pointer gesture. Every swipeable toast must also be
+  dismissible, or there is no keyboard route to closing it.
+- Do not put the only copy of important information in a toast. It leaves.
+- Motion is removed under `prefers-reduced-motion`.
 
 ## Examples
 
-### Basic Usage
+### Intents
 
-```html
-<div class="toast success" role="status" aria-live="polite" aria-atomic="true">
-  <div class="toast-content">
-    <p>Your changes have been saved</p>
-  </div>
-</div>
+```js
+Toast.append({ title: "Saved", intent: "success" });
+Toast.append({ title: "Check your details", intent: "warning" });
+Toast.append({ title: "Upload failed", intent: "error" });
 ```
 
-### With Close Button
+### One that stays until dismissed
 
-```html
-<div class="toast success" role="status" aria-live="polite" aria-atomic="true">
-  <div class="toast-content">
-    <p>Your changes have been saved</p>
-  </div>
-  <button class="toast-close" aria-label="Close notification">×</button>
-</div>
+```js
+Toast.append({
+  title: "Connection lost",
+  message: "Retrying in the background.",
+  intent: "error",
+  duration: 0,
+  dismissible: true,
+});
 ```
 
-### With Title
+### Into a specific container
 
-```html
-<div class="toast info" role="status" aria-live="polite" aria-atomic="true">
-  <div class="toast-content">
-    <p class="toast-title">New Message</p>
-    <p>You have a new message from John</p>
-  </div>
-  <button class="toast-close" aria-label="Close notification">×</button>
-</div>
+```js
+Toast.append({ message: "Copied" }, "#bottom-left");
 ```
 
-### Error Toast (Alert Role)
+### A stacked container
 
 ```html
-<div class="toast error" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class="toast-content">
-    <p>Error: Failed to save changes</p>
-  </div>
-  <button class="toast-close" aria-label="Close notification">×</button>
-</div>
+<div class="pu-toast-container" data-placement="bottom-right" data-layout="stacked"></div>
 ```
 
-### Size Variants
+Toasts pile up on top of each other and fan out into a list when the pointer
+or focus reaches them.
 
-```html
-<div class="toast sm success" role="status" aria-live="polite" aria-atomic="true">
-  <div class="toast-content">
-    <p>Small toast</p>
-  </div>
-</div>
+### Changing the defaults
 
-<div class="toast md success" role="status" aria-live="polite" aria-atomic="true">
-  <div class="toast-content">
-    <p>Medium toast</p>
-  </div>
-</div>
-
-<div class="toast lg success" role="status" aria-live="polite" aria-atomic="true">
-  <div class="toast-content">
-    <p>Large toast</p>
-  </div>
-</div>
-```
-
-### Toast Container
-
-```html
-<div class="toast-container">
-  <div class="toast success" role="status" aria-live="polite" aria-atomic="true">
-    <div class="toast-content">
-      <p>First toast</p>
-    </div>
-    <button class="toast-close" aria-label="Close notification">×</button>
-  </div>
-  <div class="toast info" role="status" aria-live="polite" aria-atomic="true">
-    <div class="toast-content">
-      <p>Second toast</p>
-    </div>
-    <button class="toast-close" aria-label="Close notification">×</button>
-  </div>
-</div>
-```
-
-## Browser Support
-
-### Required CSS Features
-
-- CSS Custom Properties (CSS Variables)
-- Flexbox
-- CSS Animations (`@keyframes`)
-- `:focus-visible` pseudo-class
-
-### Browser Compatibility
-
-- Chrome 105+
-- Firefox 121+
-- Safari 15.4+
-- Edge 105+
-
-### Known Issues
-
-- Auto-dismiss requires JavaScript (not included in CSS)
-- Animation performance may vary on older devices
-- Mobile positioning may need adjustment
-
-## Related Components
-
-- **Alert** (`alert.css`) - For persistent, important messages
-- **Dialog** (`dialog.css`) - For blocking, critical messages
-- **Progress** (`progress.css`) - For loading states
-
-## Common Patterns
-
-### Auto-dismiss Toast (JavaScript Required)
-
-```html
-<div class="toast success" role="status" aria-live="polite" aria-atomic="true" data-auto-dismiss="3000">
-  <div class="toast-content">
-    <p>This will auto-dismiss in 3 seconds</p>
-  </div>
-</div>
-```
-
-### Action Toast
-
-```html
-<div class="toast success" role="status" aria-live="polite" aria-atomic="true">
-  <div class="toast-content">
-    <p>File uploaded successfully</p>
-    <button class="btn sm">View</button>
-  </div>
-  <button class="toast-close" aria-label="Close notification">×</button>
-</div>
-```
-
-### Stacking Multiple Toasts
-
-```html
-<div class="toast-container">
-  <!-- Toasts stack vertically with gap -->
-  <div class="toast success" role="status" aria-live="polite" aria-atomic="true">
-    <div class="toast-content"><p>First</p></div>
-  </div>
-  <div class="toast info" role="status" aria-live="polite" aria-atomic="true">
-    <div class="toast-content"><p>Second</p></div>
-  </div>
-</div>
+```js
+Toast.defaults.duration = 6000;
+Toast.defaults.dismissible = true;
 ```

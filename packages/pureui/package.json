@@ -8,11 +8,11 @@
     "**/*.css"
   ],
   "files": [
-    "styles",
-    "js"
+    "index.css",
+    "styles"
   ],
   "exports": {
-    "./styles/*": "./styles/*",
-    "./js/toast": "./js/toast/index.ts"
+    "./index.css": "./index.css",
+    "./styles/*": "./styles/*"
   }
 }

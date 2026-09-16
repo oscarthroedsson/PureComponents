@@ -1,0 +1,311 @@
+/*
+Tabs — a row of choices that look like buttons in a shared box, and an
+optional set of panels that follow the choice.
+
+Two markups, one look:
+
+  Without JavaScript   fieldset.pu-tabs, a label.tabs-tab around a radio.
+                       The radio owns selection and arrow keys. Panels are
+                       matched to tabs by position: tab 2 shows panel 2.
+
+  With JavaScript      div.pu-tabs, button.tabs-tab role="tab" with
+                       aria-selected. The script owns selection, keyboard and
+                       the panels' hidden attribute. PureUI only paints it.
+
+.tabs-content is optional. A header on its own is a view switcher: the choice
+changes something elsewhere on the page, which is the consumer's to wire up.
+*/
+.pu-tabs:where(fieldset, div) {
+  /* VARIABLES */
+
+  --tabs-font-size: var(--font-size-md);
+  --tabs-gap: var(--spacing-50);
+  --tabs-radius: var(--radius-smooth);
+  --tabs-duration: var(--duration-fast);
+
+  --tabs-header-background: var(--color-surface-sunken);
+  --tabs-header-border-color: var(--color-border-subtle);
+  --tabs-header-border-width: 1px;
+  --tabs-header-padding: var(--spacing-25);
+  --tabs-header-gap: var(--spacing-15);
+
+  --tabs-tab-padding-block: var(--spacing-25);
+  --tabs-tab-padding-inline: var(--spacing-75);
+  /* Nested inside the header's padding, so its corner follows the header's
+     instead of looking pinched. */
+  --tabs-tab-radius: max(0px, calc(var(--tabs-radius) - var(--tabs-header-padding)));
+  --tabs-tab-color: var(--color-text-muted);
+  --tabs-tab-border-color: transparent;
+  --tabs-tab-hover-background: color-mix(in oklab, transparent, var(--color-shade) 6%);
+  --tabs-tab-hover-color: var(--color-text);
+  --tabs-tab-selected-background: var(--color-surface-raised);
+  --tabs-tab-selected-border-color: var(--color-border);
+  --tabs-tab-selected-color: var(--color-text);
+  --tabs-tab-selected-shadow: var(--shadow-xs);
+  --tabs-tab-disabled-color: var(--color-text-subtle);
+  --tabs-tab-disabled-opacity: 0.5;
+
+  --tabs-panel-background: var(--color-surface-raised);
+  --tabs-panel-color: var(--color-text);
+  --tabs-panel-border-color: var(--color-border);
+  --tabs-panel-border-width: 1px;
+  --tabs-panel-radius: var(--tabs-radius);
+  --tabs-panel-padding-block: var(--spacing-100);
+  --tabs-panel-padding-inline: var(--spacing-100);
+
+  /* BASE — fieldset's user-agent box is undone here. */
+
+  box-sizing: border-box;
+  min-inline-size: 0;
+
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: var(--tabs-gap);
+
+  font-size: var(--tabs-font-size);
+  line-height: var(--line-height-base);
+
+  /* The legend names the radio group for assistive technology. The visible
+     tabs already say what the group is, so it is not painted. */
+  & > .tabs-legend {
+    position: absolute;
+
+    inline-size: 1px;
+    block-size: 1px;
+
+    margin: -1px;
+    padding: 0;
+    border: 0;
+
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* HEADER — the box the tabs sit in. As wide as its tabs. */
+  & > .tabs-header {
+    box-sizing: border-box;
+    max-inline-size: 100%;
+
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--tabs-header-gap);
+
+    padding: var(--tabs-header-padding);
+
+    background-color: var(--tabs-header-background);
+    border: var(--tabs-header-border-width) solid var(--tabs-header-border-color);
+    border-radius: var(--tabs-radius);
+  }
+
+  /* TAB — a label around a radio, or a button with role="tab". */
+  & > .tabs-header > .tabs-tab:where(label, button) {
+    position: relative;
+
+    box-sizing: border-box;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-50);
+
+    margin: 0;
+    padding-block: var(--tabs-tab-padding-block);
+    padding-inline: var(--tabs-tab-padding-inline);
+
+    background-color: transparent;
+    color: var(--tabs-tab-color);
+    border: var(--tabs-header-border-width) solid var(--tabs-tab-border-color);
+    border-radius: var(--tabs-tab-radius);
+
+    appearance: none;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-control);
+    white-space: nowrap;
+
+    cursor: pointer;
+    user-select: none;
+
+    transition:
+      background-color var(--tabs-duration),
+      border-color var(--tabs-duration),
+      box-shadow var(--tabs-duration),
+      color var(--tabs-duration);
+
+    & > :is(svg, img) {
+      flex-shrink: 0;
+
+      inline-size: 1em;
+      block-size: 1em;
+    }
+
+    /* The icon is 1em against the text's 1.2em line, so a tenth of an em
+       on each side keeps an icon tab as tall as a text tab. */
+    &[data-icon-only="true"] {
+      aspect-ratio: 1;
+      padding: calc(var(--tabs-tab-padding-block) + 0.1em);
+    }
+  }
+
+  /* The radio covers its label and paints nothing. Focus lands on it, so the
+     global outline draws around the visible tab. */
+  & > .tabs-header > .tabs-tab > .tabs-input:where(input[type="radio"]) {
+    appearance: none;
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+
+    inline-size: 100%;
+    block-size: 100%;
+
+    margin: 0;
+    border: 0;
+    border-radius: inherit;
+
+    background: transparent;
+    cursor: inherit;
+  }
+
+  /* CONTENT — the panels. Spans the component's width. */
+  & > .tabs-content {
+    align-self: stretch;
+    min-inline-size: 0;
+  }
+
+  & > .tabs-content > .tabs-panel {
+    box-sizing: border-box;
+
+    padding-block: var(--tabs-panel-padding-block);
+    padding-inline: var(--tabs-panel-padding-inline);
+
+    background-color: var(--tabs-panel-background);
+    color: var(--tabs-panel-color);
+    border: var(--tabs-panel-border-width) solid var(--tabs-panel-border-color);
+    border-radius: var(--tabs-panel-radius);
+
+    & > * {
+      margin-block: 0;
+    }
+
+    & > * + * {
+      margin-block-start: var(--spacing-50);
+    }
+
+    /* The script's way of hiding a panel. The display above would beat the
+       user-agent rule without this. */
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  /* Without JavaScript every panel starts hidden and the checked radio's
+     position picks the one to show. Ten positions are supported. */
+  &:has(> .tabs-header .tabs-input) > .tabs-content > .tabs-panel {
+    display: none;
+  }
+
+  &:has(> .tabs-header > .tabs-tab:nth-child(1 of .tabs-tab) > .tabs-input:checked) > .tabs-content > .tabs-panel:nth-child(1 of .tabs-panel),
+  &:has(> .tabs-header > .tabs-tab:nth-child(2 of .tabs-tab) > .tabs-input:checked) > .tabs-content > .tabs-panel:nth-child(2 of .tabs-panel),
+  &:has(> .tabs-header > .tabs-tab:nth-child(3 of .tabs-tab) > .tabs-input:checked) > .tabs-content > .tabs-panel:nth-child(3 of .tabs-panel),
+  &:has(> .tabs-header > .tabs-tab:nth-child(4 of .tabs-tab) > .tabs-input:checked) > .tabs-content > .tabs-panel:nth-child(4 of .tabs-panel),
+  &:has(> .tabs-header > .tabs-tab:nth-child(5 of .tabs-tab) > .tabs-input:checked) > .tabs-content > .tabs-panel:nth-child(5 of .tabs-panel),
+  &:has(> .tabs-header > .tabs-tab:nth-child(6 of .tabs-tab) > .tabs-input:checked) > .tabs-content > .tabs-panel:nth-child(6 of .tabs-panel),
+  &:has(> .tabs-header > .tabs-tab:nth-child(7 of .tabs-tab) > .tabs-input:checked) > .tabs-content > .tabs-panel:nth-child(7 of .tabs-panel),
+  &:has(> .tabs-header > .tabs-tab:nth-child(8 of .tabs-tab) > .tabs-input:checked) > .tabs-content > .tabs-panel:nth-child(8 of .tabs-panel),
+  &:has(> .tabs-header > .tabs-tab:nth-child(9 of .tabs-tab) > .tabs-input:checked) > .tabs-content > .tabs-panel:nth-child(9 of .tabs-panel),
+  &:has(> .tabs-header > .tabs-tab:nth-child(10 of .tabs-tab) > .tabs-input:checked) > .tabs-content > .tabs-panel:nth-child(10 of .tabs-panel) {
+    display: block;
+  }
+
+  /* SIZE */
+
+  &.tabs-sm {
+    --tabs-font-size: var(--font-size-sm);
+    --tabs-gap: var(--spacing-25);
+    --tabs-radius: var(--radius-sm);
+    --tabs-header-padding: var(--spacing-15);
+    --tabs-tab-padding-block: var(--spacing-15);
+    --tabs-tab-padding-inline: var(--spacing-50);
+    --tabs-panel-padding-block: var(--spacing-75);
+    --tabs-panel-padding-inline: var(--spacing-75);
+  }
+
+  &.tabs-md {
+    /* base is already md */
+  }
+
+  &.tabs-lg {
+    --tabs-font-size: var(--font-size-base);
+    --tabs-gap: var(--spacing-75);
+    --tabs-radius: var(--radius-lg);
+    --tabs-header-padding: var(--spacing-50);
+    --tabs-tab-padding-block: var(--spacing-50);
+    --tabs-tab-padding-inline: var(--spacing-100);
+    --tabs-panel-padding-block: var(--spacing-125);
+    --tabs-panel-padding-inline: var(--spacing-125);
+  }
+
+  /* SHAPE */
+
+  &.tabs-sharp {
+    --tabs-radius: var(--radius-sharp);
+  }
+
+  &.tabs-smooth {
+    --tabs-radius: var(--radius-smooth);
+  }
+
+  /* The header and tabs become pills. A fully round panel would clip its
+     content, so the panel keeps the large corner. */
+  &.tabs-rounded {
+    --tabs-radius: var(--radius-rounded);
+    --tabs-panel-radius: var(--radius-lg);
+  }
+
+  /* STATES */
+
+  & > .tabs-header > .tabs-tab {
+    &:hover {
+      background-color: var(--tabs-tab-hover-background);
+      color: var(--tabs-tab-hover-color);
+    }
+
+    &:is(:has(> .tabs-input:checked), [aria-selected="true"]) {
+      background-color: var(--tabs-tab-selected-background);
+      color: var(--tabs-tab-selected-color);
+      border-color: var(--tabs-tab-selected-border-color);
+      box-shadow: var(--tabs-tab-selected-shadow);
+    }
+
+    &:is(:has(> .tabs-input:disabled), :disabled, [aria-disabled="true"]) {
+      background-color: transparent;
+      color: var(--tabs-tab-disabled-color);
+      opacity: var(--tabs-tab-disabled-opacity);
+      cursor: not-allowed;
+    }
+  }
+
+  @media (forced-colors: active) {
+    --tabs-header-border-color: CanvasText;
+    --tabs-tab-color: CanvasText;
+    --tabs-tab-hover-color: CanvasText;
+    --tabs-tab-selected-border-color: Highlight;
+    --tabs-tab-selected-color: CanvasText;
+    --tabs-tab-disabled-color: GrayText;
+    --tabs-panel-border-color: CanvasText;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    & > .tabs-header > .tabs-tab {
+      transition: none;
+    }
+  }
+}

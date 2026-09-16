@@ -1,0 +1,113 @@
+.pu-box {
+  /* VARIABLES */
+  --box-padding: var(--spacing-100);
+  --box-padding-block-start: var(--box-padding);
+  --box-padding-block-end: var(--box-padding);
+  --box-padding-inline-start: var(--box-padding);
+  --box-padding-inline-end: var(--box-padding);
+
+  --box-radius: var(--radius-md);
+
+  --box-background: transparent;
+
+  /* BASE */
+
+  /*
+   * The padding is inside the declared width. A box that is given a size by
+   * its parent — a grid track, a flex basis — must not grow past it because
+   * of its own padding.
+   */
+  box-sizing: border-box;
+
+  padding-block: var(--box-padding-block-start) var(--box-padding-block-end);
+  padding-inline: var(--box-padding-inline-start) var(--box-padding-inline-end);
+
+  border-radius: var(--box-radius);
+  background-color: var(--box-background);
+
+  /* SIZE */
+
+  &.box-none {
+    --box-padding: var(--spacing-0);
+  }
+
+  &.box-xs {
+    --box-padding: var(--spacing-50);
+  }
+
+  &.box-sm {
+    --box-padding: var(--spacing-75);
+  }
+
+  &.box-md {
+    --box-padding: var(--spacing-100);
+  }
+
+  &.box-lg {
+    --box-padding: var(--spacing-150);
+  }
+
+  &.box-xl {
+    --box-padding: var(--spacing-200);
+  }
+
+  /* SHAPE */
+
+  &.box-sharp {
+    --box-radius: var(--radius-sharp);
+  }
+
+  &.box-smooth {
+    --box-radius: var(--radius-md);
+  }
+
+  &.box-rounded {
+    --box-radius: var(--radius-lg);
+  }
+
+  /* SIDES
+
+     Two rules, in this order, and the order is the whole mechanism.
+
+     The first fires as soon as ANY side class is present and clears all four
+     sides. The individual classes below then hand back only the sides they
+     name. Both weigh (0,2,0), so source order decides and the ones below win.
+
+     Written the other way round — each class zeroing the sides it does not
+     name — two side classes together would cancel each other out and leave a
+     box with no padding at all. This way they compose: box-top and box-bottom
+     is the same as box-y, and box-x with box-y is the same as neither. */
+
+  &:is(.box-x, .box-y, .box-top, .box-bottom, .box-start, .box-end) {
+    --box-padding-block-start: var(--spacing-0);
+    --box-padding-block-end: var(--spacing-0);
+    --box-padding-inline-start: var(--spacing-0);
+    --box-padding-inline-end: var(--spacing-0);
+  }
+
+  &.box-x {
+    --box-padding-inline-start: var(--box-padding);
+    --box-padding-inline-end: var(--box-padding);
+  }
+
+  &.box-y {
+    --box-padding-block-start: var(--box-padding);
+    --box-padding-block-end: var(--box-padding);
+  }
+
+  &.box-top {
+    --box-padding-block-start: var(--box-padding);
+  }
+
+  &.box-bottom {
+    --box-padding-block-end: var(--box-padding);
+  }
+
+  &.box-start {
+    --box-padding-inline-start: var(--box-padding);
+  }
+
+  &.box-end {
+    --box-padding-inline-end: var(--box-padding);
+  }
+}

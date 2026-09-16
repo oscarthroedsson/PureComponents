@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Collapsible — PureComponents</title>
+    <title>Collapsible — Elements</title>
     <meta name="pc-description" content="One panel that opens and closes. The class goes on a native &lt;details&gt;, so the browser supplies the state, the keyboard and the semantics — and we supply the look." />
 
     <!-- Library CSS under test -->
@@ -61,7 +61,7 @@
               </td>
             </tr>
             <tr>
-              <td><code>closed</code></td>
+              <td><code>swap-closed</code></td>
               <td class="pc-doc-dim">Part</td>
               <td>
                 The icon shown while the panel is closed. Only meaningful inside a
@@ -69,37 +69,37 @@
               </td>
             </tr>
             <tr>
-              <td><code>open</code></td>
+              <td><code>swap-open</code></td>
               <td class="pc-doc-dim">Part</td>
-              <td>The icon shown while it is open. Pair it with <code>closed</code>.</td>
+              <td>The icon shown while it is open. Pair it with <code>swap-closed</code>.</td>
             </tr>
             <tr>
-              <td><code>sm</code></td>
+              <td><code>collapsible-sm</code></td>
               <td class="pc-doc-dim">Size</td>
               <td>On the <code>&lt;details&gt;</code>.</td>
             </tr>
             <tr>
-              <td><code>md</code></td>
+              <td><code>collapsible-md</code></td>
               <td class="pc-doc-dim">Size</td>
               <td>Default.</td>
             </tr>
             <tr>
-              <td><code>lg</code></td>
+              <td><code>collapsible-lg</code></td>
               <td class="pc-doc-dim">Size</td>
               <td></td>
             </tr>
             <tr>
-              <td><code>sharp</code></td>
+              <td><code>collapsible-sharp</code></td>
               <td class="pc-doc-dim">Shape</td>
               <td>Square corners.</td>
             </tr>
             <tr>
-              <td><code>smooth</code></td>
+              <td><code>collapsible-smooth</code></td>
               <td class="pc-doc-dim">Shape</td>
               <td>Default corner, whatever the size gives.</td>
             </tr>
             <tr>
-              <td><code>rounded</code></td>
+              <td><code>collapsible-rounded</code></td>
               <td class="pc-doc-dim">Shape</td>
               <td>The widest corner.</td>
             </tr>
@@ -173,21 +173,21 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>sm</code></td>
+              <td><code>collapsible-sm</code></td>
               <td><code>--font-size-sm</code></td>
               <td><code>--spacing-75</code></td>
               <td><code>--spacing-50</code></td>
               <td><code>--radius-sm</code></td>
             </tr>
             <tr>
-              <td><code>md</code></td>
+              <td><code>collapsible-md</code></td>
               <td><code>--font-size-md</code></td>
               <td><code>--spacing-100</code></td>
               <td><code>--spacing-75</code></td>
               <td><code>--radius-md</code></td>
             </tr>
             <tr>
-              <td><code>lg</code></td>
+              <td><code>collapsible-lg</code></td>
               <td><code>--font-size-base</code></td>
               <td><code>--spacing-125</code></td>
               <td><code>--spacing-100</code></td>
@@ -220,7 +220,7 @@
             </tr>
             <tr>
               <td><code>--collapsible-background</code></td>
-              <td><code>var(--color-neutral-100)</code></td>
+              <td><code>var(--color-surface-sunken)</code></td>
               <td>Behind the whole panel, summary included.</td>
             </tr>
             <tr>
@@ -230,7 +230,7 @@
             </tr>
             <tr>
               <td><code>--collapsible-border-color</code></td>
-              <td><code>var(--color-neutral-300)</code></td>
+              <td><code>var(--color-border)</code></td>
               <td>The frame.</td>
             </tr>
             <tr>
@@ -250,7 +250,7 @@
             </tr>
             <tr>
               <td><code>--collapsible-summary-color</code></td>
-              <td><code>var(--color-neutral-900)</code></td>
+              <td><code>var(--color-text)</code></td>
               <td>The title.</td>
             </tr>
             <tr>
@@ -265,7 +265,7 @@
             </tr>
             <tr>
               <td><code>--collapsible-content-color</code></td>
-              <td><code>var(--color-neutral-700)</code></td>
+              <td><code>var(--color-text-muted)</code></td>
               <td>The panel's text. 8.9:1 on the default background.</td>
             </tr>
             <tr>
@@ -288,7 +288,7 @@
             </tr>
             <tr>
               <td><code>--collapsible-marker-color</code></td>
-              <td><code>var(--color-neutral-500)</code></td>
+              <td><code>var(--color-text-subtle)</code></td>
               <td>Decoration, so it may be lighter than the text floor.</td>
             </tr>
             <tr>
@@ -360,7 +360,7 @@
         rest is the panel. Click it, or tab to it and press Enter.
       </p>
       <template>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary>How do I create an account?</summary>
           <p>Click the "Sign up" button in the top right corner and follow the steps.</p>
         </details>
@@ -373,7 +373,7 @@
         showing; the browser takes it from there.
       </p>
       <template>
-        <details class="pu-collapsible md" open>
+        <details class="pu-collapsible collapsible-md" open>
           <summary>Where does the state live?</summary>
           <p>
             In the <code>open</code> attribute, which the browser writes and removes as you click.
@@ -385,20 +385,20 @@
 
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
       <p class="pc-note">
-        <code>sm</code>, <code>md</code>, <code>lg</code>. <code>md</code> is what the key class
+        <code>collapsible-sm</code>, <code>collapsible-md</code>, <code>collapsible-lg</code>. <code>collapsible-md</code> is what the key class
         alone gives you — the class is there to say it out loud. The marker is sized in
         <code>em</code>, so it follows.
       </p>
       <template>
-        <details class="pu-collapsible sm">
+        <details class="pu-collapsible collapsible-sm">
           <summary>Small</summary>
           <p>Tighter padding, smaller type, smaller corner.</p>
         </details>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary>Medium</summary>
           <p>The default.</p>
         </details>
-        <details class="pu-collapsible lg">
+        <details class="pu-collapsible collapsible-lg">
           <summary>Large</summary>
           <p>More room to breathe.</p>
         </details>
@@ -407,19 +407,19 @@
 
     <section class="pc-demo" id="shape" data-title="Shape" data-stage-style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem;">
       <p class="pc-note">
-        <code>sharp</code>, <code>smooth</code>, <code>rounded</code> — the same three words as
+        <code>collapsible-sharp</code>, <code>collapsible-smooth</code>, <code>collapsible-rounded</code> — the same three words as
         everywhere else in the library.
       </p>
       <template>
-        <details class="pu-collapsible md sharp" open>
+        <details class="pu-collapsible collapsible-md collapsible-sharp" open>
           <summary>sharp</summary>
           <p>Square corners.</p>
         </details>
-        <details class="pu-collapsible md smooth" open>
+        <details class="pu-collapsible collapsible-md collapsible-smooth" open>
           <summary>smooth</summary>
           <p>The default corner.</p>
         </details>
-        <details class="pu-collapsible md rounded" open>
+        <details class="pu-collapsible collapsible-md collapsible-rounded" open>
           <summary>rounded</summary>
           <p>The widest corner.</p>
         </details>
@@ -433,15 +433,15 @@
         drop it entirely with <code>data-marker="none"</code>.
       </p>
       <template>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary>Default — the marker closes the row</summary>
           <p>The convention for FAQs and content panels.</p>
         </details>
-        <details class="pu-collapsible md" data-marker="start">
+        <details class="pu-collapsible collapsible-md" data-marker="start">
           <summary>data-marker="start"</summary>
           <p>The marker leads. This is the file-tree reading.</p>
         </details>
-        <details class="pu-collapsible md" data-marker="none">
+        <details class="pu-collapsible collapsible-md" data-marker="none">
           <summary>data-marker="none"</summary>
           <p>No marker at all. The panel still opens and closes.</p>
         </details>
@@ -457,7 +457,7 @@
         announced.
       </p>
       <template>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary>
             One icon, so it turns
             <svg class="collapsible-marker" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
@@ -485,12 +485,12 @@
         The <code>aria-hidden</code> goes on the wrapper; both icons are decoration.
       </p>
       <template>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary>
             A plus that becomes a minus
             <span class="collapsible-marker pu-swap" aria-hidden="true">
-              <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
-              <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
+              <svg class="swap-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              <svg class="swap-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
             </span>
           </summary>
           <p>
@@ -508,42 +508,42 @@
         four values only reassign two variables between them.
       </p>
       <template>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary>
             scale — the default
             <span class="collapsible-marker pu-swap" aria-hidden="true">
-              <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
-              <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
+              <svg class="swap-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              <svg class="swap-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
             </span>
           </summary>
           <p>Out fast and small, in slower with a little overshoot.</p>
         </details>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary>
             rotate
             <span class="collapsible-marker pu-swap" data-motion="rotate" aria-hidden="true">
-              <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
-              <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
+              <svg class="swap-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              <svg class="swap-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
             </span>
           </summary>
           <p>The pair turns through the swap. Best when the shapes have a direction.</p>
         </details>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary>
             fade
             <span class="collapsible-marker pu-swap" data-motion="fade" aria-hidden="true">
-              <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
-              <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
+              <svg class="swap-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              <svg class="swap-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
             </span>
           </summary>
           <p>Opacity only. The quietest of the four.</p>
         </details>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary>
             none
             <span class="collapsible-marker pu-swap" data-motion="none" aria-hidden="true">
-              <svg class="closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
-              <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
+              <svg class="swap-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+              <svg class="swap-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14" /></svg>
             </span>
           </summary>
           <p>A hard cut. This is also what every value above becomes under <code>prefers-reduced-motion</code>.</p>
@@ -559,11 +559,11 @@
         file.
       </p>
       <template>
-        <details class="pu-collapsible md" style="--collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M12 16 6 10h12z'/%3E%3C/svg%3E&quot;)">
+        <details class="pu-collapsible collapsible-md" style="--collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M12 16 6 10h12z'/%3E%3C/svg%3E&quot;)">
           <summary>A solid triangle</summary>
           <p>Same rotation, same size, different shape.</p>
         </details>
-        <details class="pu-collapsible md" data-marker="start" style="--collapsible-marker-rotation-open: 90deg; --collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E&quot;)">
+        <details class="pu-collapsible collapsible-md" data-marker="start" style="--collapsible-marker-rotation-open: 90deg; --collapsible-marker-icon: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E&quot;)">
           <summary>Right-pointing, turning 90°</summary>
           <p>The file-tree reading, assembled from two variables and one attribute.</p>
         </details>
@@ -577,7 +577,7 @@
         the markup. The heading keeps its rank and gives up its scale.
       </p>
       <template>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary><h3>Shipping and returns</h3></summary>
           <p>Delivery takes three to five working days. Returns are free within 30 days.</p>
         </details>
@@ -590,7 +590,7 @@
         inline; in a real project it would sit in your own stylesheet.
       </p>
       <template>
-        <details class="pu-collapsible md" open style="--collapsible-background: var(--color-neutral-200); --collapsible-border-color: var(--color-primary); --collapsible-marker-color: var(--color-primary)">
+        <details class="pu-collapsible collapsible-md" open style="--collapsible-background: var(--color-surface-muted); --collapsible-border-color: var(--color-primary); --collapsible-marker-color: var(--color-primary)">
           <summary>A panel that carries an intent</summary>
           <p>Background, border and marker, all reassigned. No override of ours needed.</p>
         </details>
@@ -604,15 +604,15 @@
         <a href="./Accordion.html">Accordion</a>. No script, no class.
       </p>
       <template>
-        <details class="pu-collapsible md" name="loose-demo">
+        <details class="pu-collapsible collapsible-md" name="loose-demo">
           <summary>First</summary>
           <p>Open the second and this one closes itself.</p>
         </details>
-        <details class="pu-collapsible md" name="loose-demo">
+        <details class="pu-collapsible collapsible-md" name="loose-demo">
           <summary>Second</summary>
           <p>And the browser did all of it.</p>
         </details>
-        <details class="pu-collapsible md" name="loose-demo">
+        <details class="pu-collapsible collapsible-md" name="loose-demo">
           <summary>Third</summary>
           <p>Same name, same group.</p>
         </details>
@@ -631,7 +631,7 @@
         disclosure, and it arrived for free.
       </p>
       <template>
-        <details class="pu-collapsible md">
+        <details class="pu-collapsible collapsible-md">
           <summary>Nothing added, nothing missing</summary>
           <p>
             Focusable, operable by Enter and Space, announced with its state. Optionally add

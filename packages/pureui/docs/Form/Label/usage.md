@@ -1,67 +1,136 @@
 # Label
 
-The name of a control.
+A visible label for a control or a labelled content group. It also handles the
+case where a `<label>` wraps a checkbox or a radio, where it becomes a row.
+
+## Quick start
 
 ```html
-<label class="label" for="email">Email</label>
-<input class="input" type="email" id="email">
+<label class="pu-label" for="email">Email</label>
+<input class="pu-input" type="email" id="email" name="email" />
 ```
 
+## Classes
+
+| Class | Does |
+|---|---|
+| `.pu-label` | The key. Requires `<label>` for controls or `<p>` for content groups. |
+
+No sizes. The label takes its scale from the field or the form around it.
+
+## Content groups
+
+Use a `<p>` when visible text labels content that is not a form control. The
+content references the paragraph with `aria-labelledby`:
+
 ```html
-<label class="label">
-  Email
-  <input class="input" type="email">
+<div>
+  <p id="general-label" class="pu-label">General</p>
+  <ul role="list" aria-labelledby="general-label">
+    <li>Inbox</li>
+    <li>Sent</li>
+  </ul>
+</div>
+```
+
+The paragraph does not create the relationship by itself. `aria-labelledby`
+on the labelled element does that.
+
+## Two shapes, decided by what is inside
+
+**A label beside its control** is bold text.
+
+```html
+<label class="pu-label" for="name">Full name</label>
+<input class="pu-input" id="name" />
+```
+
+**A label wrapping a checkbox or radio** becomes a row: the control, a gap,
+then the text at normal weight, with a pointer cursor over the whole thing.
+
+```html
+<label class="pu-label">
+  <input class="pu-checkbox" type="checkbox" name="terms" />
+  I accept the terms
 </label>
 ```
 
-Its own file and its own key, because a label is its own thing. It appears
-inside a `.field`, inside a `.fieldset`, beside a checkbox, in a table cell, in
-a toolbar — and it looks the same in all of them. Nothing owns it.
-
-## Two ways to bind, both correct
-
-`for=` pointing at the control's id, or the control nested inside the label.
-The first is preferred: it survives the control moving, and it is what
-assistive tech handles best.
-
-`for=` must point at an id that **exists**. A label bound to nothing is worse
-than no label, because it looks correct in review and announces nothing.
-
-## The key is required
-
-A bare `<label>` inside a `.field` gets nothing from us, and that is correct —
-it is your element until you say otherwise. Link this stylesheet into a page
-that already has `<label>` in its markup and nothing is restyled behind your
-back.
-
-## What does not go in it
-
-The text is the accessible name. Do not put the unit, the hint or the error
-inside it — those are `aria-describedby`, and `field.css` draws them. Putting
-them in the label makes the announced name a paragraph.
-
-## Accessibility
-
-- A control that collects input **must** have a label. A placeholder is not
-  one: it disappears on the first keystroke, it is not reliably announced, and
-  at most greys it fails 1.4.3.
-- Clicking a label moves focus to its control. That is native behaviour and
-  nothing here interferes with it — it is also why a label must never be made
-  to look like a button.
-- `--label-color` measures 17.4:1 on the form surface, well past the 4.5:1 of
-  1.4.3. The disabled colour is exempt from contrast under 1.4.3, which is
-  what makes `--label-disabled-color` legitimate at 3.6:1.
-
-## Size
-
-Inherited. The label reads `--form-font-size` like everything else in the
-family, so `.form.sm`, `.fieldset.lg` and `.field.sm` all reach it without a
-size class of its own.
+No class distinguishes the two. The stylesheet looks at what is inside.
 
 ## Variables
 
-| Variable | Controls |
-|---|---|
-| `--label-color` | the text |
-| `--label-weight` | how hard it sits against the control |
-| `--label-disabled-color` | when the control it names is disabled |
+| Variable | Default | Controls |
+|---|---|---|
+| `--label-color` | the form's label colour | Text. |
+| `--label-weight` | `600` | Weight of a standalone label. |
+| `--label-disabled-color` | `var(--color-text-subtle)` | Text when the control is disabled. |
+| `--label-option-gap` | `0.6em` | Space between the box and its text, in the wrapping form. |
+| `--label-option-weight` | `400` | Weight in the wrapping form. |
+
+```html
+<label class="pu-label" style="--label-weight: 500" for="name">Name</label>
+```
+
+## Accessibility
+
+- `for` must match the control's `id`. That binding is what makes clicking the
+  label focus the control and what makes a screen reader read the name.
+- A `<p class="pu-label">` does not use `for`. Give it an `id` and reference
+  that id with `aria-labelledby` on the content it names.
+- A wrapping label works without `for`, and it is the natural form for a
+  checkbox or radio.
+- Every control needs one. A placeholder is not a label — it disappears as
+  soon as anyone types.
+- Say "Email", not "Enter your email". The label names the field; instructions
+  belong in a `.pu-field-hint`.
+- Mark a required field in the label text as well as with the `required`
+  attribute.
+- A label whose control is disabled dims automatically. That rule lives in
+  `field.css`, so it needs the control and the label to be inside a
+  `.pu-field`.
+- Alignment in the wrapping form is `align-items: start`, so a long label
+  keeps its box against the first line rather than centring it against the
+  whole paragraph.
+
+## Examples
+
+### Standalone
+
+```html
+<div class="pu-field">
+  <label class="pu-label" for="company">Company</label>
+  <input class="pu-input" id="company" name="company" />
+</div>
+```
+
+### Wrapping a checkbox
+
+```html
+<label class="pu-label">
+  <input class="pu-checkbox" type="checkbox" name="news" />
+  Send me product updates
+</label>
+```
+
+### A radio group
+
+```html
+<fieldset class="pu-fieldset">
+  <legend>Plan</legend>
+  <label class="pu-label">
+    <input class="pu-radio" type="radio" name="plan" value="free" />
+    Free
+  </label>
+  <label class="pu-label">
+    <input class="pu-radio" type="radio" name="plan" value="pro" />
+    Pro
+  </label>
+</fieldset>
+```
+
+### Required
+
+```html
+<label class="pu-label" for="email">Email (required)</label>
+<input class="pu-input" type="email" id="email" required />
+```

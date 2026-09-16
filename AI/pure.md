@@ -87,58 +87,80 @@ live preview. The markup inside `<template>` is the single source for both the
 code pane and the preview, so they cannot drift apart.
 
 `pages/Tokens.html` renders every token off `:root` and cross-checks every
-`var(--x)` against every `--x:` declaration. An undefined token shows as a red
-row. Check it after touching `main.css`.
+`var(--x)` against every `--x:` declaration. Check it after touching
+`main.css`.
 
-### The dark stage does not reflect the library
+### The stage follows the library's scheme
 
-`docs.css` swaps the stage background and sets a light `color` on `.pc-stage`.
-It does not redefine the library's tokens. Every component that sets a colour
-through a token therefore renders dark text on the dark stage.
+The Mode control in the header drives one mode for the chrome, the stage and
+the library. `docs.js` resolves it and sets `data-scheme` on `<html>`, which is
+the attribute `main.css` reads, so the dark stage renders the library's own
+dark tokens. What the stage shows is what a real page shows.
 
-That is the library's current state, not a bug in the component being edited.
-Dark mode arrives when `main.css` gets its pass. Do not work around it in a
-component — not with `light-dark()`, and not by leaving a colour unset so it
-inherits the stage's. A component that looks right on the dark stage today is
-wrong everywhere else.
+Colour in a component goes through the tokens, which already carry
+`light-dark()`. Do not add a component-level dark override, and do not leave a
+colour unset so it inherits the stage's.
 
 ## Known debt
 
 Report these. Do not fold them into an unrelated change.
 
-- **Thirteen tokens render red in `pages/Tokens.html`** — `--toast-gap`,
-  `--toast-max-width`, `--toast-offset`, `--toast-stack-overlap`,
-  `--toast-swipe-x`, `--toast-swipe-y`, `--menu-radius`, `--menu-min-width`,
-  `--menu-offset`, `--menu-item-radius`, `--progress-color`,
-  `--progress-track-color`, `--z-index-tooltip`. Every one is used with a
-  fallback — `var(--progress-color, var(--progress-base))` — so they are the
-  consumer's tuning surface working as intended, not missing declarations. The
-  page cannot tell a guarded reference from an unguarded one and paints both
-  red. The debt is in the tool, not the tokens.
+- **`soft` vs `smooth`.** `avatar.css` is the only stylesheet using `soft` for
+  the middle shape — `avatar-soft` and `avatar-group-soft` — against `smooth`
+  in twenty-one others.
 
-- **`soft` vs `smooth`.** Down to one file: `avatar.css` is the only stylesheet
-  still using `soft` for the middle shape, against `smooth` in twenty-three
-  others. Its header also claims "soft is the default, as everywhere else",
-  which is no longer true of anywhere else.
+- **List semantics.** WebKit drops the list role from an `<ol>` or `<ul>`
+  styled `list-style: none`. Five keys sit on those elements and all five set
+  it: `.pu-list`, `.pu-nav`, `.pu-breadcrumbs`, `.pu-pagination`, `.pu-menu`.
+  `.pu-avatar-group` is the sixth where the markup is a `<ul>`.
 
-- **`md` missing.** Six component files have no `&.md` block: `a-tag.css`,
-  `loading.css`, `toast.css`, `swap.css`, `menu-grid.css`, `Form/label.css`.
-  Some are correct because the base already is `md` or the component has no
-  size; some are unfinished. Each needs deciding, not assuming.
+  CSS cannot fix this. `role="list"` in the markup can, and the docs say so on
+  every affected component. **The dev-shell demos do not carry it** — only
+  `Breadcrumbs.html` does. The demos are what people copy.
 
-- **`light-dark()` in the wild.** `alert.css` and `Menu/menu.css` use it while
-  the rest of the library waits for the dark-mode pass in `main.css`. Do not
-  spread it further until that pass is decided.
+- **Files with no size vocabulary.** `a-tag.css`, `loading.css`, `toast.css`,
+  `swap.css` and `Form/label.css` ship no size classes at all. All five are
+  correct: the link, the label and the swap slot take their scale by
+  inheritance, loading follows its host, and toast passes size to the alert
+  inside it.
 
-- **`main.css` structure.** `--font-size-base` is declared twice, at lines 62
-  and 77 with the same value. `#app` at line 10 is a dev-shell layout rule that
-  does not belong in the library.
+- **Unprefixed part name.** `.toast` in `toast.css` is a bare word. Every other
+  part in the library is namespaced — `card-body`, `alert-title`, `menu-item`.
 
-- **`SemanticNotes/`** is referenced by name in older documents but does not
-  exist. The subject is real: WebKit drops list semantics from `<ol>`/`<ul>`
-  styled `list-style: none`, which affects list, nav, breadcrumbs, pagination
-  and menu — all of which set it. CSS cannot fix this; `role="list"` in markup
-  can.
+- **`rounded` means two things, written three ways.** Of the twenty-one files
+  with a `rounded` class, nine point it at `--radius-full`, seven at
+  `--radius-rounded` (which is the same value), and five at `--radius-lg`:
+  `accordion.css`, `alert.css`, `card.css`, `collapsible.css`, `dialog.css`.
+  The Form family is the only group that consistently uses the shape token.
+
+- **Variables used but never declared.** `menu.css` and `toast.css` reach
+  several tuning variables through `var(--name, fallback)` without declaring
+  them at the top of the key block, so a reader cannot find them without
+  searching the file. `menu.css`: `--menu-min-width`, `--menu-radius`,
+  `--menu-item-radius`, `--menu-offset`. `toast.css`: `--toast-offset`,
+  `--toast-gap`, `--toast-max-width`, `--toast-stack-overlap`, plus
+  `--toast-swipe-x` and `--toast-swipe-y`, which the behaviour layer writes.
+
+- **`nav.css` has no component variables.** Sizes, spacing and colours are
+  written straight into the rules, so nothing about it can be tuned from the
+  markup. It also uses `transition: all` and has no reduced-motion block.
+
+- **`Form/range.css` sits outside the Form channel.** Every other control reads
+  `--form-*` with a fallback; this one uses library tokens directly, so a
+  `.pu-form.form-rounded` or a custom surface never reaches it. It has no
+  `:hover` state, and `range-primary` is an emphasis word no other component
+  uses.
+
+- **"Demos only" is wrong in two places.** `pure.md` under Dev shell and
+  `css-file.md` step 4 both say a component page holds nothing but its demos.
+  `AI/PureUI/doc-page.md` says the page has four parts in order — title and
+  intro, Elements, API table, Examples — and that is what every page actually
+  is. One rule, three documents, two of them stale.
+
+- **`AI/PureUI/doc-page.md` cannot be reached from the entry point.** It is the
+  only rule for how a demo page is built. `CLAUDE.md` points at `pure.md`,
+  whose document table lists six files and not this one, and nothing else in
+  `AI/` links to it.
 
 ## Shared memory
 
