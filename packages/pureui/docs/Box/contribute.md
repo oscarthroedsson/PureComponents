@@ -93,12 +93,19 @@ anywhere, which falls out correctly rather than needing a rule.
 
 ## Shape
 
-`box-rounded` maps to `--radius-lg`, the same as `card.css`, `dialog.css` and
-`alert.css`. Not `--radius-full`: a box has no known height, so a 999px corner
-resolves to half of whatever it happens to be and a tall box turns into a
-lozenge. `textarea.css` solves the same problem with a computed cap; here there
-is no single-line height to cap against, so the smaller token is the honest
-answer.
+`box-rounded` points at `--radius-rounded`, like every other rounded class.
+A box has no known height, so a 999px corner would resolve to half of whatever
+it happens to be and a tall box would turn into a lozenge. The corner is
+therefore capped:
+
+```css
+--box-radius-max: var(--radius-lg);
+border-radius: min(var(--box-radius), var(--box-radius-max));
+```
+
+`card.css`, `alert.css`, `dialog.css`, `accordion.css`, `collapsible.css` and
+the Tabs panel use the same cap. `textarea.css` is where the pattern comes
+from.
 
 ## Order inside the block
 

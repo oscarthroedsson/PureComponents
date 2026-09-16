@@ -67,7 +67,7 @@ is the good one — which is what you want for disk usage.
 | `--meter-block-size` | `1rem` | Bar height. |
 | `--meter-padding-block` | 10% of the height | Vertical inset. |
 | `--meter-padding-inline` | 30% of the height | Horizontal inset. |
-| `--meter-radius` | `var(--radius-full)` | End shape. |
+| `--meter-radius` | `var(--radius-rounded)` | End shape. |
 | `--meter-transition` | `300ms ease` | Value timing. |
 | `--meter-color` | `var(--color-primary)` | The optimum fill. |
 | `--meter-suboptimum-color` | `var(--color-warning)` | The middle range. |

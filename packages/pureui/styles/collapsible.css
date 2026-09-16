@@ -5,6 +5,9 @@
 
   --collapsible-font-size: var(--font-size-md);
   --collapsible-radius: var(--radius-md);
+  /* Rounded is --radius-rounded, which on a surface this large would be a
+     half-circle. The cap keeps it a corner. */
+  --collapsible-radius-max: var(--radius-lg);
 
   --collapsible-background: var(--color-surface-sunken);
   --collapsible-border-width: 1px;
@@ -44,7 +47,7 @@
 
   background-color: var(--collapsible-background);
   border: var(--collapsible-border-width) solid var(--collapsible-border-color);
-  border-radius: var(--collapsible-radius);
+  border-radius: min(var(--collapsible-radius), var(--collapsible-radius-max));
 
   /* So the summary's hover fill follows the corner instead of squaring it off. */
   overflow: hidden;
@@ -203,11 +206,11 @@
   }
 
   &.collapsible-smooth {
-    --collapsible-radius: var(--radius-md);
+    --collapsible-radius: var(--radius-smooth);
   }
 
   &.collapsible-rounded {
-    --collapsible-radius: var(--radius-lg);
+    --collapsible-radius: var(--radius-rounded);
   }
 
   /* STATES */

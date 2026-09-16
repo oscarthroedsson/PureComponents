@@ -11,6 +11,9 @@
   --card-border-color: var(--color-border);
   --card-border-width: 1px;
   --card-radius: var(--radius-md);
+  /* Rounded is --radius-rounded, which on a surface this large would be a
+     half-circle. The cap keeps it a corner. */
+  --card-radius-max: var(--radius-lg);
   --card-shadow: var(--shadow-md);
 
   --card-padding-block: var(--spacing-100);
@@ -44,7 +47,7 @@
   overflow: hidden;
 
   border: var(--card-border-width) solid var(--card-border-color);
-  border-radius: var(--card-radius);
+  border-radius: min(var(--card-radius), var(--card-radius-max));
 
   background-color: var(--card-surface);
   color: var(--card-color);
@@ -232,11 +235,11 @@
   }
 
   &.card-smooth {
-    --card-radius: var(--radius-md);
+    --card-radius: var(--radius-smooth);
   }
 
   &.card-rounded {
-    --card-radius: var(--radius-lg);
+    --card-radius: var(--radius-rounded);
   }
 
   /* EMPHASIS */

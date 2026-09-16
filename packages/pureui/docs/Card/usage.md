@@ -45,7 +45,7 @@ A part that follows `.card-media` keeps its full top padding.
 | `card-horizontal` | Media beside the content instead of above it. |
 | `card-sharp` | Square corners. |
 | `card-smooth` | The same radius `card-md` already gives. |
-| `card-rounded` | Larger radius. |
+| `card-rounded` | The large corner — `--radius-rounded`, capped at `--radius-lg`. |
 | `card-outline` | Transparent fill, border kept. |
 | `card-ghost` | Transparent fill, no border. |
 | `card-elevated` | Adds the shadow at rest. |

@@ -74,11 +74,11 @@
   }
 
   &.btn-smooth {
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-smooth);
   }
 
   &.btn-rounded {
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-rounded);
   }
 
   &.btn-emphasised {

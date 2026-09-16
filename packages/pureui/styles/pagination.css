@@ -103,10 +103,10 @@
   }
 
   &.pagination-smooth {
-    --pagination-radius: var(--radius-md);
+    --pagination-radius: var(--radius-smooth);
   }
 
   &.pagination-rounded {
-    --pagination-radius: var(--radius-full);
+    --pagination-radius: var(--radius-rounded);
   }
 }

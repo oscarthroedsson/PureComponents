@@ -7,6 +7,9 @@
   --box-padding-inline-end: var(--box-padding);
 
   --box-radius: var(--radius-md);
+  /* Rounded is --radius-rounded, which on a surface this large would be a
+     half-circle. The cap keeps it a corner. */
+  --box-radius-max: var(--radius-lg);
 
   --box-background: transparent;
 
@@ -22,7 +25,7 @@
   padding-block: var(--box-padding-block-start) var(--box-padding-block-end);
   padding-inline: var(--box-padding-inline-start) var(--box-padding-inline-end);
 
-  border-radius: var(--box-radius);
+  border-radius: min(var(--box-radius), var(--box-radius-max));
   background-color: var(--box-background);
 
   /* SIZE */
@@ -58,11 +61,11 @@
   }
 
   &.box-smooth {
-    --box-radius: var(--radius-md);
+    --box-radius: var(--radius-smooth);
   }
 
   &.box-rounded {
-    --box-radius: var(--radius-lg);
+    --box-radius: var(--radius-rounded);
   }
 
   /* SIDES

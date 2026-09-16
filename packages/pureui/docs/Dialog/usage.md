@@ -56,7 +56,7 @@ and footer stay put.
 | `dialog-fullscreen` | Fills the viewport, no corner. |
 | `dialog-sharp` | Square corners. |
 | `dialog-smooth` | The same radius `dialog-md` already gives. |
-| `dialog-rounded` | Larger radius. |
+| `dialog-rounded` | The large corner — `--radius-rounded`, capped at `--radius-lg`. |
 
 ## Attributes
 

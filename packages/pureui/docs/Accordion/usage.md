@@ -32,7 +32,7 @@ row, so it is written once in the markup instead of once per panel.
 | `accordion-lg` | Roomier rows, larger type and radius. |
 | `accordion-sharp` | Square corners. |
 | `accordion-smooth` | The same radius `accordion-md` already gives. |
-| `accordion-rounded` | Larger radius. |
+| `accordion-rounded` | The large corner — `--radius-rounded`, capped at `--radius-lg`. |
 | `accordion-separate` | Each panel keeps its own border and corner, with a gap between them. |
 
 ## One panel open at a time

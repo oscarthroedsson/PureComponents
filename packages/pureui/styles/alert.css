@@ -7,6 +7,9 @@
   --alert-bg: color-mix(in oklab, var(--alert-accent) 12%, var(--alert-surface));
   --alert-border: color-mix(in oklab, var(--alert-accent) 48%, var(--alert-surface));
   --alert-radius: var(--radius-md);
+  /* Rounded is --radius-rounded, which on a surface this large would be a
+     half-circle. The cap keeps it a corner. */
+  --alert-radius-max: var(--radius-lg);
 
   box-sizing: border-box;
 
@@ -26,7 +29,7 @@
   border: 1px solid var(--alert-border);
   border-inline-start-width: 0.3em;
 
-  border-radius: var(--alert-radius);
+  border-radius: min(var(--alert-radius), var(--alert-radius-max));
 
   background-color: var(--alert-bg);
   color: var(--alert-text);
@@ -204,11 +207,11 @@
   }
 
   &.alert-smooth {
-    --alert-radius: var(--radius-md);
+    --alert-radius: var(--radius-smooth);
   }
 
   &.alert-rounded {
-    --alert-radius: var(--radius-lg);
+    --alert-radius: var(--radius-rounded);
   }
 
   /* STATES */

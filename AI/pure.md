@@ -115,12 +115,6 @@ Report these. Do not fold them into an unrelated change.
   inheritance, loading follows its host, and toast passes size to the alert
   inside it.
 
-- **`rounded` means two things, written three ways.** Of the twenty-one files
-  with a `rounded` class, nine point it at `--radius-full`, seven at
-  `--radius-rounded` (which is the same value), and five at `--radius-lg`:
-  `accordion.css`, `alert.css`, `card.css`, `collapsible.css`, `dialog.css`.
-  The Form family is the only group that consistently uses the shape token.
-
 - **Variables used but never declared.** `progress.css` reaches
   `--progress-color` and `--progress-track-color` through
   `var(--name, fallback)` without declaring them at the top of the key block.

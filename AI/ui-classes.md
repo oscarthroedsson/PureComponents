@@ -213,6 +213,33 @@ the class; the component's name is the first.
 Do not invent a synonym for something that already has a name. A component
 that has no use for a word simply does not ship it.
 
+### Shape words map to shape tokens
+
+| Class | Token |
+|---|---|
+| `<name>-sharp` | `--radius-sharp` |
+| `<name>-smooth` | `--radius-smooth` |
+| `<name>-rounded` | `--radius-rounded` |
+
+Always the shape token, never the size token it happens to equal. A shape is a
+choice about form; `--radius-md` is a size step, and the two only coincide
+today.
+
+`--radius-rounded` resolves against the box: on a button it is a pill, on a
+card it would be a half-circle. A large surface therefore caps it, the pattern
+`Form/textarea.css` started:
+
+```css
+--card-radius-max: var(--radius-lg);
+border-radius: min(var(--card-radius), var(--card-radius-max));
+```
+
+Card, Alert, Dialog, Accordion, Collapsible, Box and the Tabs panel carry the
+cap. A thin bar — Meter, Progress — halves the smooth corner,
+`calc(var(--radius-smooth) / 2)`, so smooth stays distinguishable from rounded
+at that height. A control whose shape is its identity — Checkbox, Radio — does
+not ship the word that would contradict it.
+
 ## 8. Focus
 
 Every interactive element has a visible `:focus-visible` indicator at 3:1

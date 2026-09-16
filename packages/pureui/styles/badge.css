@@ -156,11 +156,11 @@
   }
 
   &.badge-smooth {
-    --badge-radius: var(--radius-md);
+    --badge-radius: var(--radius-smooth);
   }
 
   &.badge-rounded {
-    --badge-radius: var(--radius-full);
+    --badge-radius: var(--radius-rounded);
   }
 
   /* INTENT */

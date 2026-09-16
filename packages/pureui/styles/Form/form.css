@@ -40,7 +40,7 @@
     --form-radius: var(--radius-sharp);
   }
   &.form-smooth {
-    --form-radius: var(--radius-md);
+    --form-radius: var(--radius-smooth);
   }
   &.form-rounded {
     --form-radius: var(--radius-rounded);

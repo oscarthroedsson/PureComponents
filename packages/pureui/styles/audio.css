@@ -52,11 +52,11 @@
   }
 
   &.audio-smooth {
-    --audio-radius: var(--radius-md);
+    --audio-radius: var(--radius-smooth);
   }
 
   &.audio-rounded {
-    --audio-radius: var(--radius-full);
+    --audio-radius: var(--radius-rounded);
   }
 
   /* CHROMIUM — PRIVATE, PROGRESSIVE PAINT ONLY */

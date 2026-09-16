@@ -55,8 +55,10 @@ Focus lands on the radio, so the global `:focus-visible` outline from
 corner stays concentric with the header's. A size or shape class only moves
 `--tabs-radius`; the tab follows.
 
-`tabs-rounded` gives the header and tabs `--radius-rounded` but keeps the
-panel at `--radius-lg`. A fully round panel would clip its content.
+`tabs-rounded` sets `--tabs-radius` to `--radius-rounded`, so the header and
+tabs become pills. The panel follows the same variable but is capped by
+`--tabs-panel-radius-max` (`--radius-lg`), the pattern every large surface
+uses, so it stays a corner.
 
 ## Disabled
 

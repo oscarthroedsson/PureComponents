@@ -38,7 +38,7 @@ actions alone, both, or neither — no extra class needed.
 | `alert-lg` | Larger type. |
 | `alert-sharp` | Square corners. |
 | `alert-smooth` | The same radius `alert-md` already gives. |
-| `alert-rounded` | Larger radius. |
+| `alert-rounded` | The large corner — `--radius-rounded`, capped at `--radius-lg`. |
 | `alert-outline` | Transparent fill, border in the intent colour. |
 | `alert-filled` | Solid intent fill. |
 

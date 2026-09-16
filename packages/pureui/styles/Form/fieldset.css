@@ -111,7 +111,7 @@
     --form-radius: var(--radius-sharp);
   }
   &.fieldset-smooth {
-    --form-radius: var(--radius-md);
+    --form-radius: var(--radius-smooth);
   }
   &.fieldset-rounded {
     --form-radius: var(--radius-rounded);

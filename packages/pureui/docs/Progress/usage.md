@@ -68,7 +68,7 @@ would read as a half-filled bar, which is a different claim.
 | `--progress-fill` | `--progress-color`, else `--progress-base` | The fill. |
 | `--progress-track-color` | unset | Overrides the track directly. |
 | `--progress-track` | 18% of the fill | The track. |
-| `--progress-radius` | `var(--radius-full)` | End shape. |
+| `--progress-radius` | `var(--radius-rounded)` | End shape. |
 | `--progress-size` | `1rem` | Bar height. |
 
 Setting `--progress-color` alone re-tints the fill and the track together,

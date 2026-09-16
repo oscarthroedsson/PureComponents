@@ -102,11 +102,11 @@
   }
 
   &.avatar-smooth {
-    --avatar-radius: var(--radius-md);
+    --avatar-radius: var(--radius-smooth);
   }
 
   &.avatar-rounded {
-    --avatar-radius: var(--radius-full);
+    --avatar-radius: var(--radius-rounded);
   }
 
   /* STATES */
@@ -274,11 +274,11 @@
   }
 
   &.avatar-group-smooth {
-    --avatar-group-radius: var(--radius-md);
+    --avatar-group-radius: var(--radius-smooth);
   }
 
   &.avatar-group-rounded {
-    --avatar-group-radius: var(--radius-full);
+    --avatar-group-radius: var(--radius-rounded);
   }
 
   /* DIRECTION */

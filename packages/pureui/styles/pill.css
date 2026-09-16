@@ -210,11 +210,11 @@
   }
 
   &.pill-smooth {
-    --pill-radius: var(--radius-md);
+    --pill-radius: var(--radius-smooth);
   }
 
   &.pill-rounded {
-    --pill-radius: var(--radius-full);
+    --pill-radius: var(--radius-rounded);
   }
 
   /*

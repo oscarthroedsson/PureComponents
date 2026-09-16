@@ -4,7 +4,7 @@
   --meter-padding-block: calc(var(--meter-block-size) * 0.1);
   --meter-padding-inline: calc(var(--meter-block-size) * 0.3);
 
-  --meter-radius: var(--radius-full);
+  --meter-radius: var(--radius-rounded);
 
   /* VALUE */
   --meter-transition: 300ms ease;
@@ -73,11 +73,11 @@
   }
 
   &.meter-smooth {
-    --meter-radius: var(--radius-sm);
+    --meter-radius: calc(var(--radius-smooth) / 2);
   }
 
   &.meter-rounded {
-    --meter-radius: var(--radius-full);
+    --meter-radius: var(--radius-rounded);
   }
 
   /*

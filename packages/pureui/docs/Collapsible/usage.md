@@ -23,7 +23,7 @@ involved.
 | `collapsible-lg` | Roomier padding, larger type and radius. |
 | `collapsible-sharp` | Square corners. |
 | `collapsible-smooth` | The same radius `collapsible-md` already gives. |
-| `collapsible-rounded` | Larger radius. |
+| `collapsible-rounded` | The large corner — `--radius-rounded`, capped at `--radius-lg`. |
 | `.collapsible-marker` | A marker element you supply yourself. |
 
 ## Attributes

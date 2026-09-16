@@ -50,6 +50,8 @@ changes something elsewhere on the page, which is the consumer's to wire up.
   --tabs-panel-border-color: var(--color-border);
   --tabs-panel-border-width: 1px;
   --tabs-panel-radius: var(--tabs-radius);
+  /* A rounded panel would be a half-circle; the cap keeps it a corner. */
+  --tabs-panel-radius-max: var(--radius-lg);
   --tabs-panel-padding-block: var(--spacing-100);
   --tabs-panel-padding-inline: var(--spacing-100);
 
@@ -189,7 +191,7 @@ changes something elsewhere on the page, which is the consumer's to wire up.
     background-color: var(--tabs-panel-background);
     color: var(--tabs-panel-color);
     border: var(--tabs-panel-border-width) solid var(--tabs-panel-border-color);
-    border-radius: var(--tabs-panel-radius);
+    border-radius: min(var(--tabs-panel-radius), var(--tabs-panel-radius-max));
 
     & > * {
       margin-block: 0;
@@ -263,11 +265,9 @@ changes something elsewhere on the page, which is the consumer's to wire up.
     --tabs-radius: var(--radius-smooth);
   }
 
-  /* The header and tabs become pills. A fully round panel would clip its
-     content, so the panel keeps the large corner. */
+  /* The header and tabs become pills. The panel's cap keeps it a corner. */
   &.tabs-rounded {
     --tabs-radius: var(--radius-rounded);
-    --tabs-panel-radius: var(--radius-lg);
   }
 
   /* STATES */

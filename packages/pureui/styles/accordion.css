@@ -2,6 +2,9 @@
   /* VARIABLES */
 
   --accordion-radius: var(--radius-md);
+  /* Rounded is --radius-rounded, which on a surface this large would be a
+     half-circle. The cap keeps it a corner. */
+  --accordion-radius-max: var(--radius-lg);
   --accordion-border-width: 1px;
   --accordion-border-color: var(--color-border);
   --accordion-gap: var(--spacing-50);
@@ -12,7 +15,7 @@
   flex-direction: column;
 
   border: var(--accordion-border-width) solid var(--accordion-border-color);
-  border-radius: var(--accordion-radius);
+  border-radius: min(var(--accordion-radius), var(--accordion-radius-max));
 
   /* The panels are square inside; this is what rounds the block. */
   overflow: hidden;
@@ -83,11 +86,11 @@
   }
 
   &.accordion-smooth {
-    --accordion-radius: var(--radius-md);
+    --accordion-radius: var(--radius-smooth);
   }
 
   &.accordion-rounded {
-    --accordion-radius: var(--radius-lg);
+    --accordion-radius: var(--radius-rounded);
   }
 
   /* VARIANTS */

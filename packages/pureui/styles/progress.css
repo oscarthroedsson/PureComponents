@@ -2,7 +2,7 @@
   --progress-base: var(--color-primary);
   --progress-fill: var(--progress-color, var(--progress-base));
   --progress-track: var(--progress-track-color, color-mix(in oklab, var(--progress-fill) 18%, transparent));
-  --progress-radius: var(--radius-full);
+  --progress-radius: var(--radius-rounded);
   --progress-size: 1rem;
 
   /* NAMED COLORS */
@@ -61,11 +61,11 @@
   }
 
   &.progress-smooth {
-    --progress-radius: var(--radius-sm);
+    --progress-radius: calc(var(--radius-smooth) / 2);
   }
 
   &.progress-rounded {
-    --progress-radius: var(--radius-full);
+    --progress-radius: var(--radius-rounded);
   }
 }
 

@@ -166,11 +166,11 @@
 
   &.breadcrumbs-smooth,
   & .breadcrumbs-smooth {
-    --breadcrumbs-radius: var(--radius-md);
+    --breadcrumbs-radius: var(--radius-smooth);
   }
 
   &.breadcrumbs-rounded,
   & .breadcrumbs-rounded {
-    --breadcrumbs-radius: var(--radius-full);
+    --breadcrumbs-radius: var(--radius-rounded);
   }
 }
