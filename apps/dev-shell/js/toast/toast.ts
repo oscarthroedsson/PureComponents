@@ -275,7 +275,7 @@ export function remove(target: string | HTMLElement): void {
   const element =
     typeof target === "string"
       ? document.querySelector<HTMLElement>(`[data-toast-id="${target}"]`)
-      : target.closest<HTMLElement>(".toast");
+      : target.closest<HTMLElement>(".pu-toast");
 
   if (!element) {
     return;

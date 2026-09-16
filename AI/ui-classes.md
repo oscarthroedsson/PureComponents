@@ -44,7 +44,10 @@ a shared bare word would then mean two things at once, with no way to tell them
 apart. The namespace is what keeps them separate.
 
 Where a file declares more than one key, each is its own namespace:
-`.pu-avatar` takes `avatar-*` and `.pu-avatar-group` takes `avatar-group-*`.
+`.pu-avatar` takes `avatar-*` and `.pu-avatar-group` takes `avatar-group-*`;
+`.pu-toast` takes `toast-*` and `.pu-toast-container` takes
+`toast-container-*`. A container key may tell the items inside it how to
+behave only through its own variables, which the item reads with a fallback.
 
 ## 2. The key requires its native element
 

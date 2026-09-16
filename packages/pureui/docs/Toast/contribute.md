@@ -17,14 +17,28 @@ moves to PureComponents when that package starts. The split is strict:
 anything about **where a toast sits or how it moves** belongs in the CSS;
 anything about **when it appears or disappears** belongs in the TS.
 
+## Two keys
+
+`toast.css` declares two keys, like `avatar.css`:
+
+- `.pu-toast-container` — where toasts appear. Placement, layout, stacking and
+  the space between toasts. Its namespace is `toast-container-*`.
+- `.pu-toast` — one toast. Entry, exit, swipe. Its namespace is `toast-*`.
+
+The container never styles what a toast is, only where it sits among the
+others. It tells its toasts which way to move through
+`--toast-container-enter-*` and `--toast-container-exit-*`; a toast reads
+them into its own `--toast-enter-*` with a fallback, so a `.pu-toast` outside a
+container still animates.
+
 ## Toast is a wrapper around Alert
 
-A toast is a `.toast` box holding a `.pu-alert`. Nothing about the notice —
+A `.pu-toast` holds a `.pu-alert`. Nothing about the notice —
 intents, icons, title, message, actions — is repeated here. `createToast.ts`
 builds exactly the markup the two stylesheets expect:
 
 ```html
-<div class="toast" data-toast-id="…">
+<div class="pu-toast" data-toast-id="…">
   <div class="pu-alert alert-md" data-intent="success" role="status">
     <div class="alert-icon">…</div>
     <div class="alert-content">
@@ -53,16 +67,18 @@ set by `data-placement`.
 
 Covering the viewport is only safe because the container is invisible to the
 pointer. Only the toasts take input, through `pointer-events: auto` on
-`.toast`.
+`.pu-toast`.
 
 `:hover` still reaches the container from a toast inside it, which is what
 lets the stacked layout expand on hover.
 
-## The gap belongs to the toast
+## The gap belongs to the toast box
 
 ```css
-& + .toast { padding-block-start: var(--toast-gap, 0.5rem); }
+& > .pu-toast + .pu-toast { padding-block-start: var(--toast-container-gap); }
 ```
+
+Written in the container block, because the space between toasts is layout.
 
 Padding on the toast, not `gap` on the container, so the boxes keep touching.
 Moving the pointer from one toast to the next then never crosses a dead zone —
@@ -75,8 +91,8 @@ All toasts stay exactly the same size. Stacking comes only from a negative
 margin, the way a group of avatars overlaps:
 
 ```css
-& > .toast + .toast {
-  margin-block-start: calc(0px - var(--toast-gap, 0.5rem) - var(--toast-stack-overlap, 2.75rem));
+& > .pu-toast + .pu-toast {
+  margin-block-start: calc(0px - var(--toast-container-gap) - var(--toast-container-stack-overlap));
 }
 ```
 
@@ -87,7 +103,7 @@ Expanding is one declaration:
 
 ```css
 &:hover, &:focus-within {
-  & > .toast + .toast { margin-block-start: 0; }
+  & > .pu-toast + .pu-toast { margin-block-start: 0; }
 }
 ```
 
@@ -107,7 +123,7 @@ is unreadable anyway, and the toasts past the cap are fully covered.
 
 ## Entry, exit and swipe, in that order
 
-`@starting-style` on `.toast` gives the entry something to animate from.
+`@starting-style` on `.pu-toast` gives the entry something to animate from.
 `[data-state="closing"]` is the exit, with its own faster easing.
 
 The swipe rules come **after** the closing state on purpose: a toast thrown out
@@ -132,38 +148,20 @@ take a vertical flick too, so there the toast has to claim the whole gesture.
 `alert.css` animates its own entry. Inside a toast the wrapper is what moves,
 so the alert's animation is neutralised or the two would compound.
 
-## Durations are written out
+## Durations and easings are variables
 
-Not `--transition-*`. Those tokens pair a duration and an easing in one
-shorthand, so combining one with an easing of our own puts two timing
-functions in the same declaration and the whole thing is thrown away.
-`avatar.css` does the same.
+`--toast-fade-duration`, `--toast-enter-duration` and `--toast-exit-duration`
+read the `--duration-*` tokens. The entry easing has no token, so it is a
+variable of its own; the exit uses `--ease-in`. The `--transition-*` tokens are
+not used: they pair a duration with an easing in one shorthand, and combining
+one with another easing throws the whole declaration away.
 
-## Variables
+## Every variable is declared
 
-Declared on the container:
-
-| Variable | Default |
-|---|---|
-| `--toast-enter-x` | `1.5rem` |
-| `--toast-enter-y` | `0` |
-| `--toast-exit-x` | `1.5rem` |
-| `--toast-exit-y` | `0` |
-
-Used through `var(name, fallback)` without being declared:
-`--toast-offset` (`1rem`), `--toast-gap` (`0.5rem`), `--toast-max-width`
-(`28rem`), `--toast-stack-overlap` (`2.75rem`), `--toast-swipe-x`,
-`--toast-swipe-y`. They work as a tuning surface but do not appear in the
-block's variable list.
-
-Each `data-placement` block sets the four enter and exit offsets, so a
-left-hand container flies in from the left without being told.
-
-## `.toast` is unprefixed
-
-Every other part in the library is namespaced to its component —
-`card-body`, `alert-title`, `menu-item`. This one is a bare `.toast`, so it
-can collide with a consumer's own CSS.
+Each key declares all of its variables at the top of its block, including
+`--toast-swipe-x` and `--toast-swipe-y`, which a behaviour layer writes inline
+while a toast is dragged. The inline value wins; the declaration is the
+resting `0`.
 
 ## The behaviour layer
 

@@ -1,25 +1,47 @@
+/*
+Toast — two keys.
+
+  .pu-toast-container   Where toasts appear. Owns placement, list or stacked
+                        layout, and the space between toasts.
+  .pu-toast             One toast. A motion wrapper around a .pu-alert, which
+                        owns everything about the notice itself.
+
+<div class="pu-toast-container" data-placement="top-right">
+  <div class="pu-toast">
+    <div class="pu-alert alert-md" data-intent="success" role="status">…</div>
+  </div>
+</div>
+
+The container tells its toasts which way to move through
+--toast-container-enter-* and --toast-container-exit-*. A toast reads them,
+with its own fallback, so a .pu-toast outside a container still animates.
+*/
 .pu-toast-container {
-  --toast-enter-x: 1.5rem;
-  --toast-enter-y: 0;
+  /* VARIABLES */
 
-  --toast-exit-x: 1.5rem;
-  --toast-exit-y: 0;
+  --toast-container-offset: var(--spacing-100);
+  --toast-container-gap: var(--spacing-50);
+  --toast-container-stack-overlap: 2.75rem;
+  --toast-container-stack-duration: var(--duration-medium);
+  --toast-container-stack-easing: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /*
-   * The container spans the whole viewport rather than hugging one
-   * corner. A toast can then be dragged as far as the hand takes it
-   * without being clipped, and placement becomes nothing more than
-   * where inside that area the toasts are aligned.
-   */
+  --toast-container-enter-x: 1.5rem;
+  --toast-container-enter-y: 0;
+  --toast-container-exit-x: 1.5rem;
+  --toast-container-exit-y: 0;
+
+  /* BASE
+
+     The container spans the whole viewport rather than hugging one corner.
+     A toast can then be dragged as far as the hand takes it without being
+     clipped, and placement is only where inside that area toasts align. */
 
   position: fixed;
   inset: 0;
-
   z-index: var(--z-index-toast);
 
   box-sizing: border-box;
-
-  padding: var(--toast-offset, 1rem);
+  padding: var(--toast-container-offset);
 
   display: flex;
   flex-direction: column;
@@ -28,15 +50,17 @@
   justify-content: flex-start;
   align-items: flex-end;
 
-  /*
-   * Covering the viewport is only safe because the container is
-   * invisible to the pointer. Only the toasts themselves take input.
-   *
-   * :hover still reaches the container from a toast inside it, so
-   * the stacked layout keeps expanding on hover.
-   */
-
+  /* Covering the viewport is only safe because the container is invisible
+     to the pointer. Only the toasts take input. :hover still reaches the
+     container from a toast inside it, so the stacked layout still expands. */
   pointer-events: none;
+
+  /* The space between two toasts belongs to the toast box, not to a gap, so
+     the boxes touch. Moving the pointer from one toast to the next never
+     crosses a dead zone, which an expanded stack depends on. */
+  & > .pu-toast + .pu-toast {
+    padding-block-start: var(--toast-container-gap);
+  }
 
   /* PLACEMENT */
 
@@ -51,252 +75,122 @@
   &[data-placement$="left"] {
     align-items: flex-start;
 
-    --toast-enter-x: -1.5rem;
-    --toast-enter-y: 0;
-
-    --toast-exit-x: -1.5rem;
-    --toast-exit-y: 0;
+    --toast-container-enter-x: -1.5rem;
+    --toast-container-exit-x: -1.5rem;
   }
 
   &[data-placement$="right"] {
     align-items: flex-end;
 
-    --toast-enter-x: 1.5rem;
-    --toast-enter-y: 0;
-
-    --toast-exit-x: 1.5rem;
-    --toast-exit-y: 0;
+    --toast-container-enter-x: 1.5rem;
+    --toast-container-exit-x: 1.5rem;
   }
 
   &[data-placement$="center"] {
     align-items: center;
 
-    --toast-enter-x: 0;
-    --toast-exit-x: 0;
+    --toast-container-enter-x: 0;
+    --toast-container-exit-x: 0;
   }
 
   &[data-placement="top-center"] {
-    --toast-enter-y: -1.5rem;
-    --toast-exit-y: -1.5rem;
+    --toast-container-enter-y: -1.5rem;
+    --toast-container-exit-y: -1.5rem;
   }
 
   &[data-placement="bottom-center"] {
-    --toast-enter-y: 1.5rem;
-    --toast-exit-y: 1.5rem;
+    --toast-container-enter-y: 1.5rem;
+    --toast-container-exit-y: 1.5rem;
   }
 
-  /* LAYOUT */
+  &[data-placement$="center"] > .pu-toast[data-swipeable] {
+    /* A centred container takes a vertical flick too, so the toast has to
+       claim the whole gesture. */
+    touch-action: none;
+  }
 
-  /*
-   * The list layout needs no rules of its own: the gap between two
-   * toasts is carried by the toast itself, further down.
-   */
+  /* LAYOUT
+
+     The list layout needs no rules of its own. */
 
   &[data-layout="stacked"] {
-    /*
-     * All toasts stay exactly the same size. Stacking is created
-     * ONLY through overlap, the way a group of avatars overlaps.
-     *
-     * The negative margin has to swallow the gap as well, or the
-     * overlap would come out that much shorter than asked for.
-     */
-
-    & > .toast + .toast {
-      margin-block-start: calc(0px - var(--toast-gap, 0.5rem) - var(--toast-stack-overlap, 2.75rem));
+    /* Every toast keeps its size. Stacking comes only from overlap, the way
+       a group of avatars overlaps. The negative margin swallows the gap as
+       well, or the overlap would come out that much shorter. */
+    & > .pu-toast + .pu-toast {
+      margin-block-start: calc(0px - var(--toast-container-gap) - var(--toast-container-stack-overlap));
     }
 
-    & > .toast {
-      scale: 1;
-    }
-
-    /*
-     * Flex items paint in DOM order, so with no z-index at all the
-     * OLDEST toast would paint on top of every newer one. The stack
-     * has to descend from the toast nearest the edge the container
-     * is anchored to: the first child for top placements, the last
-     * child for bottom ones.
-     *
-     * The depth is enumerated rather than computed. A stack deeper
-     * than this is unreadable anyway, and the toasts past the cap
-     * are fully covered by the ones in front of them.
-     */
-
-    & > .toast {
+    /* Flex items paint in DOM order, so the oldest toast would paint on top.
+       The stack descends from the toast nearest the anchored edge: the first
+       child for top placements, the last for bottom ones. The depth is
+       enumerated; past eight the toasts are fully covered anyway. */
+    & > .pu-toast {
       z-index: 1;
     }
 
     &[data-placement^="top"] {
-      & > .toast:nth-child(1) {
+      & > .pu-toast:nth-child(1) {
         z-index: 9;
       }
-      & > .toast:nth-child(2) {
+      & > .pu-toast:nth-child(2) {
         z-index: 8;
       }
-      & > .toast:nth-child(3) {
+      & > .pu-toast:nth-child(3) {
         z-index: 7;
       }
-      & > .toast:nth-child(4) {
+      & > .pu-toast:nth-child(4) {
         z-index: 6;
       }
-      & > .toast:nth-child(5) {
+      & > .pu-toast:nth-child(5) {
         z-index: 5;
       }
-      & > .toast:nth-child(6) {
+      & > .pu-toast:nth-child(6) {
         z-index: 4;
       }
-      & > .toast:nth-child(7) {
+      & > .pu-toast:nth-child(7) {
         z-index: 3;
       }
-      & > .toast:nth-child(8) {
+      & > .pu-toast:nth-child(8) {
         z-index: 2;
       }
     }
 
     &[data-placement^="bottom"] {
-      & > .toast:nth-last-child(1) {
+      & > .pu-toast:nth-last-child(1) {
         z-index: 9;
       }
-      & > .toast:nth-last-child(2) {
+      & > .pu-toast:nth-last-child(2) {
         z-index: 8;
       }
-      & > .toast:nth-last-child(3) {
+      & > .pu-toast:nth-last-child(3) {
         z-index: 7;
       }
-      & > .toast:nth-last-child(4) {
+      & > .pu-toast:nth-last-child(4) {
         z-index: 6;
       }
-      & > .toast:nth-last-child(5) {
+      & > .pu-toast:nth-last-child(5) {
         z-index: 5;
       }
-      & > .toast:nth-last-child(6) {
+      & > .pu-toast:nth-last-child(6) {
         z-index: 4;
       }
-      & > .toast:nth-last-child(7) {
+      & > .pu-toast:nth-last-child(7) {
         z-index: 3;
       }
-      & > .toast:nth-last-child(8) {
+      & > .pu-toast:nth-last-child(8) {
         z-index: 2;
       }
     }
 
-    /*
-     * Expand stacked notifications into a normal list when the user
-     * interacts with the stack. Dropping the negative margin is
-     * enough — the gap is already part of every toast box.
-     */
-
+    /* Interacting with the stack expands it into a list. Dropping the
+       negative margin is enough; the gap is already part of every toast. */
     &:hover,
     &:focus-within {
-      & > .toast + .toast {
+      & > .pu-toast + .pu-toast {
         margin-block-start: 0;
       }
     }
-  }
-
-  /* TOAST */
-
-  & > .toast {
-    position: relative;
-
-    box-sizing: border-box;
-
-    inline-size: min(var(--toast-max-width, 28rem), 100%);
-
-    flex: 0 0 auto;
-
-    margin-block-start: 0;
-
-    pointer-events: auto;
-
-    opacity: 1;
-    translate: 0 0;
-    scale: 1;
-
-    transition:
-      opacity 180ms ease,
-      translate 320ms cubic-bezier(0.16, 1, 0.3, 1),
-      margin-block-start 280ms cubic-bezier(0.16, 1, 0.3, 1);
-
-    @starting-style {
-      opacity: 0;
-
-      translate: var(--toast-enter-x) var(--toast-enter-y);
-    }
-
-    /*
-     * The space between two toasts belongs to the toast, not to the
-     * container, so the boxes keep touching. Moving the pointer from
-     * one toast to the next then never crosses a dead zone — which
-     * is what an expanded stack depends on, now that the container
-     * itself ignores the pointer.
-     */
-
-    & + .toast {
-      padding-block-start: var(--toast-gap, 0.5rem);
-    }
-
-    & > .pu-alert {
-      inline-size: 100%;
-      max-inline-size: 100%;
-
-      transition: none;
-
-      @starting-style {
-        opacity: 1;
-        translate: 0;
-        scale: 1;
-      }
-    }
-
-    /* STATES */
-
-    &[data-state="closing"] {
-      opacity: 0;
-
-      translate: var(--toast-exit-x) var(--toast-exit-y);
-
-      pointer-events: none;
-
-      transition:
-        opacity 160ms cubic-bezier(0.4, 0, 1, 1),
-        translate 220ms cubic-bezier(0.4, 0, 1, 1);
-    }
-
-    /*
-     * SWIPE
-     *
-     * After the closing state on purpose: a toast thrown out by hand
-     * leaves the way it was thrown, not the way it came in.
-     */
-
-    &[data-swipeable] {
-      cursor: grab;
-
-      /*
-       * Horizontal swipes let the page keep scrolling vertically.
-       * Centered containers take a vertical flick too, so there the
-       * toast has to claim the whole gesture.
-       */
-
-      touch-action: pan-y;
-    }
-
-    &[data-swipe] {
-      translate: var(--toast-swipe-x, 0) var(--toast-swipe-y, 0);
-    }
-
-    &[data-swipe="move"] {
-      cursor: grabbing;
-
-      user-select: none;
-
-      /* Follows the pointer one to one. */
-      transition: none;
-    }
-  }
-
-  &[data-placement$="center"] > .toast[data-swipeable] {
-    touch-action: none;
   }
 
   /* STATES */
@@ -304,33 +198,115 @@
   &:empty {
     display: none;
   }
+}
 
-  /* REDUCED MOTION */
+.pu-toast {
+  /* VARIABLES */
+
+  --toast-max-width: 28rem;
+
+  --toast-enter-x: var(--toast-container-enter-x, 1.5rem);
+  --toast-enter-y: var(--toast-container-enter-y, 0);
+  --toast-exit-x: var(--toast-container-exit-x, 1.5rem);
+  --toast-exit-y: var(--toast-container-exit-y, 0);
+
+  --toast-fade-duration: var(--duration-fast);
+  --toast-enter-duration: var(--duration-medium);
+  --toast-enter-easing: cubic-bezier(0.16, 1, 0.3, 1);
+  --toast-exit-duration: var(--duration-fast);
+  --toast-exit-easing: var(--ease-in);
+
+  /* Written inline by a behaviour layer while the toast is dragged. */
+  --toast-swipe-x: 0;
+  --toast-swipe-y: 0;
+
+  /* BASE */
+
+  position: relative;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+
+  inline-size: min(var(--toast-max-width), 100%);
+  margin-block-start: 0;
+
+  pointer-events: auto;
+
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+
+  transition:
+    opacity var(--toast-fade-duration) ease,
+    translate var(--toast-enter-duration) var(--toast-enter-easing),
+    margin-block-start var(--toast-container-stack-duration, var(--duration-medium))
+      var(--toast-container-stack-easing, var(--toast-enter-easing));
+
+  @starting-style {
+    opacity: 0;
+    translate: var(--toast-enter-x) var(--toast-enter-y);
+  }
+
+  /* The notice itself. Alert's own entrance is switched off so the toast is
+     the only thing that moves. */
+  & > .pu-alert {
+    inline-size: 100%;
+    max-inline-size: 100%;
+
+    transition: none;
+
+    @starting-style {
+      opacity: 1;
+      translate: 0;
+      scale: 1;
+    }
+  }
+
+  /* STATES */
+
+  &[data-state="closing"] {
+    opacity: 0;
+    translate: var(--toast-exit-x) var(--toast-exit-y);
+
+    pointer-events: none;
+
+    transition:
+      opacity var(--toast-exit-duration) var(--toast-exit-easing),
+      translate var(--toast-exit-duration) var(--toast-exit-easing);
+  }
+
+  /* SWIPE — after closing on purpose: a toast thrown out by hand leaves the
+     way it was thrown, not the way it came in. */
+
+  &[data-swipeable] {
+    cursor: grab;
+
+    /* Horizontal swipes let the page keep scrolling vertically. */
+    touch-action: pan-y;
+  }
+
+  &[data-swipe] {
+    translate: var(--toast-swipe-x) var(--toast-swipe-y);
+  }
+
+  &[data-swipe="move"] {
+    cursor: grabbing;
+    user-select: none;
+
+    /* Follows the pointer one to one. */
+    transition: none;
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    & > .toast {
-      transition-duration: 0ms;
+    transition-duration: 0ms;
 
-      @starting-style {
-        opacity: 1;
-        translate: 0;
-      }
-
-      &[data-state="closing"] {
-        opacity: 0;
-        translate: 0;
-
-        transition-duration: 0ms;
-      }
+    @starting-style {
+      opacity: 1;
+      translate: 0;
     }
 
-    &[data-layout="stacked"] {
-      &:hover,
-      &:focus-within {
-        & > .toast + .toast {
-          margin-block-start: 0;
-        }
-      }
+    &[data-state="closing"] {
+      translate: 0;
+      transition-duration: 0ms;
     }
   }
 }

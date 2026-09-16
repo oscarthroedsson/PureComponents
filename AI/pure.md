@@ -115,22 +115,15 @@ Report these. Do not fold them into an unrelated change.
   inheritance, loading follows its host, and toast passes size to the alert
   inside it.
 
-- **Unprefixed part name.** `.toast` in `toast.css` is a bare word. Every other
-  part in the library is namespaced — `card-body`, `alert-title`, `menu-item`.
-
 - **`rounded` means two things, written three ways.** Of the twenty-one files
   with a `rounded` class, nine point it at `--radius-full`, seven at
   `--radius-rounded` (which is the same value), and five at `--radius-lg`:
   `accordion.css`, `alert.css`, `card.css`, `collapsible.css`, `dialog.css`.
   The Form family is the only group that consistently uses the shape token.
 
-- **Variables used but never declared.** `menu.css` and `toast.css` reach
-  several tuning variables through `var(--name, fallback)` without declaring
-  them at the top of the key block, so a reader cannot find them without
-  searching the file. `menu.css`: `--menu-min-width`, `--menu-radius`,
-  `--menu-item-radius`, `--menu-offset`. `toast.css`: `--toast-offset`,
-  `--toast-gap`, `--toast-max-width`, `--toast-stack-overlap`, plus
-  `--toast-swipe-x` and `--toast-swipe-y`, which the behaviour layer writes.
+- **Variables used but never declared.** `progress.css` reaches
+  `--progress-color` and `--progress-track-color` through
+  `var(--name, fallback)` without declaring them at the top of the key block.
 
 - **`nav.css` has no component variables.** Sizes, spacing and colours are
   written straight into the rules, so nothing about it can be tuned from the

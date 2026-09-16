@@ -31,7 +31,7 @@
 
         padding: 0 !important;
 
-        inline-size: min(var(--toast-max-width, 28rem), 100%);
+        inline-size: min(28rem, 100%);
 
         z-index: auto;
       }
@@ -517,7 +517,7 @@
 
       <template>
         <div class="pu-toast-container" data-placement="top-right" data-layout="list" data-preview-inflow>
-          <div class="toast">
+          <div class="pu-toast">
             <div class="pu-alert alert-md" data-intent="success" role="status" aria-atomic="true">
               <div class="alert-icon" aria-hidden="true">
                 <svg
@@ -564,7 +564,7 @@
             </div>
           </div>
 
-          <div class="toast">
+          <div class="pu-toast">
             <div class="pu-alert alert-md" data-intent="info" role="status" aria-atomic="true">
               <div class="alert-content">
                 <p class="alert-title">Heads up</p>

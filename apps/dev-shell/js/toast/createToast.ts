@@ -4,7 +4,7 @@ import type { ResolvedToastAttributes, ToastIntent } from "./types";
 Toast is a placement and motion wrapper around Alert, so this
 builds exactly the markup the two stylesheets expect:
 
-<div class="toast" data-toast-id="…">
+<div class="pu-toast" data-toast-id="…">
   <div class="pu-alert alert-md" data-intent="success" role="status">
     <div class="alert-icon">…</div>
     <div class="alert-content">
@@ -108,7 +108,7 @@ function buildActions(): HTMLElement {
 export function createToast(id: string, attributes: ResolvedToastAttributes): HTMLElement {
   const toast = document.createElement("div");
 
-  toast.className = "toast";
+  toast.className = "pu-toast";
   toast.dataset.toastId = id;
 
   const alert = document.createElement("div");

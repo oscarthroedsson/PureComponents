@@ -3,7 +3,7 @@
 A message that appears, says its piece and leaves. Something that stays on the
 page until it is dealt with is an alert.
 
-A toast is an `.pu-alert` inside a placement and motion wrapper, so everything
+A toast is a `.pu-alert` inside a `.pu-toast`, a motion wrapper,, so everything
 about the notice itself comes from the Alert docs.
 
 ## Two pieces
@@ -105,24 +105,31 @@ a vertical flick too — up from the top, down from the bottom — plus right.
 
 ## Variables
 
-Set these on the container.
+On the container, `.pu-toast-container`:
 
 | Variable | Default | Controls |
 |---|---|---|
-| `--toast-offset` | `1rem` | Distance from the viewport edge. |
-| `--toast-gap` | `0.5rem` | Space between toasts. |
+| `--toast-container-offset` | `var(--spacing-100)` | Distance from the viewport edge. |
+| `--toast-container-gap` | `var(--spacing-50)` | Space between toasts. |
+| `--toast-container-stack-overlap` | `2.75rem` | How far stacked toasts overlap. |
+| `--toast-container-enter-x` / `-y` | per placement | Where its toasts come from. |
+| `--toast-container-exit-x` / `-y` | per placement | Where its toasts go. |
+
+On a toast, `.pu-toast`:
+
+| Variable | Default | Controls |
+|---|---|---|
 | `--toast-max-width` | `28rem` | Toast width cap. |
-| `--toast-enter-x` | `1.5rem` | Where a toast comes from, horizontally. |
-| `--toast-enter-y` | `0` | Where it comes from, vertically. |
-| `--toast-exit-x` | `1.5rem` | Where it goes. |
-| `--toast-exit-y` | `0` | Where it goes. |
+| `--toast-enter-duration` | `var(--duration-medium)` | How long the entry move takes. |
+| `--toast-exit-duration` | `var(--duration-fast)` | How long the exit takes. |
 
 The enter and exit offsets are set per placement already — a left-hand
-container flies in from the left without being told.
+container flies in from the left without being told. A toast reads them from
+its container, so set them there.
 
 ```html
 <div class="pu-toast-container" data-placement="top-right"
-     style="--toast-max-width: 22rem; --toast-offset: 2rem"></div>
+     style="--toast-container-offset: 2rem"></div>
 ```
 
 ## Accessibility
