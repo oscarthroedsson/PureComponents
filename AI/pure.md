@@ -109,15 +109,6 @@ Report these. Do not fold them into an unrelated change.
   the middle shape — `avatar-soft` and `avatar-group-soft` — against `smooth`
   in twenty-one others.
 
-- **List semantics.** WebKit drops the list role from an `<ol>` or `<ul>`
-  styled `list-style: none`. Five keys sit on those elements and all five set
-  it: `.pu-list`, `.pu-nav`, `.pu-breadcrumbs`, `.pu-pagination`, `.pu-menu`.
-  `.pu-avatar-group` is the sixth where the markup is a `<ul>`.
-
-  CSS cannot fix this. `role="list"` in the markup can, and the docs say so on
-  every affected component. **The dev-shell demos do not carry it** — only
-  `Breadcrumbs.html` does. The demos are what people copy.
-
 - **Files with no size vocabulary.** `a-tag.css`, `loading.css`, `toast.css`,
   `swap.css` and `Form/label.css` ship no size classes at all. All five are
   correct: the link, the label and the swap slot take their scale by

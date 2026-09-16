@@ -145,6 +145,12 @@ Prefer native HTML elements:
 - Use `<ul>` or `<ol>` for lists
 - Use `<li>` for list items
 - Don't use lists for layout
+- Put `role="list"` on every `<ul>` or `<ol>` that carries a PureUI key and
+  sets `list-style: none` — `.pu-list`, `.pu-nav`, `.pu-breadcrumbs`,
+  `.pu-pagination`, `.pu-menu`'s `menu-content`, `.pu-avatar-group`. WebKit
+  drops the list role from such a list, and CSS cannot give it back. The
+  component docs and every dev-shell demo carry the attribute, because the
+  demos are what people copy.
 
 ## ARIA Attributes
 
