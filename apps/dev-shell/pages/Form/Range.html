@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Range — Elements</title>
-    <meta name="pc-description" content="A slider, left native on purpose." />
+    <meta
+      name="pc-description"
+      content="A slider on the Form channel. It takes its size, surface and border from the form around it, but it is always a capsule. The fill is painted from --range-value, which a consumer keeps in step with the value."
+    />
 
     <link rel="stylesheet" href="/pureui/styles/main.css" />
     <link rel="stylesheet" href="/pureui/styles/Form/form.css" />
@@ -16,139 +19,153 @@
     <link rel="stylesheet" href="../docs.css" />
   </head>
   <body data-component="Form/Range">
-    <section class="pc-demo" id="basic" data-title="Basic Usage" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">
-        Taken over with <code>appearance: none</code>, which is what buys the track, the shapes
-        and the sizes. The cost is the fill: once the control is ours, Chromium offers no
-        pseudo-element for the filled part, so the track is painted with a gradient that stops at
-        <code>--range-value</code>. That variable does not update itself — the library ships no
-        JavaScript. Left alone the fill sits at 50% while the thumb still moves, works and submits;
-        see the next section for the one line that makes it follow. Always set <code>min</code> and
-        <code>max</code> — without them the range is 0–100 whatever the numbers on screen say, and
-        the announced value is wrong.
+    <section class="pc-doc" id="api" data-title="API">
+      <p>
+        Every key the component answers to. The fill is a gradient that stops at <code>--range-value</code>. CSS
+        cannot read the input's value, so the page keeps that variable in step — one line, shown under
+        <strong>Behavior</strong>. Without it the fill stays at 50% while the thumb still moves, works and submits.
       </p>
-      <template>
-        <div class="pu-field">
-          <label class="pu-label" for="rg-basic">Volume</label>
-          <input id="rg-basic" class="pu-range" type="range" min="0" max="100" value="40" />
-        </div>
-      </template>
+      <div class="pc-doc-table">
+        <table>
+          <thead><tr><th>Key</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+          <tr><td><code>.pu-range</code></td><td><span class="pc-cat pc-cat-key"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 14v4.4a.6.6 0 0 0 .6.6H10m9-5v4.4a.6.6 0 0 1-.6.6H14m0-14h4.4a.6.6 0 0 1 .6.6V10M4 10V5.6a.6.6 0 0 1 .6-.6H10m4 14v1a2 2 0 1 1-4 0v-1m-6-9h1a2 2 0 1 1 0 4H4m15-4h1a2 2 0 1 1 0 4h-1m-5-9V4a2 2 0 1 0-4 0v1"/></svg>Key</span></td><td>The key. Requires <code>&lt;input type="range"&gt;</code>.</td></tr>
+          <tr><td><code>range-sm</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>12px type scale. Track, fill and thumb follow.</td></tr>
+          <tr><td><code>range-md</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>The default. The base already gives this.</td></tr>
+          <tr><td><code>range-lg</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>16px type scale.</td></tr>
+          <tr><td><code>:hover</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>The track border and the thumb darken.</td></tr>
+          <tr><td><code>aria-invalid="true"</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Border and thumb turn to the error colour. <code>:user-invalid</code> does the same.</td></tr>
+          <tr><td><code>disabled</code></td><td><span class="pc-cat pc-cat-state"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3-9l6 18l3-9h3"/></svg>State</span></td><td>Track, fill and thumb go muted.</td></tr>
+          <tr><td><code>--range-value</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>How far the fill reaches, as a percentage. <strong>Set it from your script.</strong></td></tr>
+          <tr><td><code>--range-fill</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>The filled part. Primary by default.</td></tr>
+          <tr><td><code>--range-track-size</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Overall height, <code>1.15em</code>. Fill and thumb derive from it.</td></tr>
+          <tr><td><code>--range-track-color</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>The track. Reads <code>--form-surface</code>.</td></tr>
+          <tr><td><code>--range-border-color</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>The track border. Reads <code>--form-border-color</code>.</td></tr>
+          <tr><td><code>--range-thumb-color</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>The thumb.</td></tr>
+          <tr><td><code>--range-thumb-size</code></td><td><span class="pc-cat pc-cat-variables">Variables</span></td><td>Thumb size, three quarters of the track.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="pc-doc-dim">
+        No <strong>Shape</strong>: a range is always a capsule, the way a radio is always a circle, so
+        <code>--form-radius</code> is not read. Always set <code>min</code> and <code>max</code>; without them the
+        announced value is wrong.
+      </p>
     </section>
 
-    <section class="pc-demo" id="fill" data-title="Making the fill follow" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">
-        One line of consumer JavaScript. The library cannot ship it — see
-        <code>AGENTS.md</code> §1 — but without it the fill is decoration that stands still. The
-        control is correct either way; only the paint needs the script.
-      </p>
+    <section class="pc-demo" id="default" data-title="Default" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">The key and a label. Every demo on this page keeps its fill in step through the page script under <strong>Behavior</strong>.</p>
       <template>
         <div class="pu-field">
-          <label class="pu-label" for="rg-fill">Volume — drag it</label>
-          <input id="rg-fill" class="pu-range range-primary" type="range" min="0" max="100" value="40"
-                 style="--range-value: 40%"
-                 oninput="this.style.setProperty('--range-value', (this.value / this.max * 100) + '%')" />
-        </div>
-        <div class="pu-field">
-          <label class="pu-label" for="rg-nofill">The same slider without it</label>
-          <input id="rg-nofill" class="pu-range range-primary" type="range" min="0" max="100" value="40" />
-        </div>
-      </template>
-    </section>
-
-    <section class="pc-demo" id="variants" data-title="Variants" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">
-        Neutral by default, so a slider does not shout in a form full of quiet controls.
-        <code>range-primary</code> puts the brand green on the line and on the thumb.
-      </p>
-      <template>
-        <div class="pu-field">
-          <label class="pu-label" for="rg-default">Default — neutral</label>
-          <input id="rg-default" class="pu-range" type="range" min="0" max="100" value="40" />
-        </div>
-        <div class="pu-field">
-          <label class="pu-label" for="rg-primary">Primary</label>
-          <input id="rg-primary" class="pu-range range-primary" type="range" min="0" max="100" value="40" />
+          <label class="pu-label" for="rg-default">Volume</label>
+          <input id="rg-default" class="pu-range" type="range" min="0" max="100" value="40" style="--range-value: 40%" />
         </div>
       </template>
     </section>
 
     <section class="pc-demo" id="sizes" data-title="Sizes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">
-        <code>zoom</code>, because nothing else reaches a native control — <code>font-size</code>
-        does nothing to a range, and <code>block-size</code> only makes the box taller while the
-        track stays where it was. <code>zoom</code> scales the whole thing, track and thumb included,
-        and it changes the layout box so the form reflows around it. <code>transform: scale</code>
-        would resize the picture and let the slider spill out of its column.
-      </p>
+      <p class="pc-note">Size moves the type scale. The track, the fill and the thumb are measured from it, so they move together.</p>
       <template>
         <div class="pu-field">
           <label class="pu-label" for="rg-sm">Small</label>
-          <input id="rg-sm" class="pu-range range-sm" type="range" min="0" max="100" value="40" />
+          <input id="rg-sm" class="pu-range range-sm" type="range" min="0" max="100" value="40" style="--range-value: 40%" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rg-md">Medium</label>
-          <input id="rg-md" class="pu-range range-md" type="range" min="0" max="100" value="40" />
+          <input id="rg-md" class="pu-range range-md" type="range" min="0" max="100" value="40" style="--range-value: 40%" />
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rg-lg">Large</label>
-          <input id="rg-lg" class="pu-range range-lg" type="range" min="0" max="100" value="40" />
+          <input id="rg-lg" class="pu-range range-lg" type="range" min="0" max="100" value="40" style="--range-value: 40%" />
         </div>
       </template>
     </section>
 
-    <section class="pc-demo" id="shapes" data-title="Shapes" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">
-        One class shapes both surfaces: the capsule and the fill inside it.
-        <code>range-smooth</code> gives the fill a tighter radius than the capsule, because the fill is
-        half the height and the same radius would read as a pill there.
-      </p>
+    <section class="pc-demo" id="forms" data-title="Forms" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">A range with no size class takes its size from the form. It ignores the form's shape.</p>
       <template>
+        <form class="pu-form form-sm">
         <div class="pu-field">
-          <label class="pu-label" for="rg-sharp">Sharp</label>
-          <input id="rg-sharp" class="pu-range range-sharp" type="range" min="0" max="100" value="40" />
+          <label class="pu-label" for="rg-form-sm">Inside .form-sm</label>
+          <input id="rg-form-sm" class="pu-range" type="range" min="0" max="100" value="40" style="--range-value: 40%" />
         </div>
+        </form>
+        <form class="pu-form form-lg">
         <div class="pu-field">
-          <label class="pu-label" for="rg-smooth">Smooth</label>
-          <input id="rg-smooth" class="pu-range range-smooth" type="range" min="0" max="100" value="40" />
+          <label class="pu-label" for="rg-form-lg">Inside .form-lg</label>
+          <input id="rg-form-lg" class="pu-range" type="range" min="0" max="100" value="40" style="--range-value: 40%" />
         </div>
+        </form>
+        <form class="pu-form form-sharp">
         <div class="pu-field">
-          <label class="pu-label" for="rg-rounded">Rounded</label>
-          <input id="rg-rounded" class="pu-range range-rounded" type="range" min="0" max="100" value="40" />
+          <label class="pu-label" for="rg-form-sharp">Inside .form-sharp — still a capsule</label>
+          <input id="rg-form-sharp" class="pu-range" type="range" min="0" max="100" value="40" style="--range-value: 40%" />
         </div>
-        <div class="pu-field">
-          <label class="pu-label" for="rg-thick">A thicker track — --range-track-size</label>
-          <input id="rg-thick" class="pu-range range-primary range-rounded" type="range" min="0" max="100" value="40"
-                 style="--range-track-size: 0.6rem" />
-        </div>
+        </form>
       </template>
     </section>
 
     <section class="pc-demo" id="states" data-title="States" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
-      <p class="pc-note">
-        A range is announced as a slider with a number. If the number means something — kronor,
-        minutes, a percentage — say so with <code>aria-valuetext</code>; CSS cannot. And never make a
-        slider the only way to enter a value that has to be exact: pair it with a number field when
-        precision matters.
-      </p>
+      <p class="pc-note">Invalid is reached through <code>aria-invalid</code>, because a range always has a value and <code>:user-invalid</code> rarely fires. Hover darkens the thumb, except when the range is invalid or disabled.</p>
       <template>
         <div class="pu-field">
           <label class="pu-label" for="rg-normal">Normal</label>
-          <input id="rg-normal" class="pu-range" type="range" min="0" max="100" value="40" />
+          <input id="rg-normal" class="pu-range" type="range" min="0" max="100" value="40" style="--range-value: 40%" />
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="rg-invalid">Invalid</label>
+          <input id="rg-invalid" class="pu-range" type="range" min="0" max="100" value="40" style="--range-value: 40%" aria-invalid="true" aria-describedby="rg-invalid-error" />
+          <p class="pu-field-error" id="rg-invalid-error">Pick a value above 50.</p>
         </div>
         <div class="pu-field">
           <label class="pu-label" for="rg-disabled">Disabled</label>
-          <input id="rg-disabled" class="pu-range" type="range" min="0" max="100" value="40" disabled />
-        </div>
-        <div class="pu-field">
-          <label class="pu-label" for="rg-paired">Paired with a number field</label>
-          <div style="display:flex; gap:0.75rem; align-items:center">
-            <input id="rg-paired" class="pu-range" type="range" min="0" max="100" value="40" />
-            <input class="pu-input" type="number" min="0" max="100" value="40" style="inline-size:5rem" aria-label="Volume, exact" />
-          </div>
+          <input id="rg-disabled" class="pu-range" type="range" min="0" max="100" value="40" style="--range-value: 40%" disabled />
         </div>
       </template>
     </section>
 
+    <section class="pc-demo" id="behavior" data-title="Behavior" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">The fill follows the thumb because this page runs one line for every <code>.pu-range</code>: <code>input.style.setProperty(&quot;--range-value&quot;, percent + &quot;%&quot;)</code>. The library cannot ship it. Without it the second slider below keeps its fill at the starting value while the thumb moves.</p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="rg-follow">With the page script</label>
+          <input id="rg-follow" class="pu-range" type="range" min="0" max="100" value="40" style="--range-value: 40%" />
+        </div>
+        <div class="pu-field">
+          <label class="pu-label" for="rg-still">Without it</label>
+          <input id="rg-still" class="pu-range" type="range" min="0" max="100" value="40" style="--range-value: 40%" />
+        </div>
+      </template>
+    </section>
+
+    <section class="pc-doc" id="other" data-title="Other">
+      <p>Everything below is outside the fixed section vocabulary.</p>
+    </section>
+
+    <section class="pc-demo" id="paired" data-title="Paired With a Number" data-stage-style="display:grid; gap:1rem; max-width:26rem;">
+      <p class="pc-note">
+        Never make a slider the only way to enter a value that has to be exact. If the number means something —
+        kronor, minutes, a percentage — say so with <code>aria-valuetext</code>; CSS cannot.
+      </p>
+      <template>
+        <div class="pu-field">
+          <label class="pu-label" for="rg-paired">Volume</label>
+          <input id="rg-paired" class="pu-range" type="range" min="0" max="100" value="40" style="--range-value: 40%" aria-valuetext="40 percent" />
+          <input class="pu-input" type="number" min="0" max="100" value="40" aria-label="Volume, exact" />
+        </div>
+      </template>
+    </section>
+
+    <script>
+      /* Dev shell only: keeps every slider's fill in step with its value. */
+      document.addEventListener("input", function (event) {
+        var input = event.target;
+        if (!input.matches || !input.matches(".pu-range") || input.id === "rg-still") return;
+        var min = Number(input.min || 0);
+        var max = Number(input.max || 100);
+        input.style.setProperty("--range-value", ((input.value - min) / (max - min)) * 100 + "%");
+      });
+    </script>
     <script src="../components.js"></script>
     <script src="../docs.js"></script>
   </body>

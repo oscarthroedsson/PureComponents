@@ -13,19 +13,22 @@
 The type is part of the requirement. Only a real range gives the drag, the
 arrow keys, Home and End, and the value announcement.
 
-## Everything derives from one variable
+## Everything derives from the type size
 
 ```css
---range-track-size: 1rem;
+--range-font-size: var(--form-font-size, var(--font-size-md));
+--range-track-size: 1.15em;
 
 --range-track-padding-block: calc(var(--range-track-size) * 0.25);
 --range-track-padding-inline: calc(var(--range-track-size) * 0.5);
---range-fill-size: calc(var(--range-track-size) - 2 * var(--range-track-padding-block));
+--range-fill-size: calc(var(--range-track-size) - 2 * var(--range-track-padding-block) - 2 * var(--range-border-width));
 --range-thumb-size: calc(var(--range-track-size) * 0.75);
 ```
 
-So the three size classes move one property each and the whole control scales
-in proportion.
+`font: inherit` and `font-size: var(--range-font-size)` on the key make the
+`em` mean the form's type, so a size class on the `.pu-form` reaches the
+slider. `1.15em` is the checkbox's size, so a range and a checkbox in the same
+form share a height. The size classes move `--range-font-size` only.
 
 ## `--range-value` cannot be computed here
 
@@ -69,42 +72,38 @@ runnable track carries the gradient inside it, inset by the key's padding.
 That is why there are two radius variables: `--range-track-radius` for the
 outer groove and `--range-fill-radius` for the bar inside it.
 
-`range-smooth` is the only shape that sets them differently — `--radius-sm`
-outside, `--radius-xs` inside — because a small fill inside a small groove
-needs the tighter corner to stay concentric.
+Both default to `--radius-rounded`. There are no shape classes: a range is
+always a capsule, and `--form-radius` is deliberately not read, so a
+`.pu-form.form-sharp` leaves it round.
 
 ## Invalid comes before `:disabled`
 
 Same specificity, so source order decides, and a disabled control must not
 read as wrong.
 
-A range has no border to turn red, so the thumb carries it — the part that
-answers for the value.
+The border and the thumb both turn red; the thumb is the part that answers for
+the value. Hover skips an invalid range so the error colour does not flicker
+back to primary under the pointer.
 
 `:user-invalid` rarely fires here, because a range always has a value, so
 `[aria-invalid]` is the path that matters. Colour is never the only signal: the
 `.pu-field-error` appears and `aria-invalid` is what assistive technology
 hears.
 
-## Where it departs from the family
+## Disabled keeps the value visible
 
-- **It does not read the channel.** Every other control in the Form family
-  takes its colours, border and radius from `--form-*` with a fallback. This
-  file uses library tokens directly, so a `.pu-form.form-rounded` or a custom
-  `--form-surface` does not reach it.
-- **No `:hover` state.** Every other control darkens its border on hover.
-- **No `prefers-reduced-motion` block.** There are no transitions in the file,
-  so nothing needs removing — but there are also no transitions on the thumb,
-  which every other control has on its colours.
-- **`range-primary`** is an emphasis word that no other component uses.
-  `secondary`, `tertiary`, `ghost` and `outline` are the shared vocabulary.
+The track goes to `--color-surface-muted`, which is the same step as
+`--color-border`. Fill and thumb use `--color-border-strong` instead, or the
+disabled slider would be one flat grey bar with no value in it.
+
+## No motion
+
+There are no transitions in the file, so there is no reduced-motion block.
 
 ## Order inside the block
 
-1. Variables
+1. Variables — the channel first
 2. Base
 3. Vendor pseudo-elements, one rule each
 4. Size
-5. Colour variant
-6. Shape
-7. States
+5. States — hover, invalid, disabled, forced colours

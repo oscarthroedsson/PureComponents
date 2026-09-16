@@ -1,35 +1,66 @@
-.pu-range:where(input[type="range"]) {
-  --range-fill: var(--color-border);
-  --range-value: 50%;
+/*
+Range — a slider on the Form channel.
 
-  --range-track-size: 1rem;
-  --range-track-color: var(--color-surface-muted);
-  --range-track-radius: var(--radius-full);
-  --range-fill-radius: var(--range-track-radius);
+It reads the channel's type size, surface and border like every other control,
+so a .pu-form.form-sm makes it smaller. It does not read --form-radius: a
+range is always a capsule, the way a radio is always a circle.
+
+The filled part of the track is painted from --range-value, which CSS cannot
+compute from the input's value. A consumer sets it; without it the fill stays
+at 50% while the thumb still moves, works and submits.
+*/
+.pu-range:where(input[type="range"]) {
+  /* 1. VARIABLES — the channel first, each with its own fallback. */
+  --range-font-size: var(--form-font-size, var(--font-size-md));
+  --range-track-color: var(--form-surface, var(--color-surface-sunken));
+  --range-border-width: var(--form-border-width, 1px);
+  --range-border-color: var(--form-border-color, var(--color-border-strong));
+
+  --range-value: 50%;
+  --range-fill: var(--color-primary);
+
+  /* Everything below is measured from the track, and the track from the
+     type size, so one size class moves all of it. */
+  --range-track-size: 1.15em;
+  --range-track-radius: var(--radius-rounded);
   --range-track-padding-block: calc(var(--range-track-size) * 0.25);
   --range-track-padding-inline: calc(var(--range-track-size) * 0.5);
 
   --range-fill-size: calc(
-    var(--range-track-size) - 2 * var(--range-track-padding-block)
+    var(--range-track-size) - 2 * var(--range-track-padding-block) - 2 * var(--range-border-width)
   );
+  --range-fill-radius: var(--range-track-radius);
 
   --range-thumb-size: calc(var(--range-track-size) * 0.75);
-  --range-thumb-color: var(--color-border-strong);
+  --range-thumb-color: var(--color-primary);
   --range-thumb-border-width: 1px;
-  --range-thumb-border-color: var(--color-border-strong);
+  --range-thumb-border-color: color-mix(in oklab, var(--color-primary), var(--color-shade) 25%);
 
+  /* 2. BASE */
   appearance: none;
   box-sizing: border-box;
+
+  /* A form control does not inherit the page's font. Without this the em
+     above would be em of the browser's own size, and a size class on the
+     .pu-form would never reach the slider. */
+  font: inherit;
+  font-size: var(--range-font-size);
+
   inline-size: 100%;
   block-size: var(--range-track-size);
   margin: 0;
-  border: none;
   padding-block: var(--range-track-padding-block);
   padding-inline: var(--range-track-padding-inline);
-  border-radius: var(--range-track-radius);
+
   background-color: var(--range-track-color);
+  border: var(--range-border-width) solid var(--range-border-color);
+  border-radius: var(--range-track-radius);
+
   cursor: pointer;
 
+  /* The fill. Chromium offers no pseudo-element for the filled part once
+     appearance is none, so the inner track is a gradient that stops at
+     --range-value. */
   &::-webkit-slider-runnable-track {
     block-size: var(--range-fill-size);
     border-radius: var(--range-fill-radius);
@@ -55,12 +86,9 @@
     box-sizing: border-box;
     inline-size: var(--range-thumb-size);
     block-size: var(--range-thumb-size);
-    margin-block-start: calc(
-      (var(--range-fill-size) - var(--range-thumb-size)) / 2
-    );
-    border: var(--range-thumb-border-width) solid
-      var(--range-thumb-border-color);
-    border-radius: var(--radius-full);
+    margin-block-start: calc((var(--range-fill-size) - var(--range-thumb-size)) / 2);
+    border: var(--range-thumb-border-width) solid var(--range-thumb-border-color);
+    border-radius: var(--radius-rounded);
     background-color: var(--range-thumb-color);
   }
 
@@ -68,54 +96,58 @@
     box-sizing: border-box;
     inline-size: var(--range-thumb-size);
     block-size: var(--range-thumb-size);
-    border: var(--range-thumb-border-width) solid
-      var(--range-thumb-border-color);
-    border-radius: var(--radius-full);
+    border: var(--range-thumb-border-width) solid var(--range-thumb-border-color);
+    border-radius: var(--radius-rounded);
     background-color: var(--range-thumb-color);
   }
 
+  /* 3. SIZE — the same scale as .pu-form: 12 / 14 / 16px. */
   &.range-sm {
-    --range-track-size: 0.75rem;
+    --range-font-size: var(--font-size-sm);
   }
   &.range-md {
-    --range-track-size: 1rem;
+    /* base is already md */
   }
   &.range-lg {
-    --range-track-size: 1.25rem;
+    --range-font-size: var(--font-size-base);
   }
 
-  &.range-primary {
-    --range-fill: var(--color-primary);
-    --range-thumb-color: var(--color-primary);
-    --range-thumb-border-color: color-mix(in oklab, var(--color-primary), var(--color-shade) 25%);
+  /* 4. SHAPE — none. A range is always a capsule; --form-radius is not read,
+     so a .pu-form.form-sharp leaves it round. */
+
+  /* 5. STATES */
+  &:hover:not(:disabled, :user-invalid, [aria-invalid="true"]) {
+    --range-border-color: color-mix(in oklab, var(--color-border-strong), var(--shade-hover));
+    --range-thumb-color: var(--color-primary-hover);
   }
 
-  &.range-sharp {
-    --range-track-radius: var(--radius-sharp);
-  }
-  &.range-smooth {
-    --range-track-radius: var(--radius-sm);
-    --range-fill-radius: var(--radius-xs);
-  }
-  &.range-rounded {
-    --range-track-radius: var(--radius-full);
-  }
-
-  /* A range has no border to turn red, so the thumb carries it — the part
-     that answers for the value. Before :disabled on purpose: same specificity,
-     so source order decides, and a disabled control must not read as wrong.
-     :user-invalid rarely fires here (a range always has a value), so
-     [aria-invalid] is the path that matters. Colour is never the only signal:
-     the .pu-field-error appears and aria-invalid is what assistive tech hears. */
+  /* A range has no field border worth turning red on its own, so the thumb
+     carries it too — the part that answers for the value. Before :disabled on
+     purpose: same specificity, so source order decides, and a disabled
+     control must not read as wrong. :user-invalid rarely fires here (a range
+     always has a value), so [aria-invalid] is the path that matters. Colour is
+     never the only signal: the .pu-field-error appears and aria-invalid is
+     what assistive tech hears. */
   &:is(:user-invalid, [aria-invalid="true"]) {
+    --range-border-color: var(--color-error);
     --range-thumb-color: var(--color-error);
     --range-thumb-border-color: var(--color-error);
   }
 
+  /* Muted, but the value still shows: the fill and thumb stay a step
+     darker than the track. */
   &:disabled {
-    --range-fill: var(--color-border);
-    --range-thumb-color: var(--color-border);
-    --range-thumb-border-color: var(--color-border);
+    --range-track-color: var(--color-surface-muted);
+    --range-border-color: var(--color-border);
+    --range-fill: var(--color-border-strong);
+    --range-thumb-color: var(--color-border-strong);
+    --range-thumb-border-color: var(--color-border-strong);
     cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    --range-fill: Highlight;
+    --range-thumb-color: ButtonText;
+    --range-thumb-border-color: ButtonText;
   }
 }

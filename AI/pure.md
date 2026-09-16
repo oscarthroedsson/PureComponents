@@ -129,12 +129,6 @@ Report these. Do not fold them into an unrelated change.
   written straight into the rules, so nothing about it can be tuned from the
   markup. It also uses `transition: all` and has no reduced-motion block.
 
-- **`Form/range.css` sits outside the Form channel.** Every other control reads
-  `--form-*` with a fallback; this one uses library tokens directly, so a
-  `.pu-form.form-rounded` or a custom surface never reaches it. It has no
-  `:hover` state, and `range-primary` is an emphasis word no other component
-  uses.
-
 - **"Demos only" is wrong in two places.** `pure.md` under Dev shell and
   `css-file.md` step 4 both say a component page holds nothing but its demos.
   `AI/PureUI/doc-page.md` says the page has four parts in order — title and
