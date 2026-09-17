@@ -1,23 +1,20 @@
 /*
- * Page layout for the Storage demo — the app shell and the file columns.
+ * Page layout for the Storage demo.
  *
- * Nothing here styles a component. Every surface, spacing and state inside
- * the shell comes from PureUI classes and attributes; what the library
- * cannot do, the demo does not do either.
+ * Only placement lives here, by id. Surfaces, borders, spacing, scrolling and
+ * states all come from PureUI: the frame is a Card, the rules are Separators,
+ * the scroll areas are Overflow, the padding is Box.
  */
 
-.storage-demo {
+/* The page: the app frame centred on a sunken ground. */
+#page {
   min-block-size: 100vh;
-  margin: 0;
-  padding: var(--spacing-200);
-
-  display: grid;
-  place-items: center;
-
   background-color: var(--color-surface-sunken);
 }
 
-.storage-app {
+/* The app frame: sidebar on the left, toolbar over the main area, a rule
+   between each. */
+#app-shell {
   inline-size: calc(100vw - (var(--spacing-200) * 2));
   min-inline-size: 72rem;
   max-inline-size: 94rem;
@@ -27,43 +24,36 @@
   max-block-size: 58rem;
 
   display: grid;
-  grid-template-columns: 15rem minmax(35rem, 1fr);
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: 15rem auto minmax(35rem, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
   grid-template-areas:
-    "sidebar toolbar"
-    "sidebar content";
-
-  overflow: hidden;
-
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background-color: var(--color-surface);
-  box-shadow: var(--shadow-lg);
+    "sidebar divider toolbar"
+    "sidebar divider rule"
+    "sidebar divider main";
 }
 
-.storage-sidebar {
+#app-sidebar {
   grid-area: sidebar;
-  min-block-size: 0;
-  overflow-y: auto;
-
-  border-inline-end: 1px solid var(--color-border);
-  background-color: var(--color-surface-raised);
 }
 
-.storage-toolbar {
+#app-divider {
+  grid-area: divider;
+}
+
+#app-toolbar {
   grid-area: toolbar;
-
-  border-block-end: 1px solid var(--color-border);
-  background-color: var(--color-surface-raised);
 }
 
-.storage-content {
-  grid-area: content;
-  min-block-size: 0;
-  overflow: auto;
+#app-rule {
+  grid-area: rule;
 }
 
-.storage-files {
+#app-main {
+  grid-area: main;
+}
+
+/* Files in three equal columns. */
+#file-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--spacing-100);

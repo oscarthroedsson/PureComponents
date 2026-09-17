@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="./Storage.css" />
   </head>
 
-  <body class="storage-demo">
-    <div class="storage-app">
-      <aside class="storage-sidebar pu-box box-md" aria-label="Storage navigation" data-direction="vertical" data-layout="start-between" data-gap="md">
+  <body id="page" class="pu-box box-xl" data-layout="center-center">
+    <div id="app-shell" class="pu-card card-elevated">
+      <aside id="app-sidebar" class="pu-box box-md pu-overflow overflow-y" aria-label="Storage navigation" data-direction="vertical" data-layout="start-between" data-gap="md">
         <div data-direction="vertical" data-layout="start-top" data-gap="md" data-behavior="inline-expand">
           <header data-layout="center-start" data-gap="sm">
             <span class="pu-avatar avatar-md avatar-smooth" aria-hidden="true">PS</span>
@@ -132,7 +132,9 @@
         </footer>
       </aside>
 
-      <header class="storage-toolbar pu-box box-lg" data-layout="center-between" data-gap="lg">
+      <hr id="app-divider" class="pu-separator separator-vertical" aria-orientation="vertical" />
+
+      <header id="app-toolbar" class="pu-box box-lg" data-layout="center-between" data-gap="lg">
         <h1 class="storage-heading">Storage</h1>
         <span class="pu-input-group" data-behavior="expand">
           <svg class="input-icon" data-placement="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -146,7 +148,9 @@
         </button>
       </header>
 
-      <main class="storage-content pu-box box-lg">
+      <hr id="app-rule" class="pu-separator" />
+
+      <main id="app-main" class="pu-box box-lg pu-overflow overflow-y">
         <section id="recent-files" aria-labelledby="recent-files-title" data-direction="vertical" data-layout="start-top" data-gap="md">
           <h2 id="recent-files-title" class="storage-section-title">Recent files</h2>
 
@@ -170,7 +174,7 @@
 
             <div class="tabs-content">
               <div class="tabs-panel" id="view-grid-panel" role="region" aria-label="Files as a grid">
-                <div class="storage-files">
+                <div id="file-grid">
                   <article id="shared-file" class="pu-card card-sm" data-interactive>
                     <header class="card-header" data-layout="center-between" data-gap="sm">
                       <span class="pu-badge badge-sm">PDF</span>
