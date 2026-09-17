@@ -68,3 +68,26 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--spacing-100);
 }
+
+/*
+ * Text. PureUI ships no text classes — names like text-sm would collide with
+ * Tailwind — so the page sizes its own type.
+ */
+
+.storage-heading {
+  font-size: var(--font-size-base);
+}
+
+.storage-section-title {
+  font-size: var(--font-size-lg);
+}
+
+.storage-text-strong {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.storage-text-muted {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}

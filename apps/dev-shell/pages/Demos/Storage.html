@@ -14,14 +14,13 @@
     <div class="storage-app">
       <aside class="storage-sidebar pu-box box-md" aria-label="Storage navigation" data-direction="vertical" data-layout="start-between" data-gap="md">
         <div data-direction="vertical" data-layout="start-top" data-gap="md" data-behavior="inline-expand">
-          <div data-layout="center-start" data-gap="sm">
+          <header data-layout="center-start" data-gap="sm">
             <span class="pu-avatar avatar-md avatar-smooth" aria-hidden="true">PS</span>
-            <div>
-              <strong>Pure Storage</strong>
-              <br />
-              <small>Personal workspace</small>
-            </div>
-          </div>
+            <p data-direction="vertical" data-layout="start-top">
+              <strong class="storage-text-strong">Pure Storage</strong>
+              <small class="storage-text-muted">Personal workspace</small>
+            </p>
+          </header>
 
           <nav aria-label="Files" data-behavior="inline-expand">
             <div class="pu-menu menu-md menu-inline menu-indent-none">
@@ -112,8 +111,8 @@
           </nav>
         </div>
 
-        <div data-direction="vertical" data-layout="start-top" data-gap="sm" data-behavior="inline-expand">
-          <div class="pu-card card-sm card-outline" data-behavior="inline-expand">
+        <footer data-direction="vertical" data-layout="start-top" data-gap="sm" data-behavior="inline-expand">
+          <article class="pu-card card-sm card-outline" aria-label="Storage usage" data-behavior="inline-expand">
             <div class="card-body">
               <div class="pu-meter-wrapper">
                 <label class="meter-label" for="storage-usage">8.2 GB of 15 GB</label>
@@ -121,21 +120,20 @@
                 <meter id="storage-usage" class="pu-meter meter-sm" value="55" min="0" max="100" low="70" high="90" optimum="30"></meter>
               </div>
             </div>
-          </div>
+          </article>
           <hr class="pu-separator" data-behavior="inline-expand" />
-          <div data-layout="center-start" data-gap="sm">
+          <p data-layout="center-start" data-gap="sm">
             <span class="pu-avatar avatar-sm avatar-rounded" aria-hidden="true">OT</span>
-            <div>
-              <strong>Oscar Throedsson</strong>
-              <br />
-              <small>Free plan</small>
-            </div>
-          </div>
-        </div>
+            <span data-direction="vertical" data-layout="start-top">
+              <strong class="storage-text-strong">Oscar Throedsson</strong>
+              <small class="storage-text-muted">Free plan</small>
+            </span>
+          </p>
+        </footer>
       </aside>
 
       <header class="storage-toolbar pu-box box-lg" data-layout="center-between" data-gap="lg">
-        <h1>Storage</h1>
+        <h1 class="storage-heading">Storage</h1>
         <span class="pu-input-group" data-behavior="expand">
           <svg class="input-icon" data-placement="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <circle cx="11" cy="11" r="7" />
@@ -150,7 +148,7 @@
 
       <main class="storage-content pu-box box-lg">
         <section id="recent-files" aria-labelledby="recent-files-title" data-direction="vertical" data-layout="start-top" data-gap="md">
-          <h2 id="recent-files-title">Recent files</h2>
+          <h2 id="recent-files-title" class="storage-section-title">Recent files</h2>
 
           <fieldset class="pu-tabs tabs-sm" data-behavior="inline-expand">
             <legend class="tabs-legend">Display format</legend>
@@ -362,10 +360,10 @@
                   <li class="pu-list-item list-item-sm" data-interactive data-layout="center-between" data-gap="md">
                     <div data-layout="center-start" data-gap="sm">
                       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /></svg>
-                      <div>
+                      <p data-direction="vertical" data-layout="start-top">
                         <button class="list-item-action list-item-title" type="button" command="show-modal" commandfor="file-preview">PureUI accessibility audit.pdf</button>
-                        <p class="list-item-text">PDF · 2.3 MB</p>
-                      </div>
+                        <span class="list-item-text">PDF · 2.3 MB</span>
+                      </p>
                     </div>
                     <div data-layout="center-end" data-gap="sm">
                       <ul class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded" role="list" data-layout="stacked" data-motion="expand-left" data-motion-on="hover focus-within" data-motion-scope="children" aria-label="Shared with PureUI, PureComponents and PureFramework">
@@ -390,10 +388,10 @@
                   <li class="pu-list-item list-item-sm" data-interactive data-layout="center-between" data-gap="md">
                     <div data-layout="center-start" data-gap="sm">
                       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /></svg>
-                      <div>
+                      <p data-direction="vertical" data-layout="start-top">
                         <button class="list-item-action list-item-title" type="button" command="show-modal" commandfor="file-preview">Storage dashboard.fig</button>
-                        <p class="list-item-text">FIG · 18.6 MB</p>
-                      </div>
+                        <span class="list-item-text">FIG · 18.6 MB</span>
+                      </p>
                     </div>
                     <div data-layout="center-end" data-gap="sm">
                       <ul class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded" role="list" data-layout="stacked" data-motion="expand-left" data-motion-on="hover focus-within" data-motion-scope="children" aria-label="Shared with PureComponents, PureFramework and PureUI">
@@ -418,10 +416,10 @@
                   <li class="pu-list-item list-item-sm" data-interactive data-layout="center-between" data-gap="md">
                     <div data-layout="center-start" data-gap="sm">
                       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /></svg>
-                      <div>
+                      <p data-direction="vertical" data-layout="start-top">
                         <button class="list-item-action list-item-title" type="button" command="show-modal" commandfor="file-preview">Component walkthrough.mp4</button>
-                        <p class="list-item-text">MP4 · 446.4 MB</p>
-                      </div>
+                        <span class="list-item-text">MP4 · 446.4 MB</span>
+                      </p>
                     </div>
                     <div data-layout="center-end" data-gap="sm">
                       <ul class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded" role="list" data-layout="stacked" data-motion="expand-left" data-motion-on="hover focus-within" data-motion-scope="children" aria-label="Shared with PureComponents">
@@ -444,10 +442,10 @@
                   <li class="pu-list-item list-item-sm" data-interactive data-layout="center-between" data-gap="md">
                     <div data-layout="center-start" data-gap="sm">
                       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /></svg>
-                      <div>
+                      <p data-direction="vertical" data-layout="start-top">
                         <button class="list-item-action list-item-title" type="button" command="show-modal" commandfor="file-preview">PureUI component inventory.docx</button>
-                        <p class="list-item-text">DOCX · 5.7 MB</p>
-                      </div>
+                        <span class="list-item-text">DOCX · 5.7 MB</span>
+                      </p>
                     </div>
                     <div data-layout="center-end" data-gap="sm">
                       <ul class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded" role="list" data-layout="stacked" data-motion="expand-left" data-motion-on="hover focus-within" data-motion-scope="children" aria-label="Shared with PureUI and PureComponents">
@@ -471,10 +469,10 @@
                   <li class="pu-list-item list-item-sm" data-interactive data-layout="center-between" data-gap="md">
                     <div data-layout="center-start" data-gap="sm">
                       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /></svg>
-                      <div>
+                      <p data-direction="vertical" data-layout="start-top">
                         <button class="list-item-action list-item-title" type="button" command="show-modal" commandfor="file-preview">Release checklist.xlsx</button>
-                        <p class="list-item-text">XLSX · 1.6 MB</p>
-                      </div>
+                        <span class="list-item-text">XLSX · 1.6 MB</span>
+                      </p>
                     </div>
                     <div data-layout="center-end" data-gap="sm">
                       <ul class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded" role="list" data-layout="stacked" data-motion="expand-left" data-motion-on="hover focus-within" data-motion-scope="children" aria-label="Shared with PureComponents and PureFramework">
@@ -498,10 +496,10 @@
                   <li class="pu-list-item list-item-sm" data-interactive data-layout="center-between" data-gap="md">
                     <div data-layout="center-start" data-gap="sm">
                       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-10Z" /></svg>
-                      <div>
+                      <p data-direction="vertical" data-layout="start-top">
                         <button class="list-item-action list-item-title" type="button" command="show-modal" commandfor="file-preview">Mascot assets</button>
-                        <p class="list-item-text">Folder · 18 items</p>
-                      </div>
+                        <span class="list-item-text">Folder · 18 items</span>
+                      </p>
                     </div>
                     <div data-layout="center-end" data-gap="sm">
                       <ul class="pu-avatar-group pu-motion avatar-group-xs avatar-group-rounded" role="list" data-layout="stacked" data-motion="expand-left" data-motion-on="hover focus-within" data-motion-scope="children" aria-label="Shared with PureUI, PureComponents and PureFramework">
@@ -531,7 +529,7 @@
 
       <dialog id="create-document" class="pu-dialog dialog-md" aria-labelledby="create-document-title" aria-describedby="create-document-description">
         <header class="dialog-header">
-          <h2 id="create-document-title">Create document</h2>
+          <h2 id="create-document-title" class="storage-section-title">Create document</h2>
           <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" command="close" commandfor="create-document" aria-label="Close create document">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
           </button>
@@ -539,7 +537,7 @@
 
         <div class="dialog-body">
           <form id="create-document-form" class="pu-form form-md" method="dialog">
-            <p id="create-document-description">Add the details for a document you want to test in Storage.</p>
+            <p id="create-document-description" class="storage-text-muted">Add the details for a document you want to test in Storage.</p>
 
             <div class="pu-field">
               <label class="pu-label" for="document-name">Document name</label>
@@ -577,7 +575,7 @@
 
       <dialog id="file-preview" class="pu-dialog dialog-sm" data-placement="right" aria-labelledby="file-preview-title">
         <header class="dialog-header">
-          <h2 id="file-preview-title">File preview</h2>
+          <h2 id="file-preview-title" class="storage-heading">File preview</h2>
           <button class="pu-btn btn-sm btn-ghost" type="button" data-icon-only="true" command="close" commandfor="file-preview" aria-label="Close file preview">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
           </button>
@@ -590,21 +588,21 @@
 
           <hr class="pu-separator" data-behavior="inline-expand" />
 
-          <section aria-labelledby="preview-file-name">
-            <h3 id="preview-file-name">PureUI accessibility audit.pdf</h3>
-            <p>2.3 MB · Updated today at 09:42</p>
-            <h4>File description</h4>
-            <p>Review notes and the remaining WCAG checks for the component library.</p>
+          <section aria-labelledby="preview-file-name" data-direction="vertical" data-layout="start-top" data-gap="xs">
+            <h3 id="preview-file-name" class="storage-section-title">PureUI accessibility audit.pdf</h3>
+            <p class="storage-text-muted">2.3 MB · Updated today at 09:42</p>
+            <h4 class="storage-text-strong">File description</h4>
+            <p class="storage-text-muted">Review notes and the remaining WCAG checks for the component library.</p>
           </section>
 
           <hr class="pu-separator" data-behavior="inline-expand" />
 
-          <section aria-labelledby="preview-shared-title">
-            <h3 id="preview-shared-title">Shared with</h3>
-            <div data-layout="center-start" data-gap="sm">
+          <section aria-labelledby="preview-shared-title" data-direction="vertical" data-layout="start-top" data-gap="xs">
+            <h3 id="preview-shared-title" class="storage-text-strong">Shared with</h3>
+            <p data-layout="center-start" data-gap="sm">
               <span class="pu-avatar avatar-sm avatar-smooth" aria-hidden="true">O</span>
-              <span>Oscar Throedsson (you)</span>
-            </div>
+              <span class="storage-text-muted">Oscar Throedsson (you)</span>
+            </p>
           </section>
         </div>
 

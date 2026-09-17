@@ -18,8 +18,11 @@
   /* Expands the meter element, to controll its width, controll the wrappers width*/
   inline-size: 100%;
 
-  box-sizing: content-box;
-  block-size: var(--meter-block-size);
+  /* Border-box, so 100% includes the inset below and the meter stays inside
+     its container's padding. The height adds the inset back, so the groove
+     keeps --meter-block-size. */
+  box-sizing: border-box;
+  block-size: calc(var(--meter-block-size) + 0.2rem);
   padding-block: 0.1rem;
   padding-inline: 0.3rem;
 
