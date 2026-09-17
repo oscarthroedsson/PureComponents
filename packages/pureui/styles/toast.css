@@ -20,6 +20,7 @@ with its own fallback, so a .pu-toast outside a container still animates.
   /* VARIABLES */
 
   --toast-container-offset: var(--spacing-100);
+  --toast-container-max-block-size: 50dvh;
   --toast-container-gap: var(--spacing-50);
   --toast-container-stack-overlap: 2.75rem;
   --toast-container-stack-duration: var(--duration-medium);
@@ -32,13 +33,17 @@ with its own fallback, so a .pu-toast outside a container still animates.
 
   /* BASE
 
-     The container spans the whole viewport rather than hugging one corner.
-     A toast can then be dragged as far as the hand takes it without being
-     clipped, and placement is only where inside that area toasts align. */
+     The container spans the viewport's width, so a toast can be dragged
+     sideways as far as the hand takes it, and is anchored to the top or the
+     bottom edge. It grows with its toasts up to half the viewport, then
+     scrolls. */
 
   position: fixed;
-  inset: 0;
+  inset-inline: 0;
+  inset-block-start: 0;
   z-index: var(--z-index-toast);
+
+  max-block-size: var(--toast-container-max-block-size);
 
   box-sizing: border-box;
   padding: var(--toast-container-offset);
@@ -55,6 +60,14 @@ with its own fallback, so a .pu-toast outside a container still animates.
      container from a toast inside it, so the stacked layout still expands. */
   pointer-events: none;
 
+  /* Past the max height the toasts scroll. A wheel or a drag over a toast
+     chains up to this container. Horizontal overflow is clipped so a toast
+     swiped away never adds a scrollbar. */
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+
   /* The space between two toasts belongs to the toast box, not to a gap, so
      the boxes touch. Moving the pointer from one toast to the next never
      crosses a dead zone, which an expanded stack depends on. */
@@ -68,8 +81,20 @@ with its own fallback, so a .pu-toast outside a container still animates.
     justify-content: flex-start;
   }
 
+  /* A bottom container scrolls from the bottom, where the newest toast is.
+     column-reverse makes the scroll start at the end edge; order puts the
+     DOM back the right way up, oldest on top, so the gap and stack rules
+     below read the same for both edges. */
   &[data-placement^="bottom"] {
-    justify-content: flex-end;
+    inset-block-start: auto;
+    inset-block-end: 0;
+
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+
+    & > .pu-toast {
+      order: calc(0 - sibling-index());
+    }
   }
 
   &[data-placement$="left"] {

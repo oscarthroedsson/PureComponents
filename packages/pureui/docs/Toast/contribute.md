@@ -52,22 +52,33 @@ builds exactly the markup the two stylesheets expect:
 
 A change to how a notice looks goes in `alert.css`, not here.
 
-## The container spans the viewport
+## The container spans the width and scrolls past half the height
 
 ```css
 position: fixed;
-inset: 0;
+inset-inline: 0;
+inset-block-start: 0;              /* bottom placements: inset-block-end */
+max-block-size: var(--toast-container-max-block-size);   /* 50dvh */
+overflow-x: hidden;
+overflow-y: auto;
 pointer-events: none;
 ```
 
-Rather than hugging one corner. A toast can then be dragged as far as the hand
-takes it without being clipped, and placement becomes nothing more than where
-inside that area the toasts are aligned — `justify-content` and `align-items`,
-set by `data-placement`.
+Full width, so a toast can be dragged sideways as far as the hand takes it.
+Anchored to the top or bottom edge and as tall as its toasts, up to half the
+viewport; past that the toasts scroll. A wheel or touch drag over a toast
+chains up to the container even though the container ignores the pointer.
+Horizontal overflow is clipped so a swiped toast never adds a scrollbar.
 
-Covering the viewport is only safe because the container is invisible to the
-pointer. Only the toasts take input, through `pointer-events: auto` on
-`.pu-toast`.
+A bottom container uses `flex-direction: column-reverse`, which makes its
+scroll start at the bottom edge, where the newest toast is. `order:
+calc(0 - sibling-index())` turns the visual order back the right way up, so
+the oldest toast is on top and the gap and stack rules read the same for both
+edges.
+
+Covering the viewport's width is only safe because the container is
+invisible to the pointer. Only the toasts take input, through
+`pointer-events: auto` on `.pu-toast`.
 
 `:hover` still reaches the container from a toast inside it, which is what
 lets the stacked layout expand on hover.

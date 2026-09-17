@@ -110,6 +110,7 @@ On the container, `.pu-toast-container`:
 | Variable | Default | Controls |
 |---|---|---|
 | `--toast-container-offset` | `var(--spacing-100)` | Distance from the viewport edge. |
+| `--toast-container-max-block-size` | `50dvh` | How tall the container grows before it scrolls. |
 | `--toast-container-gap` | `var(--spacing-50)` | Space between toasts. |
 | `--toast-container-stack-overlap` | `2.75rem` | How far stacked toasts overlap. |
 | `--toast-container-enter-x` / `-y` | per placement | Where its toasts come from. |
