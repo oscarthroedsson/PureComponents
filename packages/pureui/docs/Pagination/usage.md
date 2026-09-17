@@ -109,12 +109,20 @@ still between pages.
 ```html
 <nav aria-label="Pagination">
   <ul class="pu-pagination pagination-md" role="list">
-    <li><a href="?page=1" class="pu-btn btn-ghost" aria-label="Previous page">‹</a></li>
+    <li>
+      <a href="?page=1" class="pu-btn btn-ghost" data-icon-only="true" aria-label="Previous page">
+        <svg viewBox="0 0 24 24" aria-hidden="true">…</svg>
+      </a>
+    </li>
     <li><a href="?page=1" class="pu-btn btn-ghost">1</a></li>
     <li><a href="?page=2" class="pu-btn" aria-current="page">2</a></li>
     <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
     <li><a href="?page=9" class="pu-btn btn-ghost">9</a></li>
-    <li><a href="?page=3" class="pu-btn btn-ghost" aria-label="Next page">›</a></li>
+    <li>
+      <a href="?page=3" class="pu-btn btn-ghost" data-icon-only="true" aria-label="Next page">
+        <svg viewBox="0 0 24 24" aria-hidden="true">…</svg>
+      </a>
+    </li>
   </ul>
 </nav>
 ```
