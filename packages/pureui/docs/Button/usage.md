@@ -36,7 +36,7 @@ behaviour and the right announcement, which is why the key requires them.
 | `btn-secondary` | The secondary colour, with its own hover. |
 | `btn-emphasised` | The secondary colour, without a hover of its own. |
 | `btn-outline` | Border and label in the primary colour, no fill. |
-| `btn-tertiary` | No fill, no border. Underlines on hover. |
+| `btn-tertiary` | No fill, no border, underlined. Hover thickens the underline, never fills the ground. |
 | `btn-ghost` | No fill. Takes a muted surface on hover. |
 
 One filled primary button per view is the rule of thumb. Everything else on

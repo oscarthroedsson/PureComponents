@@ -10,8 +10,10 @@ the page inert.
 <dialog class="pu-dialog dialog-md" aria-labelledby="confirm-title">
   <div class="dialog-header">
     <h2 id="confirm-title">Delete report?</h2>
-    <button class="pu-btn btn-sm btn-ghost" command="close" commandfor="confirm"
-            aria-label="Close">×</button>
+    <button class="pu-btn btn-sm btn-ghost" data-icon-only="true"
+            command="close" commandfor="confirm" aria-label="Close">
+      <svg viewBox="0 0 24 24" aria-hidden="true">…</svg>
+    </button>
   </div>
   <div class="dialog-body">
     <p>This cannot be undone.</p>

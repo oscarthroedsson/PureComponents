@@ -250,7 +250,9 @@ Adding a component: create its CSS under `src/Styles/`, add an entry to
 <dialog id="dialog" class="pu-dialog md" aria-labelledby="dialog-title">
   <div class="dialog-header">
     <h2 id="dialog-title">Dialog Title</h2>
-    <button class="dialog-close" aria-label="Close dialog">×</button>
+    <button class="pu-btn btn-sm btn-ghost" data-icon-only="true" aria-label="Close dialog" command="close" commandfor="dialog">
+      <svg viewBox="0 0 24 24" aria-hidden="true">…</svg>
+    </button>
   </div>
   <div class="dialog-body">Content</div>
   <div class="dialog-footer">

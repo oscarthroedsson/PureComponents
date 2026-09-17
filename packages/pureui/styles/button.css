@@ -105,6 +105,15 @@
     text-decoration-color: var(--btn-underline-color);
     text-decoration-thickness: var(--btn-underline-size);
     text-underline-offset: var(--btn-underline-offset);
+
+    /* A text action answers on its text, never on a ground. The underline
+       thickens and takes the text colour; the text keeps its colour, because
+       primary on a dark surface falls below 4.5:1. */
+    &:hover {
+      --btn-surface: transparent;
+      --btn-underline-color: currentColor;
+      --btn-underline-size: 2px;
+    }
   }
 
   &.btn-ghost {
