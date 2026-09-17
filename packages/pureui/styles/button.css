@@ -121,8 +121,12 @@
     --btn-color: var(--color-text);
   }
 
+  /* After the emphasis variants, so the intent wins over them: a destructive
+     ghost or outline is still a red button with white text. */
   &[data-intent="destructive"] {
     --btn-surface-base: var(--color-destructive);
+    --btn-border-color: var(--btn-surface);
+    --btn-color: var(--color-destructive-foreground);
   }
 
   &[data-icon-only="true"] {

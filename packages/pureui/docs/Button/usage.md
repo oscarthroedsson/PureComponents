@@ -46,7 +46,7 @@ the screen is secondary, outline, tertiary or ghost.
 
 | Attribute | Does |
 |---|---|
-| `data-intent="destructive"` | Paints the button in the destructive colour. |
+| `data-intent="destructive"` | Red fill, white text. Wins over every emphasis class, so a destructive ghost is still red. |
 | `data-icon-only="true"` | Square box for a button with no visible label. |
 | `aria-pressed="true"` \| `"false"` | Toggle state. |
 | `disabled` | Native, on `<button>`. |
