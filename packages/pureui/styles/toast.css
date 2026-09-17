@@ -123,64 +123,16 @@ with its own fallback, so a .pu-toast outside a container still animates.
 
     /* Flex items paint in DOM order, so the oldest toast would paint on top.
        The stack descends from the toast nearest the anchored edge: the first
-       child for top placements, the last for bottom ones. The depth is
-       enumerated; past eight the toasts are fully covered anyway. */
-    & > .pu-toast {
-      z-index: 1;
+       child for top placements, the last for bottom ones. The tree-counting
+       functions keep that right for any number of toasts, as in avatar.css.
+       Flex items answer to z-index without being positioned. */
+    &[data-placement^="top"] > .pu-toast,
+    &:not([data-placement]) > .pu-toast {
+      z-index: calc(sibling-count() - sibling-index() + 1);
     }
 
-    &[data-placement^="top"] {
-      & > .pu-toast:nth-child(1) {
-        z-index: 9;
-      }
-      & > .pu-toast:nth-child(2) {
-        z-index: 8;
-      }
-      & > .pu-toast:nth-child(3) {
-        z-index: 7;
-      }
-      & > .pu-toast:nth-child(4) {
-        z-index: 6;
-      }
-      & > .pu-toast:nth-child(5) {
-        z-index: 5;
-      }
-      & > .pu-toast:nth-child(6) {
-        z-index: 4;
-      }
-      & > .pu-toast:nth-child(7) {
-        z-index: 3;
-      }
-      & > .pu-toast:nth-child(8) {
-        z-index: 2;
-      }
-    }
-
-    &[data-placement^="bottom"] {
-      & > .pu-toast:nth-last-child(1) {
-        z-index: 9;
-      }
-      & > .pu-toast:nth-last-child(2) {
-        z-index: 8;
-      }
-      & > .pu-toast:nth-last-child(3) {
-        z-index: 7;
-      }
-      & > .pu-toast:nth-last-child(4) {
-        z-index: 6;
-      }
-      & > .pu-toast:nth-last-child(5) {
-        z-index: 5;
-      }
-      & > .pu-toast:nth-last-child(6) {
-        z-index: 4;
-      }
-      & > .pu-toast:nth-last-child(7) {
-        z-index: 3;
-      }
-      & > .pu-toast:nth-last-child(8) {
-        z-index: 2;
-      }
+    &[data-placement^="bottom"] > .pu-toast {
+      z-index: sibling-index();
     }
 
     /* Interacting with the stack expands it into a list. Dropping the

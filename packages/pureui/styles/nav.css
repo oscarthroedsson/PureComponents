@@ -3,10 +3,12 @@ Navigation — a list of links: a site header, a sidebar, a section menu.
 
 <nav aria-label="Main">
   <ul class="pu-nav nav-md" role="list">
-    <li><a href="/" aria-current="page">Home</a></li>
-    <li><a href="/docs">Docs</a></li>
+    <li class="nav-item"><a class="nav-link" href="/" aria-current="page">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="/docs">Docs</a></li>
   </ul>
 </nav>
+
+Every part is named. Nothing is styled because of where it sits.
 
 Submenus belong to Menu. A small-screen toggle needs a script and belongs to
 PureComponents.
@@ -45,14 +47,14 @@ PureComponents.
 
   font-size: var(--nav-font-size);
 
-  & > li {
+  & .nav-item {
     position: relative;
 
     display: flex;
     align-items: center;
   }
 
-  & > li > a {
+  & .nav-link {
     display: flex;
     align-items: center;
 
@@ -82,7 +84,7 @@ PureComponents.
     flex-direction: column;
     align-items: stretch;
 
-    & > li > a {
+    & .nav-link {
       flex: 1 1 auto;
     }
   }
@@ -123,7 +125,7 @@ PureComponents.
 
   /* STATES — from ARIA on the link, never from classes. */
 
-  & > li > a {
+  & .nav-link {
     /* Where you already are does not answer to the pointer. */
     &:hover:not([aria-current="page"]) {
       background-color: var(--nav-link-hover-background);
@@ -152,7 +154,7 @@ PureComponents.
   }
 
   @media (prefers-reduced-motion: reduce) {
-    & > li > a {
+    & .nav-link {
       transition: none;
     }
   }

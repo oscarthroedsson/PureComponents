@@ -35,14 +35,17 @@ the block. Size and shape classes only move variables:
 
 `nav-lg` uses `--font-size-base`, the same top step as Button, Tabs and Form.
 
-## Links are children, not descendants
+## Every part is named
 
 ```css
-& > li > a { … }
+& .nav-item { … }
+& .nav-link { … }
 ```
 
-A descendant selector would also style links inside anything a consumer puts
-in an item.
+Nothing is styled because of where it sits. A selector like `& > li > a`
+would tie the look to the markup's shape and style any link that happens to be
+there; the part classes say what each element is, the way `menu-item` and
+`menu-control` do.
 
 ## States come from ARIA
 

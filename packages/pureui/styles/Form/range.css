@@ -1,7 +1,7 @@
 /*
 Range — a slider on the Form channel.
 
-It reads the channel's type size, surface and border like every other control,
+It reads the channel's type size, surface and border width like every other control,
 so a .pu-form.form-sm makes it smaller. It does not read --form-radius: a
 range is always a capsule, the way a radio is always a circle.
 
@@ -14,7 +14,10 @@ at 50% while the thumb still moves, works and submits.
   --range-font-size: var(--form-font-size, var(--font-size-md));
   --range-track-color: var(--form-surface, var(--color-surface-sunken));
   --range-border-width: var(--form-border-width, 1px);
-  --range-border-color: var(--form-border-color, var(--color-border-strong));
+  /* The track's edge, one or two steps off the track itself, so the groove
+     reads without shouting. Mixed toward --color-shade, which is dark in
+     light mode and light in dark mode. */
+  --range-border-color: color-mix(in oklab, var(--range-track-color), var(--color-shade) 8%);
 
   --range-value: 50%;
   --range-fill: var(--color-primary);
@@ -117,7 +120,7 @@ at 50% while the thumb still moves, works and submits.
 
   /* 5. STATES */
   &:hover:not(:disabled, :user-invalid, [aria-invalid="true"]) {
-    --range-border-color: color-mix(in oklab, var(--color-border-strong), var(--shade-hover));
+    --range-border-color: color-mix(in oklab, var(--range-track-color), var(--color-shade) 16%);
     --range-thumb-color: var(--color-primary-hover);
   }
 

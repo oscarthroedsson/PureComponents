@@ -8,9 +8,9 @@ A list of links — a site header, a sidebar, a section menu. It styles a real
 ```html
 <nav aria-label="Main">
   <ul class="pu-nav nav-md" role="list">
-    <li><a href="/" aria-current="page">Home</a></li>
-    <li><a href="/docs">Docs</a></li>
-    <li><a href="/pricing">Pricing</a></li>
+    <li class="nav-item"><a class="nav-link" href="/" aria-current="page">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="/docs">Docs</a></li>
+    <li class="nav-item"><a class="nav-link" href="/pricing">Pricing</a></li>
   </ul>
 </nav>
 ```
@@ -26,6 +26,8 @@ belongs to PureComponents.
 | Class | Does |
 |---|---|
 | `.pu-nav` | The key. Requires `<ul>` or `<ol>`. |
+| `nav-item` | One item, on each `<li>`. |
+| `nav-link` | The link inside an item. Carries the fill, corner and states. |
 | `nav-horizontal` | A row. The default direction. |
 | `nav-vertical` | A column. Links stretch to the list's width. |
 | `nav-sm` | Smaller type, tighter links. |
@@ -37,7 +39,7 @@ belongs to PureComponents.
 
 ## States
 
-Driven by attributes on the link, not by classes.
+Driven by attributes on the `nav-link`, not by classes.
 
 | Attribute | Does |
 |---|---|
@@ -104,5 +106,5 @@ Driven by attributes on the link, not by classes.
 ### A disabled item
 
 ```html
-<li><a href="/beta" aria-disabled="true">Beta</a></li>
+<li class="nav-item"><a class="nav-link" href="/beta" aria-disabled="true">Beta</a></li>
 ```

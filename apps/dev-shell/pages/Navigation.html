@@ -32,6 +32,8 @@
           <thead><tr><th>Key</th><th>Type</th><th>Description</th></tr></thead>
           <tbody>
           <tr><td><code>.pu-nav</code></td><td><span class="pc-cat pc-cat-key"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 14v4.4a.6.6 0 0 0 .6.6H10m9-5v4.4a.6.6 0 0 1-.6.6H14m0-14h4.4a.6.6 0 0 1 .6.6V10M4 10V5.6a.6.6 0 0 1 .6-.6H10m4 14v1a2 2 0 1 1-4 0v-1m-6-9h1a2 2 0 1 1 0 4H4m15-4h1a2 2 0 1 1 0 4h-1m-5-9V4a2 2 0 1 0-4 0v1"/></svg>Key</span></td><td>The key. Requires <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code>, inside a named <code>&lt;nav&gt;</code>.</td></tr>
+          <tr><td><code>nav-item</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>One item. Goes on each <code>&lt;li&gt;</code>.</td></tr>
+          <tr><td><code>nav-link</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>The link inside an item. Carries the fill, the corner and every state.</td></tr>
           <tr><td><code>nav-horizontal</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>A row. The default.</td></tr>
           <tr><td><code>nav-vertical</code></td><td><span class="pc-cat pc-cat-layout">Layout</span></td><td>A column. Links stretch to the list's width.</td></tr>
           <tr><td><code>nav-sm</code></td><td><span class="pc-cat pc-cat-size"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 13.6V21H3.6a.6.6 0 0 1-.6-.6V13h7.4a.6.6 0 0 1 .6.6m0 7.4h3M3 13v-3m3-7H3.6a.6.6 0 0 0-.6.6V6m11-3h-4m11 7v4M18 3h2.4a.6.6 0 0 1 .6.6V6m-3 15h2.4a.6.6 0 0 0 .6-.6V18m-10-8h3v3"/></svg>Size</span></td><td>Smaller type and tighter links.</td></tr>
@@ -60,9 +62,9 @@
       <template>
         <nav aria-label="Main">
           <ul class="pu-nav nav-md" role="list">
-            <li><a href="#home" aria-current="page">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#home" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
       </template>
@@ -73,23 +75,23 @@
       <template>
         <nav aria-label="Small">
           <ul class="pu-nav nav-sm" role="list">
-            <li><a href="#home" aria-current="page">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#home" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
         <nav aria-label="Medium">
           <ul class="pu-nav nav-md" role="list">
-            <li><a href="#home" aria-current="page">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#home" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
         <nav aria-label="Large">
           <ul class="pu-nav nav-lg" role="list">
-            <li><a href="#home" aria-current="page">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#home" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
       </template>
@@ -100,37 +102,37 @@
       <template>
         <nav aria-label="Horizontal">
           <ul class="pu-nav nav-md nav-horizontal" role="list">
-            <li><a href="#home" aria-current="page">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#home" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
         <nav aria-label="Vertical">
           <ul class="pu-nav nav-md nav-vertical" role="list">
-            <li><a href="#home" aria-current="page">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#home" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
         <nav aria-label="Sharp">
           <ul class="pu-nav nav-md nav-sharp" role="list">
-            <li><a href="#home" aria-current="page">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#home" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
         <nav aria-label="Smooth">
           <ul class="pu-nav nav-md nav-smooth" role="list">
-            <li><a href="#home" aria-current="page">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#home" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
         <nav aria-label="Rounded">
           <ul class="pu-nav nav-md nav-rounded" role="list">
-            <li><a href="#home" aria-current="page">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#home" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
       </template>
@@ -141,10 +143,10 @@
       <template>
         <nav aria-label="States">
           <ul class="pu-nav nav-md" role="list">
-            <li><a href="#home" aria-current="page">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#beta" aria-disabled="true">Beta</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#home" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#beta" aria-disabled="true">Beta</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
       </template>
@@ -167,10 +169,10 @@
           <a class="pu-btn btn-md btn-ghost" href="#home"><strong>Pure</strong></a>
           <nav aria-label="Main">
             <ul class="pu-nav nav-md" role="list">
-              <li><a href="#overview" aria-current="page">Overview</a></li>
-              <li><a href="#projects">Projects</a></li>
-              <li><a href="#team">Team</a></li>
-              <li><a href="#settings">Settings</a></li>
+              <li class="nav-item"><a class="nav-link" href="#overview" aria-current="page">Overview</a></li>
+              <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+              <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+              <li class="nav-item"><a class="nav-link" href="#settings">Settings</a></li>
             </ul>
           </nav>
           <div data-layout="center-end" data-gap="sm">
