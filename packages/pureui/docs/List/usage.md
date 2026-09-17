@@ -221,9 +221,9 @@ ListItem surface.
 |---|---|---|
 | `--list-item-padding-block` | `var(--spacing-100)` | Item padding on the block axis. |
 | `--list-item-padding-inline` | `var(--spacing-100)` | Item padding on the inline axis. |
-| `--list-item-radius` | `var(--radius-sharp)` | Item corner radius. |
+| `--list-item-radius` | `var(--radius-smooth)` | Item corner radius. |
 | `--list-item-background` | `transparent` | Item surface. |
-| `--list-item-hover-background` | Raised surface mixed with `--shade-hover` | Interactive hover surface. |
+| `--list-item-hover-background` | Raised surface with 6% of `--color-shade` | Interactive hover surface. |
 | `--list-item-active-background` | Raised surface mixed with `--shade-active` | Current or pressed surface. |
 | `--list-item-color` | `var(--color-text)` | Item text. |
 | `--list-item-muted-color` | `var(--color-text-muted)` | `.list-item-text`. |

@@ -179,9 +179,9 @@ The ListItem key contains:
 |---|---|
 | `--list-item-padding-block` | `var(--spacing-100)` |
 | `--list-item-padding-inline` | `var(--spacing-100)` |
-| `--list-item-radius` | `var(--radius-sharp)` |
+| `--list-item-radius` | `var(--radius-smooth)` |
 | `--list-item-background` | `transparent` |
-| `--list-item-hover-background` | Raised surface mixed with `--shade-hover` |
+| `--list-item-hover-background` | Raised surface with 6% of `--color-shade` |
 | `--list-item-active-background` | Raised surface mixed with `--shade-active` |
 | `--list-item-color` | `var(--color-text)` |
 | `--list-item-muted-color` | `var(--color-text-muted)` |

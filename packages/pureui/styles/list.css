@@ -75,9 +75,11 @@
   --list-item-padding-block: var(--spacing-100);
   --list-item-padding-inline: var(--spacing-100);
 
-  --list-item-radius: var(--radius-sharp);
+  --list-item-radius: var(--radius-smooth);
   --list-item-background: transparent;
-  --list-item-hover-background: color-mix(in oklab, var(--color-surface-raised), var(--shade-hover));
+  /* A row is a large surface; the shared 12% shade reads as a block of grey
+     there, so the row tints lightly, like a tab. */
+  --list-item-hover-background: color-mix(in oklab, var(--color-surface-raised), var(--color-shade) 6%);
   --list-item-active-background: color-mix(in oklab, var(--color-surface-raised), var(--shade-active));
 
   --list-item-color: var(--color-text);
