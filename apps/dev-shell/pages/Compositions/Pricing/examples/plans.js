@@ -10,32 +10,33 @@ export default {
     "/pureui/styles/Layout/behavior.css",
     "./Pricing/examples/plans.css",
   ],
-  markup: String.raw`<section class="pricing pu-box box-xl" aria-labelledby="pricing-title">
-  <h2 id="pricing-title">Pricing</h2>
+  markup: String.raw`<section class="pricing pu-box box-xl" aria-labelledby="pricing-title" data-direction="vertical" data-layout="center-top" data-gap="md">
+  <header data-direction="vertical" data-layout="center-top" data-gap="xs">
+    <h2 id="pricing-title">Pricing</h2>
+    <p>Compare what each plan includes.</p>
+  </header>
 
-  <table class="pu-table table-md">
-    <caption>Compare what each plan includes.</caption>
+  <div data-layout="center-center" data-gap="sm">
+    <p>Billing</p>
+    <fieldset class="pu-tabs tabs-sm">
+      <legend class="tabs-legend">Billing period</legend>
+      <div class="tabs-header">
+        <label class="tabs-tab">
+          <input class="tabs-input" type="radio" name="billing" value="annual" checked />
+          <span>Annual</span>
+        </label>
+        <label class="tabs-tab">
+          <input class="tabs-input" type="radio" name="billing" value="monthly" />
+          <span>Monthly</span>
+        </label>
+      </div>
+    </fieldset>
+  </div>
 
+  <table class="pu-table table-md" aria-label="Plan comparison" data-behavior="inline-expand">
     <thead>
       <tr>
-        <th scope="col">
-          <div data-direction="vertical" data-layout="start-top" data-gap="sm">
-          <p>Billing</p>
-          <fieldset class="pu-tabs tabs-sm">
-            <legend class="tabs-legend">Billing period</legend>
-            <div class="tabs-header">
-              <label class="tabs-tab">
-                <input class="tabs-input" type="radio" name="billing" value="annual" checked />
-                <span>Annual</span>
-              </label>
-              <label class="tabs-tab">
-                <input class="tabs-input" type="radio" name="billing" value="monthly" />
-                <span>Monthly</span>
-              </label>
-            </div>
-          </fieldset>
-          </div>
-        </th>
+        <th scope="col">Feature</th>
         <th scope="col" class="table-center">
           <div data-direction="vertical" data-layout="center-top" data-gap="sm">
             <h3>Free</h3>
