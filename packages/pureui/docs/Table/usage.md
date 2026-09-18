@@ -29,6 +29,9 @@ adds nothing to the markup that the table did not already need.
 | `table-start` | Align text to the start edge. The default. |
 | `table-center` | Align text to the centre. |
 | `table-end` | Align text to the end edge. |
+| `table-top` | Align the content to the cell's top. |
+| `table-middle` | The middle. What the browser already gives. |
+| `table-bottom` | Align the content to the cell's bottom. |
 
 The key requires `<table>`. On a `<div>` nothing applies — a grid of divs has
 no row and column semantics for a screen reader to read out, and CSS cannot
@@ -48,6 +51,14 @@ it, so the same word means the same thing wherever you put it.
 ```
 
 The nearest one wins. Numbers usually want `table-end` on the column's cells.
+
+The three block-axis classes work the same way. They belong on the cell: a
+cell aligns its whole content, so a wrapper inside it cannot push text down —
+the wrapper is only as tall as its own text.
+
+```html
+<th scope="col" class="table-bottom">Feature</th>
+```
 
 ## Variables
 

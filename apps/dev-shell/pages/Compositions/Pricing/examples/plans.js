@@ -36,7 +36,7 @@ export default {
   <table class="pu-table table-md" aria-label="Plan comparison" data-behavior="inline-expand">
     <thead>
       <tr>
-        <th scope="col">Feature</th>
+        <th scope="col" class="table-bottom">Feature</th>
         <th scope="col" class="table-center">
           <div data-direction="vertical" data-layout="center-top" data-gap="sm">
             <h3>Free</h3>

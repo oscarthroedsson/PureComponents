@@ -100,4 +100,22 @@
   & .table-end {
     text-align: end;
   }
+
+  /* The block axis. A cell aligns its whole content, so this belongs on the
+     cell: a wrapper inside it is only as tall as its own content. */
+
+  &.table-top,
+  & .table-top {
+    vertical-align: top;
+  }
+
+  &.table-middle,
+  & .table-middle {
+    vertical-align: middle;
+  }
+
+  &.table-bottom,
+  & .table-bottom {
+    vertical-align: bottom;
+  }
 }
