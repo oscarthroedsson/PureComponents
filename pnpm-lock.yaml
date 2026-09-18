@@ -16,17 +16,17 @@ importers:
     dependencies:
       pureui:
         specifier: workspace:*
-        version: link:../../packages/pureui
+        version: link:../../packages/ui/css
     devDependencies:
       vite:
         specifier: ^5.4.8
         version: 5.4.21
 
-  packages/purecomponents: {}
+  packages/components/vanilla: {}
 
-  packages/pureframework: {}
+  packages/framework: {}
 
-  packages/pureui: {}
+  packages/ui/css: {}
 
 packages:
 

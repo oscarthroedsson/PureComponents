@@ -14,12 +14,12 @@ Work on PureUI unless told otherwise.
 ## Repository layout
 
 ```
-packages/pureui/          the library
+packages/ui/css/          the library
   styles/                 one CSS file per component
   docs/                   usage.md + contribute.md per component
   js/                     toast behaviour layer
-packages/purecomponents/  empty
-packages/pureframework/   empty
+packages/components/vanilla/  empty
+packages/framework/   empty
 apps/dev-shell/           preview pages. Never ships.
 notes/                    loose notes
 AI/                       these documents

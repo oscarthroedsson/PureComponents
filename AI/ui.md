@@ -1,6 +1,6 @@
 # PureUI
 
-`packages/pureui/` — the only package under active development.
+`packages/ui/css/` — the only package under active development.
 
 CSS only. A consumer links a stylesheet and uses class names. The package
 ships no JavaScript and has no build step, no preprocessor and no
@@ -42,7 +42,7 @@ style the wrong element is the only enforcement it has. Full rules in
 ## Layout
 
 ```
-packages/pureui/
+packages/ui/css/
   package.json      name: "pureui", files: ["index.css", "styles"]
   styles/
     main.css        tokens + global resets. Link first.

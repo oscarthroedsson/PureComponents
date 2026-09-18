@@ -28,7 +28,7 @@ answer to different documents:
 
 | Surface | Where | Ruled by |
 |---|---|---|
-| The stylesheet | `packages/pureui/styles/<name>.css` | [../css-file.md](../css-file.md) |
+| The stylesheet | `packages/ui/css/styles/<name>.css` | [../css-file.md](../css-file.md) |
 | The class vocabulary | the same file | [../ui-classes.md](../ui-classes.md) |
 | The doc page | `apps/dev-shell/pages/<Name>.html` | [doc-page.md](doc-page.md) |
 

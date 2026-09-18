@@ -1,6 +1,6 @@
 # PureComponents
 
-`packages/purecomponents/` — not started.
+`packages/components/vanilla/` — not started.
 
 A component layer consuming PureUI. Vanilla TS first, then React, possibly
 Vue. The package exists so the monorepo has a place to put it, and is
@@ -20,7 +20,7 @@ Two things point at this package already:
 - `apps/dev-shell/js/toast/` — a toast behaviour layer written in TS, used by
   the dev-shell demo. It is behaviour, not styling, and belongs here once this
   package starts.
-- `packages/purecomponents/types/` — typing helpers for native element
+- `packages/components/vanilla/types/` — typing helpers for native element
   properties.
 
 ## Boundary

@@ -1,6 +1,6 @@
 # PureFramework
 
-`packages/pureframework/` — not started, and scope not defined.
+`packages/framework/` — not started, and scope not defined.
 
 The package exists so the monorepo has a place to put it. It is
 `private: true` and holds nothing but a `package.json` and a README.

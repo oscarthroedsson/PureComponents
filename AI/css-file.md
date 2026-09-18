@@ -1,6 +1,6 @@
 # How a CSS file is built
 
-One file per component, in `packages/pureui/styles/`. The rules for what the
+One file per component, in `packages/ui/css/styles/`. The rules for what the
 classes must be are in [ui-classes.md](ui-classes.md); this document covers
 the file itself.
 
@@ -129,13 +129,13 @@ properties. The base already says where `--btn-radius` is used.
 ## Adding a component
 
 1. Agree the change first.
-2. Write `packages/pureui/styles/<name>.css` in the order above.
+2. Write `packages/ui/css/styles/<name>.css` in the order above.
 3. Register it in `apps/dev-shell/pages/components.js` with `id`, `title`,
    `group`, `file`, `css`. This drives the start page, the component dropdown
    and the "requires" list.
 4. Write `apps/dev-shell/pages/<Name>.html` — demos only. Link `main.css` and
    the component's CSS. Pages one level down need `../docs.js`.
-5. Write `packages/pureui/docs/<Name>/usage.md` and `contribute.md`.
+5. Write `packages/ui/css/docs/<Name>/usage.md` and `contribute.md`.
 6. Verify in the browser: every size, every state, keyboard focus, both stage
    themes.
 
