@@ -15,35 +15,16 @@
   --badge-border-color: var(--color-border);
   --badge-color: var(--color-text);
 
-  /*
-   * The one colour in this file that is not a token. It is the far end an
-   * intent's text is darkened toward, and there is no black token in
-   * main.css. Declared here so a consumer can replace it rather than being
-   * stuck with it — the same escape §4.4 grants a translucent overlay.
-   */
   --badge-intent-shade: black;
-
 
   /* BASE */
 
   box-sizing: border-box;
 
-  /*
-   * inline-flex, not inline. The old file set height and width to
-   * fit-content on an inline box, where both are inert, and padding-block
-   * painted without reserving any room in the line — so a badge in running
-   * text overlapped the line above it. The dev shell hid it: its stage is a
-   * flex container, which blockified every badge on the page.
-   */
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  /*
-   * Applies between the text run and an icon — a bare text run becomes an
-   * anonymous flex item and is spaced like any other. With text alone there
-   * is nothing to space and the value is inert. Measured both ways.
-   */
   gap: var(--badge-gap);
 
   /* Never squeezed by a flex or grid parent. */
@@ -58,17 +39,6 @@
   background-color: var(--badge-background);
   color: var(--badge-color);
 
-  /*
-   * The height a line of this text would take untrimmed. It is a floor, not
-   * a height, and it exists so a badge measures the same whether the
-   * consumer wrote bare text or wrapped it in a <p> — the trim below only
-   * reaches a wrapped child, never the anonymous flex item bare text
-   * becomes. Measured across bare text, <p>, <h1>, <h4> and <span>, with
-   * and without text-box support: 17 / 24.8 / 28.6px in every combination.
-   *
-   * It is also why no @supports guard is needed for the trim. A browser
-   * that cannot trim lands on this floor anyway.
-   */
   min-block-size: calc(
     1lh + (var(--badge-padding-block) * 2) + (var(--badge-border-width) * 2)
   );
@@ -77,10 +47,6 @@
   font-weight: var(--badge-font-weight);
   line-height: 1.2;
 
-  /*
-   * A count is read as a number, and numbers that change should not shift
-   * the box under them. 9 and 1 get the same advance.
-   */
   font-variant-numeric: tabular-nums;
 
   white-space: nowrap;
@@ -104,19 +70,6 @@
     fill: currentColor;
   }
 
-  /*
-   * A badge is a leaf, so whatever is inside it has to look like badge
-   * text. Headings arrive with a margin — measured, an <h4> pushed the box
-   * from 24.8px to 56.7px — and with their own size and weight; <h1> is 2em
-   * of the badge, which no reset of the margin alone would have caught.
-   *
-   * The trim only reaches a child like this one, never bare text. The floor
-   * on the key block is what keeps both markups the same height.
-   *
-   * A heading still does not belong in a badge: it puts a phantom entry in
-   * the document outline. This rule stops it rendering broken; it is not an
-   * invitation. Same warning card.css carries for .card-title.
-   */
   & > :is(h1, h2, h3, h4, h5, h6, p) {
     margin: 0;
 
@@ -128,12 +81,6 @@
 
   /* SIZE */
 
-  /*
-   * The only size that also tightens the padding. --font-size-xs is the
-   * smallest type token there is, so at sm the box can only get smaller by
-   * giving back some of the em padding — which is the right lever anyway: a
-   * small badge is a tight badge, not just a badge in smaller type.
-   */
   &.badge-sm {
     --badge-font-size: var(--font-size-xs);
 
@@ -185,54 +132,39 @@
     --badge-border-color: var(--color-error);
   }
 
-  /*
-   * INTENT TEXT
-   *
-   * An intent reads in its own colour rather than in neutral black — a red
-   * badge in dark red, a yellow one in dark olive. Only true of an intent,
-   * so it is not at the top of the block.
-   *
-   * Guarded, and the guard is not optional. color-mix() is Chrome 111 /
-   * Safari 16.2, about 93% of traffic. A var() inside a function defers
-   * validation to computed-value time, so an unsupported mix does not fall
-   * back to the declaration above it — `color` falls back to *inherit*.
-   * Measured: on a page with light text that renders a warning badge as
-   * near-white on pale yellow, about 1.4:1. Outside the guard the base
-   * --color-neutral-900 stands instead, 6.46:1 or better on all four fills.
-   *
-   * The mix runs in oklab and toward --badge-intent-shade, not toward a
-   * neutral token. Mixing toward --color-neutral-900 keeps that token's own
-   * blue and lands the text at 3.32:1, muddy and failing; the same mix in
-   * oklch turns all four blue, because black has no hue for a polar space
-   * to interpolate.
-   *
-   * 40% is a ceiling. error is the tightest of the four and measures 5.34:1
-   * there.
-   */
   @supports (color: color-mix(in oklab, red 40%, black)) {
     &[data-intent="info"] {
-      --badge-color: color-mix(in oklab, var(--color-info) 40%, var(--badge-intent-shade));
+      --badge-color: color-mix(
+        in oklab,
+        var(--color-info) 40%,
+        var(--badge-intent-shade)
+      );
     }
 
     &[data-intent="success"] {
-      --badge-color: color-mix(in oklab, var(--color-success) 40%, var(--badge-intent-shade));
+      --badge-color: color-mix(
+        in oklab,
+        var(--color-success) 40%,
+        var(--badge-intent-shade)
+      );
     }
 
     &[data-intent="warning"] {
-      --badge-color: color-mix(in oklab, var(--color-warning) 40%, var(--badge-intent-shade));
+      --badge-color: color-mix(
+        in oklab,
+        var(--color-warning) 40%,
+        var(--badge-intent-shade)
+      );
     }
 
     &[data-intent="error"] {
-      --badge-color: color-mix(in oklab, var(--color-error) 40%, var(--badge-intent-shade));
+      --badge-color: color-mix(
+        in oklab,
+        var(--color-error) 40%,
+        var(--badge-intent-shade)
+      );
     }
   }
-
-  /*
-   * VARIANTS — after the intents, so they strip whatever fill an intent
-   * put there. Written before them the two blocks tie on specificity and
-   * source order hands it to the intent, which left .badge-outline and .badge-ghost
-   * silently filled.
-   */
 
   /* Transparent, so the label sits on the page and takes the page's text
      colour — not the intent's foreground, which is meant for a fill. */
@@ -257,6 +189,5 @@
       text-decoration: underline;
       text-underline-offset: 0.25em;
     }
-
   }
 }

@@ -7,14 +7,8 @@
   --avatar-background: var(--color-surface-muted);
   --avatar-color: var(--color-text-muted);
 
-  /*
-   * Initials are sized as a fraction of the box rather than from a table of
-   * named font sizes. That is what lets a consumer write
-   * style="--avatar-size: 8rem" and get text that still fits.
-   */
   --avatar-font-scale: 0.4;
   --avatar-font-weight: var(--font-weight-subheading);
-
 
   /* BASE */
 
@@ -44,22 +38,11 @@
 
   user-select: none;
 
-  /*
-   * Inert on a container, and exactly what is needed when the key sits on an
-   * <img> directly. One block serves both markups.
-   */
   object-fit: cover;
   object-position: center;
 
   /* CONTENT */
 
-  /*
-   * border-radius: inherit is what keeps the picture inside the shape. The
-   * old file only rounded the image under .avatar-rounded, so a smooth avatar had
-   * square picture corners inside a rounded box.
-   *
-   * Overflow is deliberately left alone — see NOT HERE above.
-   */
   & :where(img, svg, video) {
     display: block;
 
@@ -124,7 +107,6 @@
 
     font-family: inherit;
   }
-
 }
 
 .pu-avatar-group:where(ul) {
@@ -136,46 +118,25 @@
   --avatar-group-gap: var(--spacing-50);
   --avatar-group-overlap: calc(var(--avatar-group-size) / 3);
 
-  /* One value decides the resting distance between neighbours: the gap in a
-   * list and a negative overlap in a stack. Motion only translates the items;
-   * it never changes this distance or the group's layout footprint. */
   --avatar-group-space: var(--avatar-group-gap);
 
-  /*
-   * Which side the distance lands on. Reverse directions have to use the end
-   * margin: in row-reverse a negative start margin lands past the neighbour
-   * it was meant to slide under, and the first two avatars never overlap.
-   */
   --avatar-group-space-inline-start: var(--avatar-group-space);
   --avatar-group-space-inline-end: 0px;
   --avatar-group-space-block-start: 0px;
   --avatar-group-space-block-end: 0px;
 
-  /*
-   * The ring separates two overlapping shapes, so it has to read as the
-   * surface behind the group — which we cannot know. Set it to yours.
-   *
-   * box-shadow and not border, which would change the size of the square,
-   * and not outline, which is spoken for by the focus indicator.
-   */
   --avatar-group-ring-width: 2px;
   --avatar-group-ring-color: var(--color-surface);
 
-  /*
-   * A bare duration, not --transition-medium. That token is "0.3s ease" —
-   * duration and easing in one — so pairing it with an easing of our own
-   * puts two timing functions in the same declaration and the whole
-   * shorthand is thrown away. toast.css writes its durations out for the
-   * same reason.
-   */
   --avatar-group-duration: 280ms;
   --avatar-group-easing: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Map the component's measurements onto the generic motion contract. */
   --motion-duration: var(--avatar-group-duration);
   --motion-easing: var(--avatar-group-easing);
-  --motion-expand-step:
-    calc(var(--avatar-group-overlap) + var(--avatar-group-gap));
+  --motion-expand-step: calc(
+    var(--avatar-group-overlap) + var(--avatar-group-gap)
+  );
 
   /* LIFT */
 
@@ -201,21 +162,11 @@
   /* Keep the group's internal stack from competing with surrounding content. */
   isolation: isolate;
 
-  /*
-   * Size and shape are handed down from here rather than being left to the
-   * avatar, for the reason set out in the header: a custom property declared
-   * on an element cannot be reached by inheriting from the parent.
-   */
   & .pu-avatar {
     --avatar-size: var(--avatar-group-size);
     --avatar-radius: var(--avatar-group-radius);
   }
 
-  /*
-   * Written against every direct child, not against .pu-avatar, so an avatar
-   * wrapped in an <li>, in a link, or in the coming indicator is carried by
-   * the same rules.
-   */
   & > * {
     flex: 0 0 auto;
 
@@ -228,13 +179,6 @@
     transition-timing-function: var(--avatar-group-easing);
   }
 
-  /*
-   * A list wrapper otherwise creates an inline formatting context around the
-   * avatar. Its text baseline leaves descender space below a 24px avatar,
-   * making a mathematically centred group look too high beside other controls.
-   * Direct avatars keep their own inline-grid display; only wrappers need the
-   * baseline-free flex box.
-   */
   & > :where(:not(.pu-avatar)) {
     display: flex;
     align-items: center;
@@ -316,20 +260,10 @@
     --avatar-group-space: calc(-1 * var(--avatar-group-overlap));
 
     & .pu-avatar {
-      box-shadow: 0 0 0 var(--avatar-group-ring-width) var(--avatar-group-ring-color);
+      box-shadow: 0 0 0 var(--avatar-group-ring-width)
+        var(--avatar-group-ring-color);
     }
 
-    /*
-     * Flex items paint in DOM order, so with no z-index the LAST avatar
-     * would cover every one before it. The stack descends from the first
-     * instead — which is also what makes the pointer land where the eye
-     * says it should: a round avatar still has square corners, and in the
-     * overlap the corner of the avatar behind sits over the circle of the
-     * one in front. Whoever paints on top takes the pointer too.
-     *
-     * The tree-counting functions keep this correct for any group length.
-     * Flex items answer to z-index without being positioned.
-     */
     & > * {
       z-index: calc(sibling-count() - sibling-index() + 1);
     }
@@ -337,33 +271,12 @@
     &:where([data-stack-order="last"]) > * {
       z-index: sibling-index();
     }
-
   }
 
   /* STATE — how the avatar in front is marked out. */
 
-  /*
-   * The avatar keeps its place in the row. It is not nudged out of line — it
-   * comes forward, grows, and changes its ring, and the row it belongs to
-   * stays a row. Coming forward is the z-index above; the rest is here.
-   *
-   * :is() contributes the state pseudo-class's specificity. That makes this
-   * outrank both stack-order rules without repeating either layout attribute.
-   * The computed z-index clears every sibling and never relies on a maximum
-   * group length; --avatar-group-lift-z remains its configurable floor.
-   *
-   * The ring colour is handed down as a custom property rather than being
-   * restyled here: it inherits to the .pu-avatar whether the avatar is this
-   * child itself or sits somewhere inside it.
-   *
-   * drop-shadow and not box-shadow, which the ring is already using — and it
-   * follows the silhouette, so a rounded avatar casts a round shadow.
-   */
   &[data-hover="lift"] > *:is(:hover, :focus-visible, :has(:focus-visible)) {
-    z-index: max(
-      var(--avatar-group-lift-z),
-      calc(sibling-count() + 1)
-    );
+    z-index: max(var(--avatar-group-lift-z), calc(sibling-count() + 1));
 
     scale: var(--avatar-group-lift-scale);
 
@@ -374,11 +287,6 @@
 
   /* REDUCED MOTION */
 
-  /*
-   * The travel goes, the behaviour stays. A stack still opens, an avatar
-   * still comes forward and is still ringed — it simply arrives there
-   * without moving.
-   */
   @media (prefers-reduced-motion: reduce) {
     & > * {
       transition-duration: 0ms;

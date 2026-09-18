@@ -15,32 +15,22 @@
   --pill-border-color: var(--color-border);
   --pill-color: var(--color-text);
 
-  /*
-   * The hover and active fills are variables rather than values written in
-   * the state blocks, and that is a specificity decision, not a taste one.
-   * `.pu-pill.pill-outline` is (0,2,0) and `.pu-pill:hover` is (0,1,1), so a state
-   * that wrote --pill-background directly would lose to every variant and
-   * .pill-outline would have had no hover at all. Each variant writes its own
-   * pair below; the state block only ever swaps which one is in play.
-   */
-  --pill-background-hover: color-mix(in oklab, var(--color-surface-muted), var(--shade-hover));
-  --pill-background-active: color-mix(in oklab, var(--color-surface-muted), var(--shade-active));
+  --pill-background-hover: color-mix(
+    in oklab,
+    var(--color-surface-muted),
+    var(--shade-hover)
+  );
+  --pill-background-active: color-mix(
+    in oklab,
+    var(--color-surface-muted),
+    var(--shade-active)
+  );
 
   --pill-selected-background: var(--color-primary);
   --pill-selected-border-color: var(--color-primary);
 
-  /*
-   * Dark text on the primary fill, measured 7.0:1. .pu-btn puts
-   * --color-neutral-100 on this same token, which lands near 2.2:1 — a
-   * token problem reported in AGENTS.md §8, and not one to copy here.
-   */
   --pill-selected-color: var(--color-primary-foreground);
 
-  /*
-   * The mark that says "selected" without relying on the fill. Content,
-   * not a colour, so it is a string and a consumer can replace it with
-   * their own glyph.
-   */
   --pill-selected-marker: "\2713";
 
   --pill-remove-radius: var(--radius-full);
@@ -49,13 +39,6 @@
 
   box-sizing: border-box;
 
-  /*
-   * inline-flex, not inline. On an inline box height and width are inert
-   * and padding-block paints without reserving room in the line, so a pill
-   * in running text overlaps the line above it. The same bug badge.css
-   * carried, and the dev shell hides it — its stage is a flex container,
-   * which blockifies everything on the page.
-   */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -72,36 +55,16 @@
   padding-inline: var(--pill-padding-inline);
   padding-block: var(--pill-padding-block);
 
-  /*
-   * Always one border, transparent when a variant wants none. Toggling the
-   * width instead moves the box by 2px when the variant changes, which is
-   * visible in a row where only one pill is outlined.
-   */
   border: var(--pill-border-width) solid var(--pill-border-color);
   border-radius: var(--pill-radius);
 
   background-color: var(--pill-background);
   color: var(--pill-color);
 
-  /*
-   * The height an untrimmed line of this text would take. It is a floor,
-   * not a height: it holds the box the same whether the consumer wrote
-   * bare text or wrapped it in an element, since the trim below only
-   * reaches a wrapped child and never the anonymous flex item bare text
-   * becomes. It is also why the trim needs no @supports guard — a browser
-   * that cannot trim lands on this floor anyway.
-   */
   min-block-size: calc(
     1lh + (var(--pill-padding-block) * 2) + (var(--pill-border-width) * 2)
   );
 
-  /*
-   * A pill is a small control and the same class has to give the same box
-   * on every element it is allowed on. A <button> arrives with the system
-   * font, an <a> arrives underlined and in the browser's link colour, a
-   * <label> arrives with neither. None of that is a decision this
-   * component made, so all of it is cleared in one place.
-   */
   font-family: inherit;
   font-size: var(--pill-font-size);
   font-weight: var(--pill-font-weight);
@@ -112,11 +75,6 @@
   text-decoration: none;
   vertical-align: middle;
 
-  /*
-   * Only the colours and the press animate. Declared on the key, not
-   * inside :active — written there it applies on the way in and never on
-   * the way out, which is the state the old file shipped in.
-   */
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
@@ -137,17 +95,6 @@
     fill: currentColor;
   }
 
-  /*
-   * A pill is a leaf, so whatever is inside it has to look like pill text.
-   * A heading arrives with a margin, its own size and its own weight —
-   * <h1> is 2em of the pill, which resetting the margin alone would not
-   * have caught. The trim only reaches a child like this one; the floor on
-   * the key keeps both markups the same height.
-   *
-   * A heading still does not belong in a pill: it puts a phantom entry in
-   * the document outline. This rule stops it rendering broken; it is not
-   * an invitation.
-   */
   & > :is(h1, h2, h3, h4, h5, h6, p) {
     margin: 0;
 
@@ -157,25 +104,6 @@
     text-box: trim-both cap alphabetic;
   }
 
-  /*
-   * The input in the <label> form. Transparent, but it covers the whole
-   * pill rather than sitting in a 1px corner — and that is a focus-ring
-   * decision, not a layout one.
-   *
-   * The ring is drawn once, globally, in main.css, around whichever
-   * element has focus. In this form that element is the input. At 1px the
-   * keyboard ring would trace an invisible point beside the pill; at full
-   * size it traces the pill itself. So the ring stays where it belongs and
-   * this file never draws one of its own.
-   *
-   * It also inherits the radius, because an outline follows the border
-   * radius of the box it is drawn around — without this a rounded pill
-   * would get a square ring.
-   *
-   * Taken out of the flow rather than hidden: display:none and
-   * visibility:hidden both drop it from the tab order, and a filter you
-   * cannot reach by keyboard is not a filter.
-   */
   & > input:is([type="checkbox"], [type="radio"]) {
     position: absolute;
     inset: 0;
@@ -217,19 +145,15 @@
     --pill-radius: var(--radius-rounded);
   }
 
-  /*
-   * VARIANTS
-   *
-   * Each one owns its whole colour set, hover and active included. A
-   * variant that only dropped the fill would hover back to the neutral
-   * step and stop looking like itself the moment the pointer arrived.
-   */
-
   &.pill-outline {
     --pill-background: transparent;
 
     --pill-background-hover: var(--color-surface-muted);
-    --pill-background-active: color-mix(in oklab, var(--color-surface-muted), var(--shade-hover));
+    --pill-background-active: color-mix(
+      in oklab,
+      var(--color-surface-muted),
+      var(--shade-hover)
+    );
   }
 
   &.pill-ghost {
@@ -237,17 +161,15 @@
     --pill-border-color: transparent;
 
     --pill-background-hover: var(--color-surface-muted);
-    --pill-background-active: color-mix(in oklab, var(--color-surface-muted), var(--shade-hover));
+    --pill-background-active: color-mix(
+      in oklab,
+      var(--color-surface-muted),
+      var(--shade-hover)
+    );
   }
 
   /* STATES */
 
-  /*
-   * :is(button, a, label) does two jobs. It keeps hover and the pointer
-   * away from the <span> and <li> forms, which are containers and not
-   * controls — and it raises these rules to (0,2,1), above the (0,2,0) of
-   * every variant above, so .pill-outline and .pill-ghost keep their hover.
-   */
   &:is(button, a, label) {
     cursor: pointer;
 
@@ -274,12 +196,6 @@
     }
   }
 
-  /*
-   * SELECTED — after the variants, so a selected .pill-outline fills instead of
-   * staying transparent. Written before them the two tie on specificity
-   * and source order hands it to the variant, which is how a selected pill
-   * ends up looking unselected.
-   */
   &:is(:has(:checked), [aria-pressed="true"]) {
     --pill-background: var(--pill-selected-background);
     --pill-border-color: var(--pill-selected-border-color);
@@ -294,16 +210,6 @@
     }
   }
 
-  /*
-   * THE SELECTION MARKER
-   *
-   * Only where the pill can actually be selected — :has() on the input, or
-   * the toggle attribute. A plain action pill never grows one.
-   *
-   * It is present at both states and only its opacity changes, so
-   * selecting does not resize the pill. A row of filters would otherwise
-   * reflow under the pointer every time one was picked.
-   */
   &:is(:has(input:is([type="checkbox"], [type="radio"])), [aria-pressed]) {
     &::before {
       content: var(--pill-selected-marker);
@@ -319,13 +225,6 @@
     }
   }
 
-  /*
-   * THE REMOVE CONTROL
-   *
-   * A control of its own, inside a container that is not one. It lives in
-   * the key block because it has no meaning outside a pill — .pill-remove
-   * on its own is not a component.
-   */
   & > .pill-remove {
     display: inline-flex;
     align-items: center;
@@ -360,9 +259,12 @@
     }
 
     &:hover {
-      background-color: color-mix(in oklab, transparent, var(--color-shade) 20%);
+      background-color: color-mix(
+        in oklab,
+        transparent,
+        var(--color-shade) 20%
+      );
     }
-
 
     &:is(:disabled, [aria-disabled="true"]) {
       color: var(--color-text-subtle);
@@ -376,11 +278,6 @@
   }
 }
 
-/*
- * The press and the colour fades are the only motion in the file, and
- * neither carries information — the fill, the border and the marker say
- * everything without them.
- */
 @media (prefers-reduced-motion: reduce) {
   .pu-pill {
     transition: none;

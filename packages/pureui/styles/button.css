@@ -119,6 +119,11 @@
   &.btn-ghost {
     --btn-surface-base: transparent;
     --btn-color: var(--color-text);
+
+    &:hover {
+      --btn-surface: transparent;
+      --btn-underline-color: currentColor;
+    }
   }
 
   /* After the emphasis variants, so the intent wins over them: a destructive

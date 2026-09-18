@@ -13,7 +13,9 @@
   --input-placeholder-color: var(--color-text-subtle);
   --input-line-height: var(--line-height-base);
 
-  --input-min-block-size: calc(1lh + (var(--input-padding-block) * 2) + (var(--input-border-width) * 2));
+  --input-min-block-size: calc(
+    1lh + (var(--input-padding-block) * 2) + (var(--input-border-width) * 2)
+  );
 
   /* 2. BASE */
   inline-size: 100%;
@@ -29,7 +31,8 @@
   border: var(--input-border-width) solid var(--input-border-color);
   border-radius: var(--input-radius);
   padding-block: var(--input-padding-block);
-  padding-inline: var(--input-padding-inline-start) var(--input-padding-inline-end);
+  padding-inline: var(--input-padding-inline-start)
+    var(--input-padding-inline-end);
 
   transition: border-color var(--transition-fast);
 
@@ -38,54 +41,17 @@
     opacity: 1; /* Firefox dims it a second time */
   }
 
-  /* Chromium gives the date family's inner field a padding-block of 1px of
-     its own, which makes every date type 2px taller than a text box in the
-     same .pu-field — measured 39px against 37px. Zeroed, the height goes back
-     to --input-min-block-size and the family lines up with everything else.
-     Firefox and Safari build these types from different parts, do not know
-     this pseudo-element, and drop the rule. */
   &::-webkit-datetime-edit-fields-wrapper {
     padding-block: 0;
   }
 
-  /* The clock indicator on type="time" carries an intrinsic size of its own,
-     and at sm it is taller than the line it sits on — measured 32.59px while
-     every field beside it measured 32.00px. Tied to the font size it stops
-     setting the height and starts following it.
-
-     Height only. Nothing here moves it: where the browser puts the indicator
-     is where a consumer's mark has to go, and input/date.css depends on that
-     staying true. And it is here rather than there because a bare
-     <input class="pu-input" type="time"> has to line up whether or not that
-     file was linked. */
   &::-webkit-calendar-picker-indicator {
     block-size: 1em;
   }
 
-  /* 2b. TYPE NORMALISATION
-
-     What a type needs in order to look like the rest of the family, and
-     nothing a consumer chooses. It is here rather than in a file per type
-     for one reason: a bare <input class="pu-input" type="number"> has to look
-     right on a page that linked this file and nothing else. Put a spinner's
-     removal behind an extra import and every page has to remember it, and
-     the one that forgets shows a control the library removed everywhere
-     else. Lining up is not optional; neither is this.
-
-     Everything below was measured. The notes on WHY each native mark goes
-     rather than gets restyled are in git history — the short version is
-     that none of them can be sized, coloured or shaped, and each sits
-     exactly where a consumer would want a control of their own. */
-
-  /* Digits in a column do not line up in a proportional font: 1 is narrower
-     than 8, so 111 and 888 are different widths and a column of amounts
-     reads ragged. */
   &[type="number"] {
     font-variant-numeric: tabular-nums;
 
-    /* Firefox reads the standard property; Chromium needs its pseudo-element
-       taken out as well, and the margin with it, or the arrows leave their
-       gap behind. */
     appearance: textfield;
 
     &::-webkit-inner-spin-button {
@@ -101,9 +67,6 @@
     display: none;
   }
 
-  /* Invisible, still there. display: none would take the hit test with it
-     and leave the picker keyboard-only. Nothing else is set: where the
-     browser puts the indicator is where a consumer's mark has to go. */
   &:is(
       [type="date"],
       [type="time"],
@@ -144,23 +107,18 @@
     --input-border-color: transparent;
   }
 
-  /* 5. STATES — after the variant on purpose. Both sit at (0,2,0), so source
-     order decides, and the states have to win: a ghost field still has to
-     show that it is hovered, wrong or disabled. Only its resting state is
-     invisible. */
   &:hover:not(:disabled, :read-only) {
-    --input-border-color: color-mix(in oklab, var(--color-border-control), var(--color-shade) 15%);
+    --input-border-color: color-mix(
+      in oklab,
+      var(--color-border-control),
+      var(--color-shade) 15%
+    );
   }
 
   &:is(:user-invalid, [aria-invalid="true"]) {
     --input-border-color: var(--color-error);
   }
 
-  /* A read-only field is still a normal field: it takes focus, its text can
-     be selected and copied, and it is submitted with the form. Greying it
-     made it look disabled, which is the one thing it is not. The cursor
-     carries the difference instead — no I-beam, because there is nothing to
-     type into. */
   &:read-only:not(:disabled) {
     cursor: default;
   }
@@ -183,76 +141,6 @@
   }
 }
 
-/*
-Input group — a control with something laid over it.
-
-  <div class="pu-input-group">
-    <svg class="input-icon" data-placement="start" aria-hidden="true">…</svg>
-    <input class="pu-input" type="search">
-  </div>
-
-Required only when there is an icon. An <input> is a void element and cannot
-hold children, so anything that appears inside the box has to be a sibling
-laid over it — and something has to carry the positioning and know that the
-padding must grow. That is this element's whole job. A bare .pu-input needs no
-group and should not have one.
-
-It says nothing about which control it wraps, so a .pu-select or a .pu-textarea
-can sit in it the day those files exist.
-
-
-WHAT GOES IN THE SLOT
-
-Anything. An <svg>, a <span>, an <i>, an <img>, a <button>. The library
-draws none of it — no icon leaves src/Styles/, and nothing here has a
-default picture. The consumer brings the mark; this file gives it a place
-to stand and moves the text out from under it.
-
-Decorative or interactive is decided by the element, not by a second class:
-
-  <svg class="input-icon">      decoration. pointer-events: none, so a click
-                                anywhere in the box lands on the field and
-                                focuses it, the icon included.
-  <button class="input-icon">   a control. Keeps its own clicks, its own
-                                focus ring, its own tab stop.
-
-That is the same rule the rest of the library follows: read the element
-first, reach for an attribute only when the element cannot say it.
-
-
-ACCESSIBILITY REQUIREMENTS:
-- A decorative icon MUST carry aria-hidden="true". It repeats what the
-  label already says, and announced it is noise.
-- An interactive icon MUST be a real <button type="button"> with an
-  accessible name — aria-label, or visually hidden text. A <span> with a
-  click handler is not a button: it has no tab stop, no Enter, no Space, and
-  no role.
-- type="button" is not optional. A <button> inside a <form> submits by
-  default, so a clear or reveal control without it sends the form.
-- The button sits in the field's tab order, after the input. That is DOM
-  order and this file does not change it — nothing here sets `order`, so
-  what is read is what is seen.
-- The focus ring comes from main.css. Nothing here draws one and nothing
-  clips, so the ring can never be cut.
-- --input-group-icon-color measures 4.8:1 on the form surface. An icon that
-  carries meaning has to clear 3:1 (1.4.11); a decorative one has no
-  requirement, but it sits next to text and looking disabled is its own
-  problem.
-- The group draws no box. The border, the fill and every state still belong
-  to the control inside it, so a field with an icon and a field without are
-  the same field.
-
-PLACEMENT: data-placement="start | end"
-  Logical, not left and right — start follows the writing direction, so the
-  icon lands correctly in an RTL page without a second rule.
-
-VARIABLES
-  --input-group-icon-size    the square an icon is given
-  --input-group-icon-gap     between the icon and the text
-  --input-group-icon-color   the icon, when it draws with currentColor
-  --input-group-icon-inset   from the edge of the box to the icon
-*/
-
 .pu-input-group {
   /* 1. VARIABLES */
   --input-group-icon-size: 1em;
@@ -263,7 +151,8 @@ VARIABLES
   /* What the control's padding has to become on a side that holds an icon:
      clear of the edge, past the icon, and a gap after it. */
   --input-group-clearance: calc(
-    var(--input-group-icon-inset) + var(--input-group-icon-size) + var(--input-group-icon-gap)
+    var(--input-group-icon-inset) + var(--input-group-icon-size) +
+      var(--input-group-icon-gap)
   );
 
   /* 2. BASE — the positioning context, and nothing else. No box, no fill,
@@ -297,10 +186,6 @@ VARIABLES
       inset-inline-end: var(--input-group-icon-inset);
     }
 
-    /* An SVG or an image is squared off. Text is not — a currency symbol or
-       a country code sets its own width, and a consumer whose mark is wider
-       than --input-group-icon-size raises that variable so the clearance
-       follows it. */
     &:is(svg, img),
     & > :is(svg, img) {
       inline-size: var(--input-group-icon-size);
@@ -308,9 +193,6 @@ VARIABLES
     }
   }
 
-  /* A button is a control, not decoration. It takes its clicks back, and it
-     drops the browser's button chrome — the box it sits in is the field's,
-     and a second border inside it would read as a field inside a field. */
   > button.input-icon {
     pointer-events: auto;
     cursor: pointer;
@@ -321,10 +203,6 @@ VARIABLES
     font: inherit;
   }
 
-  /* 4. CLEARANCE — the whole point. The group can see what it holds, so the
-     control's padding grows only on the side that needs it. A leaf variable
-     is set here, never a --form-* one: the channel stays the group's to
-     inherit, not this element's to shadow. */
   &:has(> .input-icon[data-placement="start"]) > .pu-input {
     --input-padding-inline-start: var(--input-group-clearance);
   }
@@ -333,28 +211,19 @@ VARIABLES
     --input-padding-inline-end: var(--input-group-clearance);
   }
 
-  /* 5. STATES — the control's, borrowed only where the icon has to follow.
-     A greyed-out field with a full-strength icon reads as the one part
-     still working. */
   &:has(> .pu-input:disabled) > .input-icon {
     color: var(--color-text-subtle);
     cursor: not-allowed;
   }
 }
 
-/* The end clearance, given back to the types that already reserve it.
-
-   .pu-input-group grows --input-padding-inline-end for an end-slot icon,
-   because on an ordinary field there is nothing at that end. On the date
-   family there already is: the picker indicator, still laid out, only
-   invisible. Grow the padding anyway and the indicator moves inward while
-   the mark stays at the edge — measured 20px apart, so the click that looks
-   like it opens the picker hits nothing.
-
-   Long on purpose: it has to outrank the clearance rule above, (0,5,1)
-   against (0,4,0), and the whole condition is written out so it is obvious
-   this fires in one situation only. */
 .pu-input-group:has(> .input-icon[data-placement="end"])
-  > input.pu-input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {
+  > input.pu-input:is(
+    [type="date"],
+    [type="time"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="week"]
+  ) {
   --input-padding-inline-end: var(--input-padding-inline);
 }

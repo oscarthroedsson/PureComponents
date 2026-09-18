@@ -4,32 +4,19 @@
   --file-line-height: var(--line-height-base);
   --file-surface: var(--form-surface, var(--color-surface-sunken));
 
-  /* The file name. A fraction of --file-font-size, not an em: an em resolves
-     against the parent's size, so a field in a .pu-field carrying a size of its
-     own would scale the name off the wrong number. */
   --file-name-font-size: calc(var(--file-font-size) * 0.9);
 
-  /* A plain token on purpose, NOT var(--form-color, …). form.css declares
-     --form-color, so a leaf's fallback is only ever reached when no .pu-form is
-     above it — reading the channel here would give a quiet name outside a
-     form and a full-strength one inside it. See the header. */
   --file-name-color: var(--color-text-muted);
 
   --file-padding-block: var(--form-padding-block, 0.5em);
   --file-padding-inline: var(--form-padding-inline, 0.75em);
 
-  /* Its own variable so .pu-input-group can grow it for an end-slot icon, the
-     same way .pu-input carries --input-padding-inline-end. There is no start
-     counterpart: the button occupies that edge. */
   --file-padding-inline-end: var(--file-padding-inline);
 
   --file-radius: var(--form-radius, var(--radius-smooth));
   --file-border-width: var(--form-border-width, 1px);
   --file-border-color: var(--form-border-color, var(--color-border-control));
 
-  /* A floor, not the height. The button sets the height — see the header — and
-     this only catches the case where a consumer has taken the button's padding
-     away, so the field never collapses onto the file name alone. */
   --file-min-block-size: calc(
     1lh + (var(--file-padding-block) * 2) + (var(--file-border-width) * 2)
   );
@@ -41,9 +28,6 @@
      it in one declaration instead of two. */
   --file-button-border-color: var(--file-border-color);
 
-  /* The inner radius: what is left of the box's corner once the border has
-     taken its width. max() because sharp resolves to 0 - 1px, and a negative
-     radius is not a value. */
   --file-button-radius: max(
     0px,
     calc(var(--file-radius) - var(--file-border-width))
@@ -64,20 +48,12 @@
   font-size: var(--file-name-font-size);
   color: var(--file-name-color);
 
-  /* Resolved against --file-font-size rather than left as a ratio, so the line
-     box keeps the height it would have had at full size. Without this, drawing
-     the name smaller would shrink 1lh, and with it --file-min-block-size, and
-     the field would stand lower than the .pu-input beside it. */
   line-height: calc(var(--file-font-size) * var(--file-line-height));
 
   background-color: var(--file-surface);
   border: var(--file-border-width) solid var(--file-border-color);
   border-radius: var(--file-radius);
 
-  /* No block padding, and no start padding: the button provides both, from an
-     em that resolves against the full font size rather than the file name's
-     reduced one. The header has the measurements. Only the end padding is the
-     field's, because there is nothing at that edge to provide it. */
   padding-block: 0;
   padding-inline: 0 var(--file-padding-inline-end);
 
@@ -86,38 +62,19 @@
 
   transition: border-color var(--transition-fast);
 
-  /* 2b. THE BUTTON
-
-     ::file-selector-button is a whole element with its own UA styling, and
-     it inherits almost nothing from the input: measured in Chromium, an
-     input set in Georgia and rebeccapurple produced a button still in Arial
-     and black. Only font-size came through. So `font: inherit` and an
-     explicit colour are load-bearing, not tidiness — without them the button
-     ignores the size classes below and the whole family stops lining up. */
   &::file-selector-button {
     font: inherit;
 
-    /* Back to full size. `font: inherit` above brings across the family and
-       the line box — which is what the button needs — but it also brings the
-       name's reduced size, and the button is the primary half of the control.
-       The inherited line-height is already an absolute length, so the button
-       stays in the same line box the name sits in. */
     font-size: var(--file-font-size);
 
     color: var(--file-button-color);
     background-color: var(--file-button-surface);
 
-    /* The field's block padding, carried here. This is what makes the button
-       fill the box's inner height and what sets the field's height at all —
-       see the header, including why it cannot go back on the field. */
     margin-block: 0;
     margin-inline: 0 var(--file-button-gap);
     padding-block: var(--file-padding-block);
     padding-inline: var(--file-padding-inline);
 
-    /* The UA draws a full outset border. Only the divider survives, and it
-       carries the button's edge at the field border's contrast rather than
-       relying on the two surfaces differing. */
     border: 0;
     border-inline-end: var(--file-border-width) solid
       var(--file-button-border-color);
@@ -163,23 +120,27 @@
     --file-button-radius-end: var(--file-button-radius);
   }
 
-  /* 5. STATES — after the variant on purpose. Both sit at (0,2,0), so source
-     order decides, and the states have to win: a ghost field still has to
-     show that it is hovered, wrong or disabled. Only its resting state is
-     invisible. */
-
-  /* No :not(:read-only) here, deliberately, and it is not an oversight: a
-     file input matches :read-only at all times, so copying .pu-input's guard
-     would mean this rule never fired. See the header. */
   &:hover:not(:disabled) {
-    --file-border-color: color-mix(in oklab, var(--color-border-control), var(--color-shade) 15%);
-    --file-button-surface: color-mix(in oklab, var(--color-surface-muted), var(--shade-hover));
+    --file-border-color: color-mix(
+      in oklab,
+      var(--color-border-control),
+      var(--color-shade) 15%
+    );
+    --file-button-surface: color-mix(
+      in oklab,
+      var(--color-surface-muted),
+      var(--shade-hover)
+    );
   }
 
   /* The field is the button as far as clicking goes, so the press reads on
      the button wherever in the box it started. */
   &:active:not(:disabled) {
-    --file-button-surface: color-mix(in oklab, var(--color-surface-muted), var(--shade-active));
+    --file-button-surface: color-mix(
+      in oklab,
+      var(--color-surface-muted),
+      var(--shade-active)
+    );
   }
 
   &:is(:user-invalid, [aria-invalid="true"]) {
@@ -214,50 +175,6 @@
   }
 }
 
-/*
-An icon in the group's end slot. The button owns the start.
-
-  <div class="pu-input-group">
-    <input class="pu-file" type="file">
-    <svg class="input-icon" data-placement="end" aria-hidden="true">…</svg>
-  </div>
-
-Same markup and the same .input-icon as every other control — see input.css
-for what may go in the slot and for the rule that a decorative mark is
-aria-hidden while an interactive one is a real <button>.
-
-WHY ONLY THE END
-
-.pu-input gives both edges; .pu-select gives the start, because its chevron owns the
-end. This is the mirror of the select case: the button is drawn hard against
-the start edge, so a mark placed there lands on top of it and sits over the
-browser's own label. There is no padding that can move the button out of the
-way — it is a pseudo-element at the beginning of the box, not content that
-flows.
-
-So a start-placement icon is not supported, and it is worth saying plainly:
-put one there and it will overlap the button. Nothing here can detect that and
-warn.
-
-THE CLEARANCE HAS TO BE UNDONE FROM THE FILE NAME'S EM
-
---input-group-clearance is written in em, and a custom property is substituted
-where it is USED, not where it is declared. On .pu-input it therefore resolves
-against the control's font size. On .pu-file that font size is the file name's,
-reduced — so taking the clearance as given yields 28.35px at md where .pu-input
-gets 31.5px, and the name ends 1.35px short of the mark instead of 4.5px.
-Measured; it does not collide, it just runs tight, and it runs tightest in the
-commonest case of all, a group at the page's own size.
-
-Multiplying by the ratio between the two sizes puts it back. That is not a
-magic number: --file-name-font-size is what moved the em base, so dividing it
-out is exactly the correction, and it stays exact if a consumer replaces that
-variable with a size of their own.
-
-It is approximate in one case — an --input-group-icon-* set in absolute units,
-where the ratio is applied to a length that never shrank. The error is a few
-px of surplus padding, always in the safe direction, never a collision.
-*/
 .pu-input-group:has(> .input-icon[data-placement="end"]) > .pu-file {
   --file-padding-inline-end: calc(
     var(--input-group-clearance) *

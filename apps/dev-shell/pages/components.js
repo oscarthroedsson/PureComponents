@@ -89,36 +89,4 @@ window.PC_COMPONENTS = [
    `docs: null` = no Documentation folder, so the page shows no docs links. */
 window.PC_PAGES = [
   { id: "Tokens", title: "Design tokens", group: "Basics", file: "Tokens.html", css: [] },
-  {
-    id: "Experiments/ButtonSizing",
-    title: "Button sizing",
-    group: "Experiments",
-    file: "Experiments/ButtonSizing.html",
-    css: [],
-    docs: null,
-  },
-  {
-    id: "Experiments/ButtonNative",
-    title: "Button: native surface",
-    group: "Experiments",
-    file: "Experiments/ButtonNative.html",
-    css: [],
-    docs: null,
-  },
-  {
-    id: "Experiments/ButtonLoading",
-    title: "Button: loading & skeleton",
-    group: "Experiments",
-    file: "Experiments/ButtonLoading.html",
-    css: [],
-    docs: null,
-  },
-  {
-    id: "Experiments/MediaControlsProbe",
-    title: "Media controls probe",
-    group: "Experiments",
-    file: "Experiments/MediaControlsProbe.html",
-    css: [],
-    docs: null,
-  },
 ];
