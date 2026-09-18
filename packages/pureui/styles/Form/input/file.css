@@ -25,7 +25,7 @@
 
   --file-radius: var(--form-radius, var(--radius-smooth));
   --file-border-width: var(--form-border-width, 1px);
-  --file-border-color: var(--form-border-color, var(--color-border));
+  --file-border-color: var(--form-border-color, var(--color-border-control));
 
   /* A floor, not the height. The button sets the height — see the header — and
      this only catches the case where a consumer has taken the button's padding
@@ -172,7 +172,7 @@
      file input matches :read-only at all times, so copying .pu-input's guard
      would mean this rule never fired. See the header. */
   &:hover:not(:disabled) {
-    --file-border-color: color-mix(in oklab, var(--color-border), var(--color-shade) 15%);
+    --file-border-color: color-mix(in oklab, var(--color-border-control), var(--color-shade) 15%);
     --file-button-surface: color-mix(in oklab, var(--color-surface-muted), var(--shade-hover));
   }
 

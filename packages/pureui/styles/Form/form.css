@@ -9,7 +9,7 @@
   --form-padding-inline: 0.75em;
   --form-radius: var(--radius-md);
   --form-border-width: 1px;
-  --form-border-color: var(--color-border);
+  --form-border-color: var(--color-border-control);
   --form-surface: var(--color-surface-sunken);
   --form-color: var(--color-text);
 

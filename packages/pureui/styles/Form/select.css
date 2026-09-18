@@ -9,7 +9,7 @@
   --select-padding-inline: var(--form-padding-inline, 0.75em);
 
   --select-border-width: var(--form-border-width, 1px);
-  --select-border-color: var(--form-border-color, var(--color-border));
+  --select-border-color: var(--form-border-color, var(--color-border-control));
   --select-radius: var(--form-radius, var(--radius-smooth));
 
   --select-icon-size: 1em;
@@ -117,7 +117,7 @@
   /* No :read-only branch: readonly does nothing to a <select>. Locking a
      choice is `disabled` plus a hidden input, or a single option. */
   &:hover:not(:disabled) {
-    --select-border-color: color-mix(in oklab, var(--color-border), var(--color-shade) 15%);
+    --select-border-color: color-mix(in oklab, var(--color-border-control), var(--color-shade) 15%);
   }
 
   /* :user-invalid is native constraint validation and only fires once the

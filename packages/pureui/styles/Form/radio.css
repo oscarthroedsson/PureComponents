@@ -2,7 +2,7 @@
   /* 1. VARIABLES */
   --radio-size: 1.15em;
   --radio-border-width: var(--form-border-width, 1px);
-  --radio-border-color: var(--form-border-color, var(--color-border));
+  --radio-border-color: var(--form-border-color, var(--color-border-control));
   --radio-surface: var(--form-surface, var(--color-surface-sunken));
 
   --radio-checked-surface: var(--color-primary);
@@ -66,7 +66,7 @@
 
   /* 5. STATES */
   &:hover:not(:disabled) {
-    --radio-border-color: color-mix(in oklab, var(--color-border), var(--color-shade) 15%);
+    --radio-border-color: color-mix(in oklab, var(--color-border-control), var(--color-shade) 15%);
   }
 
   &:checked {

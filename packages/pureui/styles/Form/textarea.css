@@ -33,7 +33,7 @@
       ) / 2
   );
   --textarea-border-width: var(--form-border-width, 1px);
-  --textarea-border-color: var(--form-border-color, var(--color-border));
+  --textarea-border-color: var(--form-border-color, var(--color-border-control));
   --textarea-surface: var(--form-surface, var(--color-surface-sunken));
   --textarea-color: var(--form-color, var(--color-text));
   --textarea-placeholder-color: var(--color-text-subtle);
@@ -138,7 +138,7 @@
      order decides, and the states have to win: a ghost field still has to
      show that it is hovered, wrong or disabled. */
   &:hover:not(:disabled, :read-only) {
-    --textarea-border-color: color-mix(in oklab, var(--color-border), var(--color-shade) 15%);
+    --textarea-border-color: color-mix(in oklab, var(--color-border-control), var(--color-shade) 15%);
   }
 
   &:is(:user-invalid, [aria-invalid="true"]) {

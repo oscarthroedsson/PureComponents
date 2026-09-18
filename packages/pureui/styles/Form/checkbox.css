@@ -3,7 +3,7 @@
   --checkbox-size: 1.15em;
   --checkbox-radius: var(--form-radius, var(--radius-smooth));
   --checkbox-border-width: var(--form-border-width, 1px);
-  --checkbox-border-color: var(--form-border-color, var(--color-border));
+  --checkbox-border-color: var(--form-border-color, var(--color-border-control));
   --checkbox-surface: var(--form-surface, var(--color-surface-sunken));
 
   --checkbox-checked-surface: var(--color-primary);
@@ -105,7 +105,7 @@
 
   /* 6. STATES */
   &:hover:not(:disabled) {
-    --checkbox-border-color: color-mix(in oklab, var(--color-border), var(--color-shade) 15%);
+    --checkbox-border-color: color-mix(in oklab, var(--color-border-control), var(--color-shade) 15%);
   }
 
   &:is(:checked, :indeterminate) {
