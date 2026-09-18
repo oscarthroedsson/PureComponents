@@ -19,5 +19,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["packages/*/js", "apps/*/js", "apps/*/*.d.ts"]
+  "include": ["apps/*/js", "apps/*/*.d.ts"]
 }

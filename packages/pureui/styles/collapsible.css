@@ -1,4 +1,4 @@
-@import url("./Animations/swap.css");
+@import url("./Motion/swap.css");
 
 .pu-collapsible:where(details) {
   /* VARIABLES */

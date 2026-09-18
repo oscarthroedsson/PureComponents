@@ -2,7 +2,7 @@
 
 ## File
 
-`packages/pureui/styles/Form/input/input.css`
+`packages/pureui/styles/Form/input.css`
 
 Two keys: `.pu-input` and `.pu-input-group`.
 

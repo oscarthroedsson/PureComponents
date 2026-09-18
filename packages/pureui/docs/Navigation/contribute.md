@@ -2,7 +2,7 @@
 
 ## File
 
-`packages/pureui/styles/nav.css` — one key, everything nested.
+`packages/pureui/styles/navigation.css` — one key, everything nested.
 
 ## Key
 

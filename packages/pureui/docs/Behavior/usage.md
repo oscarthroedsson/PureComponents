@@ -19,7 +19,7 @@ Layout files it overrides:
 
 ```html
 <link rel="stylesheet" href="pureui/styles/button.css">
-<link rel="stylesheet" href="pureui/styles/Form/input/input.css">
+<link rel="stylesheet" href="pureui/styles/Form/input.css">
 <link rel="stylesheet" href="pureui/styles/Layout/box.css">
 <link rel="stylesheet" href="pureui/styles/Layout/layout.css">
 <link rel="stylesheet" href="pureui/styles/Layout/behavior.css">

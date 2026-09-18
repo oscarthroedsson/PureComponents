@@ -7,7 +7,7 @@ export default {
     "/pureui/styles/Form/form.css",
     "/pureui/styles/Form/field.css",
     "/pureui/styles/Form/label.css",
-    "/pureui/styles/Form/input/input.css",
+    "/pureui/styles/Form/input.css",
     "/pureui/styles/Layout/box.css",
     "/pureui/styles/Layout/layout.css",
     "/pureui/styles/Layout/behavior.css",

@@ -2,7 +2,7 @@
 
 ## File
 
-`packages/pureui/styles/Menu/menu.css`
+`packages/pureui/styles/menu.css`
 
 ## Key
 

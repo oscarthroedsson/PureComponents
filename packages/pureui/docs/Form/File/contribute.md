@@ -2,7 +2,7 @@
 
 ## File
 
-`packages/pureui/styles/Form/input/file.css`
+`packages/pureui/styles/Form/file.css`
 
 ## Key
 

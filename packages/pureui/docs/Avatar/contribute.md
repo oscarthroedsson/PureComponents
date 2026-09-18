@@ -102,7 +102,7 @@ first two avatars never overlap.
 
 The generic `pu-motion` key owns triggers, the transition, and the choice
 between overlay and reflow. Avatar only supplies the distance that changes a
-compact stack into an open one. `Animations/index.css` implements the six
+compact stack into an open one. `Motion/index.css` implements the six
 `expand-*` effects.
 
 Overlay changes `translate` on direct children and keeps surrounding geometry

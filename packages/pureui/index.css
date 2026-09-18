@@ -3,7 +3,7 @@
 @import "./styles/main.css" layer(pureui.base);
 
 /* Motion primitives */
-@import "./styles/Animations/index.css" layer(pureui.components);
+@import "./styles/Motion/index.css" layer(pureui.components);
 
 /* Structural primitives */
 @import "./styles/separator.css" layer(pureui.components);
@@ -12,8 +12,8 @@
 @import "./styles/button.css" layer(pureui.components);
 @import "./styles/dialog.css" layer(pureui.components);
 @import "./styles/tooltip.css" layer(pureui.components);
-@import "./styles/Menu/menu.css" layer(pureui.components);
-@import "./styles/nav.css" layer(pureui.components);
+@import "./styles/menu.css" layer(pureui.components);
+@import "./styles/navigation.css" layer(pureui.components);
 @import "./styles/tabs.css" layer(pureui.components);
 @import "./styles/skip-links.css" layer(pureui.components);
 
@@ -21,14 +21,14 @@
 @import "./styles/Form/form.css" layer(pureui.components);
 @import "./styles/Form/field.css" layer(pureui.components);
 @import "./styles/Form/fieldset.css" layer(pureui.components);
-@import "./styles/Form/input/input.css" layer(pureui.components);
+@import "./styles/Form/input.css" layer(pureui.components);
 @import "./styles/Form/label.css" layer(pureui.components);
 @import "./styles/Form/textarea.css" layer(pureui.components);
 @import "./styles/Form/checkbox.css" layer(pureui.components);
 @import "./styles/Form/radio.css" layer(pureui.components);
 @import "./styles/Form/range.css" layer(pureui.components);
 @import "./styles/Form/select.css" layer(pureui.components);
-@import "./styles/Form/input/file.css" layer(pureui.components);
+@import "./styles/Form/file.css" layer(pureui.components);
 
 /* Feedback */
 @import "./styles/alert.css" layer(pureui.components);

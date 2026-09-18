@@ -48,8 +48,7 @@ packages/pureui/
     main.css        tokens + global resets. Link first.
     button.css      one file per component
     Form/           form controls
-    Menu/
-    Animations/
+    Motion/         the motion primitives
   docs/             usage.md + contribute.md per component
 ```
 

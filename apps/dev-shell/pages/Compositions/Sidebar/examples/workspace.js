@@ -1,14 +1,14 @@
 export default {
   styles: [
     "/pureui/styles/main.css",
-    "/pureui/styles/Menu/menu.css",
+    "/pureui/styles/menu.css",
     "/pureui/styles/Layout/box.css",
     "/pureui/styles/Layout/layout.css",
     "/pureui/styles/button.css",
     "/pureui/styles/badge.css",
     "/pureui/styles/avatar.css",
     "/pureui/styles/meter.css",
-    "/pureui/styles/Form/input/input.css",
+    "/pureui/styles/Form/input.css",
   ],
   markup: String.raw`<aside aria-label="Northwind workspace">
   <nav aria-label="Workspace navigation">

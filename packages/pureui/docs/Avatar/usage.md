@@ -3,7 +3,7 @@
 A square box holding a picture, initials, or an icon. Put several in a group
 and they become a list or an overlapping stack.
 
-Animated groups also require `Animations/index.css`, which provides the
+Animated groups also require `Motion/index.css`, which provides the
 composable `pu-motion` key and its effects.
 
 ## Quick start

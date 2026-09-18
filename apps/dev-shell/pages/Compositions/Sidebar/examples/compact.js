@@ -1,7 +1,7 @@
 export default {
   styles: [
     "/pureui/styles/main.css",
-    "/pureui/styles/Menu/menu.css",
+    "/pureui/styles/menu.css",
     "/pureui/styles/Layout/box.css",
     "/pureui/styles/Layout/layout.css",
     "/pureui/styles/button.css",

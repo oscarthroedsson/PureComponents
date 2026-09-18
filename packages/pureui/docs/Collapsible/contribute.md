@@ -4,7 +4,7 @@
 
 `packages/pureui/styles/collapsible.css`
 
-It imports `./Animations/swap.css` on line 1, so a page linking this file gets
+It imports `./Motion/swap.css` on line 1, so a page linking this file gets
 the two-icon marker without linking anything else.
 
 ## Key

@@ -2,10 +2,10 @@
 
 ## Files
 
-- `Animations/motion.css` owns the `pu-motion` key, timing variables, triggers,
+- `Motion/motion.css` owns the `pu-motion` key, timing variables, triggers,
   scope, and reduced-motion policy.
 - `fade.css`, `scale.css`, `slide.css`, and `expand.css` own effects.
-- `Animations/index.css` is the public all-motion entry point.
+- `Motion/index.css` is the public all-motion entry point.
 
 ## One progress value
 
