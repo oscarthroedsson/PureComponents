@@ -1,0 +1,9 @@
+/*
+ * Outer layout only: how wide the section is and where it sits. Every cell,
+ * rule, control and state inside the table comes from PureUI.
+ */
+
+.pricing {
+  max-inline-size: 78rem;
+  margin-inline: auto;
+}

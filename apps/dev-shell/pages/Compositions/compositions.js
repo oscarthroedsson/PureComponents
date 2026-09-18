@@ -84,6 +84,15 @@
       docs: null,
       blurb: "A marketing testimonial wall; the page adds the grid and nothing else.",
     },
+    {
+      id: "Compositions/Pricing",
+      title: "Pricing",
+      group: "Compositions",
+      file: "Compositions/Pricing.html",
+      css: ["table.css", "button.css", "tabs.css", "tooltip.css", "Layout/box.css"],
+      docs: null,
+      blurb: "A plan comparison built as a real table, with disabled actions.",
+    },
   ];
 
   window.PC_PAGES = (window.PC_PAGES || []).concat(window.PC_COMPOSITIONS);

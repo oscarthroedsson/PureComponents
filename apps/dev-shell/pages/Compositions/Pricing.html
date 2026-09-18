@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing — Pure Composition</title>
+
+    <!-- Dev shell only. Composition CSS is loaded inside each lazy preview. -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-page="compositions">
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui">
+        Composition examples are loaded on demand and need JavaScript.
+      </p>
+    </noscript>
+
+    <script src="../components.js"></script>
+    <script src="./compositions.js"></script>
+    <script src="../docs.js"></script>
+    <script src="./Pricing/examples.js"></script>
+    <script type="module">
+      import "./composition-viewer.js";
+
+      (function () {
+        "use strict";
+
+        var el = window.PCDocs.el;
+
+        var about = el("div", { class: "pc-doc-body" });
+        about.innerHTML =
+          "<p>A pricing comparison, rebuilt from a screenshot. A grid of boxes would have looked the same and " +
+          "read as nothing, so this is a real <code>&lt;table&gt;</code>: each plan is a column header, each " +
+          "feature is a row header, and every section is its own <code>&lt;tbody&gt;</code>. A screen reader " +
+          "then announces &ldquo;Pro, custom permissions, included&rdquo; on a single cell.</p>" +
+          "<p>This is a UI demonstration, so the <strong>Get started</strong> buttons are <code>disabled</code> " +
+          "and the billing toggle changes nothing — it is two radios in a Tabs header. The info buttons are " +
+          "Tooltip, which needs no script.</p>" +
+          "<p>Two things the library cannot do show here: there is no text scale, so the price cannot be the " +
+          "large figure the screenshot has, and Table draws rules between rows but not between columns.</p>";
+
+        var feed = el("div");
+        window.PCCompositionViewer.mount(feed, {
+          name: "Pricing",
+          examples: window.PC_PRICING_EXAMPLES || [],
+        });
+
+        var adding = el("div", { class: "pc-doc-body" });
+        adding.innerHTML =
+          "<ol>" +
+          "<li>Create a module in <code>Pricing/examples/</code> that exports its stylesheets and markup.</li>" +
+          "<li>Add its title, module path and stable preview height to <code>Pricing/examples.js</code>.</li>" +
+          "<li>Reload this page. The shared viewer supplies lazy loading, isolation, tabs and copying.</li>" +
+          "</ol>";
+
+        window.PCDocs.buildPage({
+          title: "Pricing",
+          lede: "A plan comparison built as a real table, with one page class for its width.",
+          homeHref: "../../index.html",
+          sections: [
+            { id: "about", title: "About", node: about },
+            { id: "examples", title: "Examples", node: feed },
+            { id: "adding-an-example", title: "Add an example", node: adding },
+          ],
+        });
+      })();
+    </script>
+  </body>
+</html>
