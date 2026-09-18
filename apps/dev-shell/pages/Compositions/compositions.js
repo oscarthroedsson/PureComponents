@@ -75,6 +75,15 @@
       docs: null,
       blurb: "Scrollable sidebar compositions with lazy Example and Code viewers.",
     },
+    {
+      id: "Compositions/Testimonials",
+      title: "Testimonials",
+      group: "Compositions",
+      file: "Compositions/Testimonials.html",
+      css: ["card.css", "avatar.css", "Layout/box.css"],
+      docs: null,
+      blurb: "A marketing testimonial wall; the page adds the grid and nothing else.",
+    },
   ];
 
   window.PC_PAGES = (window.PC_PAGES || []).concat(window.PC_COMPOSITIONS);

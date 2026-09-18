@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testimonials — Pure Composition</title>
+
+    <!-- Dev shell only. Composition CSS is loaded inside each lazy preview. -->
+    <link rel="stylesheet" href="../docs.css" />
+  </head>
+  <body data-page="compositions">
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui">
+        Composition examples are loaded on demand and need JavaScript.
+      </p>
+    </noscript>
+
+    <script src="../components.js"></script>
+    <script src="./compositions.js"></script>
+    <script src="../docs.js"></script>
+    <script src="./Testimonials/examples.js"></script>
+    <script type="module">
+      import "./composition-viewer.js";
+
+      (function () {
+        "use strict";
+
+        var el = window.PCDocs.el;
+
+        var about = el("div", { class: "pc-doc-body" });
+        about.innerHTML =
+          "<p>A marketing section rebuilt from a screenshot. The page contributes <strong>layout only</strong> — " +
+          "a four-column grid and a span class for the wide cards. Everything inside a card is PureUI: " +
+          "Card for the frame, header, body and footer, Avatar for the portrait, Layout for the name row.</p>" +
+          "<p>Where the library runs out, the section says so rather than adding CSS: the section lede and the " +
+          "quotes have no muted-text class outside a Card, the large pull quote borrows " +
+          "<code>card-title</code> because there is no text scale, and the brand marks are set as words, since " +
+          "the library has no logo slot.</p>";
+
+        var feed = el("div");
+        window.PCCompositionViewer.mount(feed, {
+          name: "Testimonials",
+          examples: window.PC_TESTIMONIALS_EXAMPLES || [],
+        });
+
+        var adding = el("div", { class: "pc-doc-body" });
+        adding.innerHTML =
+          "<ol>" +
+          "<li>Create a module in <code>Testimonials/examples/</code> that exports its stylesheets and markup.</li>" +
+          "<li>Add its title, module path and stable preview height to <code>Testimonials/examples.js</code>.</li>" +
+          "<li>Reload this page. The shared viewer supplies lazy loading, isolation, tabs and copying.</li>" +
+          "</ol>";
+
+        window.PCDocs.buildPage({
+          title: "Testimonials",
+          lede: "A testimonial wall built from PureUI, with the grid as its only page CSS.",
+          homeHref: "../../index.html",
+          sections: [
+            { id: "about", title: "About", node: about },
+            { id: "examples", title: "Examples", node: feed },
+            { id: "adding-an-example", title: "Add an example", node: adding },
+          ],
+        });
+      })();
+    </script>
+  </body>
+</html>

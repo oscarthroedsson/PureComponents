@@ -1,0 +1,30 @@
+/*
+ * Layout only. The wall's columns and the spans for the wide cards; every
+ * surface, space and state inside a card comes from PureUI.
+ */
+
+.wall {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--spacing-100);
+}
+
+.wall-wide {
+  grid-column: span 2;
+}
+
+@media (max-width: 64rem) {
+  .wall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 34rem) {
+  .wall {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wall-wide {
+    grid-column: auto;
+  }
+}
